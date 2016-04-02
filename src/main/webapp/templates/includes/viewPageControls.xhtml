@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+
+	<p:button id="btnAdd" value="#{msg['agentMgmt.nav.add']}" rendered="#{controller.isAddAllowed()}"
+		outcome="openAdd" style="margin-left: 182px;" >
+		<f:param name="id" value="#{controller.maintenanceVO.id}" />
+	</p:button>
+	<p:spacer width="2px" />
+
+	<p:button id="btnModify" value="#{msg['agentMgmt.nav.modify']}"
+		outcome="openModify" rendered="#{controller.isModifyAllowed()}">
+		<f:param name="id" value="#{controller.maintenanceVO.id}" />
+	</p:button>
+	<p:spacer width="2px" /> 
+
+	<p:button id="btnList" value="#{msg['agentMgmt.nav.List']}"
+		outcome="openList" rendered="#{controller.isListAllowed()}" />
+	<p:spacer width="2px" /> 
+	
+	<p:commandButton id="btnAuth" value="#{msg['agentMgmt.btn.auth']}"
+		update="auditTrail panel" rendered="#{controller.isAuthorizeAllowed()}"
+		disabled="#{controller.isAuthorizeEnable()}" actionListener="#{controller.authorize}" />
+	<p:spacer width="2px" />
+		
+</ui:composition>

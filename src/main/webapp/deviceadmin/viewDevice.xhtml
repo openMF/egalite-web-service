@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{deviceController.device.deviceId}"></f:viewParam>
+			<f:event listener="#{deviceController.loadDevice}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['deviceMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['deviceMgmt.title.deviceDetail']}" /></span>
+				
+				<span class="pageHeaderControls">
+				<ui:include	src="/templates/includes/viewPageControls.xhtml">
+					<ui:param name="controller" value="#{deviceController}"></ui:param>
+				</ui:include> 
+				<p:commandButton id="btnDelete" value="#{msg['deviceMgmt.btn.delete']}"
+					rendered="#{deviceController.isDeleteAllowed()}" update="panel"
+					disabled="#{deviceController.isEnableDeleteAllowed()}" action="#{deviceController.deleteUnAuthorized}" >
+						<p:confirm header="Confirmation" message="#{msg['msg.confirm.dialog']}"
+							icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+									
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['deviceMgmt.tblHeader.deviceId']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{deviceController.device.deviceId}"
+					label="#{msg['deviceMgmt.label.deviceId']}">
+				</p:inputText>
+
+				<h:outputLabel for="deviceType"
+					value="#{msg['deviceMgmt.label.deviceType']}" />
+				<p:inputText id="deviceType" readonly="true"
+					value="#{deviceController.deviceType}"></p:inputText>
+
+
+				<h:outputLabel for="uniqueId"
+					value="#{msg['deviceMgmt.label.uniqueId']}" />
+				<p:inputText id="uniqueId" readonly="true"
+					value="#{deviceController.device.uniqueId}"
+					label="#{msg['deviceMgmt.label.uniqueId']}" required="true">
+				</p:inputText>
+
+
+				<h:outputLabel for="issuedDate"
+					value="#{msg['deviceMgmt.label.issuedDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy" navigator="true" readonly="true"
+					showOn="label" yearRange="c-1:c+3"
+					value="#{deviceController.device.issuedDate}" id="issuedDate" />
+
+			
+
+
+				<h:outputLabel for="issuedByCo"
+					value="#{msg['deviceMgmt.tblHeader.issuedBy']}" />
+				<p:inputText id="issuedByCo" readonly="true"
+					value="#{deviceController.device.issuedByCo}" required="true"
+					label="#{msg['deviceMgmt.tblHeader.issuedBy']}">
+				</p:inputText>
+
+
+				<h:outputLabel for="brandModel"
+					value="#{msg['deviceMgmt.label.brandModel']}" />
+				<p:inputText id="brandModel" readonly="true"
+					value="#{deviceController.device.brandModel}" required="true"
+					label="#{msg['deviceMgmt.label.brandModel']}">
+				</p:inputText>
+
+
+				<h:outputLabel for="operatingSystem"
+					value="#{msg['deviceMgmt.label.operatingSystem']}" />
+				<p:inputText id="operatingSystem" readonly="true"
+					value="#{deviceController.device.operatingSystem}" required="true"
+					label="#{msg['deviceMgmt.label.operatingSystem']}">
+				</p:inputText>
+
+
+				<h:outputLabel for="appVersion"
+					value="#{msg['deviceMgmt.label.appVersion']}" />
+				<p:inputText id="appVersion" readonly="true"
+					value="#{deviceController.device.appVersion}" required="true"
+					label="#{msg['deviceMgmt.label.appVersion']}">
+				</p:inputText>
+
+
+				<h:outputLabel for="simNumber"
+					value="#{msg['deviceMgmt.tblHeader.simNumber']}" />
+				<p:inputText id="simNumber" readonly="true"
+					value="#{deviceController.device.simNumber}" required="true"
+					label="#{msg['deviceMgmt.tblHeader.simNumber']}">
+				</p:inputText>
+				
+				<h:outputLabel for="isActive"
+					value="#{msg['deviceMgmt.tblHeader.deviceStatus']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{deviceController.isStatusActive}"></p:inputText>
+
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

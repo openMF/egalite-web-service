@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{pigmyDepositController.pigmyViewVO.id}"/>
+			<f:event listener="#{pigmyDepositController.loadPigmyDeposit}" type="preRenderView"/>
+			<f:event listener="#{pigmyDepositController.depositActivity}" type="preRenderView"/>
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['pigmyMgmt.title.viewDeposit']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:button id="btnClose"
+						value="List" outcome="List" style="margin-left: 182px;" />
+					<p:spacer width="2px" /> 
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<!-- New fields added and changes ==> Changes for Asomi Nirmal kanna S -->
+
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithoutAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+				
+				<h:outputLabel for="id" value="#{msg['pigmydeposit.label.depositAccountNumber']}" />
+				<p:inputText id="id" readonly="true" value="#{pigmyDepositController.pigmyViewVO.id}"/>
+				
+				<h:outputLabel for="branchCode" value="#{msg['depositActivity.tblHeader.branchCode']}" />
+				<p:inputText id="branchCode" readonly="true" value="#{pigmyDepositController.pigmyViewVO.branchCode}"/>
+					
+				<h:outputLabel for="customerID" value="#{msg['pigmydeposit.label.customerID']}" />
+				<p:inputText id="customerID" readonly="true" value="#{pigmyDepositController.pigmyViewVO.customerID}"/>
+				
+				<h:outputLabel for="customerFullName" value="#{msg['pigmydeposit.label.customerNm']}" />
+				<p:inputText id="customerFullName" readonly="true" value="#{pigmyDepositController.pigmyViewVO.customerFullName}"/>
+				
+				<h:outputLabel for="schInstallmentAmt" value="#{msg['pigmydeposit.label.installmentAmt']}" />
+				<p:inputText id="schInstallmentAmt" readonly="true" value="#{pigmyDepositController.pigmyViewVO.schInstallmentAmt}"/>
+				
+				<h:outputLabel for="currency" value="#{msg['pigmydeposit.label.depositAccCcy']}" />
+				<p:inputText id="currency" readonly="true" value="#{pigmyDepositController.pigmyViewVO.currency}"/>
+				
+				<h:outputLabel for="tenureType"	value="#{msg['depositActivity.tblHeader.tenureType']}" />
+				<p:inputText id="tenureType" readonly="true" value="#{pigmyDepositController.pigmyViewVO.tenureType}"/>
+				
+				<h:outputLabel for="tenure"	value="#{msg['pigmydeposit.label.depositTenure']}" />
+				<p:inputText id="tenure" readonly="true" value="#{pigmyDepositController.pigmyViewVO.tenure}"/>
+				
+				<h:outputLabel for="payFreqType" value="#{msg['depositActivity.tblHeader.payFreqType']}" />
+				<p:inputText id="payFreqType" readonly="true" value="#{pigmyDepositController.pigmyViewVO.payFreqType}"/>
+				
+				<h:outputLabel for="payFreq" value="#{msg['depositActivity.tblHeader.payFreq']}" />
+				<p:inputText id="payFreq" readonly="true" value="#{pigmyDepositController.pigmyViewVO.payFreq}"/>
+				
+				<h:outputLabel for="interestRate" value="#{msg['pigmydeposit.label.interestRate']}" />
+				<p:inputText id="interestRate" readonly="true" value="#{pigmyDepositController.pigmyViewVO.interestRate}"/>
+				
+				<h:outputLabel for="openDate" value="#{msg['pigmydeposit.label.depositOpenedDate']}" />
+				<p:inputText id="openDate" readonly="true" value="#{pigmyDepositController.pigmyViewVO.openDate}">
+					<f:convertDateTime pattern="dd-MMM-yyyy" />
+				</p:inputText>
+				
+				<h:outputLabel for="maturityDate" value="#{msg['pigmydeposit.label.maturityDate']}" />
+				<p:inputText id="maturityDate" readonly="true" value="#{pigmyDepositController.pigmyViewVO.maturityDate}">
+					<f:convertDateTime pattern="dd-MMM-yyyy" />
+				</p:inputText>
+				
+				<h:outputLabel for="principalMaturityAmount" value="#{msg['depositActivity.tblHeader.principalMaturityAmount']}" />
+				<p:inputText id="principalMaturityAmount" readonly="true" value="#{pigmyDepositController.pigmyViewVO.principalMaturityAmount}"/>
+				
+				</h:panelGrid>
+			</p:panel>
+		
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2">
+			
+				<h:outputLabel for="interestAccuredTillDate" value="#{msg['depositActivity.tblHeader.interestAccuredTillDate']}" />
+				<p:inputText id="interestAccuredTillDate" readonly="true" value="#{pigmyDepositController.pigmyViewVO.interestAccuredTillDate}"/>
+				
+				<h:outputLabel for="installmentPaidTillDate" value="#{msg['depositActivity.tblHeader.installmentPaidTillDate']}" />
+				<p:inputText id="installmentPaidTillDate" readonly="true" value="#{pigmyDepositController.pigmyViewVO.installmentPaidTillDate}"/>
+					
+				<h:outputLabel for="totalInstallmentAmtDue"	value="#{msg['depositActivity.tblHeader.totalInstallmentAmtDue']}" />
+				<p:inputText id="totalInstallmentAmtDue" readonly="true" value="#{pigmyDepositController.pigmyViewVO.totalInstallmentAmtDue}"/>
+				
+				<h:outputLabel for="redemptionFlag"	value="#{msg['depositActivity.tblHeader.redemptionFlag']}" />
+				<p:inputText id="redemptionFlag" readonly="true" value="#{pigmyDepositController.pigmyViewVO.redemptionFlag}"/>
+				
+				<h:outputLabel for="redemptionPayoutDate" value="#{msg['depositActivity.tblHeader.redemptionPayoutDate']}" />
+				<p:inputText id="redemptionPayoutDate" readonly="true" value="#{pigmyDepositController.pigmyViewVO.redemptionPayoutDate}">
+					<f:convertDateTime pattern="dd-MMM-yyyy" />
+				</p:inputText>
+				
+				<h:outputLabel for="redemptionAmount" value="#{msg['depositActivity.tblHeader.redemptionAmount']}" />
+				<p:inputText id="redemptionAmount" readonly="true" value="#{pigmyDepositController.pigmyViewVO.redemptionAmount}"/>
+			
+				<h:outputLabel for="agentId" value="#{msg['pigmydeposit.label.agentID']}" />
+				<p:inputText id="agentId" readonly="true" value="#{pigmyDepositController.pigmyViewVO.agentId}"/>
+					
+				<h:outputLabel for="locationCode" value="#{msg['pigmydeposit.label.locationCode']}" />
+				<p:inputText id="locationCode" readonly="true" value="#{pigmyDepositController.pigmyViewVO.locationCode}"/>
+				
+				<h:outputLabel for="creditOfficerCode" value="#{msg['pigmydeposit.label.creditOfficerCode']}" />
+				<p:inputText id="creditOfficerCode" readonly="true"	value="#{pigmyDepositController.pigmyViewVO.creditOfficerCode}"/>
+					
+				<h:outputLabel for="creditOfficerName"	value="#{msg['pigmydeposit.label.creditOfficerName']}" />
+				<p:inputText id="creditOfficerName" readonly="true"	value="#{pigmyDepositController.pigmyViewVO.creditOfficerName}"/>
+				
+				<h:outputLabel for="allocationStatus" value="#{msg['pigmydeposit.label.allocationStatus']}" />
+				<p:inputText id="allocationStatus" readonly="true" value="#{pigmyDepositController.pigmyViewVO.allocationStatus}"/>
+				
+				<h:outputLabel for="allocationByCode" value="#{msg['pigmydeposit.label.allocationBy']}" />
+				<p:inputText id="allocationByCode" readonly="true"	value="#{pigmyDepositController.pigmyViewVO.allocationByCode}"/>
+			
+				<h:outputLabel for="cbsUplJobId" value="#{msg['depositActivity.tblHeader.jobID']}" />
+				<p:inputText id="cbsUplJobId" readonly="true" value="#{pigmyDepositController.pigmyViewVO.cbsUplJobId}"/>
+				
+				<!-- <h:outputLabel for="recordStat"
+					value="#{msg['depositActivity.tblHeader.recordStat']}" />
+				<p:inputText id="recordStat" readonly="true"
+					value="#{pigmyDepositController.pigmyViewVO.recordStat}"
+					label="#{msg['depositActivity.tblHeader.recordStat']}">
+				</p:inputText> -->
+			
+			</h:panelGrid>
+			</p:panel>
+			</p:panel>
+			
+			<p:tabView orientation="top" styleClass="loanTapBody">
+			<p:tab title="#{msg['depositActivity.tblHeader.depositActivity']}">
+				<p:panel id="loanPanel">
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:dataTable id="loanDataTable" var="depositActivity"
+									emptyMessage="#{msg['depositActivity.tblHeader.Message']}"
+									rowKey="#{depositActivity.id}" value="#{pigmyDepositController.depositAct}"
+									scrollable="true" scrollHeight="120">
+
+									<p:column id="agendaId" styleClass="ids"
+										headerText="#{msg['depositActivity.tblHeader.agendaId']}">
+										<h:outputText value="#{depositActivity.agendaId}"/>
+									</p:column>
+									<p:column id="txnTypeDesc"
+										headerText="#{msg['depositActivity.tblHeader.txnTypeDesc']}">
+										<h:outputText value="#{depositActivity.txnTypeDesc}" />
+									</p:column>
+									<p:column id="txnTypeStDate"
+										headerText="#{msg['depositActivity.tblHeader.txnTypeStDate']}">
+										<h:outputText value="#{depositActivity.txnTypeStDate}" >
+										<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+										</p:column>
+									
+									<p:column id="txnTypeEndDate"
+										headerText="#{msg['depositActivity.tblHeader.txnTypeEndDate']}">
+										<h:outputText value="#{depositActivity.txnTypeEndDate}">
+										<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column id="txnTypeDueDate"
+										headerText="#{msg['depositActivity.tblHeader.txnTypeDueDate']}">
+										<h:outputText value="#{depositActivity.txnTypeDueDate}">
+										<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column id="txnCcyCode"
+										headerText="#{msg['depositActivity.tblHeader.txnCcyCode']}">
+										<h:outputText value="#{depositActivity.txnCcyCode}" />
+									</p:column>
+									<p:column id="txnAmtDue"
+										headerText="#{msg['depositActivity.tblHeader.txnAmtDue']}">
+										<h:outputText value="#{depositActivity.txnAmtDue}" />
+									</p:column>
+									
+									<p:column id="txnAmtSettled"
+										headerText="#{msg['depositActivity.tblHeader.txnAmtSettled']}">
+										<h:outputText value="#{depositActivity.txnAmtSettled}" >
+										<f:convertNumber type="number" groupingUsed="true" minFractionDigits="0"/>
+										</h:outputText>
+									</p:column>
+									<p:column id="isSettled"
+										headerText="#{msg['depositActivity.tblHeader.isSettled']}">
+										<h:outputText value="#{depositActivity.isSettled}" />
+									</p:column>
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+			</p:tab>
+		</p:tabView>
+	</ui:define>
+</ui:composition>

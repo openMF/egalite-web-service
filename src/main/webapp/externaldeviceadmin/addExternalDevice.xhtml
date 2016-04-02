@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	<ui:define name="metadata">
+		<script type="text/javascript">
+        //<![CDATA[
+        
+        function inputLimiter(e,allow) {
+    var AllowableCharacters = '';
+
+    if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'NameCharactersSplAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~-!@#$%^&*<>?{}[]|\/:';}
+    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+    if (k!=13 && k!=8 && k!=0){
+        if ((e.ctrlKey==false) && (e.altKey==false)) {
+        return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+        } else {
+        return true;
+        }
+    } else {
+        return true;
+    }
+} 
+
+        //]]>
+    </script>
+	</ui:define>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['deviceMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['extdeviceMgmt.label.newDeviceEntry']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['deviceMgmt.btn.save']}" update="panel"
+						action="#{externalDeviceController.create}"
+						style="margin-left: 182px;" /> <p:button id="btnCancel"
+						value="#{msg['deviceMgmt.btn.cancel']}" outcome="cancel" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="id"	value="#{msg['extdeviceMgmt.label.deviceId']}" />
+				<p:inputText id="id" value="#{externalDeviceController.device.id}"
+					readonly="true" required="true"	label="#{msg['extdeviceMgmt.label.deviceId']}">
+					<f:validateLength minimum="2" />
+				</p:inputText> <p:message for="id" display="icon" />
+
+				<h:outputLabel for="macId" value="#{msg['extdeviceMgmt.label.macId']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="macId"	value="#{externalDeviceController.device.macId}"
+					label="#{msg['extdeviceMgmt.label.macId']}" required="true"
+					onkeypress="return inputLimiter(event,'NameCharactersSplAndNumbers')">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText> <p:message for="macId" display="icon" />
+
+				<h:outputLabel for="manufacturer" value="#{msg['extdeviceMgmt.label.manufacturer']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="manufacturer" value="#{externalDeviceController.device.manufacturer}"
+					required="true" label="#{msg['extdeviceMgmt.label.manufacturer']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>	<p:message for="manufacturer" display="icon" />
+
+				<h:outputLabel for="issuedDate"	value="#{msg['deviceMgmt.label.issuedDate']}"
+					styleClass="required_asterisk" />
+				<p:calendar id="issuedDate" pattern="dd-MMM-yyyy" showOn="button"
+					required="true" yearRange="-100:+0" navigator="true"
+					value="#{externalDeviceController.device.issuedDate}"
+					label="#{msg['deviceMgmt.label.issuedDate']}">
+					<p:ajax event="dateSelect" listener="#{externalDeviceController.validateissuedDate}"
+						update="issuedDate msgs" process="@this" />
+				</p:calendar>	<p:message for="issuedDate" id="msgIssuedDate" display="icon" />
+
+
+				<h:outputLabel styleClass="required_asterisk" for="issuedByCo"
+					value="#{msg['deviceMgmt.tblHeader.issuedBy']}" />
+				<h:selectOneMenu id="issuedByCo" styleClass="drop_down_style"
+					value="#{externalDeviceController.device.issuedByCo}"
+					required="true" label="#{msg['agentMgmt.label.creditofficerId']}">
+					<f:selectItems value="#{externalDeviceController.creditOfficers}"
+						var="credit" itemValue="#{credit.id}" itemLabel="#{credit.id}" />
+				</h:selectOneMenu> <p:message for="issuedByCo" display="icon" />
+
+
+				<h:outputLabel for="modelNo" value="#{msg['extdeviceMgmt.label.modelNo']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="modelNo" value="#{externalDeviceController.device.modelNo}" required="true"
+					label="#{msg['extdeviceMgmt.label.modelNo']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>	<p:message for="modelNo" display="icon" />
+
+				<h:outputLabel for="uploadlicenceFile"	value="#{msg['extdeviceMgmt.label.licenceFile']}" />
+				<p:fileUpload id="uploadlicenceFile" fileUploadListener="#{externalDeviceController.upload}"
+					mode="advanced" auto="true" required="true" update="messages" />
+				<p:growl id="messages" showDetail="true" />
+
+				<h:outputLabel for="isActive" value="#{msg['deviceMgmt.tblHeader.deviceStatus']}" />
+				<h:selectOneMenu id="isActive"	value="#{externalDeviceController.device.isActive}" required="true"
+					styleClass="drop_down_style" label="#{msg['deviceMgmt.tblHeader.deviceStatus']}">
+					<!-- <f:selectItem itemLabel="Select" itemValue="" /> -->
+					<f:selectItems value="#{externalDeviceController.deviceStatuss}"
+						var="devs" itemValue="#{devs.listValue}" itemLabel="#{devs.desn}" />
+				</h:selectOneMenu> <p:message for="isActive" display="icon" />
+
+				<!-- <h:outputLabel styleClass="required_asterisk" for="creditofficer" value="#{msg['agentMgmt.label.creditofficerId']}" />
+				    <h:selectOneMenu id="creditofficer" styleClass="drop_down_style" value="#{agentController.agent.creditOfficer}" 
+					required="true"	label="#{msg['agentMgmt.label.creditofficerId']}">
+					<f:selectItems value="#{agentController.creditOfficers}" var="credit" itemValue="#{credit.id}" 
+						itemLabel="#{credit.id}" />
+				</h:selectOneMenu><h:outputLabel/><p:message for="creditofficer" display="icon" /> -->
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

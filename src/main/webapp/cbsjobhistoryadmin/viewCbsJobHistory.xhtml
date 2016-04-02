@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{cbsJobHistoryController.cbsJobDetails.jobId}"></f:viewParam>
+			<f:event listener="#{cbsJobHistoryController.loadJobDetail}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:dataTable id="loanDataTable" var="cbsDetail"
+			rowKey="#{loanSchedule.id}"
+			value="#{cbsJobHistoryController.cbsJobDetail}" scrollable="true"
+			scrollHeight="120">
+			<f:facet name="header">
+				<h:outputText
+					value="#{msg['cbsJobHistoryMgmt.title.ViewLoanCbsJobHistory']}" />
+			</f:facet>
+
+			<p:column id="id"
+				headerText="#{msg['cbsJobHistoryMgmt.tblHeader.cbsJobHistoryJobId']}"
+				filterMatchMode="contains">
+				<h:outputText
+					value="#{msg['cbsJobHistoryMgmt.tblHeader.cbsJobHistoryJobId']}" />
+				<h:outputText value="#{cbsDetail.jobId}" />
+			</p:column>
+			<p:column id="recordId"
+				headerText="#{msg['cbsJobHistoryMgmt.label.recordId']}"
+				filterMatchMode="contains">
+				<h:outputText value="#{cbsDetail.recordId}" />
+			</p:column>
+
+			<p:column id="recordType"
+				headerText="#{msg['cbsJobHistoryMgmt.label.recordType']}"
+				filterMatchMode="contains">
+				<h:outputText value="#{cbsDetail.recordType}">
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+	</ui:define>
+</ui:composition>

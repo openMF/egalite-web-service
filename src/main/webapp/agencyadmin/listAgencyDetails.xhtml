@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['agencyMgmt.title.listAgencies']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['agencyMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['agencyMgmt.tblNav.add']}" />
+	<ui:param name="addOutcome" value="addAgencyDetail" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addAgency')}" />
+	<ui:param name="listController" value="#{agencyListController}" />
+
+     <!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{agencyListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- ADD END -->
+
+
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{agencyListController.listSelect}" />
+
+		<p:column id="id" filterBy="#{record.agencyCode}"
+			headerText="#{msg['agencyMgmt.tblHeader.agencyCode']}"
+			sortBy="#{record.agencyCode}">
+			<h:outputText value="#{record.agencyCode}" />
+		</p:column>
+		
+		<p:column id="agencyDesc" filterBy="#{record.agencyDesc}"
+			headerText="#{msg['agencyMgmt.tblHeader.agencyDesc']}"
+			sortBy="#{record.agencyDesc}">
+			<h:outputText value="#{record.agencyDesc}" />
+		</p:column>
+		
+		<p:column id="category" filterBy="#{record.agencyCategoryText}"
+				headerText="#{msg['agencyMgmt.tblHeader.category']}"
+				sortBy="#{record.agencyCategoryText}">
+				<h:outputText value="#{record.agencyCategoryText}" />
+		</p:column>
+		
+		<p:column id="allocatedCo" filterBy="#{record.allocatedCo}"
+			headerText="#{msg['agencyMgmt.label.allocatedCo']}"
+			sortBy="#{record.allocatedCo}">
+			<h:outputText value="#{record.allocatedCo}" />
+		</p:column>
+
+		<!--  
+		<p:column id="address1" filterBy="#{record.address1}"
+			headerText="#{msg['agencyMgmt.tblHeader.address1']}"
+			sortBy="#{record.address1}">
+			<h:outputText value="#{record.address1}" />
+		</p:column>
+
+		<p:column id="address2" filterBy="#{record.address2}"
+			headerText="#{msg['agencyMgmt.tblHeader.address2']}"
+			sortBy="#{record.address2}">
+			<h:outputText value="#{record.address2}" />
+		</p:column>
+
+		<p:column id="address3" filterBy="#{record.address3}"
+			headerText="#{msg['agencyMgmt.tblHeader.address3']}"
+			sortBy="#{record.address3}">
+			<h:outputText value="#{record.address3}" />
+		</p:column>
+
+		<p:column id="address4" filterBy="#{record.address4}"
+			headerText="#{msg['agencyMgmt.tblHeader.address4']}"
+			sortBy="#{record.address4}">
+			<h:outputText value="#{record.address4}" />
+		</p:column>
+		
+		<p:column id="zipCode" filterBy="#{record.zipCode}"
+			headerText="#{msg['agencyMgmt.tblHeader.zipCode']}"
+			sortBy="#{record.zipCode}">
+			<h:outputText value="#{record.zipCode}" />
+		</p:column>
+		
+		<p:column id="city"
+			filterBy="#{record.city}"
+			headerText="#{msg['agencyMgmt.tblHeader.city']}"
+			sortBy="#{record.city}">
+			<h:outputText value="#{record.city}" />
+		</p:column>
+		
+		<p:column id="state"
+			filterBy="#{record.state}"
+			headerText="#{msg['agencyMgmt.tblHeader.state']}"
+			sortBy="#{record.state}">
+			<h:outputText value="#{record.state}" />
+		</p:column>
+		
+		<p:column id="country"
+			filterBy="#{record.country}"
+			headerText="#{msg['agencyMgmt.tblHeader.country']}"
+			sortBy="#{record.country}">
+			<h:outputText value="#{record.country}" />
+		</p:column>
+		-->
+		<p:column id="emailAddress"
+			filterBy="#{record.emailAddress}"
+			headerText="#{msg['agencyMgmt.tblHeader.emailAddress']}"
+			sortBy="#{record.emailAddress}">
+			<h:outputText value="#{record.emailAddress}" />
+		</p:column>
+
+		<p:column id="contactNumber"
+			filterBy="#{record.contactNumber}"
+			headerText="#{msg['agencyMgmt.tblHeader.contactNumber']}"
+			sortBy="#{record.contactNumber}">
+			<h:outputText value="#{record.contactNumber}" />
+		</p:column>
+
+
+		<p:column id="authStatus" filterBy="#{record.authStatusText}"
+			headerText="#{msg['agencyMgmt.tblHeader.authStatus']}"
+			sortBy="#{record.authStatusText}">
+			<h:outputText value="#{record.authStatusText}" />
+			</p:column>
+
+		<p:column id="isActive" filterBy="#{record.agencyStatusText}"
+				headerText="#{msg['agencyMgmt.tblHeader.isActive']}"
+				sortBy="#{record.agencyStatusText}">
+				<h:outputText value="#{record.agencyStatusText}" />
+		</p:column>
+		
+		
+		
+	</ui:define>
+</ui:composition>

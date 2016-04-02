@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	<ui:define name="metadata">
+		<script type="text/javascript">
+        //<![CDATA[
+        
+        function inputLimiter(e,allow) {
+    var AllowableCharacters = '';
+
+    if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'NameCharactersSplAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~-!@#$%^&*<>?{}[]|\/';}
+    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+    if (k!=13 && k!=8 && k!=0){
+        if ((e.ctrlKey==false) && (e.altKey==false)) {
+        return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+        } else {
+        return true;
+        }
+    } else {
+        return true;
+    }
+} 
+
+        //]]>
+    </script>
+	</ui:define>
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{externalDeviceController.device.id}"></f:viewParam>
+			<f:event listener="#{externalDeviceController.loadDevice}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['deviceMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['extdeviceMgmt.title.deviceDetailModify']}" /></span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['deviceMgmt.btn.save']}" update="panel"
+						action="#{externalDeviceController.checkModifyForUpdate}"
+						style="margin-left: 182px;" /> <p:spacer width="5px" /> <p:button
+						id="btnCancel" value="#{msg['deviceMgmt.btn.cancel']}"
+						outcome="cancel">
+						<f:param name="id" value="#{externalDeviceController.device.id}" />
+					</p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="3" id="panelGrid">
+
+				<h:outputLabel for="id"
+					value="#{msg['extdeviceMgmt.tblHeader.deviceId']}" />
+				<p:inputText id="id" value="#{externalDeviceController.device.id}"
+					readonly="true" label="#{msg['extdeviceMgmt.label.deviceId']}" />
+				<p:message for="id" display="icon" />
+
+				<h:outputLabel for="macId"
+					value="#{msg['extdeviceMgmt.label.macId']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="macId"
+					value="#{externalDeviceController.device.macId}"
+					label="#{msg['extdeviceMgmt.label.macId']}" required="true"
+					onkeypress="return inputLimiter(event,'NameCharactersSplAndNumbers')">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="macId" display="icon" />
+
+                <h:outputLabel for="manufacturer"
+					value="#{msg['extdeviceMgmt.label.manufacturer']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="manufacturer"
+					value="#{externalDeviceController.device.manufacturer}" required="true"
+					label="#{msg['extdeviceMgmt.label.manufacturer']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="manufacturer" display="icon" />
+
+				<h:outputLabel for="issuedDate"
+					value="#{msg['deviceMgmt.label.issuedDate']}"
+					styleClass="required_asterisk" />
+				<p:calendar id="issuedDate" pattern="dd-MMM-yyyy" showOn="button"
+					required="true" yearRange="-100:+0" navigator="true"
+					value="#{externalDeviceController.device.issuedDate}"
+					label="#{msg['deviceMgmt.label.issuedDate']}">
+				</p:calendar>
+				<p:message for="issuedDate" id="msgIssuedDate" display="icon" />
+
+				<h:outputLabel for="issuedByCo"
+					value="#{msg['deviceMgmt.tblHeader.issuedBy']} "
+					styleClass="required_asterisk" />
+				<p:inputText id="issuedByCo"
+					value="#{externalDeviceController.device.issuedByCo}"
+					onkeypress="return inputLimiter(event,'Letters')" required="true"
+					label="#{msg['deviceMgmt.tblHeader.issuedBy']}">
+					<f:validateLength for="issuedByCo" minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="issuedByCo" display="icon" />
+
+				<h:outputLabel for="modelNo"
+					value="#{msg['extdeviceMgmt.label.modelNo']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="modelNo"
+					value="#{externalDeviceController.device.modelNo}" required="true"
+					label="#{msg['extdeviceMgmt.label.modelNo']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="modelNo" display="icon" />
+
+				<h:outputLabel for="licenceFile"
+					value="#{msg['extdeviceMgmt.label.licenceFile']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="licenceFile"  readonly="true"
+					value="#{externalDeviceController.device.licenceFileName}" required="true"
+					label="#{msg['extdeviceMgmt.label.licenceFile']}">
+					<f:validateLength minimum="2"  />
+				</p:inputText>
+				<p:message for="licenceFile" display="icon" />
+
+				<h:outputLabel for="isActive"
+					value="#{msg['deviceMgmt.tblHeader.deviceStatus']}" />
+				<h:selectOneMenu id="isActive"
+				    styleClass="drop_down_style" 
+					value="#{externalDeviceController.device.isActive}" required="true"
+					label="#{msg['deviceMgmt.tblHeader.deviceStatus']}">
+					<!-- <f:selectItem itemLabel="Select" itemValue="" /> -->
+					<f:selectItems value="#{externalDeviceController.deviceStatuss}" var="devs"
+						itemValue="#{devs.listValue}" itemLabel="#{devs.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+				
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

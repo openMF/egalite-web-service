@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceListTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['SmsConfigMgmt.title.listsmsTemplate']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['SmsConfigMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['SmsTempMgmt.nav.add']}" />
+	<ui:param name="addOutcome" value="addSMSTemplate" />
+	 <ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addSMSTemplate')}" />   
+	<ui:param name="listController" value="#{smsTemplateListController}" />
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{smsTemplateListController.listSelect}" />
+
+	   <p:column id="id" filterBy="#{record.id}"
+			headerText="#{msg['SmsTemplateMgmt.tblHeader.templateId']}"
+			sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+		
+		<p:column id="txtSms" filterBy="#{record.txtSms}"
+			headerText="#{msg['SmsTemplateMgmt.tblHeader.txtsms']}"
+			sortBy="#{record.txtSms}">
+			<h:outputText value="#{record.txtSms}" />
+		</p:column>
+		
+		<p:column id="dynaFields" filterBy="#{record.dynaFields}"
+				headerText="#{msg['SmsTemplateMgmt.tblHeader.dynamicFields']}"
+				sortBy="#{record.dynaFields}">
+				<h:outputText value="#{record.dynaFields}" />
+		</p:column>
+		
+		<p:column id="description" filterBy="#{record.description}"
+				headerText="#{msg['SmsTemplateMgmt.tblHeader.desc']}"
+				sortBy="#{record.description}">
+				<h:outputText value="#{record.description}" />
+		</p:column>
+		
+	
+	
+	</ui:define>
+</ui:composition>

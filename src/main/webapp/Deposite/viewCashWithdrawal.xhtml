@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://java.sun.com/jsp/jstl/core"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{cashWithdrawalTxnController.cashWithdrawalVO.id}"></f:viewParam>
+			<f:event listener="#{cashWithdrawalTxnController.loadCashwithdrawal}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			 <h:outputText value="#{msg['transMgmt.title.transtracker']}" /> 
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['agentTxnMgmt.title.viewcashwithdrawal']}" /></span>
+				<span class="pageHeaderControls"> <p:button id="btnList"
+						value="#{msg['agentTxnMgmt.label.close']}" outcome="openList" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left">
+				<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.mbsTxnId']}" />
+					<p:inputText id="id"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.id}"
+						readonly="true" />
+
+
+					<h:outputLabel value="#{msg['custAcMgmt.label.txnDesc']}" />
+					<p:inputText id="txnCode"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.txnCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['custAcMgmt.tblHeader.cbsAcRefNo']}" />
+					<p:inputText id="cbsAcRefNo"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.cbsAcRefNo}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.BranchCode']}" />
+					<p:inputText id="branCode"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.branCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerId']}" />
+					<p:inputText id="customerId"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.customerId}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerName']}" />
+					<p:inputText id="customerFullName"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.customerFullName}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['depositeMgmt.label.txnAmount']}" />
+					<p:inputText id="amountPaid"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.txnAmount}"
+						readonly="true" />
+
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.AgentId']}" />
+					<p:inputText id="agentId"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.agentId}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.AgentName']}" />
+					<p:inputText id="agentName"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.agentName}"
+						readonly="true" />
+
+				</h:panelGrid>
+			</p:panel>
+
+
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2">
+					<h:outputLabel value="#{msg['DepositeMgmt.label.locationCode']}" />
+					<p:inputText id="locationCode"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.locationCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.locationDesc']}" />
+					<p:inputText id="locationDesc"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.locationDesc}"
+						readonly="true" />
+
+
+					<h:outputLabel value="#{msg['custAcMgmt.tblHeader.narrative']}" />
+					<p:inputText id="txnNarrative"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.txnNarrative}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['custAcMgmt.tblHeader.TxnInitTime']}" />
+					<p:inputText id="txnInitTime"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.txnInitTime}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy hh:ss:mm a" />
+					</p:inputText>
+
+					<h:outputLabel value="#{msg['custAcMgmt.tblHeader.TxnSyncTime']}" />
+					<p:inputText id="SyncTime"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.txnSyncTime}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy hh:ss:mm a" />
+					</p:inputText>
+
+					<h:outputLabel value="#{msg['custAcMgmt.tblHeader.txnStatusDesc']}" />
+					<p:inputText id="txnStatusDesc"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.txnStatusDesc}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['custAcMgmt.tblHeader.txnErrCode']}" />
+					<p:inputText id="txnErrCode"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.txnErrCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['custAcMgmt.tblHeader.txnErrMsg']}" />
+					<p:inputText id="txnErrMessage"
+						value="#{cashWithdrawalTxnController.cashWithdrawalVO.txnErrMessage}"
+						readonly="true" />
+				</h:panelGrid>
+				</p:panel>
+			</p:panel>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterTemplate.xhtml">
+	<!-- Tag no : EGA-MN15-000018 
+			1. Print Popup window Added
+			2. param Added to graphicImage for Uniqueness of Image-->
+	
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{enrollCustomerController.enrollCustomer.id}"></f:viewParam>
+			<f:event listener="#{enrollCustomerController.loadEnrollCustomer}"
+				type="preRenderView"></f:event>
+			<f:event listener="#{enrollCustomerController.onTabChanged(enrollCustomerController.enrollCustomer.id)}"
+				type="preRenderView"></f:event>	
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="contentSection">
+		<h:form id="form" enctype="multipart/form-data">
+			<p:panel id="contentPanel">
+			
+				<!-- <f:facet name="header">
+					<h:outputText value="#{msg['nav.enrollCustomer']}" />
+				</f:facet> -->
+				
+				<p:panel id="panel">
+					<f:facet name="header">
+						<p:panel styleClass="maintenanceFormPanelHeader">
+							<span class="pageHeaderTitle"><h:outputText
+									value="#{msg['customerMgmt.title']}" /> </span>
+							<span class="pageHeaderControls"> <p:button id="btnModify" value="#{msg['custMgmt.btn.enrich']}" outcome="openModify"
+									rendered="#{enrollCustomerController.isEnriched()}"
+									disabled="#{enrollCustomerController.isEnrichedAuthorizedRecord()}">
+									</p:button>
+								 <p:commandButton id="btnAuth1" value="#{msg['agentMgmt.btn.auth']}"
+		                            update="panel" rendered="#{enrollCustomerController.isAuthorizeAllowed()}" 
+		                           disabled="#{enrollCustomerController.isAuthorizeEnable()}" actionListener="#{enrollCustomerController.authorize}" /> 
+								<p:button id="btnList" value="List" outcome="openList"></p:button>
+								<h:outputLink onclick="window.open('printEnrollCustomerDetail.xhtml', 'WindowName', 'dependent=yes, menubar=no, toolbar=no');"> 
+								<p:button id="btnPrint" value="#{msg['custMgmt.btn.print']}"></p:button>
+								</h:outputLink>
+							</span>
+						</p:panel>
+					</f:facet>
+					<p:panel styleClass="maintenanceFormWithAuditTrail">
+						<p:panel style="width:46%;height:410px; float:left" >
+							<!--  styleClass="maintenanceFormWithAuditTrail" -->
+							  <h:panelGrid columns="2" >
+                               
+		                    		<h:outputLabel for="id"
+										value="#{msg['customerMgmt.label.enrolID']}" />
+									<p:inputText id="id" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.id}"
+										label="#{msg['customerMgmt.label.enrolID']}">
+									</p:inputText>
+											
+									<h:outputLabel for="workFlowQType"
+										value="#{msg['customerMgmt.label.workFlowQType']}" />
+									<p:inputText id="workFlowQType" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.workFlowQType}"
+										label="#{msg['customerMgmt.label.workFlowQType']}">
+									</p:inputText>
+											
+									<h:outputLabel for="tempGroupId"
+										value="#{msg['customerMgmt.label.tempGroupId']}" />
+									<p:inputText id="tempGroupId" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.tempGroupId}"
+										label="#{msg['customerMgmt.label.tempGroupId']}">
+									</p:inputText>
+											
+									<h:outputLabel for="poc"
+										value="#{msg['customerMgmt.label.poc']}" />
+									<p:inputText id="poc" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.poc}"
+										label="#{msg['customerMgmt.label.poc']}">
+									</p:inputText>
+											
+									<h:outputLabel for="firstName"
+										value="#{msg['customerMgmt.label.custfName']}" />
+									<p:inputText id="firstName" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.firstName}"
+										label="#{msg['customerMgmt.label.custfName']}">
+									</p:inputText>
+											
+									<h:outputLabel for="middleName"
+										value="#{msg['customerMgmt.label.custmName']}" />
+									<p:inputText id="middleName" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.middleName}"
+										label="#{msg['customerMgmt.label.custmName']}">
+									</p:inputText>
+											
+									<h:outputLabel for="lastName"
+										value="#{msg['customerMgmt.label.custlName']}" />
+									<p:inputText id="lastName" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.lastName}"
+										label="#{msg['customerMgmt.label.custlName']}">
+									</p:inputText>
+											
+									<h:outputLabel for="dob"
+										value="#{msg['customerMgmt.label.custDob']}" />
+									<p:inputText id="dob" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.dob}"
+										label="#{msg['customerMgmt.label.custDob']}">
+									<f:convertDateTime pattern="dd-MMM-yyyy" />
+									</p:inputText>
+											
+									<h:outputLabel for="gender"
+										value="#{msg['customerMgmt.label.custGender']}" />
+									<p:inputText id="gender" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.gender}"
+										label="#{msg['customerMgmt.label.custGender']}">
+									</p:inputText>
+											
+									<h:outputLabel for="residentialType"
+										value="#{msg['customerMgmt.label.residentialType']}" />
+									<p:inputText id="residentialType" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.residentialType}"
+										label="#{msg['customerMgmt.label.residentialType']}">
+									</p:inputText>
+											
+									<h:outputLabel for="nationality"
+										value="#{msg['customerMgmt.label.nationality']}" />
+									<p:inputText id="nationality" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.nationality}"
+										label="#{msg['customerMgmt.label.nationality']}">
+									</p:inputText>
+											     
+									<h:outputLabel for="address1"
+										value="#{msg['agencyMgmt.label.address1']}" />
+									<p:inputText id="address1" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.address1}"
+										label="#{msg['agencyMgmt.label.address1']}">
+									</p:inputText>
+											
+									<h:outputLabel for="address2"
+										value="#{msg['agencyMgmt.label.address2']}" />
+									<p:inputText id="address2" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.address2}"
+										label="#{msg['agencyMgmt.label.address2']}">
+									</p:inputText>
+											
+
+									<h:outputLabel for="address3"
+										value="#{msg['agencyMgmt.label.address3']}" />
+									<p:inputText id="address3" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.address3}"
+										label="#{msg['agencyMgmt.label.address3']}">
+									</p:inputText>
+									
+									<h:outputLabel for="address4"
+										value="#{msg['agencyMgmt.label.address4']}" />
+									<p:inputText id="address4" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.address4}"
+										label="#{msg['agencyMgmt.label.address4']}">
+									</p:inputText>
+
+									<h:outputLabel for="state"
+										value="#{msg['customerMgmt.label.state']}" />
+									<p:inputText id="state" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.state}"
+										label="#{msg['customerMgmt.label.state']}">
+									</p:inputText>
+											
+									<h:outputLabel for="zipCode"
+										value="#{msg['customerMgmt.label.zipCode']}" />
+									<p:inputText id="zipCode" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.zipCode}"
+										label="#{msg['customerMgmt.label.zipCode']}">
+									</p:inputText>
+											
+									<h:outputLabel for="country"
+										value="#{msg['customerMgmt.label.country']}" />
+									<p:inputText id="country" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.country}"
+										label="#{msg['customerMgmt.label.country']}">
+									</p:inputText>
+											  
+									<h:outputLabel for="emailId"
+										value="#{msg['customerMgmt.label.emailID']}" />
+									<p:inputText id="emailId" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.emailId}"
+										label="#{msg['customerMgmt.label.emailID']}">
+									</p:inputText>
+											
+									<h:outputLabel for="contactNumber"
+										value="#{msg['agencyMgmt.tblHeader.contactNumber']}" />
+									<p:inputText id="contactNumber" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.contactNumber}"
+										label="#{msg['agencyMgmt.tblHeader.contactNumber']}">
+									</p:inputText>
+
+									<h:outputLabel for="martialStatus"
+										value="#{msg['customerMgmt.label.maritalStat']}" />
+									<p:inputText id="martialStatus" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.martialStatus}"
+										label="#{msg['customerMgmt.label.maritalStat']}">
+									</p:inputText>
+											
+		                            <h:outputLabel for="profession"
+										value="#{msg['customerMgmt.label.profession']}" />
+									<p:inputText id="profession" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.profession}"
+										label="#{msg['customerMgmt.label.profession']}">
+									</p:inputText>
+		                                     
+		                            <h:outputLabel for="professionRemark"
+										value="#{msg['customerMgmt.label.professionRemark']}" />
+									<p:inputText id="professionRemark" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.professionRemark}"
+										label="#{msg['customerMgmt.label.professionRemark']}">
+									</p:inputText>
+											    
+									<h:outputLabel for="accountCategory"
+										value="#{msg['customerMgmt.label.accountCategory']}" />
+									<p:inputText id="accountCategory" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.accountCategory}"
+										label="#{msg['customerMgmt.label.accountCategory']}">
+									</p:inputText>
+											
+									<h:outputLabel for="accountType"
+										value="#{msg['customerMgmt.label.accountType']}" />
+									<p:inputText id="accountType" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.accountType}"
+										label="#{msg['customerMgmt.label.accountType']}">
+									</p:inputText>
+											
+									<h:outputLabel for="currency"
+										value="#{msg['customerMgmt.label.custCurrency']}" />
+									<p:inputText id="currency" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.currency}"
+										label="#{msg['customerMgmt.label.custCurrency']}">
+									</p:inputText>
+											
+									<h:outputLabel for="txnInitTime"
+										value="#{msg['DepositeMgmt.label.txnInitTime']}" />
+									<p:inputText id="txnInitTime" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.txnInitTime}"
+										label="#{msg['DepositeMgmt.label.txnInitTime']}">
+									<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a" />
+									</p:inputText>
+											
+									<h:outputLabel for="txnSyncTime"
+										value="#{msg['agentTxnMgmt.label.txnSyncTime']}" />
+									<p:inputText id="txnSyncTime" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.txnSyncTime}"
+										label="#{msg['agentTxnMgmt.label.txnSyncTime']}">
+									<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a" />
+									</p:inputText>
+											    
+									<h:outputLabel for="agentId"
+										value="#{msg['agentMgmt.label.agentId']}" />
+									<p:inputText id="agentId" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.agentId}"
+										label="#{msg['agentMgmt.label.agentId']}">
+									</p:inputText>
+											
+									<h:outputLabel for="deviceId"
+										value="#{msg['deviceMgmt.label.deviceId']}" />
+									<p:inputText id="deviceId" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.deviceId}"
+										label="#{msg['deviceMgmt.label.deviceId']}">
+									</p:inputText>
+											
+									<h:outputLabel for="locationCode"
+										value="#{msg['DepositeMgmt.label.locationCode']}" />
+									<p:inputText id="locationCode" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.locationCode}"
+										label="#{msg['DepositeMgmt.label.locationCode']}">
+									</p:inputText>
+											
+									<h:outputLabel for="txnErrCode"
+										value="#{msg['customerMgmt.label.txnErrCode']}" />
+									<p:inputText id="txnErrCode" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.txnErrCode}"
+										label="#{msg['customerMgmt.label.txnErrCode']}">
+									</p:inputText>
+											
+									<h:outputLabel for="txnErrMessage"
+										value="#{msg['customerMgmt.label.txnErrMessage']}" />
+									<p:inputText id="txnErrMessage" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.txnErrMessage}"
+										label="#{msg['customerMgmt.label.txnErrMessage']}">
+									</p:inputText>
+											
+									<h:outputLabel for="authStatus"
+										value="#{msg['customerMgmt.label.authStatus']}" />
+									<p:inputText id="authStatus" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.authStatusText}"
+										label="#{msg['customerMgmt.label.authStatus']}">
+									</p:inputText>
+											
+									<h:outputLabel for="cbsResponseStat"
+										value="#{msg['customerMgmt.label.cbsResponseStat']}" />
+									<p:inputText id="cbsResponseStat" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.cbsResponseStat}"
+										label="#{msg['customerMgmt.label.cbsResponseStat']}">
+									</p:inputText>
+											
+									<!-- <h:outputLabel for="isActive"
+										value="#{msg['agentMgmt.label.isActive']}" />
+									<p:inputText id="isActive" readonly="true"
+										value="#{enrollCustomerController.enrollCustomer.isActive}"
+										label="#{msg['agentMgmt.label.isActive']}">
+									</p:inputText> -->
+											
+						      </h:panelGrid> 
+						</p:panel>
+						<!-- <p:tab title="Enrichment Details"> -->
+							<p:panel style="width:52%;height:410px; float:right">
+								<h:panelGrid columns="2" >
+								   <p:tabView orientation="top" >
+								        
+								      <p:tab title="KYC" id="kycid">
+										 <h:panelGrid >
+										          <p:row id="r1">
+										             <h:panelGrid columns="2" id="panelGridCust">
+										              <p:panel>
+                                                             <h:outputLink id="content" value="#">
+                                                                <p:graphicImage cache="true"  value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.customerImage}" 
+                                                                    width="250" height="250"  circular="true">
+                                                                     <f:param name="uniqueId"  value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+                                                                    </p:graphicImage>
+                                                             </h:outputLink>
+                                                               <p:tooltip id="toolTipContent" for="content"  >
+                                                               <p:graphicImage cache="true" value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.customerImage}" 
+                                                                 width="350" height="350"  circular="true" styleClass="setImageTop" >
+                                                                  <f:param name="uniqueId"  value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+                                                                 </p:graphicImage>
+                                                              </p:tooltip>
+										               </p:panel>
+										                  <h:panelGrid columns="2">
+						                                      <p:outputLabel id="custFullName" 
+					                                             value="#{enrollCustomerController.enrollCustomer.firstName} &#160;&#160;
+					                                                         #{enrollCustomerController.enrollCustomer.middleName} &#160;&#160;
+					                                                             #{enrollCustomerController.enrollCustomer.lastName} "/>
+					                                      </h:panelGrid>  
+					                                  </h:panelGrid>   
+										          </p:row>
+										          
+										          <p:row id="r2">
+										           <h:panelGrid columns="2" id="panel1">
+										              <p:panel>
+															 <h:outputLink id="grpImage1" value="#">
+                                                                <p:graphicImage cache="true" value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.streamImage1}" 
+                                                                    width="250" height="250"  circular="true">
+                                                                      <f:param name="uniqueId"  value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+                                                                    </p:graphicImage>
+                                                             </h:outputLink>
+                                                               <p:tooltip id="toolTipContentImage1" for="grpImage1"  >
+                                                               <p:graphicImage cache="true" value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.streamImage1}" 
+                                                                 width="350" height="350"  circular="true" styleClass="setImageTop" >
+                                                                   <f:param name="uniqueId"  value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+                                                                 </p:graphicImage>
+                                                              </p:tooltip>
+										               </p:panel>
+										               <h:panelGrid columns="2">
+										  
+															<h:outputLabel for="kycId1Type"
+																	value="#{msg['customerMgmt.label.kycId1Type']}" />
+																<h:selectOneMenu id="kycId1Type" styleClass="drop_down_style"
+																	value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId1Type}"
+																	required="true" disabled="true" 
+																	label="#{msg['customerMgmt.label.kycId1Type']}">
+																	<f:selectItems value="#{enrollCustomerController.idType}"
+																		var="type1" itemValue="#{type1.intrValue}" itemLabel="#{type1.displayValue}" />
+																</h:selectOneMenu>
+																<h:outputLabel />
+															<p:message for="kycId1Type" id="kycIDT1" display="icon" />
+															
+															<h:outputLabel for="kycId1Number"
+																value="#{msg['customerMgmt.label.kycId1Number']}" />
+															<p:inputText id="kycId1Number" readonly="true"
+																value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId1Number}"
+																label="#{msg['customerMgmt.label.kycId1Number']}">
+															</p:inputText>
+															
+															<h:outputLabel for="kycId1ProofType"
+																	value="#{msg['customerMgmt.label.kycId1ProofType']}" />
+																<h:selectOneMenu id="kycId1ProofType" styleClass="drop_down_style"
+																	value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId1ProofType}"
+																	required="true" disabled="true" 
+																	label="#{msg['customerMgmt.label.kycId1ProofType']}">
+																	<f:selectItems value="#{enrollCustomerController.prooofType}"
+																		var="ptype1" itemValue="#{ptype1.intrValue}" itemLabel="#{ptype1.displayValue}" />
+																</h:selectOneMenu>
+																<h:outputLabel />
+															<p:message for="kycId1ProofType" id="kycIDProof1" display="icon" />
+															
+										               </h:panelGrid>
+										            </h:panelGrid> 
+										          </p:row> 
+										         
+										          <p:row id="r3">
+										           <h:panelGrid columns="2" id="panel2">
+										               <p:panel>
+														  <h:outputLink id="grpImage2" value="#">
+                                                                <p:graphicImage cache="false" value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.streamImage2}" 
+                                                                    width="250" height="250"  circular="true">
+                                                                    <f:param name="uniqueId"  value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+                                                                    </p:graphicImage>
+                                                             </h:outputLink>
+                                                               <p:tooltip id="toolTipContentImage2" for="grpImage2"  >
+                                                               <p:graphicImage  cache="false" value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.streamImage2}" 
+                                                                 width="350" height="350"  circular="true" styleClass="setImageTop">
+                                                                 <f:param name="uniqueId"  value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+                                                                 </p:graphicImage>
+                                                              </p:tooltip>
+										               </p:panel>
+										               <h:panelGrid columns="2">
+										    
+															<h:outputLabel for="kycId2Type"
+																	value="#{msg['customerMgmt.label.kycId1Type']}" />
+																<h:selectOneMenu id="kycId2Type" styleClass="drop_down_style"
+																	value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId2Type}"
+																	required="true" disabled="true" 
+																	label="#{msg['customerMgmt.label.kycId1Type']}">
+																	<f:selectItems value="#{enrollCustomerController.idType}"
+																		var="type1" itemValue="#{type1.intrValue}" itemLabel="#{type1.displayValue}" />
+																</h:selectOneMenu>
+																<h:outputLabel />
+															<p:message for="kycId2Type" id="kycIDT2" display="icon" />
+															
+															<h:outputLabel for="kycId2Number"
+																value="#{msg['customerMgmt.label.kycId1Number']}" />
+															<p:inputText id="kycId2Number" readonly="true"
+																value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId2Number}"
+																label="#{msg['customerMgmt.label.kycId1Number']}">
+															</p:inputText>
+															
+														    <h:outputLabel for="kycId2ProofType"
+																	value="#{msg['customerMgmt.label.kycId1ProofType']}" />
+																<h:selectOneMenu id="kycId2ProofType" styleClass="drop_down_style"
+																	value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId2ProofType}"
+																	required="true" disabled="true" 
+																	label="#{msg['customerMgmt.label.kycId1ProofType']}">
+																	<f:selectItems value="#{enrollCustomerController.prooofType}"
+																		var="ptype1" itemValue="#{ptype1.intrValue}" itemLabel="#{ptype1.displayValue}" />
+																</h:selectOneMenu>
+																<h:outputLabel />
+															<p:message for="kycId2ProofType" id="kycIDProof2" display="icon" />
+														    
+														
+										               </h:panelGrid>
+										          </h:panelGrid> 
+										          </p:row>
+										          
+										           <p:row id="r4">
+										            <h:panelGrid columns="2" id="panel3">
+										               <p:panel>
+														  <h:outputLink id="grpImage3" value="#">
+                                                                <p:graphicImage cache="false" value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.streamImage3}" 
+                                                                    width="250" height="250"  circular="true">
+                                                                    <f:param name="uniqueId"  value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+                                                                    </p:graphicImage>
+                                                             </h:outputLink>
+                                                               <p:tooltip id="toolTipContentImage3" for="grpImage3"  >
+                                                               <p:graphicImage cache="false" value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.streamImage3}" 
+                                                                 width="350" height="350"  circular="true" styleClass="setImageTop">
+                                                                 <f:param name="uniqueId"  value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+                                                                 </p:graphicImage>
+                                                              </p:tooltip>
+										               </p:panel>
+										               <h:panelGrid columns="2">
+										    
+															<h:outputLabel for="kycId3Type"
+																	value="#{msg['customerMgmt.label.kycId1Type']}" />
+																<h:selectOneMenu id="kycId3Type" styleClass="drop_down_style"
+																	value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId3Type}"
+																	required="true" disabled="true" 
+																	label="#{msg['customerMgmt.label.kycId1Type']}">
+																	<f:selectItems value="#{enrollCustomerController.idType}"
+																		var="type1" itemValue="#{type1.intrValue}" itemLabel="#{type1.displayValue}" />
+																</h:selectOneMenu>
+																<h:outputLabel />
+															<p:message for="kycId3Type" id="kycIDT3" display="icon" />
+															
+															
+															<h:outputLabel for="kycId3Number"
+																value="#{msg['customerMgmt.label.kycId1Number']}" />
+															<p:inputText id="kycId3Number" readonly="true"
+																value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId3Number}"
+																label="#{msg['customerMgmt.label.kycId1Number']}">
+															</p:inputText>
+															
+														   <h:outputLabel for="kycId3ProofType"
+																	value="#{msg['customerMgmt.label.kycId1ProofType']}" />
+																<h:selectOneMenu id="kycId3ProofType" styleClass="drop_down_style"
+																	value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId3ProofType}"
+																	required="true" disabled="true" 
+																	label="#{msg['customerMgmt.label.kycId1ProofType']}">
+																	<f:selectItems value="#{enrollCustomerController.prooofType}"
+																		var="ptype1" itemValue="#{ptype1.intrValue}" itemLabel="#{ptype1.displayValue}" />
+																</h:selectOneMenu>
+																<h:outputLabel />
+															<p:message for="kycId3ProofType" id="kycIDProof3" display="icon" />
+														   
+										               </h:panelGrid>
+										          </h:panelGrid> 
+										          </p:row>
+										            
+									        </h:panelGrid>
+										</p:tab>	
+										
+									
+										<p:tab title="Biometric" id="crcid">
+										 <h:panelGrid >
+										        <p:row id="bioheading">
+										            <h:panelGrid columns="6" id="biohead">
+										               <h:panelGrid style="width:80px;">
+														<p:outputLabel   value="Finger Name" />
+										               </h:panelGrid>
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <h:panelGrid >
+														 <p:outputLabel   value="Templates"/>
+										               </h:panelGrid>
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <!--  <h:panelGrid >
+														 <p:outputLabel   value="Finger Images"/>
+										               </h:panelGrid> -->
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										 
+										 
+										         <p:row id="rfinger1">
+										            <h:panelGrid columns="6" id="panelrf1">
+										               <h:panelGrid style="width:80px;">
+														<p:outputLabel   value="Right  Hand Little Finger"   />
+										               </h:panelGrid>
+														<p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false" 
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhlfTempltImage}"
+															width="50" id="grpCrcFin1" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+														<p:panel style="padding:0px;"><p:graphicImage cache="false"   styleClass="background_image"/></p:panel>
+										                <!-- <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhlfImageScanImage}"
+															width="50" id="grpImageFin1" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										          
+										         <p:row id="rfinger2">
+										            <h:panelGrid columns="6" id="panelrf2">
+										               <h:panelGrid style="width:80px;">
+														<p:outputLabel   value="Right Hand Ring Finger"   />
+										               </h:panelGrid>
+										              <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhrfTempltImage}"
+															width="50" id="grpCrcFin2" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										                <!-- <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhrfImageScanImage}"
+															width="50" id="grpImageFin2" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										         
+										          <p:row id="rfinger3">
+										            <h:panelGrid columns="6" id="panelrf3">
+										               <h:panelGrid style="width:80px;">
+														<p:outputLabel   value="Right Hand Middle Finger"   />
+										               </h:panelGrid>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhmfTempltImage}"
+															width="50" id="grpCrcFin3" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <!--  <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhmfImageScanImage}"
+															width="50" id="grpImageFin3" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										         
+										           <p:row id="rfinger4">
+										            <h:panelGrid columns="6" id="panelrf4">
+										               <h:panelGrid style="width:80px;">
+														<p:outputLabel   value="Right Hand Index Finger"   />
+										               </h:panelGrid>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhifTempltImage}"
+															width="50" id="grpCrcFin4" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										                <!-- <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhifImageScanImage}"
+															width="50" id="grpImageFin4" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										          
+										          <p:row id="rfinger5">
+										            <h:panelGrid columns="6" id="panelrf5">
+										               <h:panelGrid style="width:80px;">
+														<p:outputLabel   value="Right Hand Thumb"   />
+										               </h:panelGrid>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhtfTempltImage}"
+															width="50" id="grpCrcFin5" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <!--  <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.rhtfImageScanImage}"
+															width="50" id="grpImageFin5" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										          
+										          <p:row id="lfinger1">
+										            <h:panelGrid columns="6" id="panellf1">
+										               <h:panelGrid style="width:80px;">
+														<h:outputLabel   value="Left Hand Little Finger"   />
+										               </h:panelGrid>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhlfTempltImage}"
+															width="50" id="grpCrceftFin1" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										                <!-- <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhlfImageScanImage}"
+															width="50" id="grpImageleftFin1" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										          
+										           <p:row id="lfinger2">
+										            <h:panelGrid columns="6" id="panellf2">
+										               <h:panelGrid style="width:80px;">
+														<h:outputLabel   value="Left Hand Ring Finger"   />
+										               </h:panelGrid>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhrfTempltImage}"
+															width="50" id="grpCrceftFin2" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										                <!-- <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhrfImageScanImage}"
+															width="50" id="grpImageleftFin2" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										          
+										          
+										           <p:row id="lfinger3">
+										            <h:panelGrid columns="6" id="panellf3">
+										               <h:panelGrid style="width:80px;">
+														<p:outputLabel   value="Left Hand Middle Finger"   />
+										               </h:panelGrid>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhmfTempltImage}"
+															width="50" id="grpCrceftFin3" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										                <!-- <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhmfImageScanImage}"
+															width="50" id="grpImageleftFin3" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										          
+										           <p:row id="lfinger4">
+										            <h:panelGrid columns="6" id="panellf4">
+										               <h:panelGrid style="width:80px;">
+														<p:outputLabel   value="Left Hand Index Finger"   />
+										               </h:panelGrid>
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhifTempltImage}"
+															width="50" id="grpCrceftFin4" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										                <!-- <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhifImageScanImage}"
+															width="50" id="grpImageleftFin4" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+										          
+										           <p:row id="lfinger5">
+										            <h:panelGrid columns="6" id="panellf5">
+										               <h:panelGrid style="width:80px;">
+														<p:outputLabel   value="Left Hand Thumb" />
+										               </h:panelGrid>
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhtfTempltImage}"
+															width="50" id="grpCrceftFin5" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel>
+										               <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="background_image"/> </p:panel>
+										               <!--  <p:panel >
+														<p:graphicImage cache="false"
+															value="#{enrollCustomerController.custEnrolBiometricVO.lhtfImageScanImage}"
+															width="50" id="grpImageleftFin5" height="50" circular="true">
+														</p:graphicImage>
+										               </p:panel> -->
+										                <p:panel style="padding:0px;"><p:graphicImage cache="false"  styleClass="last_background_image"/> </p:panel>
+										             </h:panelGrid> 
+										          </p:row> 
+									        </h:panelGrid>
+										</p:tab>
+										
+									</p:tabView>	
+								</h:panelGrid>
+							</p:panel>
+						<!-- </p:tab> -->
+					</p:panel>
+				</p:panel>
+				
+				<ui:include src="/templates/includes/auditTrail.xhtml"></ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

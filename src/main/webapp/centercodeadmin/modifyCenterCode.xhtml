@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<!-- Modification under Tag No [ EGA-MN15-000004 ]
+	1. Panel Added under maintenance form for splitting Screen.
+	2. contactNumber modified to non mandatory field.
+	3. ZipCode modified to non mandatory field and placed after addressLine3.
+	4. addressLine 1,2 modified to non mandatory field.
+	5. district,city,state modified to drop-down.
+	6. Center Code Desc placed below CBS CenterCode.
+	7. Validate CBS CenterCode by Ajax call.
+	 -->
+
+	<ui:define name="metadata">
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'NameCharactersAndNumbersWithNoBlankSpace') {
+					AllowableCharacters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			function ieClicked() {
+				if (document.all) {
+					return false;
+				}
+			}
+			function firefoxClicked(e) {
+				if (document.layers || (document.getElementById(!document.all))) {
+					if (e.which == 2 || e.which == 3) {
+						return false;
+					}
+				}
+			}
+			if (document.layers) {
+				document.captureEvents(Event.MOUSEDOWN);
+				document.onmousedown = firefoxClicked;
+			} else {
+				document.onmouseup = firefoxClicked;
+				document.oncontextmenu = ieClicked;
+			}
+			document.oncontextmenu = new Function("return false")
+
+			//]]>
+		</script>
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{centerCodeController.centerCodes.centerCode}"></f:viewParam>
+			<f:event listener="#{centerCodeController.loadCenterCode}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['centerMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['centerMgmt.title.centerDetailModify']}" /></span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['centerMgmt.btn.save']}" update="panel"
+						action="#{centerCodeController.checkModifyForUpdate}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['centerMgmt.nav.cancel']}"
+						outcome="cancel">
+						<f:param name="id"
+							value="#{centerCodeController.centerCodes.centerCode}" />
+					</p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left">
+				<h:panelGrid columns="3" id="panelGrid">
+
+					<h:outputLabel for="centerCode"
+						value="#{msg['centerMgmt.tblHeader.centerCode']}"
+						styleClass="required_asterisk" />
+					<p:inputText id="centerCode"
+						value="#{centerCodeController.centerCodes.centerCode}"
+						readonly="false" required="true"
+						label="#{msg['centerMgmt.tblHeader.centerCode']}">
+						<f:validateLength minimum="2" maximum="25" />
+					</p:inputText>
+					<p:message for="centerCode" display="icon" />
+
+					<h:outputLabel for="cbsCenterCode"
+						value="#{msg['centerMgmt.tblHeader.cbsCenterCode']}"
+						styleClass="required_asterisk" />
+					<h:selectOneMenu id="cbsCenterCode" styleClass="drop_down_style"
+						value="#{centerCodeController.centerCodes.cbsCenterCode}"
+						required="true"
+						label="#{msg['centerMgmt.tblHeader.cbsCenterCode']}">
+						<f:selectItem itemLabel="Select" itemValue="" />
+						<p:ajax event="change"
+							listener="#{centerCodeController.validateCenterCode}" />
+						<f:selectItems value="#{centerCodeController.cbsCenterCodesUpdate}"
+							var="dev" itemValue="#{dev.dlValue}"
+							itemLabel="#{dev.dlValue} ~ #{dev.dlDesc}" />
+					</h:selectOneMenu>
+					<p:message for="cbsCenterCode" display="icon" />
+
+					<h:outputLabel for="centerCodeDesc"
+						value="#{msg['centerMgmt.tblHeader.centerCodeDesc']}"
+						styleClass="required_asterisk" />
+					<p:inputText id="centerCodeDesc"
+						value="#{centerCodeController.centerCodes.centerCodeDesc}"
+						readonly="false" required="true"
+						label="#{msg['centerMgmt.tblHeader.centerCodeDesc']}">
+						<f:validateLength minimum="2" maximum="25" />
+					</p:inputText>
+					<p:message for="centerCodeDesc" display="icon" />
+
+					<h:outputLabel for="ibsLocationCode"
+						value="#{msg['routeMgmt.tblHeader.ibsLocationCode']}"
+						styleClass="required_asterisk" />
+					<h:selectOneMenu id="ibsLocationCode" styleClass="drop_down_style"
+						value="#{centerCodeController.centerCodes.ibsLocationCode}"
+						required="true"
+						label="#{msg['routeMgmt.tblHeader.ibsLocationCode']}">
+						<f:selectItem itemLabel="Select" itemValue="" />
+						<f:selectItems value="#{centerCodeController.locationCodes}"
+							var="code" itemValue="#{code.locationCode}"
+							itemLabel="#{code.locationCode}" />
+					</h:selectOneMenu>
+					<p:message for="ibsLocationCode" display="icon" />
+
+					<h:outputLabel for="cbsBranchCode"
+						value="#{msg['routeMgmt.tblHeader.cbsBranchCode']}"
+						styleClass="required_asterisk" />
+					<h:selectOneMenu id="cbsBranchCode" styleClass="drop_down_style"
+						value="#{centerCodeController.centerCodes.cbsBranchCode}"
+						required="true"
+						label="#{msg['routeMgmt.tblHeader.cbsBranchCode']}">
+						<f:selectItem itemLabel="Select" itemValue="" />
+						<f:selectItems value="#{centerCodeController.cbsBranchCodes}"
+							var="dev" itemValue="#{dev.dlValue}"
+							itemLabel="#{dev.dlValue}  ~  #{dev.dlDesc}" />
+					</h:selectOneMenu>
+					<p:message for="cbsBranchCode" display="icon" />
+
+					<h:outputLabel for="contactNumber"
+						value="#{msg['routeMgmt.tblHeader.contactNumber']}" />
+					<p:inputText id="contactNumber"
+						onkeypress="return inputLimiter(event,'Numbers')"
+						value="#{centerCodeController.centerCodes.contactNumber}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.contactNumber']}">
+						<f:validateLength minimum="8" maximum="15" />
+						<f:validateRegex pattern="[0-9]+" />
+					</p:inputText>
+					<p:message for="contactNumber" display="icon" />
+
+					<h:outputLabel for="addressLine1"
+						value="#{msg['centerMgmt.tblHeader.addressLine1']}" />
+					<p:inputText id="frmAddressLine1"
+						value="#{centerCodeController.centerCodes.addressLine1}"
+						readonly="false" required="false"
+						label="#{msg['centerMgmt.tblHeader.addressLine1']}">
+						<f:validateLength minimum="0" maximum="25" />
+					</p:inputText>
+					<p:message for="frmAddressLine1" display="icon" />
+
+					<h:outputLabel for="addressLine2"
+						value="#{msg['centerMgmt.tblHeader.addressLine2']}" />
+					<p:inputText id="addressLine2"
+						value="#{centerCodeController.centerCodes.addressLine2}"
+						readonly="false" required="false"
+						label="#{msg['centerMgmt.tblHeader.addressLine2']}">
+						<f:validateLength minimum="0" maximum="25" />
+					</p:inputText>
+					<p:message for="addressLine2" display="icon" />
+
+					<h:outputLabel for="addressLine3"
+						value="#{msg['centerMgmt.tblHeader.addressLine3']}" />
+					<p:inputText id="addressLine3"
+						value="#{centerCodeController.centerCodes.addressLine3}"
+						readonly="false" required="false"
+						label="#{msg['centerMgmt.tblHeader.addressLine3']}">
+						<f:validateLength minimum="0" maximum="25" />
+					</p:inputText>
+					<p:message for="addressLine3" display="icon" />
+
+				</h:panelGrid>
+			</p:panel>
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="3">
+
+					<h:outputLabel for="zipCode"
+						value="#{msg['centerMgmt.tblHeader.zipCode']}" />
+					<p:inputText id="zipCode"
+						onkeypress="return inputLimiter(event,'Numbers')"
+						value="#{centerCodeController.centerCodes.zipCode}"
+						readonly="false" required="false"
+						label="#{msg['centerMgmt.tblHeader.zipCode']}">
+						<f:validateLength minimum="0" maximum="25" />
+					</p:inputText>
+					<p:message for="zipCode" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="addressLine4"
+						value="#{msg['centerMgmt.tblHeader.addressLine4']}" />
+					<h:selectOneMenu id="addressLine4" styleClass="drop_down_style"
+						value="#{centerCodeController.centerCodes.addressLine4}"
+						required="true"
+						label="#{msg['centerMgmt.tblHeader.addressLine4']}">
+						<f:selectItems value="#{centerCodeController.districts}"
+							var="code" itemValue="#{code.codeValue}"
+							itemLabel="#{code.codeValue}" />
+					</h:selectOneMenu>
+					<p:message for="addressLine4" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="city"
+						value="#{msg['centerMgmt.tblHeader.city']}" />
+					<h:selectOneMenu id="city" styleClass="drop_down_style"
+						value="#{centerCodeController.centerCodes.city}" required="true"
+						label="#{msg['centerMgmt.tblHeader.city']}">
+						<f:selectItems value="#{centerCodeController.citys}" var="code"
+							itemValue="#{code.codeValue}" itemLabel="#{code.codeValue}" />
+					</h:selectOneMenu>
+					<p:message for="city" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="state"
+						value="#{msg['centerMgmt.tblHeader.state']}" />
+					<h:selectOneMenu id="state" styleClass="drop_down_style"
+						value="#{centerCodeController.centerCodes.state}" required="true"
+						label="#{msg['centerMgmt.tblHeader.state']}">
+						<f:selectItems value="#{centerCodeController.states}" var="code"
+							itemValue="#{code.codeValue}" itemLabel="#{code.codeValue}" />
+					</h:selectOneMenu>
+					<p:message for="state" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="country"
+						value="#{msg['centerMgmt.tblHeader.country']}" />
+					<h:selectOneMenu id="country" styleClass="drop_down_style"
+						value="#{centerCodeController.centerCodes.country}"
+						required="true" label="#{msg['centerMgmt.tblHeader.country']}">
+						<f:selectItems value="#{centerCodeController.countryCodes}"
+							var="code" itemValue="#{code.countryCode}"
+							itemLabel="#{code.description}" />
+					</h:selectOneMenu>
+					<p:message for="country" display="icon" />
+
+					<h:outputLabel for="isActive"
+						value="#{msg['centerMgmt.tblHeader.isActive']}"
+						styleClass="required_asterisk" />
+					<h:selectOneMenu id="isActive" styleClass="drop_down_style"
+						value="#{centerCodeController.centerCodes.isActive}"
+						required="true" label="#{msg['centerMgmt.tblHeader.isActive']}">
+						<f:selectItems value="#{centerCodeController.centerCodeStatuss}"
+							var="devi" itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+					</h:selectOneMenu>
+					<p:message for="isActive" display="icon" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="8">
+					<h:outputText id="day" value="#{msg['centerMgmt.tblHeader.week']}" />
+					<p:selectBooleanCheckbox id="onSunday"
+						value="#{centerCodeController.centerCodes.onSunday}"
+						itemLabel="Sunday" />
+					<br />
+					<p:selectBooleanCheckbox id="onMonday"
+						value="#{centerCodeController.centerCodes.onMonday}"
+						itemLabel="Monday" />
+					<br />
+					<p:selectBooleanCheckbox id="onTuesday"
+						value="#{centerCodeController.centerCodes.onTuesday}"
+						itemLabel="Tuesday" />
+					<br />
+					<p:selectBooleanCheckbox id="onWednesday"
+						value="#{centerCodeController.centerCodes.onWednesday}"
+						itemLabel="Wednesday" />
+					<br />
+					<p:selectBooleanCheckbox id="onThursday"
+						value="#{centerCodeController.centerCodes.onThursday}"
+						itemLabel="Thursday" />
+					<br />
+					<p:selectBooleanCheckbox id="onFriday"
+						value="#{centerCodeController.centerCodes.onFriday}"
+						itemLabel="Friday" />
+					<br />
+					<p:selectBooleanCheckbox id="onSaturday"
+						value="#{centerCodeController.centerCodes.onSaturday}"
+						itemLabel="Saturday" />
+					<p:message for="day" display="icon" />
+
+				</h:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

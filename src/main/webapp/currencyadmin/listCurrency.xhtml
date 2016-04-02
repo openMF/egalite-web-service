@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+
+	<!-- <ui:param name="pageTitle" value="#{msg['currencyMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['currencyMgmt.title.listCurrency']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['currencyMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{currencyListController}" />
+	<ui:param name="selectionMode" value="single" />
+	<ui:define name="dataTableContent">
+
+		<p:column id="id" filterBy="#{record.currencyCode}"
+			headerText="#{msg['currencyMgmt.tblHeader.currencyCode']}"
+			sortBy="#{record.currencyCode}">
+			<h:outputText value="#{record.currencyCode}" />
+		</p:column>
+
+		<p:column id="currencyName" filterBy="#{record.currencyName}"
+			headerText="#{msg['currencyMgmt.tblHeader.currencyName']}"
+			sortBy="#{record.currencyName}">
+			<h:outputText value="#{record.currencyName}" />
+		</p:column>
+
+		<p:column id="isoCcyCode" filterBy="#{record.isoCcyCode}"
+			headerText="#{msg['currencyMgmt.tblHeader.isoCcyCode']}"
+			sortBy="#{record.isoCcyCode}">
+			<h:outputText value="#{record.isoCcyCode}" />
+		</p:column>
+
+
+		<p:column id="isoAltCcode" filterBy="#{record.isoAltCcode}"
+			headerText="#{msg['currencyMgmt.tblHeader.isoAltCcode']}"
+			sortBy="#{record.isoAltCcode}">
+			<h:outputText value="#{record.isoAltCcode}" />
+		</p:column>
+
+
+		<p:column id="country" filterBy="#{record.countryName}"
+			headerText="#{msg['currencyMgmt.tblHeader.country']}"
+			sortBy="#{record.countryName}">
+			<h:outputText value="#{record.countryName}" />
+		</p:column>
+
+	
+
+		<p:column id="ccyRoundRule" filterBy="#{record.ccyRoundRule}"
+			headerText="#{msg['currencyMgmt.tblHeader.ccyRoundRule']}"
+			sortBy="#{record.ccyRoundRule}">
+			<h:outputText value="#{record.ccyRoundRule}" />
+		</p:column>
+
+
+		<p:column id="currencyDecimals" filterBy="#{record.currencyDecimals}"
+			headerText="#{msg['currencyMgmt.tblHeader.currencyDecimals']}"
+			sortBy="#{record.currencyDecimals}">
+			<h:outputText value="#{record.currencyDecimals}">
+				<f:convertNumber type="number" groupingUsed="true"
+					minFractionDigits="0" />
+			</h:outputText>
+
+		</p:column>
+
+		<p:column id="recordStatus" filterBy="#{record.recordStatus}"
+			headerText="#{msg['currencyMgmt.tblHeader.recordStatus']}"
+			sortBy="#{record.recordStatus}">
+			<h:outputText value="#{record.recordStatus}" />
+		</p:column>
+
+		<p:column id="cbsJobId" filterBy="#{record.cbsJobId}"
+			headerText="#{msg['currencyMgmt.tblHeader.cbsJobId']}"
+			sortBy="#{record.cbsJobId}">
+			<h:outputText value="#{record.cbsJobId}" />
+		</p:column>
+		<!--
+		<p:column id="syncTime"
+			filterBy="#{record.syncTime}"
+			headerText="#{msg['currencyMgmt.tblHeader.syncTime']}"
+			sortBy="#{record.syncTime}">
+			<h:outputText value="#{record.syncTime}" />
+		</p:column>
+		
+		<p:column id="syncStatus"
+			filterBy="#{record.syncStatus}"
+			headerText="#{msg['currencyMgmt.tblHeader.syncStatus']}"
+			sortBy="#{record.syncStatus}">
+			<h:outputText value="#{record.syncStatus}" />
+		</p:column>
+		-->
+	</ui:define>
+</ui:composition>

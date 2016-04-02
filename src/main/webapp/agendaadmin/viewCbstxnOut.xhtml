@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://java.sun.com/jsp/jstl/core"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{cbsTxnOutController.cbsTxnOut.id}"></f:viewParam>
+			<f:event listener="#{cbsTxnOutController.loadCbsTxnOut}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			 <h:outputText value="#{msg['transMgmt.title.transtracker']}" /> 
+		</f:facet>
+	</ui:define> -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader" >
+				
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['agndMgmt.title.viewCbsTxnOut']}" /></span>
+				
+				<span class="pageHeaderControls"> 
+					<p:button id="btnList" value="#{msg['cbsTxnOutMgmt.label.close']}" outcome="openList" /> 
+				</span>
+						
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.mfiOutSeqno']}" />
+        			<p:inputText id="mfiOutSeqno" value="#{cbsTxnOutController.cbsTxnOut.mfiOutSeqno}" readonly="true" />
+
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.mbsTxnRefNo']}" />
+		        	<p:inputText id="mbsTxnRefNo" value="#{cbsTxnOutController.cbsTxnOut.mbsTxnRefNo}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsAcRefNo']}" />
+		        	<p:inputText id="cbsAcRefNo" value="#{cbsTxnOutController.cbsTxnOut.cbsAcRefNo}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.customerId']}" />
+		        	<p:inputText id="customerId" value="#{cbsTxnOutController.cbsTxnOut.customerId}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsBranchCode']}" />
+		        	<p:inputText id="cbsBranchCode" value="#{cbsTxnOutController.cbsTxnOut.cbsBranchCode}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.moduleCode']}" />
+		        	<p:inputText id="moduleCode" value="#{cbsTxnOutController.cbsTxnOut.moduleCode}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.txnCode']}" />
+		        	<p:inputText id="txnCode" value="#{cbsTxnOutController.cbsTxnOut.txnCode}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.txnIdentifier']}" />
+		        	<p:inputText id="txnIdentifier" value="#{cbsTxnOutController.cbsTxnOut.txnIdentifier}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.syncType']}" />
+		        	<p:inputText id="syncType" value="#{cbsTxnOutController.cbsTxnOut.syncType}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqOrTxn']}" />
+		        	<p:inputText id="reqOrTxn" value="#{cbsTxnOutController.cbsTxnOut.reqOrTxn}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.sentToCbs']}" />
+		        	<p:inputText id="sentToCbs" value="#{cbsTxnOutController.cbsTxnOut.sentToCbs}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.logTime']}" />
+		        	<p:inputText id="logTime" value="#{cbsTxnOutController.cbsTxnOut.logTime}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsSentTime']}" />
+		        	<p:inputText id="cbsSentTime" value="#{cbsTxnOutController.cbsTxnOut.cbsSentTime}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsResponseStat']}" />
+		        	<p:inputText id="cbsResponseStat" value="#{cbsTxnOutController.cbsTxnOut.cbsResponseStat}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsResponseTxnRefNo']}" />
+		        	<p:inputText id="cbsResponseTxnRefNo" value="#{cbsTxnOutController.cbsTxnOut.cbsResponseTxnRefNo}" readonly="true" />
+		
+		</h:panelGrid>
+			</p:panel>
+			
+			<p:panel style="width:52%;height:410px; float:right">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsRespondTime']}" />
+		        	<p:inputText id="cbsRespondTime" value="#{cbsTxnOutController.cbsTxnOut.cbsRespondTime}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsErrorCode']}" />
+		        	<p:inputText id="cbsErrorCode" value="#{cbsTxnOutController.cbsTxnOut.cbsErrorCode}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsErrorDesc']}" />
+		        	<p:inputText id="cbsErrorDesc" value="#{cbsTxnOutController.cbsTxnOut.cbsErrorDesc}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.ibsAgendaId']}" />
+		        	<p:inputText id="ibsAgendaId" value="#{cbsTxnOutController.cbsTxnOut.ibsAgendaId}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.ibsAgendaSeqNo']}" />
+		        	<p:inputText id="ibsAgendaSeqNo" value="#{cbsTxnOutController.cbsTxnOut.ibsAgendaSeqNo}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.fullPartialInd']}" />
+		        	<p:inputText id="fullPartialInd" value="#{cbsTxnOutController.cbsTxnOut.fullPartialInd}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.mbsTxnNarrative']}" />
+		        	<p:inputText id="mbsTxnNarrative" value="#{cbsTxnOutController.cbsTxnOut.mbsTxnNarrative}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqDepNoInst']}" />
+		        	<p:inputText id="reqDepNoInst" value="#{cbsTxnOutController.cbsTxnOut.reqDepNoInst}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqRedReqDt']}" />
+		        	<p:inputText id="reqRedReqDt" value="#{cbsTxnOutController.cbsTxnOut.reqRedReqDt}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqRedFullPartInd']}" />
+		        	<p:inputText id="reqRedFullPartInd" value="#{cbsTxnOutController.cbsTxnOut.reqRedFullPartInd}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqMaturityDate']}" />
+		        	<p:inputText id="reqMaturityDate" value="#{cbsTxnOutController.cbsTxnOut.reqMaturityDate}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqIntRate']}" />
+		        	<p:inputText id="reqIntRate" value="#{cbsTxnOutController.cbsTxnOut.reqIntRate}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqDpTenureType']}" />
+		        	<p:inputText id="reqDpTenureType" value="#{cbsTxnOutController.cbsTxnOut.reqDpTenureType}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqDpTenure']}" />
+		        	<p:inputText id="reqDpTenure" value="#{cbsTxnOutController.cbsTxnOut.reqDpTenure}" readonly="true" />
+		        	
+		        <h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqDpFrequencyType']}" />
+		        	<p:inputText id="reqDpFrequencyType" value="#{cbsTxnOutController.cbsTxnOut.reqDpFrequencyType}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.reqDpFrequency']}" />
+		        	<p:inputText id="reqDpFrequency" value="#{cbsTxnOutController.cbsTxnOut.reqDpFrequency}" readonly="true" />
+		
+				<!-- <h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsAgentId']}" />
+		        	<p:inputText id="cbsAgentId" value="#{cbsTxnOutController.cbsTxnOut.cbsAgentId}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsLcrCode']}" />
+		        	<p:inputText id="cbsLcrCode" value="#{cbsTxnOutController.cbsTxnOut.cbsLcrCode}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.cbsLcrType']}" />
+		        	<p:inputText id="cbsLcrType" value="#{cbsTxnOutController.cbsTxnOut.cbsLcrType}" readonly="true" /> -->
+		        	
+				<!-- <h:outputLabel value="#{msg['cbsTxnOutMgmt.label.agnAmtDueCcy']}" />
+		        	<p:inputText id="agnAmtDueCcy" value="#{cbsTxnOutController.cbsTxnOut.agnAmtDueCcy}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.agnAmtDue']}" />
+		        	<p:inputText id="agnAmtDue" value="#{cbsTxnOutController.cbsTxnOut.agnAmtDue}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.agnAmtSettledCcy']}" />
+		        	<p:inputText id="agnAmtSettledCcy" value="#{cbsTxnOutController.cbsTxnOut.agnAmtSettledCcy}" readonly="true" />
+		
+				<h:outputLabel value="#{msg['cbsTxnOutMgmt.label.agnAmtSettled']}" />
+		        	<p:inputText id="agnAmtSettled" value="#{cbsTxnOutController.cbsTxnOut.agnAmtSettled}" readonly="true" /> -->
+		        	
+			</h:panelGrid>
+		</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

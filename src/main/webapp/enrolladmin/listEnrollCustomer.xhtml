@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['customerMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['customerMgmt.title.listCustomers']}" />
+	<ui:param name="emptyMessage" value="#{msg['customerMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{enrollCustomerListController}" />
+	
+	<!-- Add -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{enrollCustomerListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- Add End-->
+	
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{enrollCustomerListController.listSelect}" />
+
+		<p:column id="id" filterBy="#{record.id}" sortBy="#{record.id}"
+			headerText="#{msg['customerMgmt.label.enrolID']}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+		
+		 <p:column id="tempGroupId" filterBy="#{record.tempGroupId}" sortBy="#{record.tempGroupId}"
+			headerText="#{msg['customerMgmt.label.tempGroupId']}">
+			<h:outputText value="#{record.tempGroupId}" />
+		</p:column>
+		
+		 <p:column id="poc" filterBy="#{record.poc}" sortBy="#{record.poc}"
+			headerText="#{msg['customerMgmt.label.poc']}">
+			<h:outputText value="#{record.poc}" />
+		</p:column>
+		
+		<!-- <p:column id="enrollDateText" filterBy="#{record.enrollDateText}"
+			headerText="#{msg['customerMgmt.label.enrollmentdate']}">
+			<h:outputText value="#{record.enrollDateText}" />	 
+		</p:column> -->
+		
+		<p:column id="firstName" filterBy="#{record.firstName}" sortBy="#{record.firstName}"
+			headerText="#{msg['customerMgmt.label.custfName']}">
+			<h:outputText value="#{record.firstName}" />
+		</p:column>
+		
+		<!-- <p:column id="middleName" filterBy="#{record.middleName}"
+			headerText="#{msg['customerMgmt.label.custmName']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.middleName}" />
+		</p:column> -->
+		
+		<p:column id="lastName" filterBy="#{record.lastName}" sortBy="#{record.lastName}"
+			headerText="#{msg['customerMgmt.label.custlName']}">
+			<h:outputText value="#{record.lastName}" />
+		</p:column>
+		
+		<p:column id="gender" filterBy="#{record.gender}" sortBy="#{record.gender}"
+			headerText="#{msg['customerMgmt.label.custGender']}">
+			<h:outputText value="#{record.gender}" />
+		</p:column>
+		
+		<!-- <p:column id="dob" filterBy="#{record.dob}"
+			headerText="#{msg['customerMgmt.label.custDob']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.dob}" />
+		</p:column>
+		
+		<p:column id="address1" filterBy="#{record.address1}"
+			headerText="#{msg['customerMgmt.label.custAdd1']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.address1}" />
+		</p:column>
+		
+		<p:column id="address2" filterBy="#{record.address2}"
+			headerText="#{msg['customerMgmt.label.custAdd2']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.address2}" />
+		</p:column>
+		
+		<p:column id="emailId" filterBy="#{record.emailId}"
+			headerText="#{msg['customerMgmt.label.emailID']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.emailId}" />
+		</p:column>
+		
+		<p:column id="contactNumber" filterBy="#{record.contactNumber}"
+			headerText="#{msg['customerMgmt.label.phoneNumber']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.contactNumber}" />
+		</p:column>
+		
+		<p:column id="state" filterBy="#{record.state}"
+			headerText="#{msg['customerMgmt.label.state']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.state}" />
+		</p:column>
+		
+		<p:column id="zipCode" filterBy="#{record.zipCode}"
+			headerText="#{msg['customerMgmt.label.postalID']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.zipCode}" />
+		</p:column>
+		
+		<p:column id="country" filterBy="#{record.country}"
+			headerText="#{msg['customerMgmt.label.country']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.country}" />
+		</p:column>
+		
+		<p:column id="currency" filterBy="#{record.currency}"
+			headerText="#{msg['customerMgmt.label.custCurrency']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.currency}" />
+		</p:column> -->
+		
+		<p:column id="residentialType" filterBy="#{record.residentialType}" sortBy="#{record.residentialType}"
+			headerText="#{msg['customerMgmt.label.residentailType']}">
+			<h:outputText value="#{record.residentialType}" />
+		</p:column>
+		
+		<p:column id="nationality" filterBy="#{record.nationality}" sortBy="#{record.nationality}"
+			headerText="#{msg['customerMgmt.label.custnationalty']}">
+			<h:outputText value="#{record.nationality}" />
+		</p:column>
+		
+		<!-- <p:column id="martialStatus" filterBy="#{record.martialStatus}"
+			headerText="#{msg['customerMgmt.label.maritalStat']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.martialStatus}" />
+		</p:column> -->
+		
+		<p:column id="agentId" filterBy="#{record.agentId}" sortBy="#{record.agentId}"
+			headerText="#{msg['agentMgmt.label.agentId']}">
+			<h:outputText value="#{record.agentId}" />
+		</p:column>
+		
+		<!-- <p:column id="profession" filterBy="#{record.profession}" sortBy="#{record.profession}"
+			headerText="#{msg['customerMgmt.label.profession']}">
+			<h:outputText value="#{record.profession}" />
+		</p:column> -->
+		
+		<p:column id="authStatus" filterBy="#{record.authStatusText}" sortBy="#{record.authStatusText}"
+			headerText="#{msg['customerMgmt.label.authStatus']}">
+			<h:outputText value="#{record.authStatusText}" />
+		</p:column>
+		
+	</ui:define> 	 
+</ui:composition>

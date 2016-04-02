@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+
+	<!-- <ui:param name="pageTitle" value="#{msg['centerMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['centerMgmt.title.listCenterCodes']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['centerMgmt.msg.noRecords']}" />
+	 <ui:param name="addControlText" value="#{msg['centerMgmt.tblNav.add']}" />
+	<ui:param name="addOutcome" value="addCenterCode" />
+	 <ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addCenterCode')}" />
+	<ui:param name="listController" value="#{centerCodeListController}" />
+	
+	<!-- Add -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{centerCodeListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+    <!-- Add End-->
+    
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{centerCodeListController.listSelect}" />
+
+		<p:column id="id" filterBy="#{record.centerCode}"
+			headerText="#{msg['centerMgmt.tblHeader.centerCode']}"
+			sortBy="#{record.centerCode}">
+			<h:outputText value="#{record.centerCode}" />
+		</p:column>
+		
+		<p:column id="cbsCenterCode" filterBy="#{record.cbsCenterCode}"
+			headerText="#{msg['centerMgmt.tblHeader.cbsCenterCode']}"
+			sortBy="#{record.cbsCenterCode}">
+			<h:outputText value="#{record.cbsCenterCode}" />
+		</p:column>
+		
+		<p:column id="ibsLocationCode" filterBy="#{record.ibsLocationCode}"
+				headerText="#{msg['routeMgmt.tblHeader.ibsLocationCode']}"
+				sortBy="#{record.ibsLocationCode}">
+				<h:outputText value="#{record.ibsLocationCode}" />
+		</p:column>
+		
+		<p:column id="centerCodeDesc" filterBy="#{record.centerCodeDesc}"
+			headerText="#{msg['centerMgmt.tblHeader.centerCodeDesc']}"
+			sortBy="#{record.centerCodeDesc}">
+			<h:outputText value="#{record.centerCodeDesc}" />
+		</p:column>
+
+
+		<p:column id="cbsBranchCode" filterBy="#{record.cbsBranchCode}"
+			headerText="#{msg['routeMgmt.tblHeader.cbsBranchCode']}"
+			sortBy="#{record.cbsBranchCode}">
+			<h:outputText value="#{record.cbsBranchCode}" />
+		</p:column>
+
+		<p:column id="contactNumber" filterBy="#{record.contactNumber}"
+			headerText="#{msg['routeMgmt.tblHeader.contactNumber']}"
+			sortBy="#{record.contactNumber}">
+			<h:outputText value="#{record.contactNumber}" />
+		</p:column>
+		
+		<!-- <p:column id="onSunday" filterBy="#{record.sunText}"
+			headerText="#{msg['routeMgmt.tblHeader.onSunday']}"
+			sortBy="#{record.sunText}">
+			<h:outputText value="#{record.sunText}" />
+		</p:column>
+
+		<p:column id="onMonday" filterBy="#{record.monText}"
+			headerText="#{msg['routeMgmt.tblHeader.onMonday']}"
+			sortBy="#{record.monText}">
+			<h:outputText value="#{record.monText}" />
+		</p:column>
+		<p:column id="onTuesday" filterBy="#{record.tueText}"
+			headerText="#{msg['routeMgmt.tblHeader.onTuesday']}"
+			sortBy="#{record.tueText}">
+			<h:outputText value="#{record.tueText}" />
+		</p:column>
+		<p:column id="onWednesday" filterBy="#{record.wedText}"
+			headerText="#{msg['routeMgmt.tblHeader.onWednesday']}"
+			sortBy="#{record.wedText}">
+			<h:outputText value="#{record.wedText}" />
+		</p:column>
+		<p:column id="onThursday" filterBy="#{record.thuText}"
+			headerText="#{msg['routeMgmt.tblHeader.onThursday']}"
+			sortBy="#{record.thuText}">
+			<h:outputText value="#{record.thuText}" />
+		</p:column>
+		<p:column id="onFriday" filterBy="#{record.friText}"
+			headerText="#{msg['routeMgmt.tblHeader.onFriday']}"
+			sortBy="#{record.friText}">
+			<h:outputText value="#{record.friText}" />
+		</p:column>
+		
+		<p:column id="onSaturday" filterBy="#{record.satText}"
+			headerText="#{msg['routeMgmt.tblHeader.onSaturday']}"
+			sortBy="#{record.satText}">
+			<h:outputText value="#{record.satText}" />
+			</p:column>
+		 -->
+		 
+		<p:column id="authStatus" filterBy="#{record.authStatusText}"
+			headerText="#{msg['agencyMgmt.tblHeader.authStatus']}"
+			sortBy="#{record.authStatusText}">
+			<h:outputText value="#{record.authStatusText}" />
+		</p:column>
+		
+		<p:column id="isActive" filterBy="#{record.centerStatusText}"
+				headerText="#{msg['agencyMgmt.tblHeader.isActive']}"
+				sortBy="#{record.centerStatusText}">
+				<h:outputText value="#{record.centerStatusText}" />
+		</p:column>
+	</ui:define>
+</ui:composition>

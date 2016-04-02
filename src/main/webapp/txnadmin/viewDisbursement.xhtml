@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://java.sun.com/jsp/jstl/core"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	
+	<!-- For Tag No : EGA-MN15-000020 
+		1. generated_sms, sms_mobile_no, sms_content, generated_revr, full_part_ind, sync_type Added-->
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.id}"></f:viewParam>
+			<f:event listener="#{loanDisbursementController.loadDisbursement}" type="preRenderView"></f:event>
+			<!-- <f:event listener="#{loanDisbursementController.childLoanForParent}" type="preRenderView"></f:event> -->
+		</f:metadata>
+	</ui:define>
+	
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			 <h:outputText value="#{msg['transMgmt.title.transtracker']}" /> 
+		</f:facet>
+	</ui:define> -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader" >
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['disbMgmt.title.viewdisbursement']}" /></span>
+				<span class="pageHeaderControls"> 
+					<p:button id="btnList" value="#{msg['agentTxnMgmt.label.close']}"	outcome="openList" /> 
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+		<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.mbsTxnId']}" />
+               			<p:inputText id="id" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.id}" readonly="true" />
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.agendaId']}" />
+						<p:inputText id="agendaId" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.agendaId}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.seqNo']}" />
+						<p:inputText id="seqNo" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.seqNo}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnCode']}" />
+						<p:inputText id="txnCode" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.txnCode}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.cbsAcRefNo']}" />
+						<p:inputText id="cbsAcRefNo" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.cbsAcRefNo}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.branchCode']}" />
+						<p:inputText id="branchCode" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.branchCode}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.customerId']}" />
+						<p:inputText id="customerId" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.customerId}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.customerFullName']}" />
+						<p:inputText id="customerFullName" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.customerFullName}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.amountToDisburse']}" />
+						<p:inputText id="amountToDisburse" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.amountToDisburse}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.disbursedAmount']}" />
+						<p:inputText id="disbursedAmount" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.disbursedAmount}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.agentId']}" />
+						<p:inputText id="agentId" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.agentId}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.agentName']}" />
+						<p:inputText id="agentName" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.agentName}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.locationCode']}" />
+						<p:inputText id="locationCode" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.locationCode}" readonly="true"/>
+				</h:panelGrid>		
+					</p:panel>	
+					<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2" >
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.locationDesc']}" />
+						<p:inputText id="locationDesc" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.locationDesc}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnNarrative']}" />
+						<p:inputText id="txnNarrative" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.txnNarrative}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnInitTime']}" />
+               			<p:calendar id="txnInitTime" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.txnInitTime}" pattern="dd-MMM-yyyy hh:mm:ss" showOn="label" readonly="true" />
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnSyncTime']}" />
+						<p:calendar id="syncTime" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.txnSyncTime}" pattern="dd-MMM-yyyy hh:mm:ss" showOn="label" readonly="true" />
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnStatusDesc']}" />
+						<p:inputText id="txnStatusDesc" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.txnStatusDesc}" readonly="true"/>
+						
+				
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnErrorCode']}" />
+						<p:inputText id="txnErrCode" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.txnErrCode}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnErrorMessage']}" />
+						<p:inputText id="txnErrMessage" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.txnErrMessage}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.generatedSms']}" />
+						<p:inputText id="generatedSms" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.generatedSms}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.smsMobileNo']}" />
+						<p:inputText id="smsMobileNo" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.smsMobileNo}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.smsContent']}" />
+						<p:inputText id="smsContent" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.smsContent}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.genetatedRevr']}" />
+						<p:inputText id="generatedRevr" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.generatedRevr}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.fullPartInd']}" />
+						<p:inputText id="fullPartInd" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.fullPartInd}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.syncType']}" />
+						<p:inputText id="syncType" value="#{loanDisbursementController.mfiMbsTxnLndisbrVO.syncType}" readonly="true"/>
+						
+			</h:panelGrid>
+		</p:panel>
+		</p:panel>
+		<!-- <p:tabView orientation="top" styleClass="loanTapBody">
+			<p:tab title="#{msg['disbursementMgmt.label.childAcDetail']}">
+				<p:panel id="childloanPanel">
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:dataTable id="childloanDataTable" var="childLoan"
+									emptyMessage="#{msg['disbursementMgmt.label.loanACNo']}"
+									rowKey="#{childLoan.id}" value="#{loanDisbursementController.childLoan}"
+									scrollable="true" scrollHeight="50">
+									
+									 <p:column id="loanACNo"
+										headerText="#{msg['disbursementMgmt.label.loanACNo']}">
+										<h:outputText value="#{childLoan.loanACNo}" />
+									</p:column>
+                                     
+                                     <p:column id="parentLoanAcNo"
+										headerText="#{msg['disbursementMgmt.label.parentLoanAcNo']}">
+										<h:outputText value="#{childLoan.parentLoanAcNo}" />
+									</p:column>
+                                     
+									<p:column id="parentCustId"
+										headerText="#{msg['disbursementMgmt.label.parentCustId']}">
+										<h:outputText value="#{childLoan.parentCustId}" />
+									</p:column>
+									<p:column id="customerId"
+										headerText="#{msg['disbursementMgmt.label.customerId']}">
+										<h:outputText value="#{childLoan.customerId}" />
+									</p:column>
+									
+									<p:column id="isParentLoan"
+										headerText="#{msg['disbursementMgmt.label.isParentLoan']}">
+										<h:outputText value="#{childLoan.isParentLoan}" />
+										
+									</p:column>
+									<p:column id="isGroupLoan"
+										headerText="#{msg['disbursementMgmt.label.isGroupLoan']}">
+										<h:outputText value="#{childLoan.isGroupLoan}" />
+									</p:column>
+									
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+			</p:tab>
+		</p:tabView> -->
+	</ui:define>
+</ui:composition>

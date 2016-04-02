@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceListTemplate.xhtml">
+	<ui:define name="metadata">
+
+		
+	</ui:define>
+	<ui:param name="pageTitle" value="#{msg['cashRecMgmt.title']}" />
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['cashRecMgmt.title.listCashRecord']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['cashRecMgmt.msg.noRecords']}" />
+	<!-- <ui:param name="addControlText" value="#{msg['userMgmt.tblNav.add']}" />
+	<ui:param name="addOutcome" value="addUser" />
+	<ui:param name="addAuthority" value="#{auth.checkAuthority('addUser')}" /> -->
+	<ui:param name="listController" value="#{cashRecSumupListController}" />
+	<!-- 	<ui:param name="listData" value="#{userListController.users}"/>
+	<ui:param name="selectedRecords" value="#{userListController.selectedUser}"/>
+	<ui:param name="filteredRecords" value="#{userListController.filteredUsers}"/>
+ -->
+
+	<ui:define name="topSearchContent">
+		<p:panel>
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="agtid" value="#{msg['cashRecMgmt.tblHeader.agtid']}" />
+				<h:selectOneMenu id="agtid" styleClass="drop_down_style"
+					value="#{cashRecSumupListController.agtid}" required="false"
+					label="#{msg['cashRecMgmt.tblHeader.agtid']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{cashRecSumupListController.agtIds}" var="dev"
+						itemValue="#{dev.id}" itemLabel="#{dev.id} " />
+				</h:selectOneMenu>	
+				<p:message for="agtid" display="icon" />
+				
+                 <h:outputLabel for="tdate"	value="#{msg['cashRecMgmt.tblHeader.tdate']}" />
+				<p:calendar id="tdate" pattern="dd-MMM-yyyy" showOn="button" readonlyInput="true"
+					required="false" yearRange="-100:+0" navigator="true"
+					value="#{cashRecSumupListController.tdate}"
+					label="#{msg['cashRecMgmt.tblHeader.tdate']}">
+					<p:ajax event="dateSelect" listener="#{externalDeviceController.validateissuedDate}"
+						update="tdate msgs" process="@this" />
+				</p:calendar>	<p:message for="tdate" id="msgTdate" display="icon" />
+
+				<h:outputLabel for="btnSearch"
+					value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+				<p:commandButton id="btnSearch" 
+					value="#{msg['commonMgmt.btn.search']}" update="panel"
+					action="#{cashRecSumupListController.load()}" />
+
+			</h:panelGrid>
+		</p:panel>
+
+	</ui:define>
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{cashRecSumupListController.listSelect}" />
+        
+		<!-- <p:column id="id"
+			headerText="#{msg['cashRecMgmt.tblHeader.id']}"
+			filterBy="#{record.id}" sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column> -->
+
+         <p:column id="agentId"
+			headerText="#{msg['cashRecMgmt.tblHeader.agentId']}"
+			sortBy="#{record.agentId}">
+			<h:outputText value="#{record.agentId}" />
+		</p:column>
+
+         <p:column id="txnDate"
+			headerText="#{msg['cashRecMgmt.tblHeader.txnDate']}"
+			sortBy="#{record.txnDate}">
+			<h:outputText value="#{record.txnDate}" />
+		</p:column>
+         
+		<p:column id="drSum"
+			headerText="#{msg['cashRecMgmt.tblHeader.drSum']}"
+			sortBy="#{record.drSum}">
+			<h:outputText value="#{record.drSum}" />
+		</p:column>
+		
+		<p:column id="crSum"
+			headerText="#{msg['cashRecMgmt.tblHeader.crSum']}"
+			sortBy="#{record.crSum}">
+			<h:outputText value="#{record.crSum}" />
+		</p:column>
+		
+		<p:column id="toBeSettled"
+			headerText="#{msg['cashRecMgmt.tblHeader.toBeSettled']}"
+			sortBy="#{record.toBeSettled}">
+			<h:outputText value="#{record.toBeSettled}" />
+		</p:column>
+
+	</ui:define>
+ </ui:composition>

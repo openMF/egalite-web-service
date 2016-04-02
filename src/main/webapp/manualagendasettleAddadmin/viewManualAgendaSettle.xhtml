@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{manualAgendaSettleController.manualAgendaSettleVO.agendaId}"></f:viewParam>
+			<f:event listener="#{manualAgendaSettleController.loadManuAgdSet}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['manualAgnSetMgmt.title.manAgnDetail']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{manualAgendaSettleController}"></ui:param>
+					</ui:include> 
+					
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="agendaId"
+					value="#{msg['manualAgnSetMgmt.label.agendaId']}" />
+				<p:inputText id="agendaId" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.agendaId}"
+					label="#{msg['manualAgnSetMgmt.label.agendaId']}">
+				</p:inputText>
+
+				<h:outputLabel for="seqNo"
+					value="#{msg['manualAgnSetMgmt.label.seqNo']}" />
+				<p:inputText id="seqNo" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.seqNo}"
+					label="#{msg['manualAgnSetMgmt.label.seqNo']}">
+				</p:inputText>
+
+				<h:outputLabel for="cbsAcRefNo"
+					value="#{msg['manualAgnSetMgmt.label.cbsAcRefNo']}" />
+				<p:inputText id="cbsAcRefNo" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.cbsAcRefNo}"
+					label="#{msg['manualAgnSetMgmt.label.cbsAcRefNo']}">
+				</p:inputText>
+
+                 <h:outputLabel for="txnCode"
+					value="#{msg['manualAgnSetMgmt.label.txnCode']}" />
+				<p:inputText id="txnCode" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.txnCode}"
+					label="#{msg['manualAgnSetMgmt.label.txnCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="customerId"
+					value="#{msg['manualAgnSetMgmt.label.customerId']}" />
+				<p:inputText id="customerId" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.customerId}"
+					label="#{msg['manualAgnSetMgmt.label.cbsAcRefNo']}">
+				</p:inputText>
+
+				<h:outputLabel for="agentId"
+					value="#{msg['manualAgnSetMgmt.label.agentId']}" />
+				<p:inputText id="agentId" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.agentId}"
+					label="#{msg['manualAgnSetMgmt.label.agentId']}">
+				</p:inputText>
+
+				<h:outputLabel for="deviceId"
+					value="#{msg['manualAgnSetMgmt.label.deviceId']}" />
+				<p:inputText id="deviceId" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.deviceId}"
+					label="#{msg['manualAgnSetMgmt.label.deviceId']}">
+				</p:inputText>
+
+				<h:outputLabel for="locationCode"
+					value="#{msg['manualAgnSetMgmt.label.locationCode']}" />
+				<p:inputText id="locationCode" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.locationCode}"
+					label="#{msg['manualAgnSetMgmt.label.locationCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="agnCmpName"
+					value="#{msg['manualAgnSetMgmt.label.agnCmpName']}" />
+				<p:inputText id="agnCmpName" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.agnCmpName}"
+					label="#{msg['manualAgnSetMgmt.label.agnCmpName']}">
+				</p:inputText>
+				
+				<h:outputLabel for="agnCmpStDate"
+					value="#{msg['manualAgnSetMgmt.label.agnCmpStDate']}" />
+				<p:inputText id="agnCmpStDate" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.agnCmpStDate}"
+					label="#{msg['manualAgnSetMgmt.label.agnCmpStDate']}">
+				</p:inputText>
+
+				<h:outputLabel for="agnCmpEndDate"
+					value="#{msg['manualAgnSetMgmt.label.agnCmpEndDate']}" />
+				<p:inputText id="agnCmpEndDate" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.agnCmpEndDate}"
+					label="#{msg['manualAgnSetMgmt.label.agnCmpEndDate']}">
+				</p:inputText>
+				
+				<h:outputLabel for="agnCcyCode"
+					value="#{msg['manualAgnSetMgmt.label.agnCcyCode']}" />
+				<p:inputText id="agnCcyCode" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.agnCcyCode}"
+					label="#{msg['manualAgnSetMgmt.label.agnCcyCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="agnAgendaAmt"
+					value="#{msg['manualAgnSetMgmt.label.agnAgendaAmt']}" />
+				<p:inputText id="agnAgendaAmt" readonly="true"
+					value="#{manualAgendaSettleController.manualAgendaSettleVO.agnAgendaAmt}"
+					label="#{msg['manualAgnSetMgmt.label.agnAgendaAmt']}">
+				</p:inputText>
+
+				
+				<!-- <h:outputLabel for="isActive"
+					value="#{msg['agencyMgmt.tblHeader.isActive']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{manualAgendaSettleController.isactiveStatus}">
+				</p:inputText> -->
+				
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

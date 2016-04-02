@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceListTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['groupCodesMgmt.title.listgroupCodes']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['groupCodesMgmt.msg.noRecords']}" />
+		
+	 <ui:param name="addControlText" value="#{msg['groupCodesMgmt.nav.add']}" />
+	<ui:param name="addOutcome" value="addGroupCodes" />
+	 <ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addGroupCode')}" />  
+		
+	<ui:param name="listController" value="#{groupCodesListController}" />
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{groupCodesListController.listSelect}" />
+
+	   <p:column id="id" filterBy="#{record.id}"
+			headerText="#{msg['groupCodesMgmt.tblHeader.groupId']}"
+			sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+		
+		<p:column id="cbsBranchCode" filterBy="#{record.cbsBranchCode}"
+			headerText="#{msg['groupCodesMgmt.tblHeader.cbsBranchCode']}"
+			sortBy="#{record.cbsBranchCode}">
+			<h:outputText value="#{record.cbsBranchCode}" />
+		</p:column>
+		
+		<p:column id="cbsGroupId" filterBy="#{record.cbsGroupId}"
+				headerText="#{msg['groupCodesMgmt.tblHeader.cbsGroupId']}"
+				sortBy="#{record.cbsGroupId}">
+				<h:outputText value="#{record.cbsGroupId}" />
+		</p:column>
+		
+		<p:column id="groupName" filterBy="#{record.groupName}"
+			headerText="#{msg['groupCodesMgmt.label.groupName']}"
+			sortBy="#{record.groupName}">
+			<h:outputText value="#{record.groupName}" />
+		</p:column>
+
+
+		<p:column id="cbsCoId" filterBy="#{record.cbsCoId}"
+			headerText="#{msg['groupCodesMgmt.tblHeader.cbsCoId']}"
+			sortBy="#{record.cbsCoId}">
+			<h:outputText value="#{record.cbsCoId}" />
+		</p:column>
+
+		<p:column id="ibsCoId" filterBy="#{record.ibsCoId}"
+			headerText="#{msg['groupCodesMgmt.tblHeader.ibsCoId']}"
+			sortBy="#{record.ibsCoId}">
+			<h:outputText value="#{record.ibsCoId}" />
+		</p:column>
+
+		<!-- <p:column id="contactNumber"
+			filterBy="#{record.contactNumber}"
+			headerText="#{msg['groupCodesMgmt.tblHeader.contactNumber']}"
+			sortBy="#{record.contactNumber}">
+			<h:outputText value="#{record.contactNumber}" />
+		</p:column> -->
+
+
+		<p:column id="authStatus" filterBy="#{record.authStatusText}"
+			headerText="#{msg['groupCodesMgmt.tblHeader.authStatus']}"
+			sortBy="#{record.authStatusText}">
+			<h:outputText value="#{record.authStatusText}" />
+			</p:column>
+
+		<p:column id="isActive" filterBy="#{record.isActive}"
+				headerText="#{msg['groupCodesMgmt.tblHeader.isActive']}"
+				sortBy="#{record.isActive}">
+				<h:outputText value="#{record.isActive}" />
+		</p:column>
+	
+	</ui:define>
+</ui:composition>

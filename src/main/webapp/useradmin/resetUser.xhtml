@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	<ui:define name="metadata">
+	
+		<script type="text/javascript">
+			function onPageLoading()
+			{
+				document.getElementById('form:password').value = "";
+				document.getElementById('form:cPassword').value = "";
+			}
+		</script>
+		<f:metadata>
+			<f:viewParam name="id" value="#{userController.userIdToLoad}"></f:viewParam>
+			<f:event listener="#{userController.loadUserForReset}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+      <!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['userMgmt.title']}" />
+		</f:facet>
+      </ui:define> -->
+      
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+			<body onload="onPageLoading();"> 
+				<span class="pageHeaderTitle"> 
+				<h:outputText value="#{msg['userMgmt.title.resetPassword']}" /></span>
+				
+				<span class="pageHeaderControls"> 
+				<p:commandButton id="btnSave" value="#{msg['userMgmt.nav.save']}" update="panel"
+						action="#{userController.resetPassword}" style="margin-left: 182px;" /><p:spacer width="2px" /> 
+				<p:button id="btnCancel" value="Cancel"	outcome="cancel">
+				
+				<f:param name="id" value="#{userController.user.id}" /></p:button>
+				</span>
+			</body>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="4" id="panelGrid">
+
+				<h:outputLabel for="id" value="#{msg['userMgmt.label.userId']}" />
+				<p:inputText id="id" value="#{userController.user.id}"
+					readonly="true" label="#{msg['userMgmt.label.userId']}" />
+				<h:outputLabel />
+				<p:message for="id" display="icon" />
+
+				<h:outputLabel for="password"
+					value="#{msg['userMgmt.label.newPassword']}"
+					styleClass="required_asterisk" />
+				 <p:password id="password" value="#{userController.user.password}" autocomplete="off"
+					required="true" label="#{msg['userMgmt.label.newPassword']}" validatorMessage="#{msg['agentMgmt.validate.password']}"
+					href="#" title="#{msg['agentMgmt.validate.passwordmg']}">
+					<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16})" />
+					</p:password>
+				 <h:outputLabel />
+				<p:message for="password" id="msgPassword" display="icon" />
+
+				<h:outputLabel for="cPassword" value="#{msg['userMgmt.label.cPassword']}"
+					styleClass="required_asterisk" />
+				<p:password id="cPassword" value="#{userController.user.cPassword}" autocomplete="off"
+					required="true" label="#{msg['userMgmt.label.cPassword']}" 
+					href="#" title="#{msg['agentMgmt.validate.passwordmg']}">
+					 <f:validateLength minimum="3" maximum="20" />
+				</p:password>	 
+				<h:outputLabel />
+				<p:message for="cPassword" display="icon" />
+
+			</h:panelGrid>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>

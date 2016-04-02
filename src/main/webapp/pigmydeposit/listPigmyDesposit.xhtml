@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+
+	<!-- <ui:param name="pageTitle" value="#{msg['pigmyMgmt.title.deposit']}" />  -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['pigmyMgmt.title.listDeposit']}" />
+	<ui:param name="emptyMessage" value="#{msg['pigmyMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{pigmyDepositListContoller}" />
+
+	<ui:param name="selectionMode" value="single"></ui:param>
+	<ui:param name="selection" value="#{pigmyDepositListContoller.selectedRecord}" />
+
+		<ui:param name="addControlText"
+		value="#{msg['agencyAllocationsMgmt.tblNav.bulkAssignAgent']}" />
+	<ui:param name="addOutcome" value="bulkAssign" />
+	<ui:param name="singleControlText"
+		value="#{msg['agencyAllocationsMgmt.tblNav.selectedAssignAgent']}" />
+	<ui:param name="cancelOutcome" value="selectedAssign" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('allocateAgentForDeposit')}" />
+
+	<ui:define name="pageHeaderControls">
+		<p:splitButton
+			value="#{msg['agencyAllocationsMgmt.tblNav.allocateAgent']}"
+			rendered="#{agentAllocationDepositController.isAssignAgentAllowed()}" 
+			style="margin-left:82px;" >
+			<p:menuitem value="#{addControlText}" styleClass="ui-menu" 
+				url="/pigmydeposit/bulkDepositAgentAllocations.xhtml" outcome="#{addOutcome}" />
+			<p:menuitem value="#{singleControlText}" styleClass="ui-menu" 
+				url="/pigmydeposit/depositAgentAllocation.xhtml" outcome="#{cancelOutcome}"
+				/>
+		</p:splitButton>
+	</ui:define>
+	
+	<!-- UI Changes => Changes For Asomi Nirmal kanna S -->
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{pigmyDepositListContoller.listSelect}" />
+		<!-- <p:column selectionMode="multiple" style="width:2%"
+			disabledSelection="true" /> -->
+
+		<p:column id="id" filterBy="#{record.depositAccountNumber}"
+			headerText="#{msg['pigmydeposit.label.depositAccountNumber']}"
+			filterMatchMode="contains" sortBy="#{record.depositAccountNumber}">
+			<h:outputText value="#{record.depositAccountNumber}" />
+		</p:column>
+		<p:column id="branchCode" filterBy="#{record.branchCode}"
+			headerText="#{msg['depositActivity.tblHeader.branchCode']}"
+			filterMatchMode="contains" sortBy="#{record.branchCode}">
+			<h:outputText value="#{record.branchCode}" />
+		</p:column>
+		<p:column id="customerID" filterBy="#{record.customerID}"
+			headerText="#{msg['pigmydeposit.label.customerid']}"
+			filterMatchMode="contains" sortBy="#{record.customerID}">
+			<h:outputText value="#{record.customerID}" />
+		</p:column>
+		<!-- <p:column id="customerFullName" filterBy="#{record.customerFullName}"
+			headerText="#{msg['pigmydeposit.label.customerNm']}"
+			filterMatchMode="contains" sortBy="#{record.customerFullName}">
+			<h:outputText value="#{record.customerFullName}" />
+		</p:column> -->
+		<!-- <p:column id="allocationStatus" filterBy="#{record.allocationStatus}"
+			headerText="#{msg['pigmydeposit.label.allocationStatus']}"
+			filterMatchMode="contains" sortBy="#{record.allocationStatus}">
+			<h:outputText value="#{record.allocationStatus}" />
+		</p:column> -->
+		<p:column id="agentID" filterBy="#{record.agentID}"
+			headerText="#{msg['pigmydeposit.label.agentID']}"
+			filterMatchMode="contains" sortBy="#{record.agentID}">
+			<h:outputText value="#{record.agentID}" />
+		</p:column>
+		<p:column id="locationCode" filterBy="#{record.locationCode}"
+			headerText="#{msg['pigmydeposit.label.locationCode']}"
+			filterMatchMode="contains" sortBy="#{record.locationCode}">
+			<h:outputText value="#{record.locationCode}" />
+		</p:column>
+		<!-- <p:column id="allocationBy" filterBy="#{record.allocationBy}"
+			headerText="#{msg['pigmydeposit.label.allocationBy']}"
+			filterMatchMode="contains" sortBy="#{record.allocationBy}">
+			<h:outputText value="#{record.allocationBy}" />
+		</p:column> -->
+		<!-- <p:column id="depositAccCcy" filterBy="#{record.depositAccCcy}"
+			headerText="#{msg['pigmydeposit.label.depositAccCcy']}"
+			filterMatchMode="contains" sortBy="#{record.depositAccCcy}">
+			<h:outputText value="#{record.depositAccCcy}" >
+			</h:outputText>
+		</p:column> -->
+		<!-- <p:column id="depositOpenedDate" filterBy="#{record.depositOpenedDate}"
+			headerText="#{msg['pigmydeposit.label.depositOpenedDate']}"
+			filterMatchMode="contains" sortBy="#{record.depositOpenedDate}">
+			<h:outputText value="#{record.depositOpenedDate}" >
+			<f:convertDateTime pattern="dd-MMM-yyyy" /> 
+			</h:outputText>
+		</p:column>
+		<p:column id="maturityDate" filterBy="#{record.maturityDate}"
+			headerText="#{msg['pigmydeposit.label.maturityDate']}"
+			filterMatchMode="contains" sortBy="#{record.maturityDate}" >
+			<h:outputText value="#{record.maturityDate}">
+				<f:convertDateTime pattern="dd-MMM-yyyy" /> 
+			</h:outputText>
+		</p:column> -->
+		
+		<p:column id="redemptionFlag" filterBy="#{record.redemptionFlag}"
+			headerText="#{msg['pigmydeposit.label.redemptionFlag']}"
+			filterMatchMode="contains" sortBy="#{record.redemptionFlag}">
+			<h:outputText value="#{lov['redemptionFlag~'.concat(record.redemptionFlag.trim())]}" />
+		</p:column>
+		
+		<!-- <p:column id="redemptionPayoutDate" filterBy="#{record.redemptionPayoutDate}"
+			headerText="#{msg['pigmydeposit.label.redemptionPayoutDate']}"
+			filterMatchMode="contains" sortBy="#{record.redemptionPayoutDate}">
+			<h:outputText value="#{record.redemptionPayoutDate}">
+			   //<f:convertDateTime pattern="dd-MMM-yyyy" />note:- WHEN UNCOMMENT THIS <P:COLUMN> COMMENT THIS PARTICULAR LINE
+			</h:outputText>
+		</p:column> -->
+		
+		<!-- <p:column id="redemptionAmount" filterBy="#{record.redemptionAmount}"
+			headerText="#{msg['pigmydeposit.label.redemptionAmount']}"
+			filterMatchMode="contains" sortBy="#{record.redemptionAmount}">
+			<h:outputText value="#{record.redemptionAmount}" >
+			</h:outputText>
+		</p:column> -->
+		
+	</ui:define>
+</ui:composition>

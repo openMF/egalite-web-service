@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="deviceId"
+				value="#{deviceController.device.deviceId}"></f:viewParam>
+			<f:event listener="#{deviceController.loadDevice}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="contentSection">
+		<h1>#{msg['deviceMgmt.title']}</h1>
+
+		<h:form id="form">
+
+			<p:panel id="panel">
+
+				<f:facet name="header">
+					<p:panel>
+						<span class="pageHeaderTitle"> <h:outputText
+								value="#{msg['deviceMgmt.title.deleteDevice']}" />
+						</span>
+						<span class="pageHeaderControls"> <p:commandButton
+								id="btnSave" value="#{msg['deviceMgmt.nav.delete']}"
+								update="panel" action="#{deviceController.delete}" /> <p:button
+								id="btnCancel" value="#{msg['deviceMgmt.nav.cancel']}"
+								outcome="cancel">
+								<f:param name="deviceId"
+									value="#{deviceController.device.deviceId}" />
+							</p:button>
+						</span>
+					</p:panel>
+				</f:facet>
+
+				<p:messages id="msgs" showDetail="false" closable="true" />
+				<p:growl id="growl" showDetail="true" sticky="false" />
+
+				<h:panelGrid columns="3">
+					<h:outputLabel for="deviceId"
+						value="#{msg['deviceMgmt.label.deviceId']}" />
+					<p:inputText id="deviceId" readonly="true"
+						value="#{deviceController.device.deviceId}" required="true"
+						label="#{msg['deviceMgmt.label.deviceId']}">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="deviceId" display="icon" />
+
+					<h:outputLabel for="deviceType"
+						value="#{msg['deviceMgmt.label.deviceType']}" />
+					<p:inputText id="deviceType" readonly="true"
+						value="#{lov['deviceType~'.concat(deviceController.device.deviceType.trim())]}"></p:inputText>
+					<p:message for="deviceType" display="icon" />
+
+					<h:outputLabel for="uniqueId"
+						value="#{msg['deviceMgmt.label.uniqueId']}" />
+					<p:inputText id="uniqueId" readonly="true"
+						value="#{deviceController.device.uniqueId}"
+						label="#{msg['deviceMgmt.label.uniqueId']}" required="true">
+					</p:inputText>
+					<p:message for="uniqueId" display="icon" />
+
+					<h:outputLabel for="issuedDate"
+						value="#{msg['deviceMgmt.label.issuedDate']}" />
+					<p:calendar pattern="dd-MMM-yyyy" navigator="true" readonly="true"
+						showOn="label" yearRange="c-1:c+3"
+						value="#{deviceController.device.issuedDate}" id="issuedDate" />
+					<p:message for="issuedDate" display="icon" />
+
+					<h:outputLabel for="lastSync"
+						value="#{msg['deviceMgmt.label.lastSync']}" />
+					<p:inputText id="lastSync" readonly="true"
+						value="#{deviceController.device.lastSync}" required="true"
+						label="#{msg['deviceMgmt.label.lastSync']}">
+					</p:inputText>
+					<p:message for="lastSync" display="icon" />
+
+					<h:outputLabel for="deviceStatus"
+						value="#{msg['deviceMgmt.label.deviceStatus']}" />
+					<p:inputText id="deviceStatus" readonly="true"
+						value="#{lov['deviceStatus~'.concat(deviceController.device.deviceStatus)]}"></p:inputText>
+					<p:message for="deviceStatus" display="icon" />
+
+					<h:outputLabel for="issuedBy"
+						value="#{msg['deviceMgmt.label.issuedBy']}" />
+					<p:inputText id="issuedBy" readonly="true"
+						value="#{deviceController.device.issuedBy}" required="true"
+						label="#{msg['deviceMgmt.label.issuedBy']}">
+					</p:inputText>
+					<p:message for="issuedBy" display="icon" />
+
+					<h:outputLabel for="brandModel"
+						value="#{msg['deviceMgmt.label.brandModel']}" />
+					<p:inputText id="brandModel" readonly="true"
+						value="#{deviceController.device.brandModel}" required="true"
+						label="#{msg['deviceMgmt.label.brandModel']}">
+					</p:inputText>
+					<p:message for="brandModel" display="icon" />
+
+					<h:outputLabel for="operatingSystem"
+						value="#{msg['deviceMgmt.label.operatingSystem']}" />
+					<p:inputText id="operatingSystem" readonly="true"
+						value="#{deviceController.device.operatingSystem}" required="true"
+						label="#{msg['deviceMgmt.label.operatingSystem']}">
+					</p:inputText>
+					<p:message for="operatingSystem" display="icon" />
+
+					<h:outputLabel for="appVersion"
+						value="#{msg['deviceMgmt.label.appVersion']}" />
+					<p:inputText id="appVersion" readonly="true"
+						value="#{deviceController.device.appVersion}" required="true"
+						label="#{msg['deviceMgmt.label.appVersion']}">
+					</p:inputText>
+					<p:message for="appVersion" display="icon" />
+
+					<h:outputLabel for="mobileNumber"
+						value="#{msg['deviceMgmt.label.mobileNumber']}" />
+					<p:inputText id="mobileNumber" readonly="true"
+						value="#{deviceController.device.mobileNumber}" required="true"
+						label="#{msg['deviceMgmt.label.mobileNumber']}">
+					</p:inputText>
+					<p:message for="mobileNumber" display="icon" />
+
+				</h:panelGrid>
+			</p:panel>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

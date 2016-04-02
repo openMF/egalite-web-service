@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<!-- Modification under Tag No [ EGA-MN15-000002 ]
+	1. Panel Added under maintenance form for splitting Screen.
+	2. contactNumber modified to non mandatory field.
+	3. from ZipCode and to ZipCode modified to non mandatory field and placed after addressLine3.
+	4. from addressLine 1,2 and to addressLine 1,2 modified to non mandatory field.
+	5. district,city,state modified to drop-down.
+	6. Route Code Desc placed below CBS RouteCode.
+	7. Validate CBS RouteCode by Ajax call.
+	 -->
+
+	<ui:define name="metadata">
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'NameCharactersAndNumbersWithNoBlankSpace') {
+					AllowableCharacters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			function ieClicked() {
+				if (document.all) {
+					return false;
+				}
+			}
+			function firefoxClicked(e) {
+				if (document.layers || (document.getElementById(!document.all))) {
+					if (e.which == 2 || e.which == 3) {
+						return false;
+					}
+				}
+			}
+			if (document.layers) {
+				document.captureEvents(Event.MOUSEDOWN);
+				document.onmousedown = firefoxClicked;
+			} else {
+				document.onmouseup = firefoxClicked;
+				document.oncontextmenu = ieClicked;
+			}
+			document.oncontextmenu = new Function("return false")
+
+			//]]>
+		</script>
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{routeCodeController.routeCodes.routeCode}"></f:viewParam>
+			<f:event listener="#{routeCodeController.loadRouteCode}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['routeMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['routeMgmt.title.routeDetailModify']}" /></span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['routeMgmt.btn.save']}" update="panel"
+						action="#{routeCodeController.checkModifyForUpdate}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['routeMgmt.nav.cancel']}"
+						outcome="cancel">
+						<f:param name="id"
+							value="#{routeCodeController.routeCodes.routeCode}" />
+					</p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left">
+				<h:panelGrid columns="3" id="panelGrid">
+
+					<h:outputLabel for="routeCode"
+						value="#{msg['routeMgmt.tblHeader.routeCode']}"
+						styleClass="required_asterisk" />
+					<p:inputText id="routeCode"
+						value="#{routeCodeController.routeCodes.routeCode}"
+						readonly="true" required="true"
+						label="#{msg['routeMgmt.tblHeader.routeCode']}"
+						onkeypress="return inputLimiter(event,'NameCharactersAndNumbers')">
+						<f:validateLength minimum="2" maximum="25" />
+					</p:inputText>
+					<p:message for="routeCode" display="icon" />
+
+					<h:outputLabel for="cbsRouteCode"
+						value="#{msg['routeMgmt.tblHeader.cbsRouteCode']}"
+						styleClass="required_asterisk" />
+					<h:selectOneMenu id="cbsRouteCode" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.cbsRouteCode}"
+						required="true" label="#{msg['routeMgmt.tblHeader.cbsRouteCode']}">
+						<f:selectItem itemLabel="Select" itemValue="" />
+						<p:ajax event="change" listener="#{routeCodeController.validateRouteCode}" /> 
+						<f:selectItems value="#{routeCodeController.cbsRouteCodesUpdate}"
+							var="dev" itemValue="#{dev.dlValue}"
+							itemLabel="#{dev.dlValue} ~ #{dev.dlDesc}" />
+					</h:selectOneMenu>
+					<p:message for="cbsRouteCode" display="icon" />
+					
+					<h:outputLabel for="routeCodeDesc"
+						value="#{msg['routeMgmt.tblHeader.routeCodeDesc']}"
+						styleClass="required_asterisk" />
+					<p:inputText id="routeCodeDesc"
+						value="#{routeCodeController.routeCodes.routeCodeDesc}"
+						readonly="false" required="true"
+						label="#{msg['routeMgmt.tblHeader.routeCodeDesc']}">
+						<f:validateLength minimum="2" maximum="25" />
+					</p:inputText>
+					<p:message for="routeCodeDesc" display="icon" />
+
+					<h:outputLabel for="ibsLocationCode"
+						value="#{msg['routeMgmt.tblHeader.ibsLocationCode']}"
+						styleClass="required_asterisk" />
+					<h:selectOneMenu id="ibsLocationCode" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.ibsLocationCode}"
+						required="true"
+						label="#{msg['routeMgmt.tblHeader.ibsLocationCode']}">
+						<f:selectItem itemLabel="Select" itemValue="" />
+						<f:selectItems value="#{routeCodeController.locationCodes}"
+							var="code" itemValue="#{code.locationCode}"
+							itemLabel="#{code.locationCode}" />
+					</h:selectOneMenu>
+					<p:message for="ibsLocationCode" display="icon" />
+
+					<h:outputLabel for="cbsBranchCode"
+						value="#{msg['routeMgmt.tblHeader.cbsBranchCode']}"
+						styleClass="required_asterisk" />
+					<h:selectOneMenu id="cbsBranchCode" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.cbsBranchCode}"
+						required="true"
+						label="#{msg['routeMgmt.tblHeader.cbsBranchCode']}">
+						<f:selectItem itemLabel="Select" itemValue="" />
+						<f:selectItems value="#{routeCodeController.cbsBranchCodes}"
+							var="dev" itemValue="#{dev.dlValue}"
+							itemLabel="#{dev.dlValue}  ~  #{dev.dlDesc}" />
+					</h:selectOneMenu>
+					<p:message for="cbsBranchCode" display="icon" />
+
+					<h:outputLabel for="contactNumber"
+						value="#{msg['routeMgmt.tblHeader.contactNumber']}" />
+					<p:inputText id="contactNumber"
+						onkeypress="return inputLimiter(event,'Numbers')"
+						value="#{routeCodeController.routeCodes.contactNumber}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.contactNumber']}">
+						<f:validateLength minimum="2" maximum="25" />
+					</p:inputText>
+					<p:message for="contactNumber" display="icon" />
+
+					<h:outputLabel for="frmAddressLine1"
+						value="#{msg['routeMgmt.tblHeader.frmAddressLine1']}" />
+					<p:inputText id="frmAddressLine1"
+						value="#{routeCodeController.routeCodes.frmAddressLine1}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.frmAddressLine1']}">
+						<f:validateLength minimum="0" maximum="25" />
+					</p:inputText>
+					<p:message for="frmAddressLine1" display="icon" />
+
+					<h:outputLabel for="frmAddressLine2"
+						value="#{msg['routeMgmt.tblHeader.frmAddressLine2']}" />
+					<p:inputText id="frmAddressLine2"
+						value="#{routeCodeController.routeCodes.frmAddressLine2}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.frmAddressLine2']}">
+						<f:validateLength minimum="0" maximum="25" />
+					</p:inputText>
+					<p:message for="frmAddressLine2" display="icon" />
+
+					<h:outputLabel for="frmAddressLine3"
+						value="#{msg['routeMgmt.tblHeader.frmAddressLine3']}" />
+					<p:inputText id="frmAddressLine3"
+						value="#{routeCodeController.routeCodes.frmAddressLine3}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.frmAddressLine3']}">
+						<f:validateLength minimum="0" maximum="25" />
+					</p:inputText>
+					<p:message for="frmAddressLine3" display="icon" />
+
+					<h:outputLabel for="frmZipCode"
+						value="#{msg['routeMgmt.tblHeader.frmZipCode']}" />
+					<p:inputText id="frmZipCode"
+						onkeypress="return inputLimiter(event,'Numbers')"
+						value="#{routeCodeController.routeCodes.frmZipCode}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.frmZipCode']}">
+						<f:validateLength minimum="0" maximum="25" />
+					</p:inputText>
+					<p:message for="frmZipCode" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="frmAddressLine4"
+						value="#{msg['routeMgmt.tblHeader.frmAddressLine4']}" />
+					<h:selectOneMenu id="frmAddressLine4" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.frmAddressLine4}"
+						required="true"
+						label="#{msg['routeMgmt.tblHeader.frmAddressLine4']}">
+						<f:selectItems value="#{routeCodeController.districts}" var="code"
+							itemValue="#{code.codeValue}" itemLabel="#{code.codeValue}" />
+					</h:selectOneMenu>
+					<p:message for="frmAddressLine4" display="icon" />
+
+
+					<h:outputLabel styleClass="required_asterisk" for="frmCity"
+						value="#{msg['routeMgmt.tblHeader.frmCity']}" />
+					<h:selectOneMenu id="frmCity" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.frmCity}" required="true"
+						label="#{msg['routeMgmt.tblHeader.frmCity']}">
+						<f:selectItems value="#{routeCodeController.citys}" var="code"
+							itemValue="#{code.codeValue}" itemLabel="#{code.codeValue}" />
+					</h:selectOneMenu>
+					<p:message for="frmCity" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="frmState"
+						value="#{msg['routeMgmt.tblHeader.frmState']}" />
+					<h:selectOneMenu id="frmState" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.frmState}" required="true"
+						label="#{msg['routeMgmt.tblHeader.frmState']}">
+						<f:selectItems value="#{routeCodeController.states}" var="code"
+							itemValue="#{code.codeValue}" itemLabel="#{code.codeValue}" />
+					</h:selectOneMenu>
+					<p:message for="frmState" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="country"
+						value="#{msg['routeMgmt.tblHeader.frmCountry']}" />
+					<h:selectOneMenu id="frmCountry" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.frmCountry}"
+						required="true" label="#{msg['routeMgmt.tblHeader.frmCountry']}">
+						<f:selectItems value="#{routeCodeController.countryCodes}"
+							var="code" itemValue="#{code.countryCode}"
+							itemLabel="#{code.description}" />
+					</h:selectOneMenu>
+					<p:message for="frmCountry" display="icon" />
+
+				</h:panelGrid>
+			</p:panel>
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="3">
+
+					<h:outputLabel for="toAddressLine1"
+						value="#{msg['routeMgmt.tblHeader.toAddressLine1']}"/>
+					<p:inputText id="toAddressLine1"
+						value="#{routeCodeController.routeCodes.toAddressLine1}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.toAddressLine1']}">
+						<f:validateLength minimum="0" maximum="25" />
+					</p:inputText>
+					<p:message for="toAddressLine1" display="icon" />
+
+
+					<h:outputLabel for="toAddressLine2"
+						value="#{msg['routeMgmt.tblHeader.toAddressLine2']}"/>
+					<p:inputText id="toAddressLine2"
+						value="#{routeCodeController.routeCodes.toAddressLine2}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.toAddressLine2']}">
+						<f:validateLength minimum="2" maximum="25" />
+					</p:inputText>
+					<p:message for="toAddressLine2" display="icon" />
+
+					<h:outputLabel for="toAddressLine3"
+						value="#{msg['routeMgmt.tblHeader.toAddressLine3']}" />
+					<p:inputText id="toAddressLine3"
+						value="#{routeCodeController.routeCodes.toAddressLine3}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.toAddressLine3']}">
+						<f:validateLength minimum="0" maximum="15" />
+					</p:inputText>
+					<p:message for="toAddressLine3" display="icon" />
+
+					<h:outputLabel for="toZipCode"
+						value="#{msg['routeMgmt.tblHeader.toZipCode']}" />
+					<p:inputText id="toZipCode"
+						onkeypress="return inputLimiter(event,'Numbers')"
+						value="#{routeCodeController.routeCodes.toZipCode}"
+						readonly="false" required="false"
+						label="#{msg['routeMgmt.tblHeader.toZipCode']}">
+						<f:validateLength minimum="0" maximum="15" />
+					</p:inputText>
+					<p:message for="toZipCode" display="icon" />
+					<h:outputLabel styleClass="required_asterisk" for="toAddressLine4"
+						value="#{msg['routeMgmt.tblHeader.toAddressLine4']}" />
+					<h:selectOneMenu id="toAddressLine4" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.toAddressLine4}"
+						required="true"
+						label="#{msg['#{routeCodeController.routeCodes.toAddressLine4}']}">
+						<f:selectItems value="#{routeCodeController.districts}" var="code"
+							itemValue="#{code.codeValue}" itemLabel="#{code.codeValue}" />
+					</h:selectOneMenu>
+					<p:message for="toAddressLine4" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="toCity"
+						value="#{msg['routeMgmt.tblHeader.toCity']}" />
+					<h:selectOneMenu id="toCity" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.toCity}" required="true"
+						label="#{msg['routeMgmt.tblHeader.toCity']}">
+						<f:selectItems value="#{routeCodeController.citys}" var="code"
+							itemValue="#{code.codeValue}" itemLabel="#{code.codeValue}" />
+					</h:selectOneMenu>
+					<p:message for="toCity" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="toState"
+						value="#{msg['routeMgmt.tblHeader.toState']}" />
+					<h:selectOneMenu id="toState" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.toState}" required="true"
+						label="#{msg['routeMgmt.tblHeader.toState']}">
+						<f:selectItems value="#{routeCodeController.states}" var="code"
+							itemValue="#{code.codeValue}" itemLabel="#{code.codeValue}" />
+					</h:selectOneMenu>
+					<p:message for="toState" display="icon" />
+
+					<h:outputLabel styleClass="required_asterisk" for="country"
+						value="#{msg['routeMgmt.tblHeader.toCountry']}" />
+					<h:selectOneMenu id="toCountry" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.toCountry}"
+						required="true" label="#{msg['routeMgmt.tblHeader.toCountry']}">
+						<f:selectItems value="#{routeCodeController.countryCodes}"
+							var="code" itemValue="#{code.countryCode}"
+							itemLabel="#{code.description}" />
+					</h:selectOneMenu>
+					<p:message for="toCountry" display="icon" />
+
+
+					<h:outputLabel for="isActive"
+						value="#{msg['agencyMgmt.tblHeader.isActive']}"
+						styleClass="required_asterisk" />
+					<h:selectOneMenu id="isActive" styleClass="drop_down_style"
+						value="#{routeCodeController.routeCodes.isActive}" required="true"
+						label="#{msg['agencyMgmt.tblHeader.isActive']}">
+						<f:selectItems value="#{routeCodeController.routeCodeStatuss}"
+							var="devi" itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+					</h:selectOneMenu>
+					<p:message for="isActive" display="icon" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="8">
+					<h:outputText id="day" value="#{msg['centerMgmt.tblHeader.week']}" />
+					<p:selectBooleanCheckbox id="onSunday"
+						value="#{routeCodeController.routeCodes.onSunday}"
+						itemLabel="Sunday" />&nbsp;
+				<p:selectBooleanCheckbox id="onMonday"
+						value="#{routeCodeController.routeCodes.onMonday}"
+						itemLabel="Monday" />&nbsp;
+				<p:selectBooleanCheckbox id="onTuesday"
+						value="#{routeCodeController.routeCodes.onTuesday}"
+						itemLabel="Tuesday" />&nbsp;
+				<p:selectBooleanCheckbox id="onWednesday"
+						value="#{routeCodeController.routeCodes.onWednesday}"
+						itemLabel="Wednesday" />&nbsp;
+				<p:selectBooleanCheckbox id="onThursday"
+						value="#{routeCodeController.routeCodes.onThursday}"
+						itemLabel="Thursday" />&nbsp;
+				<p:selectBooleanCheckbox id="onFriday"
+						value="#{routeCodeController.routeCodes.onFriday}"
+						itemLabel="Friday" />&nbsp;
+				<p:selectBooleanCheckbox id="onSaturday"
+						value="#{routeCodeController.routeCodes.onSaturday}"
+						itemLabel="Saturday" />&nbsp;
+				<p:message for="day" display="icon" />
+				</h:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

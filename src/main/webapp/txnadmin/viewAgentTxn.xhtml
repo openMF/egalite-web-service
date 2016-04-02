@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://java.sun.com/jsp/jstl/core"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{agentTxnController.agentTxnVO.txnId}"></f:viewParam>
+			<f:event listener="#{agentTxnController.loadAgentTxn}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agentMgmt.title.viewAgent']}" />
+		</f:facet>
+	</ui:define> -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader" >
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['agentMgmt.title.viewAgent']}" /></span>
+				<span class="pageHeaderControls"> 
+					<p:button id="btnList" value="#{msg['agentTxnMgmt.label.close']}"	outcome="openList" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.agentId']}" />
+						<p:inputText id="agentId" value="#{agentTxnController.agentTxnVO.agentId}" />
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.customerId']}" />
+						<p:inputText id="customerId" value="#{agentTxnController.agentTxnVO.customerId}" />
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.loanAcNo']}"/>
+						<p:inputText id="loanAcNo" value="#{agentTxnController.agentTxnVO.loanAcNo}" />
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnType']}" />
+						<p:inputText id="txnType" value="#{lov['txnType~'.concat(agentTxnController.agentTxnVO.txnType.trim())]}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnId']}" />
+						<p:inputText id="id" value="#{agentTxnController.agentTxnVO.txnId}" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnTimestamp']}"/>
+						<p:calendar id="txnTimestamp" value="#{agentTxnController.agentTxnVO.txnTimestamp}"
+						pattern="dd-MMM-yyyy" showOn="label" readonlyInput="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.syncStatus']}" />
+						<p:inputText id="syncStatus" value="#{agentTxnController.agentTxnVO.syncStatus}" />
+						
+					<s:if test="agentTxnController.agentTxnVO.txnType=='R'">
+               			
+               			<h:outputLabel value="#{msg['agentTxnMgmt.label.syncStatus']}" />
+               			<p:inputText id="syncStatus" value="#{agentTxnController.repaymentTxn.txnId}" />
+						<h:outputLabel value="#{msg['agentTxnMgmt.label.syncStatus']}" />
+						<p:inputText id="syncStatus" value="#{agentTxnController.repaymentTxn.txnNarrative}" />
+						<h:outputLabel value="#{msg['agentTxnMgmt.label.syncStatus']}" />
+						<p:inputText id="syncStatus" value="#{agentTxnController.repaymentTxn.amount}" />
+						<h:outputLabel value="#{msg['agentTxnMgmt.label.syncStatus']}" />
+						<p:inputText id="syncStatus" value="#{agentTxnController.repaymentTxn.repaymentInst}" />
+						
+            		</s:if>
+            		<s:otherwise>
+                		
+                		<h:outputLabel value="#{msg['agentTxnMgmt.label.syncStatus']}" />
+                		<p:inputText id="syncStatus" value="#{agentTxnController.disbursementTxnVO.txnId}" />
+						<h:outputLabel value="#{msg['agentTxnMgmt.label.syncStatus']}" />
+						<p:inputText id="syncStatus" value="#{agentTxnController.disbursementTxnVO.txnNarrative}" />
+						<h:outputLabel value="#{msg['agentTxnMgmt.label.syncStatus']}" />
+						<p:inputText id="syncStatus" value="#{agentTxnController.disbursementTxnVO.amount}" />
+						
+            		</s:otherwise>
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

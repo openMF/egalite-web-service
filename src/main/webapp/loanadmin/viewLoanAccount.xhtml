@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{loanController.loanDetailViewVO.id}"></f:viewParam>
+			<f:event listener="#{loanController.loadLoan}" type="preRenderView"></f:event>
+			<f:event listener="#{loanController.loanSchedule}"
+				type="preRenderView"></f:event>
+			<f:event listener="#{loanController.loanPayment}"
+				type="preRenderView"></f:event>
+			<f:event listener="#{loanController.getDisbursementSchedule}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			 <h:outputText value="#{msg['loanMgmt.title.loanManagement']}" /> 
+		</f:facet>
+	</ui:define> -->
+	
+	<!-- UI Changes ==> Changes for Asomi Nirmal kanna S -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['loanMgmt.title.loanAccount']}" /></span>
+				<span class="pageHeaderControls"> <p:button id="btnClose"
+						value="#{msg['loanMgmt.btn.close']}" outcome="openClose"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> 
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithoutAuditTrail">
+			<!-- <h:panelGrid columns="2">
+
+				<h:outputLabel for="branchCode" value="#{msg['loanMgmt.tblHeader.branchCode']}" />
+				<p:inputText id="branchCode" readonly="true" value="#{loanController.loanDetailViewVO.branchCode}"
+					label="#{msg['loanMgmt.tblHeader.branchCode']}"/>
+				
+				<h:outputLabel for="loanAcId" value="#{msg['loanMgmt.label.loanAcNo']}" />
+				<p:inputText id="id" readonly="true" value="#{loanController.loanDetailViewVO.id}"
+					label="#{msg['loanMgmt.label.loanAcNo']}"/>
+				
+				<h:outputLabel for="customerId" value="#{msg['loanMgmt.label.customerId']}" />
+				<p:inputText id="customerId" readonly="true" value="#{loanController.loanDetailViewVO.customerId}"
+					label="#{msg['loanMgmt.label.customerId']}"/>
+				
+				<h:outputLabel for="customerFullName" value="#{msg['loanMgmt.label.customerName']}" />
+				<p:inputText id="customerFullName" readonly="true" value="#{loanController.loanDetailViewVO.customerFullName}"
+					label="#{msg['loanMgmt.label.customerName']}" />
+                 
+				<h:outputLabel for="parentLoanAcNo" value="#{msg['loanMgmt.label.parentLoanAcNo']}" />
+				<p:inputText id="parentLoanAcNo" readonly="true" value="#{loanController.loanDetailViewVO.parentLoanAcNo}"
+					label="#{msg['loanMgmt.label.parentLoanAcNo']}"/>
+                 
+                <h:outputLabel for="parentCustId" value="#{msg['loanMgmt.label.parentCustId']}" />
+				<p:inputText id="parentCustId" readonly="true" value="#{loanController.loanDetailViewVO.parentCustId}"
+					label="#{msg['loanMgmt.label.parentCustId']}" />
+                 
+                <h:outputLabel for="creditOfficerCode" value="#{msg['loanMgmt.label.creditOfficerCode']}" />
+				<p:inputText id="creditOfficerCode" readonly="true" value="#{loanController.loanDetailViewVO.creditOfficerCode}"
+					label="#{msg['loanMgmt.label.creditOfficerCode']}"/>
+				
+              	<h:outputLabel for="creditOfficerName" value="#{msg['loanMgmt.label.creditOfficerName']}" />
+				<p:inputText id="creditOfficerName" readonly="true" value="#{loanController.loanDetailViewVO.creditOfficerName}"
+					label="#{msg['loanMgmt.label.creditOfficerName']}"/>
+
+                <h:outputLabel for="agentId" value="#{msg['loanMgmt.label.agentId']}" />
+				<p:inputText id="agentId" readonly="true" value="#{loanController.loanDetailViewVO.agentId}"
+					label="#{msg['loanMgmt.label.agentId']}"/>
+                  
+				<h:outputLabel for="locationCode" value="#{msg['loanMgmt.label.locationCode']}" />
+				<p:inputText id="locationId" readonly="true" value="#{loanController.loanDetailViewVO.locationCode}"
+					label="#{msg['loanMgmt.label.locationCode']}"/>
+                 
+                 <h:outputLabel for="locationDesc" value="#{msg['loanMgmt.label.locationDesc']}" />
+				<p:inputText id="locationDesc" readonly="true" value="#{loanController.loanDetailViewVO.locationDesc}"
+					label="#{msg['loanMgmt.label.locationDesc']}"/>
+				
+				<h:outputLabel for="allocationByCode" value="#{msg['loanMgmt.label.allocationByCode']}" />
+				<p:inputText id="allocationByCode" readonly="true" value="#{loanController.loanDetailViewVO.allocationByCode}"
+					label="#{msg['loanMgmt.label.allocationByCode']}"/>
+				
+				<h:outputLabel for="allocationByName" value="#{msg['loanMgmt.label.allocationByName']}" />
+				<p:inputText id="allocationByName" readonly="true" value="#{loanController.loanDetailViewVO.allocationByName}"
+					label="#{msg['loanMgmt.label.allocationByName']}"/>
+                 
+                <h:outputLabel for="groupId" value="#{msg['loanMgmt.label.groupId']}" />
+				<p:inputText id="groupId" readonly="true" value="#{loanController.loanDetailViewVO.groupId}"
+					label="#{msg['loanMgmt.label.groupId']}"/>
+                 
+				<h:outputLabel for="sanctionedDate" value="#{msg['loanMgmt.label.sanctionedDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy " navigator="true" readonly="true"
+					showOn="label" yearRange="c-1:c+3" value="#{loanController.loanDetailViewVO.sanctionedDate}" id="sanctionedDate" />
+				
+				<h:outputLabel for="lastDisbursedDate" value="#{msg['loanMgmt.label.lastDisbursedDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy " navigator="true" readonly="true"	showOn="label" 
+					yearRange="c-1:c+3" value="#{loanController.loanDetailViewVO.lastDisbursedDate}" id="lastDisbursedDate" />
+					
+				<h:outputLabel for="disbrType" value="#{msg['loanMgmt.label.disbrType']}" />
+				<p:inputText id="disbrType" readonly="true" value="#{loanController.loanDetailViewVO.disbrType}"
+					label="#{msg['loanMgmt.label.disbrType']}"/>
+				
+				<h:outputLabel for="loanAcCcy"	value="#{msg['loanMgmt.label.currency']}" />
+				<p:inputText id="loanAcCcy" readonly="true" value="#{loanController.loanDetailViewVO.loanAcCcy}"
+					label="#{msg['loanMgmt.label.currency']}"/>
+					
+				<h:outputLabel for="isFullyDisbursed" value="#{msg['loanMgmt.label.isFullyDisbursed']}" />
+				<p:inputText id="isFullyDisbursed" readonly="true" value="#{loanController.loanDetailViewVO.isFullyDisbursed}"
+					label="#{msg['loanMgmt.label.isFullyDisbursed']}" />
+				
+				<h:outputLabel for="interestRate" value="#{msg['loanMgmt.label.interestRate']}" />
+				<p:inputText id="interestRate" readonly="true" value="#{loanController.loanDetailViewVO.interestRate}"
+					label="#{msg['loanMgmt.label.interestRate']}" />
+				
+				<h:outputLabel for="interestAccured" value="#{msg['loanMgmt.label.interestAccured']}" />
+				<p:inputText id="interestAccured" readonly="true" value="#{loanController.loanDetailViewVO.interestAccured}"
+					label="#{msg['loanMgmt.label.interestAccured']}" />
+				
+				<h:outputLabel for="principalAmount" value="#{msg['loanMgmt.label.principalAmount']}" />
+				<p:inputText id="principalAmount" readonly="true" value="#{loanController.loanDetailViewVO.principalAmount}"
+					label="#{msg['loanMgmt.label.principalAmount']}" />
+				
+				<h:outputLabel for="principalPaid" value="#{msg['loanMgmt.label.principalPaid']}" />
+				<p:inputText id="principalPaid" readonly="true" value="#{loanController.loanDetailViewVO.principalPaid}"
+					label="#{msg['loanMgmt.label.principalPaid']}" />
+				
+				<h:outputLabel for="principalOutstanding" value="#{msg['loanMgmt.label.principalOutstanding']}" />
+				<p:inputText id="principalOutstanding" readonly="true" value="#{loanController.loanDetailViewVO.principalOutstanding}"
+					label="#{msg['loanMgmt.label.principalOutstanding']}" />
+				
+				<h:outputLabel for="loanStatus" value="#{msg['loanMgmt.label.loanStatus']}" />
+				<p:inputText id="loanStatus" readonly="true" value="#{loanController.loanDetailViewVO.loanStatus}"
+					label="#{msg['loanMgmt.label.loanStatus']}" />
+				
+				<h:outputLabel for="lastRepaymentDate" value="#{msg['loanMgmt.label.lastRepaymentDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy " navigator="true" readonly="true" showOn="label" yearRange="c-1:c+3"
+					value="#{loanController.loanDetailViewVO.lastRepaymentDate}" id="lastRepaymentDate" />
+				
+				<h:outputLabel for="recordStat"	value="#{msg['loanMgmt.label.recordStat']}" />
+				<p:inputText id="recordStat" readonly="true" value="#{loanController.loanDetailViewVO.recordStat}"
+					label="#{msg['loanMgmt.label.recordStat']}"/>
+				
+				<h:outputLabel for="cbsUpldJobId" value="#{msg['loanMgmt.label.cbsUpldJobId']}" />
+				<p:inputText id="cbsUpldJobId" readonly="true" value="#{loanController.loanDetailViewVO.cbsUpldJobId}"
+					label="#{msg['loanMgmt.label.cbsUpldJobId']}"/>
+				
+				<h:outputLabel for="syncStatus"	value="#{msg['loanMgmt.label.syncStatus']}" />
+				<p:inputText id="syncStatus" readonly="true" value="#{loanController.loanDetailViewVO.syncStatus}"
+					label="#{msg['loanMgmt.label.syncStatus']}"/>
+				
+				<h:outputLabel for="syncTime" value="#{msg['loanMgmt.label.syncTime']}" />
+				<p:inputText id="syncTime" readonly="true"
+					value="#{loanController.loanDetailViewVO.syncTime}"
+					label="#{msg['loanMgmt.label.syncTime']}">
+				</p:inputText>
+				
+				<h:outputLabel for="allocationStatus"
+					value="#{msg['loanMgmt.label.allocationStatus']}" />
+				<p:inputText id="allocationStatus" readonly="true"
+					value="#{loanController.loanDetailViewVO.allocationStatus}"
+					label="#{msg['loanMgmt.label.allocationStatus']}">
+				</p:inputText>
+					
+			</h:panelGrid>-->
+
+				<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="loanAcId" value="#{msg['loanMgmt.tblHeader.loanAcNoSummary']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{loanController.loanDetailViewVO.id}"
+					label="#{msg['loanMgmt.tblHeader.loanAcNoSummary']}">
+				</p:inputText>
+				
+				<h:outputLabel for="branchCode"
+					value="#{msg['loanMgmt.tblHeader.branchCode']}" />
+				<p:inputText id="branchCode" readonly="true"
+					value="#{loanController.loanDetailViewVO.branchCode}"
+					label="#{msg['loanMgmt.tblHeader.branchCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="parentLoanAcNo"
+					value="#{msg['loanMgmt.label.parentLoanAcNo']}" />
+				<p:inputText id="parentLoanAcNo" readonly="true"
+					value="#{loanController.loanDetailViewVO.parentLoanAcNo}"
+					label="#{msg['loanMgmt.label.parentLoanAcNo']}">
+				</p:inputText> 
+				
+				<h:outputLabel for="customerId"
+					value="#{msg['loanMgmt.label.customerId']}" />
+				<p:inputText id="customerId" readonly="true"
+					value="#{loanController.loanDetailViewVO.customerId}"
+					label="#{msg['loanMgmt.label.customerId']}">
+				</p:inputText>
+				
+				<h:outputLabel for="customerFullName"
+					value="#{msg['loanMgmt.label.customerName']}" />
+				<p:inputText id="customerFullName" readonly="true"
+					value="#{loanController.loanDetailViewVO.customerFullName}"
+					label="#{msg['loanMgmt.label.customerName']}">
+				</p:inputText>
+                 
+                 <h:outputLabel for="parentCustId"
+					value="#{msg['loanMgmt.label.parentCustId']}" />
+				<p:inputText id="parentCustId" readonly="true"
+					value="#{loanController.loanDetailViewVO.parentCustId}"
+					label="#{msg['loanMgmt.label.parentCustId']}">
+				</p:inputText> 
+				
+				<h:outputLabel for="isParentLoan"
+					value="#{msg['loanMgmt.label.loanType']}" />
+				<p:inputText id="isParentLoan" readonly="true"
+					value="#{loanController.loanDetailViewVO.isParentLoan}"
+					label="#{msg['loanMgmt.label.loanType']}">
+				</p:inputText> 
+				
+				<h:outputLabel for="isGroupLoan"
+					value="#{msg['loanMgmt.label.Group_typecategory']}" />
+				<p:inputText id="isGroupLoan" readonly="true"
+					value="#{loanController.loanDetailViewVO.isGroupLoan}"
+					label="#{msg['loanMgmt.label.Group_typecategory']}">
+				</p:inputText> 
+				
+				 <h:outputLabel for="groupId"
+					value="#{msg['loanMgmt.label.groupId']}" />
+				<p:inputText id="groupId" readonly="true"
+					value="#{loanController.loanDetailViewVO.groupId}"
+					label="#{msg['loanMgmt.label.groupId']}">
+				</p:inputText>
+				
+				<h:outputLabel for="sanctionedDate"
+					value="#{msg['loanMgmt.label.sanctionedDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy " navigator="true" readonly="true"
+					showOn="label" yearRange="c-1:c+3"
+					value="#{loanController.loanDetailViewVO.sanctionedDate}" id="sanctionedDate" />
+					
+				<h:outputLabel for="loanAcCcy"
+					value="#{msg['loanMgmt.label.currency']}" />
+				<p:inputText id="loanAcCcy" readonly="true"
+					value="#{loanController.loanDetailViewVO.loanAcCcy}"
+					label="#{msg['loanMgmt.label.currency']}">
+				</p:inputText>
+				
+				<h:outputLabel for="principalAmount"
+					value="#{msg['loanMgmt.label.principalAmount']}" />
+				<p:inputText id="principalAmount" readonly="true"
+					value="#{loanController.loanDetailViewVO.principalAmount}"
+					label="#{msg['loanMgmt.label.principalAmount']}">
+				</p:inputText>
+				
+				<h:outputLabel for="principalPaid"
+					value="#{msg['loanMgmt.label.principalPaid']}" />
+				<p:inputText id="principalPaid" readonly="true"
+					value="#{loanController.loanDetailViewVO.principalPaid}"
+					label="#{msg['loanMgmt.label.principalPaid']}">
+				</p:inputText>
+				
+				<h:outputLabel for="principalOutstanding"
+					value="#{msg['loanMgmt.label.principalOutstanding']}" />
+				<p:inputText id="principalOutstanding" readonly="true"
+					value="#{loanController.loanDetailViewVO.principalOutstanding}"
+					label="#{msg['loanMgmt.label.principalOutstanding']}">
+				</p:inputText>
+				
+				<h:outputLabel for="interestRate"
+					value="#{msg['loanMgmt.label.interestRate']}" />
+				<p:inputText id="interestRate" readonly="true"
+					value="#{loanController.loanDetailViewVO.interestRate}"
+					label="#{msg['loanMgmt.label.interestRate']}">
+				</p:inputText>
+			</h:panelGrid>
+			</p:panel>
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2" >
+				
+				<h:outputLabel for="interestAccured"
+					value="#{msg['loanMgmt.label.interestAccured']}" />
+				<p:inputText id="interestAccured" readonly="true"
+					value="#{loanController.loanDetailViewVO.interestAccured}"
+					label="#{msg['loanMgmt.label.interestAccured']}">
+				</p:inputText>
+				
+				<h:outputLabel for="lastRepaymentDate"
+					value="#{msg['loanMgmt.label.lastRepaymentDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy " navigator="true" readonly="true"
+					showOn="label" yearRange="c-1:c+3"
+					value="#{loanController.loanDetailViewVO.lastRepaymentDate}" id="lastRepaymentDate" />
+					
+				<h:outputLabel for="lastDisbursedDate"
+					value="#{msg['loanMgmt.label.lastDisbursedDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy " navigator="true" readonly="true"
+					showOn="label" yearRange="c-1:c+3"
+					value="#{loanController.loanDetailViewVO.lastDisbursedDate}"
+					id="lastDisbursedDate" />
+					
+				<h:outputLabel for="disbrType"
+					value="#{msg['loanMgmt.label.disbrType']}" />
+				<p:inputText id="disbrType" readonly="true"
+					value="#{loanController.loanDetailViewVO.disbrType}"
+					label="#{msg['loanMgmt.label.disbrType']}">
+				</p:inputText>
+				
+				<h:outputLabel for="isFullyDisbursed"
+					value="#{msg['loanMgmt.label.isFullyDisbursed']}" />
+				<p:inputText id="isFullyDisbursed" readonly="true"
+					value="#{loanController.loanDetailViewVO.isFullyDisbursed}"
+					label="#{msg['loanMgmt.label.isFullyDisbursed']}">
+				</p:inputText>
+				
+				<h:outputLabel for="loanStatus"
+					value="#{msg['loanMgmt.label.loanStatus']}" />
+				<p:inputText id="loanStatus" readonly="true"
+					value="#{loanController.loanDetailViewVO.loanStatus}"
+					label="#{msg['loanMgmt.label.loanStatus']}">
+				</p:inputText>
+                 
+                 <h:outputLabel for="creditOfficerCode"
+					value="#{msg['loanMgmt.label.creditOfficerCode']}" />
+				<p:inputText id="creditOfficerCode" readonly="true"
+					value="#{loanController.loanDetailViewVO.creditOfficerCode}"
+					label="#{msg['loanMgmt.label.creditOfficerCode']}">
+				</p:inputText>
+				
+              <h:outputLabel for="creditOfficerName"
+					value="#{msg['loanMgmt.label.creditOfficerName']}" />
+				<p:inputText id="creditOfficerName" readonly="true"
+					value="#{loanController.loanDetailViewVO.creditOfficerName}"
+					label="#{msg['loanMgmt.label.creditOfficerName']}">
+				</p:inputText>
+
+                  <h:outputLabel for="agentId"
+					value="#{msg['loanMgmt.label.agentId']}" />
+				<p:inputText id="agentId" readonly="true"
+					value="#{loanController.loanDetailViewVO.agentId}"
+					label="#{msg['loanMgmt.label.agentId']}">
+				</p:inputText>
+                  
+				<h:outputLabel for="locationCode"
+					value="#{msg['loanMgmt.label.locationCode']}" />
+				<p:inputText id="locationId" readonly="true"
+					value="#{loanController.loanDetailViewVO.locationCode}"
+					label="#{msg['loanMgmt.label.locationCode']}">
+				</p:inputText>
+                 
+                 <h:outputLabel for="locationDesc"
+					value="#{msg['loanMgmt.label.locationDesc']}" />
+				<p:inputText id="locationDesc" readonly="true"
+					value="#{loanController.loanDetailViewVO.locationDesc}"
+					label="#{msg['loanMgmt.label.locationDesc']}">
+				</p:inputText>
+				
+				<h:outputLabel for="allocationByCode"
+					value="#{msg['loanMgmt.label.allocationByCode']}" />
+				<p:inputText id="allocationByCode" readonly="true"
+					value="#{loanController.loanDetailViewVO.allocationByCode}"
+					label="#{msg['loanMgmt.label.allocationByCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="allocationByName"
+					value="#{msg['loanMgmt.label.allocationByName']}" />
+				<p:inputText id="allocationByName" readonly="true"
+					value="#{loanController.loanDetailViewVO.allocationByName}"
+					label="#{msg['loanMgmt.label.allocationByName']}">
+				</p:inputText>
+                 
+				<h:outputLabel for="recordStat"
+					value="#{msg['loanMgmt.label.recordStat']}" />
+				<p:inputText id="recordStat" readonly="true"
+					value="#{loanController.loanDetailViewVO.recordStat}"
+					label="#{msg['loanMgmt.label.recordStat']}">
+				</p:inputText>
+				
+				<h:outputLabel for="cbsUpldJobId"
+					value="#{msg['loanMgmt.label.cbsUpldJobId']}" />
+				<p:inputText id="cbsUpldJobId" readonly="true"
+					value="#{loanController.loanDetailViewVO.cbsUpldJobId}"
+					label="#{msg['loanMgmt.label.cbsUpldJobId']}">
+				</p:inputText>
+			</h:panelGrid>
+			</p:panel>
+		</p:panel>
+ 
+		<p:tabView orientation="top" styleClass="loanTapBody">
+			<p:tab title="#{msg['loanMgmt.tblHeader.loanSchedule']}">
+				<p:panel id="loanPanel">
+					<!-- <f:facet name="header">
+						<p:panel styleClass="maintenanceFormPanelHeader">
+							<span class="pageHeaderTitle"> <h:outputText
+									value="#{msg['loanMgmt.tblHeader.loanSchedule']}" />
+							</span>
+						</p:panel>
+					</f:facet> -->
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:dataTable id="loanDataTable" var="loanSchedule"
+									emptyMessage="#{msg['loanMgmt.tblHeader.noRecords']}"
+									rowKey="#{loanSchedule.id}" value="#{loanController.loanScdle}"
+									scrollable="true" scrollHeight="60">
+                                     
+                                    <p:column styleClass="ids" id="agendaId" headerText="#{msg['loanMgmt.label.agendaId']}">
+										<h:outputText value="#{loanSchedule.agendaId}" />
+									</p:column>
+                                    
+                                    <p:column id="componentName" headerText="#{msg['loanMgmt.label.cmpName']}">
+										<h:outputText value="#{loanSchedule.componentName}" />
+									</p:column>
+                                    
+                                    <p:column id="schType" headerText="#{msg['loanMgmt.label.schType']}">
+										<h:outputText value="#{loanSchedule.schType}" />
+									</p:column>
+                                     
+									<p:column id="schEndDate" headerText="#{msg['loanMgmt.label.schEndDate']}">
+										<h:outputText value="#{loanSchedule.schEndDate}"><f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+									</p:column>
+	
+									<p:column id="isFutureSch"	headerText="#{msg['loanMgmt.label.schType']}">
+										<h:outputText value="#{loanSchedule.isFutureSch}" />
+									</p:column> 									
+	
+									<p:column id="ccyCode"	headerText="#{msg['loanMgmt.label.ccyCode']}">
+										<h:outputText value="#{loanSchedule.ccyCode}" />
+									</p:column> 									
+	
+									<p:column id="amtDue" headerText="#{msg['loanMgmt.label.amtDue']}">
+										<h:outputText value="#{loanSchedule.amtDue}" >
+										<f:convertNumber type="number" groupingUsed="true" minFractionDigits="0"/>
+										</h:outputText>
+									</p:column>
+									
+									<p:column id="amtSettled" headerText="#{msg['loanMgmt.label.amtSettled']}">
+										<h:outputText value="#{loanSchedule.amtSettled}" >
+										<f:convertNumber type="number" groupingUsed="true" minFractionDigits="0"/>
+										</h:outputText>
+									</p:column>
+	
+									<p:column id="isSettled"	headerText="#{msg['loanMgmt.label.isSettled']}">
+										<h:outputText value="#{loanSchedule.isSettled}" />
+									</p:column> 									
+	
+			
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+			</p:tab>
+			<p:tab title="#{msg['loanMgmt.tblHeader.loanPayment']}">
+				<p:panel id="paymentPanel">
+					<!-- <f:facet name="header">
+						<p:panel styleClass="maintenanceFormPanelHeader">
+							<span class="pageHeaderTitle"> <h:outputText
+									value="#{msg['loanMgmt.tblHeader.loanPayment']}" />
+							</span>
+						</p:panel>
+					</f:facet> -->
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:dataTable id="loanDataTable2" var="loanPayment"
+									emptyMessage="#{msg['loanMgmt.tblHeader.noRecords']}"
+									rowKey="#{loanPayment.id}"
+									value="#{loanController.loanPaymentlist}" scrollable="true"
+									scrollHeight="60">
+                                         
+									<p:column id="schDueDate"
+										headerText="#{msg['loanMgmt.label.schDueDate']}">
+										<h:outputText value="#{loanPayment.schDueDate}" >
+										<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column id="schPaidDate"
+										headerText="#{msg['loanMgmt.label.schPaidDate']}">
+										<h:outputText value="#{loanPayment.schPaidDate}" >
+										<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column id="settlementCcyCode"
+										headerText="#{msg['loanMgmt.label.settlementCcyCode']}">
+										<h:outputText value="#{loanPayment.settlementCcyCode}" />
+									</p:column>
+
+									<p:column id="amtSettled"
+										headerText="#{msg['loanMgmt.label.amtSettled']}">
+										<h:outputText value="#{loanPayment.amtSettled}" />
+									</p:column>
+
+									<p:column id="fullPartialInd"
+										headerText="#{msg['loanMgmt.label.fullPartialInd']}">
+										<h:outputText value="#{loanPayment.fullPartialInd}" />
+									</p:column>
+									
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+			</p:tab>
+			<p:tab title="#{msg['loanMgmt.tblHeader.disbursementSchedule']}" styleClass="loanTapBody">
+				<p:panel id="disbursementSchedule">
+					<!-- <f:facet name="header">
+						<p:panel styleClass="maintenanceFormPanelHeader">
+							<span class="pageHeaderTitle"> <h:outputText
+									value="#{msg['loanMgmt.tblHeader.disbursementSchedule']}" />
+							</span>
+						</p:panel>
+					</f:facet> -->
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:dataTable id="disburScheduleDataTable" var="disburSchedule"
+									emptyMessage="#{msg['loanMgmt.tblHeader.noRecords']}"
+									rowKey="#{disburSchedule.id}" value="#{loanController.disbursementScheduleList}"
+									scrollable="true" scrollHeight="60">
+                                  
+                                  	<p:column styleClass="ids" id="agendaId" headerText="#{msg['loanMgmt.label.agendaId']}">
+										<h:outputText value="#{disburSchedule.agendaId}" />
+									</p:column>
+									
+									<p:column id="componentName" headerText="#{msg['loanMgmt.label.componentName']}">
+										<h:outputText value="#{disburSchedule.componentName}" />
+									</p:column>
+									
+									<p:column id="disbrType" headerText="#{msg['loanMgmt.label.disbrType']}">
+										<h:outputText value="#{disburSchedule.disbrType}" />
+									</p:column>
+									
+									<p:column id="schStDate" headerText="#{msg['loanMgmt.label.schStDate']}">
+										<h:outputText value="#{disburSchedule.schStDate}">
+											<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column id="schEndDate" headerText="#{msg['loanMgmt.label.schEndDate']}">
+										<h:outputText value="#{disburSchedule.schEndDate}">
+											<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column id="ccyCode"	headerText="#{msg['loanMgmt.label.ccyCode']}">
+										<h:outputText value="#{disburSchedule.ccyCode}" />
+									</p:column>
+									
+									<p:column id="amtToDisbr" headerText="#{msg['loanMgmt.label.amtToDisbr']}">
+										<h:outputText value="#{disburSchedule.amtToDisbr}" >
+										<f:convertNumber type="number" groupingUsed="true" minFractionDigits="0" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column id="amtDisbursed" headerText="#{msg['loanMgmt.label.amtDisbursed']}">
+										<h:outputText value="#{disburSchedule.amtDisbursed}" >
+										<f:convertNumber type="number" groupingUsed="true" minFractionDigits="0" />
+										</h:outputText>
+									</p:column>
+									
+									<p:column id="isSettled" headerText="#{msg['loanMgmt.label.isSettled']}">
+										<h:outputText value="#{disburSchedule.isSettled}" />
+									</p:column>
+									
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+			</p:tab>
+		</p:tabView>
+	</ui:define>
+</ui:composition>

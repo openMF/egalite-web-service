@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	<ui:define name="metadata">
+		<script type="text/javascript">
+        //<![CDATA[
+        
+        function inputLimiter(e,allow) {
+    var AllowableCharacters = '';
+
+    if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'NameCharactersSplAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~-!@#$%^&*<>?{}[]|\/';}
+    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+    if (k!=13 && k!=8 && k!=0){
+        if ((e.ctrlKey==false) && (e.altKey==false)) {
+        return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+        } else {
+        return true;
+        }
+    } else {
+        return true;
+    }
+} 
+
+        //]]>
+    </script>
+	</ui:define>
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{deviceController.device.deviceId}"></f:viewParam>
+			<f:event listener="#{deviceController.loadDevice}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['deviceMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+	<!-- Brand model and OS Version Mandatory Removed == changed for Asomi Nirmal kanna S  -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['deviceMgmt.title.deviceDetailModify']}" /></span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['deviceMgmt.btn.save']}" update="panel"
+						action="#{deviceController.checkModifyForUpdate}"
+						style="margin-left: 182px;" /> <p:spacer width="5px" /> <p:button
+						id="btnCancel" value="#{msg['deviceMgmt.btn.cancel']}"
+						outcome="cancel">
+						<f:param name="id" value="#{deviceController.device.deviceId}" />
+					</p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="3" id="panelGrid">
+
+				<h:outputLabel for="id"
+					value="#{msg['deviceMgmt.tblHeader.deviceId']}" />
+				<p:inputText id="id" value="#{deviceController.device.deviceId}"
+					readonly="true" label="#{msg['deviceMgmt.label.deviceId']}" />
+				<p:message for="id" display="icon" />
+
+				<h:outputLabel for="deviceType"
+					value="#{msg['deviceMgmt.label.deviceType']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="deviceType"
+					styleClass="drop_down_style"
+					value="#{deviceController.device.deviceType}" required="true"
+					label="#{msg['deviceMgmt.label.deviceType']}">
+					<f:selectItems value="#{deviceController.deviceTypes}" var="dev"
+						itemValue="#{dev.listValue}" itemLabel="#{dev.desn}" />
+				</h:selectOneMenu>
+				<p:message for="deviceType" display="icon" />
+
+				<h:outputLabel for="uniqueId"
+					value="#{msg['deviceMgmt.label.uniqueId']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="uniqueId"
+					value="#{deviceController.device.uniqueId}"
+					label="#{msg['deviceMgmt.label.uniqueId']}" required="true"
+					onkeypress="return inputLimiter(event,'NameCharactersSplAndNumbers')">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="uniqueId" display="icon" />
+
+				<h:outputLabel for="issuedDate"
+					value="#{msg['deviceMgmt.label.issuedDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy" navigator="true" readonly="true"
+					showOn="label" yearRange="c-1:c+3"
+					value="#{deviceController.device.issuedDate}" id="issuedDate" />
+				<p:message for="issuedDate" display="icon" />
+
+				<h:outputLabel styleClass="required_asterisk" for="issuedByCo"
+					value="#{msg['deviceMgmt.tblHeader.issuedBy']}" />
+				<h:selectOneMenu id="issuedByCo" styleClass="drop_down_style"
+					value="#{deviceController.device.issuedByCo}" required="true"
+					label="#{msg['deviceMgmt.tblHeader.issuedBy']}">
+					<f:selectItems value="#{deviceController.creditOfficers}"
+						var="credit" itemValue="#{credit.id}" itemLabel="#{credit.id}" />
+				</h:selectOneMenu>
+				<h:outputLabel />
+
+				<h:outputLabel for="brandModel"
+					value="#{msg['deviceMgmt.label.brandModel']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="brandModel"
+					value="#{deviceController.device.brandModel}" required="true"
+					label="#{msg['deviceMgmt.label.brandModel']}">
+				</p:inputText>
+				<p:message for="brandModel" display="icon" />
+
+				<h:outputLabel for="operatingSystem"
+					value="#{msg['deviceMgmt.label.operatingSystem']}" />
+				<p:inputText id="operatingSystem" value="#{deviceController.osType}"
+					required="true" readonly="true"
+					label="#{msg['deviceMgmt.label.operatingSystem']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="operatingSystem" display="icon" />
+
+				<h:outputLabel for="appVersion"
+					value="#{msg['deviceMgmt.label.appVersion']}" />
+				<p:inputText id="appVersion"
+					value="#{deviceController.device.appVersion}" required="true"
+					label="#{msg['deviceMgmt.label.appVersion']}">
+				</p:inputText>
+				<p:message for="appVersion" display="icon" />
+
+				<h:outputLabel for="simNumber"
+					value="#{msg['deviceMgmt.tblHeader.simNumber']}"
+					styleClass="required_asterisk" />
+				<p:inputText
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+					id="simNumber" value="#{deviceController.device.simNumber}"
+					required="true" label="#{msg['deviceMgmt.tblHeader.simNumber']}">
+					<f:validateLength minimum="8" maximum="16" />
+				</p:inputText>
+				<p:message for="simNumber" display="icon" />
+
+				<h:outputLabel for="isActive"
+					value="#{msg['deviceMgmt.tblHeader.deviceStatus']}" />
+				<h:selectOneMenu id="isActive"
+					styleClass="drop_down_style"
+					value="#{deviceController.device.isActive}" required="true"
+					label="#{msg['deviceMgmt.tblHeader.deviceStatus']}">
+					<!-- <f:selectItem itemLabel="Select" itemValue="" /> -->
+					<f:selectItems value="#{deviceController.deviceStatuss}" var="devs"
+						itemValue="#{devs.listValue}" itemLabel="#{devs.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

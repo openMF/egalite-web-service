@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{cashRecSumupController.agentId}"></f:viewParam>
+			<f:event listener="#{cashRecSumupController.loadCashRecord}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['cashRecMgmt.title.listCashRecord']}" /></span>
+
+				<span class="pageHeaderControls"> 
+				 	<p:button id="btnList" value="#{msg['loanMgmt.btn.close']}"
+		outcome="openList"  />
+	<p:spacer width="2px" /> 				
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+
+	<p:dataTable id="tblCashRecDetail" var="record"   
+					value="#{cashRecSumupController.cashRecDetailList}" widgetVar="recordsTable" 
+					paginator="true" rows="15" paginatorPosition="bottom" rowKey="#{record.txnId}"
+					emptyMessage="#{msg['cashRecMgmt.msg.noRecords']}" >
+					
+					
+					
+					
+			<p:column id="txnId" headerText="#{msg['cashRecMgmt.tblHeader.txnid']}" filterBy="#{record.txnId}"  sortBy="#{record.txnId}">
+				<h:outputText value="#{record.txnId}" />
+			</p:column>
+			
+			<p:column id="txnDate" headerText="#{msg['cashRecMgmt.tblHeader.txnDate']}" filterBy="#{record.txnDate}"  sortBy="#{record.txnDate}">
+				<h:outputText value="#{record.txnDate}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column id="syncTime" headerText="#{msg['cashRecMgmt.tblHeader.syncTime']}" filterBy="#{record.syncTime}"  sortBy="#{record.syncTime}">
+				<h:outputText value="#{record.syncTime}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</h:outputText>
+			</p:column>
+
+			<p:column id="txnDesc" headerText="#{msg['cashRecMgmt.tblHeader.txnDesc']}" filterBy="#{record.txnDesc}"  sortBy="#{record.txnDesc}">
+				<h:outputText value="#{record.txnDesc}" />
+			</p:column>
+
+			
+
+			<p:column id="agendaId" headerText="#{msg['cashRecMgmt.tblHeader.agendaId']}" filterBy="#{record.agendaId}"  sortBy="#{record.agendaId}">
+				<h:outputText value="#{record.agendaId}" />
+			</p:column>
+			
+
+			<p:column id="seqNo" headerText="#{msg['cashRecMgmt.tblHeader.seqNo']}" filterBy="#{record.seqNo}"  sortBy="#{record.seqNo}">
+				<h:outputText value="#{record.seqNo}" />
+			</p:column>
+
+			<p:column id="currency" headerText="#{msg['cashRecMgmt.tblHeader.txnCcy']}" filterBy="#{record.currency}"  sortBy="#{record.currency}">
+				<h:outputText value="#{record.currency}" />
+			</p:column>
+
+			<p:column id="drCr" headerText="#{msg['cashRecMgmt.tblHeader.drCr']}" filterBy="#{record.drCr}"  sortBy="#{record.drCr}">
+				<h:outputText value="#{record.drCr}" />
+			</p:column>
+					
+					
+			<p:column id="amount" headerText="#{msg['cashRecMgmt.tblHeader.txnAmt']}" filterBy="#{record.amount}"  sortBy="#{record.amount}">
+				<h:outputText value="#{record.amount}" />
+			</p:column>
+					
+			<p:column id="authStatus" headerText="#{msg['cashRecMgmt.tblHeader.authStatus']}" filterBy="#{record.authStatus}"  sortBy="#{record.authStatus}">
+				<h:outputText value="#{record.authStatus}" />
+			</p:column>
+			
+				<p:column id="revStatus" headerText="#{msg['cashRecMgmt.tblHeader.RevStat']}" filterBy="#{record.revStatus}"  sortBy="#{record.revStatus}">
+				<h:outputText value="#{record.revStatus}" />
+			</p:column>
+			
+			<p:column id="deleteStatus" headerText="#{msg['cashRecMgmt.tblHeader.delStat']}" filterBy="#{record.deleteStatus}"  sortBy="#{record.deleteStatus}">
+				<h:outputText value="#{record.deleteStatus}" />
+			</p:column>
+			
+			<p:column id="agentId" headerText="#{msg['cashRecMgmt.tblHeader.agentId']}" filterBy="#{record.agentId}"  sortBy="#{record.agentId}">
+				<h:outputText value="#{record.agentId}" />
+			</p:column>
+					</p:dataTable>
+					
+					
+					
+	</ui:define>
+	</ui:composition>

@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#useradmin#modifyUser.xhtml"
+  PATH="/useradmin/modifyUser.xhtml" SHAPE="304,513,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#useradmin#modifyUser.xhtml:0" NAME="item"
+   PATH="/useradmin/modifyUser.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#useradmin#listUsers.xhtml"
+    NAME="output" PATH="/useradmin/listUsers.xhtml"
+    TARGET="rules:#useradmin#listUsers.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#useradmin#viewUser.xhtml"
+    NAME="output1" PATH="/useradmin/viewUser.xhtml"
+    TARGET="rules:#useradmin#viewUser.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#useradmin#addUser.xhtml"
+    NAME="output2" PATH="/useradmin/addUser.xhtml"
+    TARGET="rules:#useradmin#addUser.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#useradmin#viewUser.xhtml"
+  PATH="/useradmin/viewUser.xhtml" SHAPE="304,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#useradmin#viewUser.xhtml:0" NAME="item"
+   PATH="/useradmin/viewUser.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="openAdd::#useradmin#addUser.xhtml"
+    NAME="output" PATH="/useradmin/addUser.xhtml"
+    TARGET="rules:#useradmin#addUser.xhtml" TITLE="openAdd" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openModify::#useradmin#modifyUser.xhtml"
+    NAME="output1" PATH="/useradmin/modifyUser.xhtml"
+    TARGET="rules:#useradmin#modifyUser.xhtml" TITLE="openModify" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openDelete::#useradmin#viewUser.xhtml"
+    NAME="output2" PATH="/useradmin/viewUser.xhtml"
+    TARGET="rules:#useradmin#viewUser.xhtml" TITLE="openDelete" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openList::#useradmin#listUsers.xhtml"
+    NAME="output3" PATH="/useradmin/listUsers.xhtml"
+    TARGET="rules:#useradmin#listUsers.xhtml" TITLE="openList" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#useradmin#listUsers.xhtml"
+  PATH="/useradmin/listUsers.xhtml" SHAPE="304,785,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#useradmin#listUsers.xhtml:0" NAME="item"
+   PATH="/useradmin/listUsers.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="addUser::#useradmin#addUser.xhtml"
+    NAME="output" PATH="/useradmin/addUser.xhtml"
+    TARGET="rules:#useradmin#addUser.xhtml" TITLE="addUser" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#useradmin#addUser.xhtml"
+  PATH="/useradmin/addUser.xhtml" SHAPE="304,177,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#useradmin#addUser.xhtml:0" NAME="item"
+   PATH="/useradmin/addUser.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#useradmin#listUsers.xhtml"
+    NAME="output" PATH="/useradmin/listUsers.xhtml"
+    TARGET="rules:#useradmin#listUsers.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#useradmin#listUsers.xhtml"
+    NAME="output1" PATH="/useradmin/listUsers.xhtml"
+    TARGET="rules:#useradmin#listUsers.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#useradmin#addUser.xhtml"
+    NAME="output2" PATH="/useradmin/addUser.xhtml"
+    TARGET="rules:#useradmin#addUser.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agentadmin#viewAgent.xhtml"
+  PATH="/agentadmin/viewAgent.xhtml" SHAPE="304,1505,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agentadmin#viewAgent.xhtml:0" NAME="item"
+   PATH="/agentadmin/viewAgent.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="openAdd::#agentadmin#addAgent.xhtml"
+    NAME="output" PATH="/agentadmin/addAgent.xhtml"
+    TARGET="rules:#agentadmin#addAgent.xhtml" TITLE="openAdd" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openModify::#agentadmin#modifyAgent.xhtml"
+    NAME="output1" PATH="/agentadmin/modifyAgent.xhtml"
+    TARGET="rules:#agentadmin#modifyAgent.xhtml" TITLE="openModify" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openDelete::#agentadmin#deleteAgent.xhtml"
+    NAME="output2" PATH="/agentadmin/deleteAgent.xhtml"
+    TARGET="rules:#agentadmin#deleteAgent.xhtml" TITLE="openDelete" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openList::#agentadmin#listAgent.xhtml"
+    NAME="output3" PATH="/agentadmin/listAgent.xhtml"
+    TARGET="rules:#agentadmin#listAgent.xhtml" TITLE="openList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openAuth::#agentadmin#addAgent.xhtml"
+    NAME="output4" PATH="/agentadmin/addAgent.xhtml"
+    TARGET="rules:#agentadmin#addAgent.xhtml" TITLE="openAuth" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="success::#agentadmin#listAgent.xhtml"
+    NAME="output5" PATH="/agentadmin/listAgent.xhtml"
+    TARGET="rules:#agentadmin#listAgent.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#agentadmin#listAgent.xhtml"
+    NAME="output6" PATH="/agentadmin/listAgent.xhtml"
+    TARGET="rules:#agentadmin#listAgent.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agentadmin#modifyAgent.xhtml"
+  PATH="/agentadmin/modifyAgent.xhtml" SHAPE="304,1825,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agentadmin#modifyAgent.xhtml:0" NAME="item"
+   PATH="/agentadmin/modifyAgent.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#agentadmin#listAgent.xhtml"
+    NAME="output" PATH="/agentadmin/listAgent.xhtml"
+    TARGET="rules:#agentadmin#listAgent.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#agentadmin#viewAgent.xhtml"
+    NAME="output1" PATH="/agentadmin/viewAgent.xhtml"
+    TARGET="rules:#agentadmin#viewAgent.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#agentadmin#addAgent.xhtml"
+    NAME="output2" PATH="/agentadmin/addAgent.xhtml"
+    TARGET="rules:#agentadmin#addAgent.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agentadmin#listAgent.xhtml"
+  PATH="/agentadmin/listAgent.xhtml" SHAPE="304,2001,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agentadmin#listAgent.xhtml:0" NAME="item"
+   PATH="/agentadmin/listAgent.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="viewAgent::#agentadmin#viewAgent.xhtml"
+    NAME="output" PATH="/agentadmin/viewAgent.xhtml"
+    TARGET="rules:#agentadmin#viewAgent.xhtml" TITLE="viewAgent" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openAdd::#agentadmin#addAgent.xhtml"
+    NAME="output1" PATH="/agentadmin/addAgent.xhtml"
+    TARGET="rules:#agentadmin#addAgent.xhtml" TITLE="openAdd" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="pass::#agentadmin#modifyAgent.xhtml"
+    NAME="output2" PATH="/agentadmin/modifyAgent.xhtml"
+    TARGET="rules:#agentadmin#modifyAgent.xhtml" TITLE="pass" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agentadmin#addAgent.xhtml"
+  PATH="/agentadmin/addAgent.xhtml" SHAPE="304,1617,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agentadmin#addAgent.xhtml:0" NAME="item"
+   PATH="/agentadmin/addAgent.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#agentadmin#listAgent.xhtml"
+    NAME="output" PATH="/agentadmin/listAgent.xhtml"
+    TARGET="rules:#agentadmin#listAgent.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#agentadmin#listAgent.xhtml"
+    NAME="output1" PATH="/agentadmin/listAgent.xhtml"
+    TARGET="rules:#agentadmin#listAgent.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#agentadmin#addAgent.xhtml"
+    NAME="output2" PATH="/agentadmin/addAgent.xhtml"
+    TARGET="rules:#agentadmin#addAgent.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agentadmin#viewCashSettlement.xhtml"
+  PATH="/agentadmin/viewCashSettlement.xhtml" SHAPE="304,3169,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agentadmin#viewCashSettlement.xhtml:0"
+   NAME="item" PATH="/agentadmin/viewCashSettlement.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="openAdd::#agentadmin#addCashSettlement.xhtml" NAME="output"
+    PATH="/agentadmin/addCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#addCashSettlement.xhtml" TITLE="openAdd" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="openModify::#agentadmin#modifyCashSettlement.xhtml"
+    NAME="output1" PATH="/agentadmin/modifyCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#modifyCashSettlement.xhtml"
+    TITLE="openModify" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="openDelete::#agentadmin#viewCashSettlement.xhtml" NAME="output2"
+    PATH="/agentadmin/viewCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#viewCashSettlement.xhtml"
+    TITLE="openDelete" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="openAuth::#agentadmin#viewCashSettlement.xhtml" NAME="output3"
+    PATH="/agentadmin/viewCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#viewCashSettlement.xhtml" TITLE="openAuth" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="openList::#agentadmin#listCashSettlement.xhtml" NAME="output4"
+    PATH="/agentadmin/listCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#listCashSettlement.xhtml" TITLE="openList" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#deviceadmin#viewDevice.xhtml"
+  PATH="/deviceadmin/viewDevice.xhtml" SHAPE="304,3841,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#deviceadmin#viewDevice.xhtml:0" NAME="item"
+   PATH="/deviceadmin/viewDevice.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="openAdd::#deviceadmin#addDevice.xhtml"
+    NAME="output" PATH="/deviceadmin/addDevice.xhtml"
+    TARGET="rules:#deviceadmin#addDevice.xhtml" TITLE="openAdd" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openModify::#deviceadmin#modifyDevice.xhtml"
+    NAME="output1" PATH="/deviceadmin/modifyDevice.xhtml"
+    TARGET="rules:#deviceadmin#modifyDevice.xhtml" TITLE="openModify" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openDelete::#deviceadmin#deleteDevice.xhtml"
+    NAME="output2" PATH="/deviceadmin/deleteDevice.xhtml"
+    TARGET="rules:#deviceadmin#deleteDevice.xhtml" TITLE="openDelete" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openList::#deviceadmin#listDevices.xhtml"
+    NAME="output3" PATH="/deviceadmin/listDevices.xhtml"
+    TARGET="rules:#deviceadmin#listDevices.xhtml" TITLE="openList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openAuth::#deviceadmin#viewDevice.xhtml"
+    NAME="output4" PATH="/deviceadmin/viewDevice.xhtml"
+    TARGET="rules:#deviceadmin#viewDevice.xhtml" TITLE="openAuth" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="success::#deviceadmin#listDevices.xhtml"
+    NAME="output5" PATH="/deviceadmin/listDevices.xhtml"
+    TARGET="rules:#deviceadmin#listDevices.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#deviceadmin#listDevices.xhtml"
+    NAME="output6" PATH="/deviceadmin/listDevices.xhtml"
+    TARGET="rules:#deviceadmin#listDevices.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#deviceadmin#listDevices.xhtml"
+  PATH="/deviceadmin/listDevices.xhtml" SHAPE="304,4337,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#deviceadmin#listDevices.xhtml:0" NAME="item"
+   PATH="/deviceadmin/listDevices.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="viewDevice::#deviceadmin#viewDevice.xhtml"
+    NAME="output" PATH="/deviceadmin/viewDevice.xhtml"
+    TARGET="rules:#deviceadmin#viewDevice.xhtml" TITLE="viewDevice" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#roleadmin#listRoles.xhtml"
+  PATH="/roleadmin/listRoles.xhtml" SHAPE="304,2993,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#roleadmin#listRoles.xhtml:0" NAME="item"
+   PATH="/roleadmin/listRoles.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="viewRole::#roleadmin#viewRole.xhtml"
+    NAME="output" PATH="/roleadmin/viewRole.xhtml"
+    TARGET="rules:#roleadmin#viewRole.xhtml" TITLE="viewRole" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openAdd::#roleadmin#addRole.xhtml"
+    NAME="output1" PATH="/roleadmin/addRole.xhtml"
+    TARGET="rules:#roleadmin#addRole.xhtml" TITLE="openAdd" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#roleadmin#viewRole.xhtml"
+  PATH="/roleadmin/viewRole.xhtml" SHAPE="304,2497,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#roleadmin#viewRole.xhtml:0" NAME="item"
+   PATH="/roleadmin/viewRole.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="openAdd::#roleadmin#addRole.xhtml"
+    NAME="output" PATH="/roleadmin/addRole.xhtml"
+    TARGET="rules:#roleadmin#addRole.xhtml" TITLE="openAdd" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openModify::#roleadmin#modifyRole.xhtml"
+    NAME="output1" PATH="/roleadmin/modifyRole.xhtml"
+    TARGET="rules:#roleadmin#modifyRole.xhtml" TITLE="openModify" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openDelete::#roleadmin#deleteRole.xhtml"
+    NAME="output2" PATH="/roleadmin/deleteRole.xhtml"
+    TARGET="rules:#roleadmin#deleteRole.xhtml" TITLE="openDelete" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openList::#roleadmin#listRoles.xhtml"
+    NAME="output3" PATH="/roleadmin/listRoles.xhtml"
+    TARGET="rules:#roleadmin#listRoles.xhtml" TITLE="openList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="checkAuth::#roleadmin#viewRole.xhtml"
+    NAME="output4" PATH="/roleadmin/viewRole.xhtml"
+    TARGET="rules:#roleadmin#viewRole.xhtml" TITLE="checkAuth" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#roleadmin#addRole.xhtml"
+  PATH="/roleadmin/addRole.xhtml" SHAPE="304,2609,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#roleadmin#addRole.xhtml:0" NAME="item"
+   PATH="/roleadmin/addRole.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#roleadmin#listRoles.xhtml"
+    NAME="output" PATH="/roleadmin/listRoles.xhtml"
+    TARGET="rules:#roleadmin#listRoles.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#roleadmin#listRoles.xhtml"
+    NAME="output1" PATH="/roleadmin/listRoles.xhtml"
+    TARGET="rules:#roleadmin#listRoles.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#roleadmin#addRole.xhtml"
+    NAME="output2" PATH="/roleadmin/addRole.xhtml"
+    TARGET="rules:#roleadmin#addRole.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agentadmin#listCashSettlement.xhtml"
+  PATH="/agentadmin/listCashSettlement.xhtml" SHAPE="304,3665,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agentadmin#listCashSettlement.xhtml:0"
+   NAME="item" PATH="/agentadmin/listCashSettlement.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="viewCash::#agentadmin#viewCashSettlement.xhtml" NAME="output"
+    PATH="/agentadmin/viewCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#viewCashSettlement.xhtml" TITLE="viewCash" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="openAdd::#agentadmin#addCashSettlement.xhtml" NAME="output1"
+    PATH="/agentadmin/addCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#addCashSettlement.xhtml" TITLE="openAdd" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#roleadmin#modifyRole.xhtml"
+  PATH="/roleadmin/modifyRole.xhtml" SHAPE="304,2817,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#roleadmin#modifyRole.xhtml:0" NAME="item"
+   PATH="/roleadmin/modifyRole.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#roleadmin#listRoles.xhtml"
+    NAME="output" PATH="/roleadmin/listRoles.xhtml"
+    TARGET="rules:#roleadmin#listRoles.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#roleadmin#viewRole.xhtml"
+    NAME="output1" PATH="/roleadmin/viewRole.xhtml"
+    TARGET="rules:#roleadmin#viewRole.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#roleadmin#modifyRole.xhtml"
+    NAME="output2" PATH="/roleadmin/modifyRole.xhtml"
+    TARGET="rules:#roleadmin#modifyRole.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#deviceadmin#addDevice.xhtml"
+  PATH="/deviceadmin/addDevice.xhtml" SHAPE="304,3953,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#deviceadmin#addDevice.xhtml:0" NAME="item"
+   PATH="/deviceadmin/addDevice.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#deviceadmin#listDevices.xhtml"
+    NAME="output" PATH="/deviceadmin/listDevices.xhtml"
+    TARGET="rules:#deviceadmin#listDevices.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#deviceadmin#listDevices.xhtml"
+    NAME="output1" PATH="/deviceadmin/listDevices.xhtml"
+    TARGET="rules:#deviceadmin#listDevices.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#deviceadmin#addDevice.xhtml"
+    NAME="output2" PATH="/deviceadmin/addDevice.xhtml"
+    TARGET="rules:#deviceadmin#addDevice.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agentadmin#addCashSettlement.xhtml"
+  PATH="/agentadmin/addCashSettlement.xhtml" SHAPE="304,3281,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agentadmin#addCashSettlement.xhtml:0"
+   NAME="item" PATH="/agentadmin/addCashSettlement.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success::#agentadmin#listCashSettlement.xhtml" NAME="output"
+    PATH="/agentadmin/listCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#listCashSettlement.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cancel::#agentadmin#listCashSettlement.xhtml" NAME="output1"
+    PATH="/agentadmin/listCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#listCashSettlement.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="failure::#agentadmin#addCashSettlement.xhtml" NAME="output2"
+    PATH="/agentadmin/addCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#addCashSettlement.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#deviceadmin#modifyDevice.xhtml"
+  PATH="/deviceadmin/modifyDevice.xhtml" SHAPE="304,4161,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#deviceadmin#modifyDevice.xhtml:0" NAME="item"
+   PATH="/deviceadmin/modifyDevice.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#deviceadmin#listDevices.xhtml"
+    NAME="output" PATH="/deviceadmin/listDevices.xhtml"
+    TARGET="rules:#deviceadmin#listDevices.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#deviceadmin#viewDevice.xhtml"
+    NAME="output1" PATH="/deviceadmin/viewDevice.xhtml"
+    TARGET="rules:#deviceadmin#viewDevice.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#deviceadmin#addDevice.xhtml"
+    NAME="output2" PATH="/deviceadmin/addDevice.xhtml"
+    TARGET="rules:#deviceadmin#addDevice.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agentadmin#modifyCashSettlement.xhtml"
+  PATH="/agentadmin/modifyCashSettlement.xhtml" SHAPE="304,3489,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agentadmin#modifyCashSettlement.xhtml:0"
+   NAME="item" PATH="/agentadmin/modifyCashSettlement.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success::#agentadmin#viewCashSettlement.xhtml" NAME="output"
+    PATH="/agentadmin/viewCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#viewCashSettlement.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cancel::#agentadmin#viewCashSettlement.xhtml" NAME="output1"
+    PATH="/agentadmin/viewCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#viewCashSettlement.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="failure::#agentadmin#addCashSettlement.xhtml" NAME="output2"
+    PATH="/agentadmin/addCashSettlement.xhtml"
+    TARGET="rules:#agentadmin#addCashSettlement.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agentadmin#deleteAgent.xhtml"
+  PATH="/agentadmin/deleteAgent.xhtml" SHAPE="576,1697,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agentadmin#deleteAgent.xhtml:0" NAME="item"
+   PATH="/agentadmin/deleteAgent.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#agentadmin#listAgent.xhtml"
+    NAME="output" PATH="/agentadmin/listAgent.xhtml"
+    TARGET="rules:#agentadmin#listAgent.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#agentadmin#listAgent.xhtml"
+    NAME="output1" PATH="/agentadmin/listAgent.xhtml"
+    TARGET="rules:#agentadmin#listAgent.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#agentadmin#addAgent.xhtml"
+    NAME="output2" PATH="/agentadmin/addAgent.xhtml"
+    TARGET="rules:#agentadmin#addAgent.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#deviceadmin#deleteDevice.xhtml"
+  PATH="/deviceadmin/deleteDevice.xhtml" SHAPE="32,5249,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#deviceadmin#deleteDevice.xhtml:0" NAME="item"
+   PATH="/deviceadmin/deleteDevice.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#deviceadmin#listDevices.xhtml"
+    NAME="output" PATH="/deviceadmin/listDevices.xhtml"
+    TARGET="rules:#deviceadmin#listDevices.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#deviceadmin#viewDevice.xhtml"
+    NAME="output1" PATH="/deviceadmin/viewDevice.xhtml"
+    TARGET="rules:#deviceadmin#viewDevice.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#deviceadmin#addDevice.xhtml"
+    NAME="output2" PATH="/deviceadmin/addDevice.xhtml"
+    TARGET="rules:#deviceadmin#addDevice.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#roleadmin#deleteRole.xhtml"
+  PATH="/roleadmin/deleteRole.xhtml" SHAPE="48,3089,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#roleadmin#deleteRole.xhtml:0" NAME="item"
+   PATH="/roleadmin/deleteRole.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#roleadmin#listRoles.xhtml"
+    NAME="output" PATH="/roleadmin/listRoles.xhtml"
+    TARGET="rules:#roleadmin#listRoles.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#roleadmin#viewRole.xhtml"
+    NAME="output1" PATH="/roleadmin/viewRole.xhtml"
+    TARGET="rules:#roleadmin#viewRole.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#roleadmin#deleteRole.xhtml"
+    NAME="output2" PATH="/roleadmin/deleteRole.xhtml"
+    TARGET="rules:#roleadmin#deleteRole.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agencyadmin#listAgencyDetails.xhtml"
+  PATH="/agencyadmin/listAgencyDetails.xhtml" SHAPE="544,4177,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agencyadmin#listAgencyDetails.xhtml:0"
+   NAME="item" PATH="/agencyadmin/listAgencyDetails.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="viewAgencyDetail::#agencyadmin#viewAgencyDetail.xhtml"
+    NAME="output" PATH="/agencyadmin/viewAgencyDetail.xhtml"
+    TARGET="rules:#agencyadmin#viewAgencyDetail.xhtml"
+    TITLE="viewAgencyDetail" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agencyadmin#viewAgencyDetail.xhtml"
+  PATH="/agencyadmin/viewAgencyDetail.xhtml" SHAPE="288,4609,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agencyadmin#viewAgencyDetail.xhtml:0"
+   NAME="item" PATH="/agencyadmin/viewAgencyDetail.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="openAdd::#agencyadmin#addAgencyDetail.xhtml"
+    NAME="output" PATH="/agencyadmin/addAgencyDetail.xhtml"
+    TARGET="rules:#agencyadmin#addAgencyDetail.xhtml" TITLE="openAdd" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="openModify::#agencyadmin#modifyAgencyDetail.xhtml"
+    NAME="output1" PATH="/agencyadmin/modifyAgencyDetail.xhtml"
+    TARGET="rules:#agencyadmin#modifyAgencyDetail.xhtml"
+    TITLE="openModify" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="openDelete::#agencyadmin#deleteAgencyDetail.xhtml"
+    NAME="output2" PATH="/agencyadmin/deleteAgencyDetail.xhtml"
+    TARGET="rules:#agencyadmin#deleteAgencyDetail.xhtml"
+    TITLE="openDelete" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="openList::#agencyadmin#listAgencyDetails.xhtml" NAME="output3"
+    PATH="/agencyadmin/listAgencyDetails.xhtml"
+    TARGET="rules:#agencyadmin#listAgencyDetails.xhtml" TITLE="openList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success::#agencyadmin#listAgencyDetails.xhtml" NAME="output4"
+    PATH="/agencyadmin/listAgencyDetails.xhtml"
+    TARGET="rules:#agencyadmin#listAgencyDetails.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cancel::#agencyadmin#listAgencyDetails.xhtml" NAME="output5"
+    PATH="/agencyadmin/listAgencyDetails.xhtml"
+    TARGET="rules:#agencyadmin#listAgencyDetails.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agencyadmin#addAgencyDetail.xhtml"
+  PATH="/agencyadmin/addAgencyDetail.xhtml" SHAPE="288,5137,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agencyadmin#addAgencyDetail.xhtml:0"
+   NAME="item" PATH="/agencyadmin/addAgencyDetail.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success::#agencyadmin#listAgencyDetails.xhtml" NAME="output"
+    PATH="/agencyadmin/listAgencyDetails.xhtml"
+    TARGET="rules:#agencyadmin#listAgencyDetails.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cancel::#agencyadmin#listAgencyDetails.xhtml" NAME="output1"
+    PATH="/agencyadmin/listAgencyDetails.xhtml"
+    TARGET="rules:#agencyadmin#listAgencyDetails.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#agencyadmin#addAgencyDetail.xhtml"
+    NAME="output2" PATH="/agencyadmin/addAgencyDetail.xhtml"
+    TARGET="rules:#agencyadmin#addAgencyDetail.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agencyadmin#modifyAgencyDetail.xhtml"
+  PATH="/agencyadmin/modifyAgencyDetail.xhtml" SHAPE="32,4593,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agencyadmin#modifyAgencyDetail.xhtml:0"
+   NAME="item" PATH="/agencyadmin/modifyAgencyDetail.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success::#agencyadmin#listAgencyDetails.xhtml" NAME="output"
+    PATH="/agencyadmin/listAgencyDetails.xhtml"
+    TARGET="rules:#agencyadmin#listAgencyDetails.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cancel::#agencyadmin#viewAgencyDetail.xhtml"
+    NAME="output1" PATH="/agencyadmin/viewAgencyDetail.xhtml"
+    TARGET="rules:#agencyadmin#viewAgencyDetail.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#agencyadmin#addAgencyDetail.xhtml"
+    NAME="output2" PATH="/agencyadmin/addAgencyDetail.xhtml"
+    TARGET="rules:#agencyadmin#addAgencyDetail.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#agencyadmin#deleteAgencyDetail.xhtml"
+  PATH="/agencyadmin/deleteAgencyDetail.xhtml" SHAPE="576,6177,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#agencyadmin#deleteAgencyDetail.xhtml:0"
+   NAME="item" PATH="/agencyadmin/deleteAgencyDetail.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success::#agencyadmin#listAgencyDetails.xhtml" NAME="output"
+    PATH="/agencyadmin/listAgencyDetails.xhtml"
+    TARGET="rules:#agencyadmin#listAgencyDetails.xhtml" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="cancel::#agencyadmin#listAgencyDetails.xhtml" NAME="output1"
+    PATH="/agencyadmin/listAgencyDetails.xhtml"
+    TARGET="rules:#agencyadmin#listAgencyDetails.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#agencyadmin#addAgencyDetail.xhtml"
+    NAME="output2" PATH="/agencyadmin/addAgencyDetail.xhtml"
+    TARGET="rules:#agencyadmin#addAgencyDetail.xhtml" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#loanadmin#listLoanAccounts.xhtml"
+  PATH="/loanadmin/listLoanAccounts.xhtml" SHAPE="32,8273,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#loanadmin#listLoanAccounts.xhtml:0"
+   NAME="item" PATH="/loanadmin/listLoanAccounts.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="viewLoanAccount::#loanadmin#viewLoanAccount.xhtml" NAME="output"
+    PATH="/loanadmin/viewLoanAccount.xhtml"
+    TARGET="rules:#loanadmin#viewLoanAccount.xhtml"
+    TITLE="viewLoanAccount" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#txnadmin#listAgentTxn.xhtml"
+  PATH="/txnadmin/listAgentTxn.xhtml" SHAPE="32,8385,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#txnadmin#listAgentTxn.xhtml:0" NAME="item"
+   PATH="/txnadmin/listAgentTxn.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="viewRepayment::#txnadmin#viewRepayment.xhtml" NAME="output"
+    PATH="/txnadmin/viewRepayment.xhtml"
+    TARGET="rules:#txnadmin#viewRepayment.xhtml" TITLE="viewRepayment" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="viewDisbursement::#txnadmin#viewDisbursement.xhtml"
+    NAME="output1" PATH="/txnadmin/viewDisbursement.xhtml"
+    TARGET="rules:#txnadmin#viewDisbursement.xhtml"
+    TITLE="viewDisbursement" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="openList::#txnadmin#listAgentTxn.xhtml"
+    NAME="output3" PATH="/txnadmin/listAgentTxn.xhtml"
+    TARGET="rules:#txnadmin#listAgentTxn.xhtml" TITLE="openList" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#loanadmin#viewLoanAccount.xhtml"
+  PATH="/loanadmin/viewLoanAccount.xhtml" SHAPE="240,8289,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#loanadmin#viewLoanAccount.xhtml:0"
+   NAME="item" PATH="/loanadmin/viewLoanAccount.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="openClose::#loanadmin#listLoanAccounts.xhtml" NAME="output"
+    PATH="/loanadmin/listLoanAccounts.xhtml"
+    TARGET="rules:#loanadmin#listLoanAccounts.xhtml" TITLE="openClose" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#customeradmin#listCustomers.xhtml"
+  PATH="/customeradmin/listCustomers.xhtml" SHAPE="240,10561,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#customeradmin#listCustomers.xhtml:0"
+   NAME="item" PATH="/customeradmin/listCustomers.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="viewCustomer::#customeradmin#viewCustomer.xhtml" NAME="output"
+    PATH="/customeradmin/viewCustomer.xhtml"
+    TARGET="rules:#customeradmin#viewCustomer.xhtml"
+    TITLE="viewCustomer" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#customeradmin#viewCustomer.xhtml"
+  PATH="/customeradmin/viewCustomer.xhtml" SHAPE="32,10545,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#customeradmin#viewCustomer.xhtml:0"
+   NAME="item" PATH="/customeradmin/viewCustomer.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="openClose::#customeradmin#listCustomers.xhtml" NAME="output"
+    PATH="/customeradmin/listCustomers.xhtml"
+    TARGET="rules:#customeradmin#listCustomers.xhtml" TITLE="openClose" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#txnadmin#viewRepayment.xhtml"
+  PATH="/txnadmin/viewRepayment.xhtml" SHAPE="288,10481,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#txnadmin#viewRepayment.xhtml:0" NAME="item"
+   PATH="/txnadmin/viewRepayment.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="openList::#txnadmin#listAgentTxn.xhtml"
+    NAME="output" PATH="/txnadmin/listAgentTxn.xhtml"
+    TARGET="rules:#txnadmin#listAgentTxn.xhtml" TITLE="openList" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#txnadmin#viewDisbursement.xhtml"
+  PATH="/txnadmin/viewDisbursement.xhtml" SHAPE="272,10481,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#txnadmin#viewDisbursement.xhtml:0"
+   NAME="item" PATH="/txnadmin/viewDisbursement.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="openList::#txnadmin#listAgentTxn.xhtml"
+    NAME="output" PATH="/txnadmin/listAgentTxn.xhtml"
+    TARGET="rules:#txnadmin#listAgentTxn.xhtml" TITLE="openList" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

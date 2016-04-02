@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['agentMgmt.title.agent']}" /> -->
+	<ui:param name="pageHeaderTitle" value="#{msg['dpstMgmt.label.listDepositAgent']}" />
+	<ui:param name="emptyMessage" value="#{msg['msg.noRecords']}" />
+	<ui:param name="listController" value="#{depositAgendaListController}" />
+	
+	<!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{depositAgendaListController.selectedRecord}"/>
+	<!-- ADD END -->
+	
+<h:outputScript library="js" name="menu.js" />
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect" listener="#{depositAgendaListController.listSelect}" />
+
+			<p:column headerText="#{msg['agendaMgmt.label.agendaId']}"
+				filterBy="#{record.agendaId}" id="id" sortBy="#{record.agendaId}">
+				<h:outputText value="#{record.agendaId}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agendaMgmt.label.seqNo']}"
+				filterBy="#{record.seqNo}" id="seqNo" sortBy="#{record.seqNo}">
+				<h:outputText value="#{record.seqNo}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agendaMgmt.label.agendaStatus']}"
+				filterBy="#{record.agendaStatus}" id="agendaStatus" sortBy="#{record.agendaStatus}">
+				<h:outputText value="#{record.agendaStatus}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agendaMgmt.label.branchCode']}"
+				filterBy="#{record.branchCode}" id="branchCode" sortBy="#{record.branchCode}">
+				<h:outputText value="#{record.branchCode}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agendaMgmt.label.depAccNo']}"
+				filterBy="#{record.cbdAccRefNo}" id="cbdAccRefNo" sortBy="#{record.cbdAccRefNo}">
+				<h:outputText value="#{record.cbdAccRefNo}" />
+			</p:column>
+            
+			<!-- <p:column headerText="#{msg['agendaMgmt.label.moduleCode']}"
+				filterBy="#{record.moduleCode}" id="moduleCode" sortBy="#{record.moduleCode}">
+				<h:outputText value="#{record.moduleCode}" />
+			</p:column> -->
+
+			<!-- <p:column headerText="#{msg['agendaMgmt.label.txnCode']}"
+				filterBy="#{record.txnCode}" id="txnCode" sortBy="#{record.txnCode}">
+				<h:outputText value="#{record.txnCode}" />
+			</p:column> -->
+			
+			 <p:column headerText="#{msg['agentTxnMgmt.label.txnDesc']}"
+				filterBy="#{record.getTxnDesc()}" id="txnDesc" sortBy="#{record.getTxnDesc()}">
+				<h:outputText value="#{record.getTxnDesc()}" />
+			</p:column> 
+
+			<p:column headerText="#{msg['agendaMgmt.label.agentId']}"
+				filterBy="#{record.agentId}" id="agentId" sortBy="#{record.agentId}">
+				<h:outputText value="#{record.agentId}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agendaMgmt.label.locCode']}"
+				filterBy="#{record.locCode}" id="locCode" sortBy="#{record.locCode}">
+				<h:outputText value="#{record.locCode}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agendaMgmt.label.isValid']}"
+				filterBy="#{record.isValid}" id="isValid" sortBy="#{record.isValid}">
+				<h:outputText value="#{record.isValid}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agendaMgmt.label.deviceId']}"
+				filterBy="#{record.deviceId}" id="deviceId" sortBy="#{record.deviceId}">
+				<h:outputText value="#{record.deviceId}" />
+			</p:column>
+			
+			<!-- <p:column headerText="#{msg['agendaMgmt.label.agendaUploadTime']}"
+				filterBy="#{record.agendaUploadTime}" id="agendaUploadTime" sortBy="#{record.agendaUploadTime}">
+				<h:outputText value="#{record.agendaUploadTime}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agendaMgmt.label.customerName']}"
+				filterBy="#{record.customerName}" id="customerName" sortBy="#{record.customerName}">
+				<h:outputText value="#{record.customerName}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agendaMgmt.label.agendaCcyCode']}"
+				filterBy="#{record.agendaCcyCode}" id="agendaCcyCode" sortBy="#{record.agendaCcyCode}">
+				<h:outputText value="#{record.agendaCcyCode}" />
+			</p:column> -->
+			
+	</ui:define>
+</ui:composition>

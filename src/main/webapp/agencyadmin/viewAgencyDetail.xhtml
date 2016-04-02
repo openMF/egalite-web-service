@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{agencyController.agency.agencyCode}"></f:viewParam>
+			<f:event listener="#{agencyController.loadAgency}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+<!--Allocated co to IBS CO Id == changes for Asomi Nirmal kanna S  -->
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['agencyMgmt.title.agencyDetail']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{agencyController}"></ui:param>
+					</ui:include> <p:commandButton id="btnDelete"
+						value="#{msg['agencyMgmt.btn.delete']}"
+						rendered="#{agencyController.isDeleteAllowed()}"
+						disabled="#{agencyController.isEnableDeleteAllowed()}"
+						action="#{agencyController.deleteUnAuthorized}">
+						<p:confirm header="Confirmation" message="#{msg['msg.confirm.dialog']}"
+							icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['agencyMgmt.label.agencyCode']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{agencyController.agency.agencyCode}"
+					label="#{msg['agencyMgmt.label.agencyCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="agencyDesc"
+					value="#{msg['agencyMgmt.label.agencyDesc']}" />
+				<p:inputText id="agencyDesc" readonly="true"
+					value="#{agencyController.agency.agencyDesc}"
+					label="#{msg['agencyMgmt.label.agencyDesc']}">
+				</p:inputText>
+
+				<h:outputLabel for="category"
+					value="#{msg['agencyMgmt.tblHeader.category']}" />
+				<p:inputText id="category" readonly="true"
+					value="#{agencyController.agencyCategory}">
+				</p:inputText>
+
+				<h:outputLabel for="allocatedCo"
+					value="#{msg['agencyMgmt.label.allocatedCo']}" />
+				<p:inputText id="allocatedCo" readonly="true"
+					value="#{agencyController.agency.allocatedCo}"
+					label="#{msg['agencyMgmt.label.allocatedCo']}">
+				</p:inputText>
+
+				<h:outputLabel for="address1"
+					value="#{msg['agencyMgmt.label.address1']}" />
+				<p:inputText id="address1" readonly="true"
+					value="#{agencyController.agency.address1}"
+					label="#{msg['agencyMgmt.label.address1']}">
+				</p:inputText>
+
+				<h:outputLabel for="address2"
+					value="#{msg['agencyMgmt.label.address2']}" />
+				<p:inputText id="address2" readonly="true"
+					value="#{agencyController.agency.address2}"
+					label="#{msg['agencyMgmt.label.address2']}">
+				</p:inputText>
+
+				<h:outputLabel for="address3"
+					value="#{msg['agencyMgmt.label.address3']}" />
+				<p:inputText id="address3" readonly="true"
+					value="#{agencyController.agency.address3}"
+					label="#{msg['agencyMgmt.label.address3']}">
+				</p:inputText>
+
+				<h:outputLabel for="address4"
+					value="#{msg['agencyMgmt.label.address4']}" />
+				<p:inputText id="address4" readonly="true"
+					value="#{agencyController.agency.address4}"
+					label="#{msg['agencyMgmt.label.address4']}">
+				</p:inputText>
+
+				<h:outputLabel for="zipCode"
+					value="#{msg['agencyMgmt.tblHeader.zipCode']}" />
+				<p:inputText id="zipCode" readonly="true"
+					value="#{agencyController.agency.zipCode}"
+					label="#{msg['agencyMgmt.tblHeader.zipCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="city"
+					value="#{msg['agencyMgmt.tblHeader.city']}" />
+				<p:inputText id="city" readonly="true"
+					value="#{agencyController.agency.city}"
+					label="#{msg['agencyMgmt.tblHeader.city']}">
+				</p:inputText>
+
+				<h:outputLabel for="state"
+					value="#{msg['agencyMgmt.tblHeader.state']}" />
+				<p:inputText id="state" readonly="true"
+					value="#{agencyController.agency.state}"
+					label="#{msg['agencyMgmt.tblHeader.state']}">
+				</p:inputText>
+
+				<h:outputLabel for="country"
+					value="#{msg['agencyMgmt.tblHeader.country']}" />
+				<p:inputText id="country" readonly="true"
+					value="#{agencyController.countryName}"
+					label="#{msg['agencyMgmt.tblHeader.country']}">
+				</p:inputText>
+
+				<h:outputLabel for="emailAddress"
+					value="#{msg['agencyMgmt.tblHeader.emailAddress']}" />
+				<p:inputText id="emailAddress" readonly="true"
+					value="#{agencyController.agency.emailAddress}"
+					label="#{msg['agencyMgmt.tblHeader.emailAddress']}">
+				</p:inputText>
+
+				<h:outputLabel for="contactNumber"
+					value="#{msg['agencyMgmt.tblHeader.contactNumber']}" />
+				<p:inputText id="contactNumber" readonly="true"
+					value="#{agencyController.agency.contactNumber}"
+					label="#{msg['agencyMgmt.tblHeader.contactNumber']}">
+				</p:inputText>
+				<h:outputLabel for="isActive"
+					value="#{msg['agencyMgmt.tblHeader.isActive']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{agencyController.agencyStatus}">
+				</p:inputText>
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

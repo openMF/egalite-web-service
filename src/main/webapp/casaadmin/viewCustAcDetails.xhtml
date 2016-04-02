@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{casaController.custAcDetailViewVO.id}"></f:viewParam>
+			<f:event listener="#{casaController.loadCustAc}" type="preRenderView"></f:event>
+
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			 <h:outputText value="#{msg['loanMgmt.title.loanManagement']}" /> 
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['custAcMgmt.title.viewcustAc']}" /></span>
+				<span class="pageHeaderControls"> <p:button id="btnClose"
+						value="#{msg['loanMgmt.btn.close']}" outcome="openClose"
+						style="margin-left: 182px;" /> <p:spacer width="2px" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left">
+				<h:panelGrid columns="2">
+
+					<h:outputLabel for="custAcId"
+						value="#{msg['custAcMgmt.tblHeader.custAcNo']}" />
+					<p:inputText id="id" readonly="true"
+						value="#{casaController.custAcDetailViewVO.id}"
+						label="#{msg['custAcMgmt.tblHeader.custAcNo']}">
+					</p:inputText>
+
+					<h:outputLabel for="branchCode"
+						value="#{msg['custAcMgmt.tblHeader.branchCode']}" />
+					<p:inputText id="branchCode" readonly="true"
+						value="#{casaController.custAcDetailViewVO.branchCode}"
+						label="#{msg['custAcMgmt.tblHeader.branchCode']}">
+					</p:inputText>
+
+					<h:outputLabel for="customerId"
+						value="#{msg['custAcMgmt.tblHeader.customerId']}" />
+					<p:inputText id="customerId" readonly="true"
+						value="#{casaController.custAcDetailViewVO.customerId}"
+						label="#{msg['custAcMgmt.tblHeader.customerId']}">
+					</p:inputText>
+
+					<h:outputLabel for="customerFullName"
+						value="#{msg['loanMgmt.label.customerName']}" />
+					<p:inputText id="customerFullName" readonly="true"
+						value="#{casaController.custAcDetailViewVO.customerFullName}"
+						label="#{msg['loanMgmt.label.customerName']}">
+					</p:inputText>
+
+
+					<h:outputLabel for="accountType"
+						value="#{msg['custAcMgmt.label.accountType']}" />
+					<p:inputText id="accountType" readonly="true"
+						value="#{casaController.custAcDetailViewVO.accountType}"
+						label="#{msg['custAcMgmt.label.accountType']}">
+					</p:inputText>
+
+					<h:outputLabel for="acDesc"
+						value="#{msg['custAcMgmt.label.acDesc']}" />
+					<p:inputText id="acDesc" readonly="true"
+						value="#{casaController.custAcDetailViewVO.acDesc}"
+						label="#{msg['custAcMgmt.label.acDesc']}">
+					</p:inputText>
+
+					<h:outputLabel for="jointAcIndicator"
+						value="#{msg['custAcMgmt.label.jointAcIndicator']}" />
+					<p:inputText id="jointAcIndicator" readonly="true"
+						value="#{casaController.custAcDetailViewVO.jointAcIndicator}"
+						label="#{msg['custAcMgmt.label.jointAcIndicator']}">
+					</p:inputText>
+
+
+					<h:outputLabel for="acCcy"
+						value="#{msg['custAcMgmt.tblHeader.currency']}" />
+					<p:inputText id="acCcy" readonly="true"
+						value="#{casaController.custAcDetailViewVO.acCcy}"
+						label="#{msg['custAcMgmt.tblHeader.currency']}">
+					</p:inputText>
+
+					<h:outputLabel for="acyCurrBal"
+						value="#{msg['custAcMgmt.label.acyCurrBal']}" />
+					<p:inputText id="acyCurrBal" readonly="true"
+						value="#{casaController.custAcDetailViewVO.acyCurrBal}"
+						label="#{msg['custAcMgmt.label.acyCurrBal']}">
+					</p:inputText>
+
+					<h:outputLabel for="acyAvailBal"
+						value="#{msg['custAcMgmt.label.acyAvailBal']}" />
+					<p:inputText id="acyAvailBal" readonly="true"
+						value="#{casaController.custAcDetailViewVO.acyAvailBal}"
+						label="#{msg['custAcMgmt.label.acyAvailBal']}">
+					</p:inputText>
+				</h:panelGrid>
+			</p:panel>
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="acStatNoDr"
+						value="#{msg['custAcMgmt.tblHeader.acStatNoDebit']}" />
+					<p:inputText id="acStatNoDr" readonly="true"
+						value="#{casaController.custAcDetailViewVO.acStatNoDr}"
+						label="#{msg['custAcMgmt.tblHeader.acStatNoDebit']}">
+					</p:inputText>
+
+					<h:outputLabel for="acStatNoCr"
+						value="#{msg['custAcMgmt.tblHeader.acStatNoCredit']}" />
+					<p:inputText id="acStatNoCr" readonly="true"
+						value="#{casaController.custAcDetailViewVO.acStatNoCr}"
+						label="#{msg['custAcMgmt.tblHeader.acStatNoCredit']}">
+					</p:inputText>
+
+
+					<h:outputLabel for="acStatBlock"
+						value="#{msg['custAcMgmt.label.acStatBlock']}" />
+					<p:inputText id="acStatBlock" readonly="true"
+						value="#{casaController.custAcDetailViewVO.acStatBlock}"
+						label="#{msg['custAcMgmt.label.acStatBlock']}">
+					</p:inputText>
+
+					<h:outputLabel for="acStatStopPay"
+						value="#{msg['custAcMgmt.label.acStatStopPay']}" />
+					<p:inputText id="acStatStopPay" readonly="true"
+						value="#{casaController.custAcDetailViewVO.acStatStopPay}"
+						label="#{msg['custAcMgmt.label.acStatStopPay']}">
+					</p:inputText>
+
+					<h:outputLabel for="acStatDormant"
+						value="#{msg['custAcMgmt.label.acStatDormant']}" />
+					<p:inputText id="acStatDormant" readonly="true"
+						value="#{casaController.custAcDetailViewVO.acStatDormant}"
+						label="#{msg['custAcMgmt.label.acStatDormant']}">
+					</p:inputText>
+
+					<h:outputLabel for="agentId"
+						value="#{msg['loanMgmt.label.agentId']}" />
+					<p:inputText id="agentId" readonly="true"
+						value="#{casaController.custAcDetailViewVO.agentId}"
+						label="#{msg['loanMgmt.label.agentId']}">
+					</p:inputText>
+
+					<h:outputLabel for="locationCode"
+						value="#{msg['loanMgmt.label.locationCode']}" />
+					<p:inputText id="locationCode" readonly="true"
+						value="#{casaController.custAcDetailViewVO.locationCode}"
+						label="#{msg['loanMgmt.label.locationCode']}">
+					</p:inputText>
+
+					<h:outputLabel for="creditOfficerId"
+						value="#{msg['custAcMgmt.tblHeader.creditOfficerId']}" />
+					<p:inputText id="creditOfficerId" readonly="true"
+						value="#{casaController.custAcDetailViewVO.creditOfficerId}"
+						label="#{msg['custAcMgmt.tblHeader.creditOfficerId']}">
+					</p:inputText>
+
+
+
+					<h:outputLabel for="recordStat"
+						value="#{msg['loanMgmt.label.recordStat']}" />
+					<p:inputText id="recordStat" readonly="true"
+						value="#{casaController.custAcDetailViewVO.recordStat}"
+						label="#{msg['loanMgmt.label.recordStat']}">
+					</p:inputText>
+
+					<h:outputLabel for="cbsUpldJobId"
+						value="#{msg['loanMgmt.label.cbsUpldJobId']}" />
+					<p:inputText id="cbsUpldJobId" readonly="true"
+						value="#{casaController.custAcDetailViewVO.cbsUpldJobId}"
+						label="#{msg['loanMgmt.label.cbsUpldJobId']}">
+					</p:inputText>
+
+				</h:panelGrid>
+			</p:panel>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

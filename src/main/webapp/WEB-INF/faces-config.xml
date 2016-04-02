@@ -1,0 +1,2746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+	version="2.1">
+	<lifecycle>
+		<phase-listener>com.bfsi.mfi.controller.LoginController</phase-listener>
+	</lifecycle>
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>af</supported-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>i18n.messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>i18n.lov</base-name>
+			<var>lov</var>
+		</resource-bundle>
+		<message-bundle>i18n.facesMessages</message-bundle>
+	</application>
+
+	<navigation-rule>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/useradmin/addUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Navigation for user Starts -->
+	
+	<navigation-rule>
+		<from-view-id>/useradmin/listUsers.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addUser</from-outcome>
+			<to-view-id>/useradmin/addUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/useradmin/viewUser.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/useradmin/addUser.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/useradmin/modifyUser.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/useradmin/viewUser.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/useradmin/listUsers.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAuth</from-outcome>
+			<to-view-id>/useradmin/viewUser.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/useradmin/listUsers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/useradmin/listUsers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openReset</from-outcome>
+			<to-view-id>/useradmin/resetUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/useradmin/addUser.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/useradmin/listUsers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/useradmin/listUsers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/useradmin/addUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/useradmin/modifyUser.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/useradmin/listUsers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/useradmin/viewUser.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/useradmin/addUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/useradmin/resetUser.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/useradmin/listUsers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/useradmin/viewUser.xhtml</to-view-id>
+		</navigation-case>
+		</navigation-rule>
+		<navigation-rule>
+		<from-view-id>/useradmin/changePasswd.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/useradmin/logout.xhtml</to-view-id>
+		</navigation-case>
+		</navigation-rule>
+	
+	<!-- End Navigation for Users Navigation -->
+
+	<!--Agent Navigation Start -->
+
+	<navigation-rule>
+		<from-view-id>/agentadmin/listAgent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewAgent</from-outcome>
+			<to-view-id>/agentadmin/viewAgent.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/agentadmin/addAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>pass</from-outcome>
+			<to-view-id>/agentadmin/modifyAgent.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agentadmin/viewAgent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/agentadmin/addAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/agentadmin/modifyAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/agentadmin/listAgent.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/agentadmin/listAgent.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAuth</from-outcome>
+			<to-view-id>/agentadmin/addAgent.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentadmin/listAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/agentadmin/listAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agentadmin/addAgent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentadmin/listAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/agentadmin/listAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/agentadmin/addAgent.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agentadmin/modifyAgent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentadmin/listAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/agentadmin/viewAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/agentadmin/modifyAgent.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agentadmin/deleteAgent.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentadmin/listAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/agentadmin/listAgent.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/agentadmin/addAgent.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- End Navigation for Agents -->
+
+	<!--Role Navigation Start -->
+	<navigation-rule>
+		<from-view-id>/roleadmin/listRoles.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewRole</from-outcome>
+			<to-view-id>/roleadmin/viewRole.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/roleadmin/addRole.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/roleadmin/viewRole.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/roleadmin/addRole.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/roleadmin/modifyRole.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/roleadmin/deleteRole.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/roleadmin/listRoles.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>checkAuth</from-outcome>
+			<to-view-id>/roleadmin/viewRole.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/roleadmin/listRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/roleadmin/addRole.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/roleadmin/listRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/roleadmin/listRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/roleadmin/addRole.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/roleadmin/modifyRole.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/roleadmin/listRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/roleadmin/viewRole.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/roleadmin/modifyRole.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/roleadmin/deleteRole.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/roleadmin/listRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/roleadmin/viewRole.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/roleadmin/deleteRole.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!--Role Navigation End -->
+
+	<!-- Navigation start for Agent Cash Settlement -->
+	<navigation-rule>
+		<from-view-id>/cashsettlementadmin/listCashSettlement.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCash</from-outcome>
+			<to-view-id>/cashsettlementadmin/viewCashSettlement.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/cashsettlementadmin/addCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/cashsettlementadmin/viewCashSettlement.xhtml</from-view-id>
+
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/cashsettlementadmin/addCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/cashsettlementadmin/modifyCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/cashsettlementadmin/viewCashSettlement.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAuth</from-outcome>
+			<to-view-id>/cashsettlementadmin/viewCashSettlement.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/cashsettlementadmin/listCashSettlement.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/cashsettlementadmin/listCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/cashsettlementadmin/addCashSettlement.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/cashsettlementadmin/listCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/cashsettlementadmin/listCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/cashsettlementadmin/addCashSettlement.xhtml</to-view-id>
+		</navigation-case>
+
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/cashsettlementadmin/modifyCashSettlement.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/cashsettlementadmin/listCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/cashsettlementadmin/viewCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/cashsettlementadmin/modifyCashSettlement.xhtml</to-view-id>
+		</navigation-case>
+
+	</navigation-rule>
+	
+	<navigation-rule>
+
+		<from-view-id>/cashsettlementadmin/viewCashSettlement.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/cashsettlementadmin/listCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/cashsettlementadmin/listCashSettlement.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+
+	</navigation-rule>
+	
+	<!-- Navigation end for Agent Cash Settlement -->
+
+	<!-- Navigation start for Device Management -->
+
+	<navigation-rule>
+		<from-view-id>/deviceadmin/listDevices.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewDevice</from-outcome>
+			<to-view-id>/deviceadmin/viewDevice.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/deviceadmin/viewDevice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/deviceadmin/addDevice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/deviceadmin/modifyDevice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/deviceadmin/deleteDevice.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/deviceadmin/listDevices.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAuth</from-outcome>
+			<to-view-id>/deviceadmin/viewDevice.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/deviceadmin/listDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/deviceadmin/listDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/deviceadmin/addDevice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/deviceadmin/listDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/deviceadmin/listDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/deviceadmin/addDevice.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/deviceadmin/modifyDevice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/deviceadmin/listDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/deviceadmin/viewDevice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/deviceadmin/modifyDevice.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/deviceadmin/deleteDevice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/deviceadmin/listDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/deviceadmin/viewDevice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/deviceadmin/addDevice.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Navigation ends for Device Management -->
+
+	<!-- Navigation Start for Agency Details -->
+
+	<navigation-rule>
+		<from-view-id>/agencyadmin/listAgencyDetails.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewAgencyDetail</from-outcome>
+			<to-view-id>/agencyadmin/viewAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/agencyadmin/viewAgencyDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/agencyadmin/addAgencyDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/agencyadmin/modifyAgencyDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/agencyadmin/deleteAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/agencyadmin/listAgencyDetails.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agencyadmin/listAgencyDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/agencyadmin/listAgencyDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/agencyadmin/addAgencyDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agencyadmin/listAgencyDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/agencyadmin/listAgencyDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/agencyadmin/addAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/agencyadmin/modifyAgencyDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agencyadmin/listAgencyDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/agencyadmin/viewAgencyDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/agencyadmin/modifyAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/agencyadmin/deleteAgencyDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agencyadmin/listAgencyDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/agencyadmin/listAgencyDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/agencyadmin/addAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- Navigation ends for Agency Management -->
+
+	<!-- Navigation start for Loan Detail -->
+	<navigation-rule>
+		<from-view-id>/loanadmin/listLoanAccounts.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewLoanAccount</from-outcome>
+			<to-view-id>/loanadmin/viewLoanAccount.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>bulkAssign</from-outcome>
+			<to-view-id>/loanadmin/bulkAgentAllocations.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>selectedAssign</from-outcome>
+			<to-view-id>/loanadmin/agentAllocation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/loanadmin/viewLoanAccount.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openClose</from-outcome>
+			<to-view-id>/loanadmin/listLoanAccounts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/loanadmin/listLoanAccounts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/loanadmin/viewLoanAccount.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/loanadmin/agentAllocation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/loanadmin/listLoanAccounts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/loanadmin/agentAllocation.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/loanadmin/listLoanAccounts.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/loanadmin/bulkAgentAllocations.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/loanadmin/listLoanAccounts.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/loanadmin/listLoanAccounts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- End Loan details navigations -->
+
+	<!-- Navigation start for Agent Allocations Detail -->
+	<navigation-rule>
+		<from-view-id>/agentallocationsadmin/listAgentAllocations.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewLoanAccount</from-outcome>
+			<to-view-id>/loanadmin/viewLoanAccount.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>bulkAssign</from-outcome>
+			<to-view-id>/agentallocationsadmin/bulkAgentAllocations.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>selectedAssign</from-outcome>
+			<to-view-id>/agentallocationsadmin/agentAllocation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agentallocationsadmin/agentAllocation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentallocationsadmin/listAgentAllocations.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/agentallocationsadmin/agentAllocation.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/agentallocationsadmin/listAgentAllocations.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agentallocationsadmin/bulkAgentAllocations.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/agentallocationsadmin/listAgentAllocations.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentallocationsadmin/listAgentAllocations.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- Navigation End for Agent Allocations Detail -->
+
+	<!-- Navigation start for Transaction Tracker -->
+	<navigation-rule>
+		<from-view-id>/txnadmin/listAgentTxn.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewRepayment</from-outcome>
+			<to-view-id>/txnadmin/viewRepayment.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewDisbursement</from-outcome>
+			<to-view-id>/txnadmin/viewDisbursement.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewPrePayment</from-outcome>
+			<to-view-id>/txnadmin/viewPrePayment.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewCashWithdrawal</from-outcome>
+			<to-view-id>/txnadmin/viewCashWithdrawal.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>viewCashDeposit</from-outcome>
+			<to-view-id>/txnadmin/viewCashDeposit.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/txnadmin/listAgentTxn.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewDepositMaturity</from-outcome>
+			<to-view-id>/txnadmin/viewDepositMaturity.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewInstCollection</from-outcome>
+			<to-view-id>/txnadmin/viewInstCollection.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewDepositRedem</from-outcome>
+			<to-view-id>/txnadmin/viewDepositRedem.xhtml</to-view-id>
+		</navigation-case>
+
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/txnadmin/viewRepayment.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/txnadmin/listLoanTxn.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/txnadmin/viewDisbursement.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/txnadmin/listLoanTxn.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/txnadmin/viewPrePayment.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/txnadmin/listLoanTxn.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/txnadmin/viewDepositMaturity.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/txnadmin/listDepositTxn.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/txnadmin/viewDepositRedem.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/txnadmin/listDepositTxn.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/txnadmin/viewCashWithdrawal.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/txnadmin/listAgentTxn.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/txnadmin/viewCashDeposit.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/txnadmin/listAgentTxn.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+
+	<navigation-rule>
+		<from-view-id>/txnadmin/viewInstCollection.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/txnadmin/listDepositTxn.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Navigation Rule For the Deposite New Account -->
+	<navigation-rule>
+		<from-view-id>/Deposite/depositeReqList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewNewDepositAcc</from-outcome>
+			<to-view-id>/Deposite/viewNewDepositAcc.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewpreDeposit</from-outcome>
+			<to-view-id>/Deposite/viewpreDeposit.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewredemptionReq</from-outcome>
+			<to-view-id>/Deposite/viewredemptionReq.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>viewCashDeposit</from-outcome>
+			<to-view-id>/Deposite/viewCashDeposit.xhtml</to-view-id>
+		</navigation-case> 
+		<navigation-case>
+			<from-outcome>viewCashWithdrawal</from-outcome>
+			<to-view-id>/Deposite/viewCashWithdrawal.xhtml</to-view-id>
+		</navigation-case> 
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/Deposite/viewNewDepositAcc.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/Deposite/depositeReqList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/Deposite/viewpreDeposit.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/Deposite/depositeReqList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/Deposite/viewredemptionReq.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/Deposite/depositeReqList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/Deposite/viewDepositPrePayReq.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/Deposite/depositeReqList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/Deposite/viewCashDeposit.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/Deposite/cashWandDList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/Deposite/viewCashWithdrawal.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/Deposite/cashWandDList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- End Navigation Rule For the Deposite New Account -->
+
+	<!-- Navigation start for Customer Detail -->
+	<navigation-rule>
+		<from-view-id>/customeradmin/listCustomers.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCustomer</from-outcome>
+			<to-view-id>/customeradmin/viewCustomer.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/customeradmin/viewCustomer.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openClose</from-outcome>
+			<to-view-id>/customeradmin/listCustomers.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Navigation start for Device Management -->
+
+	<navigation-rule>
+		<from-view-id>/systemparameter/listSystemParameters.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>modifySystemParameter</from-outcome>
+			<to-view-id>/systemparameter/modifySystemParameter.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/systemparameter/modifySystemParameter.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/systemparameter/modifySystemParameter.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/systemparameter/listSystemParameters.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/systemparameter/listSystemParameters.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/systemparameter/listSystemParameters.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- Navigation ends for Device Management -->
+
+	<!-- Navigation start for Cbs Job History -->
+	<navigation-rule>
+		<from-view-id>/cbsjobhistoryadmin/listCbsJobHistory.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/cbsjobhistoryadmin/listCbsJobHistory.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/cbsjobhistoryadmin/listCbsJobHistory.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>doRefresh</from-outcome>
+			<to-view-id>/cbsjobhistoryadmin/listCbsJobHistory.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/cbsjobhistoryadmin/viewCbsJobHistory.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openClose</from-outcome>
+			<to-view-id>/cbsjobhistoryadmin/listCbsJobHistory.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Navigation ends for Cbs Job History -->
+
+	<!-- Navigation start for Change Password -->
+
+	<navigation-rule>
+		<from-view-id>/templates/includes/topBanner.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>change</from-outcome>
+			<to-view-id>/useradmin/userChangePasswd.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/useradmin/logout.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/useradmin/userChangePasswd.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/useradmin/userChangePasswd.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/useradmin/logout.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Navigation ends for Change Password -->
+	
+	<!-- Navigation start for Enroll Customer -->
+	
+	<navigation-rule>
+		<from-view-id>/enrolladmin/viewEnrollCustomerDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openEnrich</from-outcome>
+			<to-view-id>/enrolladmin/enrichEnrollCustomerDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/enrolladmin/modifyEnrollCustomerDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/enrolladmin/listEnrollCustomer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/enrolladmin/modifyEnrollCustomerDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/enrolladmin/listEnrollCustomer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/enrolladmin/listEnrollCustomer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/enrolladmin/printEnrollCustomerDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/enrolladmin/listEnrollCustomer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/enrolladmin/enrichEnrollCustomerDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/enrolladmin/listEnrollCustomer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/enrolladmin/listEnrollCustomer.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Navigation start for Enriched Enroll Customer -->
+	
+	<!-- Navigation Starts for Manual Disbursement Schedule -->
+	<navigation-rule>
+		<from-view-id>/disbursescheduleadmin/listManualDisbrSchedule.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewManualDisbrSchedule</from-outcome>
+			<to-view-id>/disbursescheduleadmin/viewManualDisbrSchedule.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/disbursescheduleadmin/viewManualDisbrSchedule.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/disbursescheduleadmin/addManualDisburseSchedule.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/disbursescheduleadmin/modifyAgencyDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/disbursescheduleadmin/deleteAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/disbursescheduleadmin/listManualDisbrSchedule.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/disbursescheduleadmin/listManualDisbrSchedule.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/disbursescheduleadmin/listManualDisbrSchedule.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/disbursescheduleadmin/addManualDisburseSchedule.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/disbursescheduleadmin/listManualDisbrSchedule.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/disbursescheduleadmin/listManualDisbrSchedule.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/disbursescheduleadmin/addManualDisburseSchedule.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- Navigation ends for Manual Disbursement Schedule -->
+	<navigation-rule>
+		<from-view-id>/pigmydeposit/viewpigmyDepositAccount.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>List</from-outcome>
+			<to-view-id>/pigmydeposit/listPigmyDesposit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>bulkAssign</from-outcome>
+			<to-view-id>/pigmydeposit/bulkDepositAgentAllocations.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>selectedAssign</from-outcome>
+			<to-view-id>/pigmydeposit/depositAgentAllocation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pigmydeposit/depositAgentAllocation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/pigmydeposit/listPigmyDesposit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/pigmydeposit/depositAgentAllocation.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/pigmydeposit/listPigmyDesposit.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/pigmydeposit/bulkDepositAgentAllocations.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/pigmydeposit/listPigmyDesposit.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/pigmydeposit/listPigmyDesposit.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Navigation Start for Ref Code Details -->
+
+	<navigation-rule>
+		<from-view-id>/refcodeadmin/listRefCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addUser</from-outcome>
+			<to-view-id>/refcodeadmin/addUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/refcodeadmin/viewRefCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/refcodeadmin/addRefCodeDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/refcodeadmin/modifyRefCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/refcodeadmin/listRefCode.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAuth</from-outcome>
+			<to-view-id>/refcodeadmin/viewRefCode.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/refcodeadmin/listRefCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/refcodeadmin/listRefCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/refcodeadmin/addRefCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/refcodeadmin/listRefCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/refcodeadmin/listRefCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/refcodeadmin/addRefCode.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/refcodeadmin/addRefCodeDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/refcodeadmin/listRefCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/refcodeadmin/listRefCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/refcodeadmin/addRefCodeDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/refcodeadmin/modifyRefCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/refcodeadmin/listRefCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/refcodeadmin/viewRefCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/refcodeadmin/modifyRefCode.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- End Navigation for Users Navigation -->
+	<!-- Navigation start for Location Management -->
+
+	<navigation-rule>
+		<from-view-id>/locationadmin/listLocation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewLocationDetail</from-outcome>
+			<to-view-id>/locationadmin/viewLocationDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/locationadmin/viewLocationDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/locationadmin/addLocation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/locationadmin/modifyLocation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/locationadmin/deleteLocation.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/locationadmin/listLocation.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAuth</from-outcome>
+			<to-view-id>/locationadmin/viewLocationDetail.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/locationadmin/listLocation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/locationadmin/listLocation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/locationadmin/addLocation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/locationadmin/listLocation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/locationadmin/listLocation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/locationadmin/addLocation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/locationadmin/modifyLocation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/locationadmin/listLocation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/locationadmin/viewLocationDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/locationadmin/modifyLocation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/locationadmin/deleteLocation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/locationadmin/listLocation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/locationadmin/viewLocationDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/locationadmin/addLocation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Navigation ends for Location Management -->
+	
+	<!-- Navigation start for Currency Management -->
+	<navigation-rule>
+		<from-view-id>/currencyadmin/listCurrency.xhtml</from-view-id>
+	</navigation-rule>
+	<!-- Navigation ends for Currency Management -->
+	
+	<!-- Navigation start for Branch Management -->
+	<navigation-rule>
+		<from-view-id>/branchadmin/listBranch.xhtml</from-view-id>
+	</navigation-rule>
+	<!-- Navigation ends for Branch Management -->
+	
+
+<!-- Navigation start for Agent Message Detail -->
+	<navigation-rule>
+		<from-view-id>/agentallocationsadmin/listAgentMessages.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>bulkAssign</from-outcome>
+			<to-view-id>/agentallocationsadmin/bulkAgentAllocations.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>selectedAssign</from-outcome>
+			<to-view-id>/agentallocationsadmin/agentAllocation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+
+
+
+	<navigation-rule>
+		<from-view-id>/agentmessageadmin/agentMessage.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentmessageadmin/listAgentMessages.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/agentmessageadmin/agentMessage.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/agentmessageadmin/listAgentMessages.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agentmessageadmin/bulkAgentMessages.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/agentmessageadmin/listAgentMessages.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentmessageadmin/listAgentMessages.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- Navigation End for Agent Message Detail -->
+	
+	<!-- Navigation Start for GroupCode Details -->
+
+	<navigation-rule>
+		<from-view-id>/groupcodesadmin/listGroupCodes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewGroupCodes</from-outcome>
+			<to-view-id>/groupcodesadmin/viewGroupCodes.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/groupcodesadmin/viewGroupCodes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/groupcodesadmin/addGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/groupcodesadmin/modifyGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/groupcodesadmin/deleteGroupCodes.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/groupcodesadmin/listGroupCodes.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/groupcodesadmin/listGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/groupcodesadmin/listGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/groupcodesadmin/addGroupCodes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/groupcodesadmin/listGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/groupcodesadmin/listGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/groupcodesadmin/addGroupCodes.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/groupcodesadmin/modifyGroupCodes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/groupcodesadmin/listGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/groupcodesadmin/viewGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/groupcodesadmin/modifyGroupCodes.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/groupcodesadmin/deleteGroupCodes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/groupcodesadmin/listGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/groupcodesadmin/listGroupCodes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/groupcodesadmin/addGroupCodes.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- Navigation ends for GroupCode Management -->
+	
+
+	
+
+    <!-- Navigation start for Route Codes Management-->
+	<navigation-rule>
+		<from-view-id>/routecodeadmin/listRouteCode.xhtml.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewAgencyDetail</from-outcome>
+			<to-view-id>/routecodeadmin/viewRouteCodeDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/routecodeadmin/listRouteCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewRouteCodeDetail</from-outcome>
+			<to-view-id>/routecodeadmin/viewRouteCodeDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/routecodeadmin/viewRouteCodeDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/routecodeadmin/addRouteCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/routecodeadmin/modifyRouteCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/routecodeadmin/deleteAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/routecodeadmin/listRouteCode.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/routecodeadmin/listRouteCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/routecodeadmin/listRouteCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/routecodeadmin/addRouteCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/routecodeadmin/listRouteCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/routecodeadmin/listRouteCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/routecodeadmin/addRouteCode.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/routecodeadmin/modifyRouteCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/routecodeadmin/listRouteCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/routecodeadmin/viewRouteCodeDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/routecodeadmin/modifyRouteCode.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/routecodeadmin/deleteAgencyDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/routecodeadmin/listRouteCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/routecodeadmin/listRouteCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/routecodeadmin/addRouteCode.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		<!-- Navigation ends for Route Codes Management -->
+		
+		<!-- Navigation start for Center Codes Management-->
+		
+			<navigation-rule>
+		<from-view-id>/centercodeadmin/listCenterCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewAgencyDetail</from-outcome>
+			<to-view-id>/centercodeadmin/viewCenterCodeDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/centercodeadmin/listCenterCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCenterCodeDetail</from-outcome>
+			<to-view-id>/centercodeadmin/viewCenterCodeDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/centercodeadmin/viewCenterCodeDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/centercodeadmin/addCenterCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/centercodeadmin/modifyCenterCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/centercodeadmin/deleteAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/centercodeadmin/listCenterCode.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/centercodeadmin/listCenterCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/centercodeadmin/listCenterCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/centercodeadmin/addCenterCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/centercodeadmin/listCenterCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/centercodeadmin/listCenterCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/centercodeadmin/addCenterCode.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/centercodeadmin/modifyCenterCode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/centercodeadmin/listCenterCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/centercodeadmin/viewCenterCodeDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/centercodeadmin/modifyCenterCode.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/centercodeadmin/deleteAgencyDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/centercodeadmin/listCenterCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/centercodeadmin/listCenterCode.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/centercodeadmin/addCenterCode.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		<!-- Navigation ends for Center Codes Management-->
+	
+	<!-- Navigation start for Agent Message Detail -->
+	<navigation-rule>
+		<from-view-id>/agentallocationsadmin/listAgentMessages.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>bulkAssign</from-outcome>
+			<to-view-id>/agentallocationsadmin/bulkAgentAllocations.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>selectedAssign</from-outcome>
+			<to-view-id>/agentallocationsadmin/agentAllocation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+
+	<navigation-rule>
+		<from-view-id>/agentmessageadmin/agentMessage.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentmessageadmin/listAgentMessages.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/agentmessageadmin/agentMessage.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/agentmessageadmin/listAgentMessages.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agentmessageadmin/bulkAgentMessages.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/agentmessageadmin/listAgentMessages.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/agentmessageadmin/listAgentMessages.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<!-- Navigation End for Agent Message Detail -->
+	
+	
+		<!-- Navigation Start for Message Config Details -->
+
+	<navigation-rule>
+		<from-view-id>/SMSconfigadmin/listSMSConfig.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewSMSConfig</from-outcome>
+			<to-view-id>/SMSconfigadmin/viewSMSConfig.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/SMSconfigadmin/viewSMSConfig.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/SMSconfigadmin/addSMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/SMSconfigadmin/modifySMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/SMSconfigadmin/deleteSMSConfig.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/SMSconfigadmin/listSMSConfig.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SMSconfigadmin/listSMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/SMSconfigadmin/listSMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/SMSconfigadmin/addSMSConfig.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SMSconfigadmin/listSMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/SMSconfigadmin/listSMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/SMSconfigadmin/addSMSConfig.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/SMSconfigadmin/modifySMSConfig.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SMSconfigadmin/listSMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/SMSconfigadmin/viewSMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/SMSconfigadmin/modifySMSConfig.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/SMSconfigadmin/deleteSMSConfig.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SMSconfigadmin/listSMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/SMSconfigadmin/listSMSConfig.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/SMSconfigadmin/addSMSConfig.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- Navigation End for Message Config Details -->
+	
+	<!-- Navigation Start for CASA Details -->
+	<navigation-rule>
+		<from-view-id>/casaadmin/listCustAcDetails.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCustAcDetails</from-outcome>
+			<to-view-id>/casaadmin/viewCustAcDetails.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>bulkAssign</from-outcome>
+			<to-view-id>/casaadmin/bulkAgentAllocations.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>selectedAssign</from-outcome>
+			<to-view-id>/casaadmin/agentAllocation.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/casaadmin/viewCustAcDetails.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openClose</from-outcome>
+			<to-view-id>/casaadmin/listCustAcDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/casaadmin/agentAllocation.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/casaadmin/listCustAcDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/casaadmin/agentAllocation.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/casaadmin/listCustAcDetails.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/casaadmin/bulkAgentAllocations.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>doCancel</from-outcome>
+			<to-view-id>/casaadmin/listCustAcDetails.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/casaadmin/listCustAcDetails.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Navigation End for CASA Details -->
+	
+	<!-- Navigation Start for CbsTxnOut Details -->
+
+	<navigation-rule>
+		<from-view-id>/agendaadmin/listCbsTxnOut.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCbstxnOut</from-outcome>
+			<to-view-id>/agendaadmin/viewCbstxnOut.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agendaadmin/viewCbstxnOut.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/agendaadmin/listCbsTxnOut.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Navigation End for CbsTxnOut Details -->
+	
+	<!-- Navigation Start for Loan Agenda Details -->
+
+	<navigation-rule>
+		<from-view-id>/agendaadmin/listLoanAgenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewLoanAgenda</from-outcome>
+			<to-view-id>/agendaadmin/viewLoanAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agendaadmin/viewLoanAgenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/agendaadmin/listLoanAgenda.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Navigation End for Loan Agenda Details -->
+	
+	<!-- Navigation Start for Deposit Agenda Details -->
+
+	<navigation-rule>
+		<from-view-id>/agendaadmin/listDepositAgenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewDepositAgenda</from-outcome>
+			<to-view-id>/agendaadmin/viewDepositAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/agendaadmin/viewDepositAgenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/agendaadmin/listDepositAgenda.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Navigation End for Deposit Agenda Details -->
+	
+	<!-- Navigation Start for SMS Template Details -->
+
+	<navigation-rule>
+		<from-view-id>/SMStemplateadmin/listSMSTemplate.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewSMSTemplate</from-outcome>
+			<to-view-id>/SMStemplateadmin/viewSMSTemplate.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/SMStemplateadmin/viewSMSTemplate.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/SMStemplateadmin/addSMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/SMStemplateadmin/modifySMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/SMStemplateadmin/deleteSMSTemplate.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/SMStemplateadmin/listSMSTemplate.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SMStemplateadmin/listSMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/SMStemplateadmin/listSMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/SMStemplateadmin/addSMSTemplate.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SMStemplateadmin/listSMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/SMStemplateadmin/listSMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/SMStemplateadmin/addSMSTemplate.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/SMStemplateadmin/modifySMSTemplate.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SMStemplateadmin/listSMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/SMStemplateadmin/viewSMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/SMStemplateadmin/modifySMSTemplate.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/SMStemplateadmin/deleteSMSTemplate.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/SMStemplateadmin/listSMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/SMStemplateadmin/listSMSTemplate.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/SMStemplateadmin/addSMSTemplate.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- Navigation End for SMS Template Details -->
+	
+	
+	<!-- Navigation Start for Lov List Additions Details -->
+
+	<navigation-rule>
+		<from-view-id>/lovaddadmin/listAddLovType.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewAddLovTypeDetail</from-outcome>
+			<to-view-id>/lovaddadmin/viewAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/lovaddadmin/viewAddLovTypeDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/lovaddadmin/addLovListDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/lovaddadmin/modifyLovList.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/lovaddadmin/deleteAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/lovaddadmin/listAddLovType.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/lovaddadmin/listAddLovType.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/lovaddadmin/listAddLovType.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/lovaddadmin/addLovListDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/lovaddadmin/listAddLovType.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/lovaddadmin/listAddLovType.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/lovaddadmin/addLovListDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/lovaddadmin/modifyLovList.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/lovaddadmin/listAddLovType.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/lovaddadmin/viewAddLovTypeDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/lovaddadmin/modifyLovList.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- <navigation-rule>
+		<from-view-id>/lovaddadmin/deleteAgencyDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/lovaddadmin/listAddLovType.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/lovaddadmin/listAddLovType.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/lovaddadmin/addLovListDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule> -->
+	
+	<!-- Navigation ends for Lov List Additions Management -->
+	
+	
+	<!-- Navigation Start for Lov BASE  Details -->
+
+	<navigation-rule>
+		<from-view-id>/lovbaseadmin/listLovBase.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewLovBase</from-outcome>
+			<to-view-id>/lovbaseadmin/viewLovBase.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/lovbaseadmin/viewLovBase.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/lovbaseadmin/addLovBaseDetail.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/lovbaseadmin/modifyLovBase.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/lovbaseadmin/deleteAgencyDetail.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/lovbaseadmin/listLovBase.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/lovbaseadmin/listLovBase.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/lovbaseadmin/listLovBase.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/lovbaseadmin/addLovBaseDetail.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/lovbaseadmin/listLovBase.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/lovbaseadmin/listLovBase.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/lovbaseadmin/addLovBaseDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/lovbaseadmin/modifyLovBase.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/lovbaseadmin/listLovBase.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/lovbaseadmin/viewLovBase.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/lovbaseadmin/modifyLovBase.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Navigation  Lov BASE END Details -->
+	
+	<!-- Navigation Start for  External Device Management -->
+
+	<navigation-rule>
+		<from-view-id>/externaldeviceadmin/listExternalDevices.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewExternalDevice</from-outcome>
+			<to-view-id>/externaldeviceadmin/viewExternalDevice.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/externaldeviceadmin/viewExternalDevice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/externaldeviceadmin/addExternalDevice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/externaldeviceadmin/modifyExternalDevice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/externaldeviceadmin/deleteExternalDevice.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/externaldeviceadmin/listExternalDevices.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAuth</from-outcome>
+			<to-view-id>/externaldeviceadmin/viewExternalDevice.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/externaldeviceadmin/listExternalDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/externaldeviceadmin/listExternalDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/externaldeviceadmin/addExternalDevice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/externaldeviceadmin/listExternalDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/externaldeviceadmin/listExternalDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/externaldeviceadmin/addExternalDevice.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/externaldeviceadmin/modifyExternalDevice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/externaldeviceadmin/listExternalDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/externaldeviceadmin/viewExternalDevice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/externaldeviceadmin/modifyExternalDevice.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- <navigation-rule>
+		<from-view-id>/externaldeviceadmin/deleteDevice.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/externaldeviceadmin/listExternalDevices.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/externaldeviceadmin/viewExternalDevice.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/externaldeviceadmin/addExternalDevice.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule> -->
+
+	<!-- Navigation ends for External Device Management -->
+	
+	<!--RoleForMbs Navigation Start -->
+	<navigation-rule>
+		<from-view-id>/roleadminmbs/listMbsRoles.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewRole</from-outcome>
+			<to-view-id>/roleadminmbs/viewMbsRole.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/roleadminmbs/addMbsRole.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/roleadminmbs/viewMbsRole.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/roleadminmbs/addMbsRole.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/roleadminmbs/modifyMbsRole.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openDelete</from-outcome>
+			<to-view-id>/roleadminmbs/deleteMbsRole.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/roleadminmbs/listMbsRoles.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>checkAuth</from-outcome>
+			<to-view-id>/roleadminmbs/viewMbsRole.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/roleadminmbs/listMbsRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/roleadminmbs/addMbsRole.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/roleadminmbs/listMbsRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/roleadminmbs/listMbsRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/roleadminmbs/addMbsRole.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/roleadminmbs/modifyMbsRole.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/roleadminmbs/listMbsRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/roleadminmbs/viewMbsRole.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/roleadminmbs/modifyMbsRole.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/roleadminmbs/deleteMbsRole.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/roleadminmbs/listMbsRoles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/roleadminmbs/viewMbsRole.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/roleadminmbs/deleteMbsRole.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!--RoleForMbs Navigation End -->
+	
+	
+	
+	
+	
+	
+	<!-- Navigation Start for IBS Reset Agenda Details -->
+
+	<navigation-rule>
+		<from-view-id>/resetagendaadmin/listIbsResetAgenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>viewIbsResetAgenda</from-outcome>
+			<to-view-id>/resetagendaadmin/viewIbsResetAgenda.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/resetagendaadmin/viewIbsResetAgenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/resetagendaadmin/addIbsResetAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/resetagendaadmin/modifyIbsResetAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/resetagendaadmin/listIbsResetAgenda.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/resetagendaadmin/listIbsResetAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/resetagendaadmin/listIbsResetAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/resetagendaadmin/addIbsResetAgenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/resetagendaadmin/listIbsResetAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/resetagendaadmin/listIbsResetAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/resetagendaadmin/addIbsResetAgenda.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/resetagendaadmin/modifyIbsResetAgenda.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/resetagendaadmin/listIbsResetAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/resetagendaadmin/viewIbsResetAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/resetagendaadmin/modifyIbsResetAgenda.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<!-- Navigation ends for IBS Reset Agenda Management -->
+	
+	
+	<!-- Navigation Start for Manual Reset AgendaADD Details -->
+	
+        <navigation-rule>
+			<from-view-id>/manualagendasettleAddadmin/listManualAgendaSettle.xhtml</from-view-id>
+			<navigation-case>
+				<from-outcome>viewManualAgendaSettle</from-outcome>
+				<to-view-id>/manualagendasettleAddadmin/viewManualAgendaSettle.xhtml</to-view-id>
+			</navigation-case>
+	    </navigation-rule>	
+	
+	   <navigation-rule>
+		<from-view-id>/manualagendasettleAddadmin/viewManualAgendaSettle.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/manualagendasettleAddadmin/addManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<!-- <navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/manualagendasettleAddadmin/modifyIbsResetAgenda.xhtml</to-view-id>
+			<redirect />
+		</navigation-case> -->
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/manualagendasettleAddadmin/listManualAgendaSettle.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manualagendasettleAddadmin/listManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/manualagendasettleAddadmin/listManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	 </navigation-rule>
+	 
+	 <navigation-rule>
+		<from-view-id>/manualagendasettleAddadmin/addManualAgendaSettle.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/manualagendasettleAddadmin/listManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/manualagendasettleAddadmin/listManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/manualagendasettleAddadmin/addManualAgendaSettle.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Navigation ends for Manual Reset AgendaADD Management -->
+	
+	
+	
+	
+	<!-- Navigation Start for Modify and Auth Manual Reset AgendaADD Details -->
+	
+        <navigation-rule>
+			<from-view-id>/modifyManualagendasettleadmin/listModifyManualAgendaSettle.xhtml</from-view-id>
+			<navigation-case>
+				<from-outcome>viewModifyManualAgendaSettle</from-outcome>
+				<to-view-id>/modifyManualagendasettleadmin/viewModifyManualAgendaSettle.xhtml</to-view-id>
+			</navigation-case>
+	    </navigation-rule>	
+	
+	   <navigation-rule>
+		<from-view-id>/modifyManualagendasettleadmin/viewModifyManualAgendaSettle.xhtml</from-view-id>
+		 <navigation-case>
+			<from-outcome>openModify</from-outcome>
+			<to-view-id>/modifyManualagendasettleadmin/modifyManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case> 
+		<!--<navigation-case>
+			<from-outcome>openAdd</from-outcome>
+			<to-view-id>/modifyManualagendasettleadmin/modifyManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>  -->
+		<navigation-case>
+			<from-outcome>openList</from-outcome>
+			<to-view-id>/modifyManualagendasettleadmin/listModifyManualAgendaSettle.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/modifyManualagendasettleadmin/listModifyManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/modifyManualagendasettleadmin/listModifyManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	 </navigation-rule>
+	 
+	 <navigation-rule>
+		<from-view-id>/modifyManualagendasettleadmin/modifyManualAgendaSettle.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/modifyManualagendasettleadmin/listModifyManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>cancel</from-outcome>
+			<to-view-id>/modifyManualagendasettleadmin/listModifyManualAgendaSettle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/modifyManualagendasettleadmin/modifyManualAgendaSettle.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Navigation ends for Modify and Auth Manual Reset AgendaADD Management -->
+	
+	
+	<!-- Navigation start for Cash Record Management -->
+	
+	<navigation-rule>
+		<from-view-id>/cashrecordadmin/listCashRecSumup.xhtml</from-view-id>
+		<navigation-case>
+				<from-outcome>viewCashRecDetail</from-outcome>
+				<to-view-id>/cashrecordadmin/viewCashRecDetail.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/cashrecordadmin/viewCashRecDetail.xhtml</from-view-id>
+		<navigation-case>
+				<from-outcome>openList</from-outcome>
+				<to-view-id>/cashrecordadmin/listCashRecSumup.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		
+	<!-- Navigation ends for Cash Record Management -->
+	
+	
+	
+
+</faces-config>

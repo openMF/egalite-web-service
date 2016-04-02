@@ -1,0 +1,44 @@
+ <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<p:dialog id="themeDialogId" header="Choose your theme"
+		widgetVar="themeDialog" modal="true">
+		<h:form id="themeForm">
+			 <p:themeSwitcher id="statefulSwitcher"
+				value="#{userSettingsController.theme}" var="theme"
+				style="width:165px" effect="drop">
+				<f:selectItem itemLabel="Choose Theme" itemValue="" />
+				<f:selectItems value="#{userSettingsController.themes}" />
+				<p:ajax listener="#{userSettingsController.saveTheme}"
+					oncomplete="themeDialog.hide(); return false;" />
+			</p:themeSwitcher>
+		</h:form>
+	</p:dialog>
+</ui:composition> 

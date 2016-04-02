@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	
+	<!-- Modification under Tag No [ EGA-MN15-000003 ]
+	1. Panel Added under maintenance form for splitting Screen.
+	2. contactNumber modified to non mandatory field.
+	3. ZipCode and contact number modified to non mandatory field.
+	4. addressLine 1,2 modified to non mandatory field.
+	5. district,city,state modified to drop-down.
+	6. Validate CBS Location Code by Ajax call.
+	 -->
+	
+	
+	<ui:define name="metadata">
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NumbersName') {
+					   AllowableCharacters='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'NameCharactersAndNumbersWithNoBlankSpace') {
+					AllowableCharacters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			//]]>
+		</script>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['locationMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<!-- CBS branch code logic added => Changes for Asomi Nirmal kanna S -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['locationMgmt.tblHeader.newLocationEntry']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['locationMgmt.btn.save']}"
+						update="panel" action="#{locationController.createLocation}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['locationMgmt.nav.cancel']}"
+						outcome="cancel" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+		<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="locationCode"
+					value="#{msg['locationMgmt.tblHeader.locationCode']}" />
+				<p:inputText id="locationCode"
+					value="#{locationController.location.locationCode}" readonly="true"
+					required="true"
+					label="#{msg['locationMgmt.tblHeader.locationCode']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="locationCode" display="icon" />
+
+				<h:outputLabel for="locationDesc"
+					value="#{msg['locationMgmt.tblHeader.locationDesc']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="locationDesc"
+					onkeypress="return inputLimiter(event,'Letters')"
+					value="#{locationController.location.locationDesc}"
+					readonly="false" required="true"
+					label="#{msg['locationMgmt.tblHeader.locationDesc']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="locationDesc" display="icon" />
+
+				<h:outputLabel for="cbsLocationCode"
+					value="#{msg['locationMgmt.tblHeader.cbsLocationCode']}"  />
+				<h:selectOneMenu id="cbsLocationCode" styleClass="drop_down_style"
+					value="#{locationController.location.cbsLocationCode}" label="#{msg['locationMgmt.tblHeader.cbsLocationCode']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{locationController.cbsLocationCodes}"
+						var="dev" itemValue="#{dev.dlValue}"
+						itemLabel="#{dev.dlValue} ~ #{dev.dlDesc}" />
+				<p:ajax event="change" listener="#{locationController.validateLocationCode}" process="@this" /> 
+				</h:selectOneMenu>
+				<p:message for="cbsLocationCode" display="icon" />
+
+				<h:outputLabel for="cbsBranchCode"
+					value="#{msg['locationMgmt.tblHeader.cbsBranchCode']}" styleClass="required_asterisk"  />
+				<h:selectOneMenu id="cbsBranchCode"
+					styleClass="drop_down_style"
+					value="#{locationController.location.cbsBranchCode}"
+					required="true"
+					label="#{msg['locationMgmt.tblHeader.cbsBranchCode']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{locationController.cbsBranchCodes}"
+						var="dev" itemValue="#{dev.dlValue}"
+						itemLabel="#{dev.dlValue}  ~  #{dev.dlDesc}" />
+				</h:selectOneMenu>
+				<p:message for="cbsBranchCode" display="icon" />
+
+				<h:outputLabel for="address1"
+					value="#{msg['locationMgmt.tblHeader.address1']}" />
+				<p:inputText id="address1"
+					value="#{locationController.location.address1}" readonly="false"
+					required="false" label="#{msg['locationMgmt.tblHeader.address1']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="address1" display="icon" />
+
+				<h:outputLabel for="address2"
+					value="#{msg['locationMgmt.tblHeader.address2']}"/>
+				<p:inputText id="address2"
+					value="#{locationController.location.address2}" readonly="false"
+					required="false" label="#{msg['locationMgmt.tblHeader.address2']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="address2" display="icon" />
+
+				<h:outputLabel for="address3"
+					value="#{msg['locationMgmt.tblHeader.address3']}" />
+				<p:inputText id="address3"
+					value="#{locationController.location.address3}" readonly="false"
+					required="false" label="#{msg['locationMgmt.tblHeader.address3']}">
+					<f:validateLength minimum="0" maximum="25" />
+				</p:inputText>
+				<p:message for="address3" display="icon" />
+				
+				</h:panelGrid>
+			</p:panel>	
+					<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="3" >
+				
+				<h:outputLabel for="zipCode"
+					value="#{msg['locationMgmt.tblHeader.zipCode']}" />
+				<p:inputText id="zipCode"
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+					value="#{locationController.location.zipCode}" readonly="false"
+					required="false" label="#{msg['locationMgmt.tblHeader.zipCode']}">
+					<f:validateLength minimum="0" maximum="15" />
+				</p:inputText>
+				<p:message for="zipCode" display="icon" />
+				
+				<h:outputLabel styleClass="required_asterisk" for="address4" value="#{msg['locationMgmt.tblHeader.address4']}" /> 
+				<h:selectOneMenu id="address4" styleClass="drop_down_style" value="#{locationController.location.address4}"
+					required="true" label="#{msg['locationMgmt.tblHeader.address4']}">
+					<f:selectItems value="#{locationController.districts}"
+						var="code" itemValue="#{code.codeValue}"
+						itemLabel="#{code.codeValue}" />
+				</h:selectOneMenu>	<p:message for="address4" display="icon" />
+				
+				<h:outputLabel styleClass="required_asterisk" for="city" value="#{msg['locationMgmt.tblHeader.city']}" /> 
+				<h:selectOneMenu id="city" styleClass="drop_down_style" value="#{locationController.location.city}"
+					required="true" label="#{msg['locationMgmt.tblHeader.city']}">
+					<f:selectItems value="#{locationController.citys}"
+						var="code" itemValue="#{code.codeValue}"
+						itemLabel="#{code.codeValue}" />
+				</h:selectOneMenu>	<p:message for="city" display="icon" />
+				
+				<h:outputLabel styleClass="required_asterisk" for="state" value="#{msg['locationMgmt.tblHeader.state']}" /> 
+				<h:selectOneMenu id="state" styleClass="drop_down_style" value="#{locationController.location.state}"
+					required="true" label="#{msg['locationMgmt.tblHeader.state']}">
+					<f:selectItems value="#{locationController.states}"
+						var="code" itemValue="#{code.codeValue}"
+						itemLabel="#{code.codeValue}" />
+				</h:selectOneMenu>	<p:message for="state" display="icon" />
+
+				<h:outputLabel styleClass="required_asterisk" for="country"
+					value="#{msg['locationMgmt.tblHeader.country']}" />
+				<h:selectOneMenu id="country"
+					styleClass="drop_down_style"
+					value="#{locationController.location.country}" required="true"
+					label="#{msg['locationMgmt.tblHeader.country']}">
+					<f:selectItems value="#{locationController.countryCodes}"
+						var="code" itemValue="#{code.countryCode}"
+						itemLabel="#{code.description}" />
+				</h:selectOneMenu>
+				<p:message for="country" display="icon" />
+
+				<h:outputLabel for="contactNumber"
+					value="#{msg['locationMgmt.tblHeader.contactNumber']}"/>
+				<p:inputMask id="contactNumber"
+					value="#{locationController.location.contactNumber}"
+					required="false" onkeypress="return inputLimiter(event,'Numbers')"
+					validatorMessage="#{msg['agencyMgmt.errmsg.mobileNo']}">
+					<f:validateLength minimum="8" maximum="16" />
+				</p:inputMask>
+				<p:message for="contactNumber" display="icon" />
+
+				<h:outputLabel for="isActive"
+					value="#{msg['locationMgmt.tblHeader.isActive']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="isActive"
+					styleClass="drop_down_style"
+					value="#{locationController.location.isActive}" required="true"
+					label="#{msg['locationMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{locationController.locationStatuss}"
+						var="devi" itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

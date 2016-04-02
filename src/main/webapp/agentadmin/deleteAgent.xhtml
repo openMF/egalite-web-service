@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="agentId" value="#{agentController.agent.agentId}"></f:viewParam>
+			<f:event listener="#{agentController.loadAgent}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="contentSection">
+		<h:form id="form">
+			<p:panel id="panel" header="#{msg['agentMgmt.title.deleteAgent']}">
+				<p:messages id="msgs" />
+				<p:growl id="growl" showDetail="true" sticky="false" />
+
+				<p:commandButton id="btnSave" value="#{msg['agentMgmt.btn.delete']}"
+					update="panel" action="#{agentController.delete}" />
+				<p:button id="btnCancel" value="#{msg['agentMgmt.btn.cancel']}"
+					outcome="cancel">
+					<f:param name="agentId" value="#{agentController.agent.agentId}" />
+				</p:button>
+
+				<h:panelGrid columns="2">
+
+
+					<h:outputLabel for="agentId"
+						value="#{msg['agentMgmt.label.agentId']}" />
+					<p:inputText id="agentId" value="#{agentController.agent.agentId}"
+						readonly="true" />
+
+					<h:outputLabel for="creditofficer"
+						value="#{msg['agentMgmt.label.creditofficer']}" />
+					<p:inputText id="creditofficer"
+						value="#{agentController.agent.creditOfficer}" readonly="true"
+						label="#{msg['agentMgmt.label.creditofficer']}">
+						<f:selectItems value="#{agentController.creditOfficers}"
+							var="credit" itemValue="#{credit.id}" itemLabel="#{credit.id}" />
+					</p:inputText>
+
+					<h:outputLabel for="agencyCode"
+						value="#{msg['agentMgmt.label.agencyCode']}" />
+					<p:inputText id="agencyCode"
+						value="#{agentController.agent.agencyCode}" readonly="true" />
+
+					<h:outputLabel for="agentType"
+						value="#{msg['agentMgmt.label.agentType']}" />
+					<p:inputText id="agentType"
+						value="#{lov['agentType~'.concat(agentController.agent.agentType.trim())]}"
+						readonly="true" />
+
+					<h:outputLabel for="agentStatus"
+						value="#{msg['agentMgmt.label.agentStatus']}" />
+					<p:inputText id="agentStatus"
+						value="#{lov['agentStatus~'.concat(agentController.agent.agentStatus.trim())]}"
+						readonly="true" />
+
+					<h:outputLabel for="cashLimit"
+						value="#{msg['agentMgmt.label.cashLimit']}" />
+					<p:inputText id="cashLimit"
+						value="#{agentController.agent.cashLimit}" readonly="true" />
+
+					<h:outputLabel for="deviceId"
+						value="#{msg['agentMgmt.label.deviceId']}" />
+					<p:inputText id="deviceId"
+						value="#{agentController.agent.deviceId}" readonly="true" />
+
+					<h:outputLabel for="userName"
+						value="#{msg['agentMgmt.label.userName']}" />
+					<p:inputText id="userName"
+						value="#{agentController.agent.userName}" readonly="true" />
+
+					<h:outputLabel for="fname"
+						value="#{msg['agentMgmt.label.firstName']}" />
+					<p:inputText id="fname" value="#{agentController.agent.fname}"
+						readonly="true" />
+
+					<h:outputLabel for="lname"
+						value="#{msg['agentMgmt.label.lastName']}" />
+					<p:inputText id="lname" value="#{agentController.agent.lname}"
+						readonly="true" />
+
+					<h:outputLabel for="dob" value="#{msg['agentMgmt.label.dob']}" />
+					<p:calendar id="dob" value="#{agentController.agent.dob}"
+						pattern="dd-MMM-yyyy" showOn="label" readonlyInput="true" />
+
+					<h:outputLabel for="gender"
+						value="#{msg['agentMgmt.label.gender']}" />
+					<p:inputText id="gender"
+						value="#{lov['gender~'.concat(agentController.agent.gender.trim())]}"
+						readonly="true" />
+
+					<h:outputLabel for="address1"
+						value="#{msg['agentMgmt.label.commAddr1']}" />
+					<p:inputText id="address1"
+						value="#{agentController.agent.commAddr1}" readonly="true" />
+
+					<h:outputLabel for="address2"
+						value="#{msg['agentMgmt.label.commAddr2']} " />
+					<p:inputText id="address2"
+						value="#{agentController.agent.commAddr2}" readonly="true" />
+
+					<h:outputLabel for="address3"
+						value="#{msg['agentMgmt.label.commAddr3']} " />
+					<p:inputText id="address3"
+						value="#{agentController.agent.commAddr3}" readonly="true" />
+
+					<h:outputLabel for="commPostCode"
+						value="#{msg['agentMgmt.label.commPostalCode']}" />
+					<p:inputText id="commPostCode"
+						value="#{agentController.agent.commPostCode}" readonly="true" />
+
+					<h:outputLabel for="mobile"
+						value="#{msg['agentMgmt.label.mobile']}" />
+					<p:inputText id="mobile" value="#{agentController.agent.mobile}"
+						readonly="true" />
+
+					<h:outputLabel for="emailId"
+						value="#{msg['agentMgmt.label.emailId']}" />
+					<p:inputText id="emailId" value="#{agentController.agent.emailId}"
+						readonly="true" />
+
+					<h:outputLabel for="startDate"
+						value="#{msg['agentMgmt.label.startDate']}" />
+					<p:calendar id="startDate"
+						value="#{agentController.agent.startDate}" pattern="dd-MMM-yyyy"
+						showOn="label" readonlyInput="true" />
+
+					<h:outputLabel for="endDate"
+						value="#{msg['agentMgmt.label.endDate']}" />
+					<p:calendar id="endDate" value="#{agentController.agent.endDate}"
+						pattern="dd-MMM-yyyy" showOn="label" readonlyInput="true" />
+
+					<h:outputLabel for="agentLang"
+						value="#{msg['agentMgmt.label.Language']}" />
+					<p:inputText id="agentLang"
+						value="#{lov['language~'.concat(agentController.agent.agentLang.trim())]}"
+						readonly="true" />
+
+				</h:panelGrid>
+
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

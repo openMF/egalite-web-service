@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	<ui:define name="metadata">
+	<script type="text/javascript">
+        //<![CDATA[
+        
+  function inputLimiter(e,allow) {
+    var AllowableCharacters = '';
+
+    if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'NameCharactersAndNumbersWithNoBlankSpace'){AllowableCharacters='1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+
+    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+    if (k!=13 && k!=8 && k!=0){
+        if ((e.ctrlKey==false) && (e.altKey==false)) {
+        return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+        } else {
+        return true;
+        }
+    } else {
+        return true;
+    }
+} 
+    	function ieClicked() {
+    		if (document.all) {
+    			return false;
+    		}
+    	}
+    	function firefoxClicked(e) {
+    		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+    			if (e.which==2||e.which==3) {
+    				return false;
+    			}
+    		}
+    	}
+    	if (document.layers){
+    		document.captureEvents(Event.MOUSEDOWN);
+    		document.onmousedown=firefoxClicked;
+    	}else{
+    		document.onmouseup=firefoxClicked;
+    		document.oncontextmenu=ieClicked;
+    	}
+    	document.oncontextmenu=new Function("return false")
+
+    
+
+        //]]>
+    </script>
+	</ui:define>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['lovMgmt.title.newLovDispEntry']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['agencyMgmt.btn.save']}" update="panel"
+						action="#{addLovController.create}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['agencyMgmt.nav.cancel']}"
+						outcome="cancel" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<h:panelGrid columns="3">
+
+                <h:outputLabel for="lovId"
+					value="#{msg['lovMgmt.label.lovid']}"
+					styleClass="required_asterisk" />
+                <h:selectOneMenu id="lovId" styleClass="drop_down_style" effect="drop"
+					value="#{addLovController.lovVo.lovId}"
+					label="#{msg['lovMgmt.label.lovid']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{addLovController.lovIds}"
+						var="tempAgent" itemValue="#{tempAgent.id}"
+						itemLabel="#{tempAgent.id}" />
+						<p:ajax event="change" update="intrValue orderBy" process="@this"/>
+				</h:selectOneMenu>
+				<p:message for="lovId" display="icon" />
+				
+				<h:outputLabel for="lovDesc"
+					value="#{msg['lovMgmt.label.lovDesc']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="lovDesc"
+					value="#{addLovController.lovVo.lovDesc}" readonly="false"
+					required="true" label="#{msg['lovMgmt.label.lovDesc']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="lovDesc" display="icon" />
+
+				<h:outputLabel for="intrValue"
+					value="#{msg['lovMgmt.label.intrValue']}"
+					/>
+				<p:inputText id="intrValue"
+					value="#{addLovController.lovVo.intrValue}" readonly="false"
+					required="true" label="#{msg['lovMgmt.label.intrValue']}">
+					<f:validateLength minimum="1" maximum="3" />
+				</p:inputText>
+				<p:message for="intrValue" display="icon" />
+
+				<h:outputLabel for="displayValue"
+					value="#{msg['lovMgmt.label.displayValue']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="displayValue"
+					value="#{addLovController.lovVo.displayValue}" readonly="false"
+					required="true" label="#{msg['lovMgmt.label.displayValue']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="displayValue" display="icon" />
+
+				<h:outputLabel for="orderBy"
+					value="#{msg['lovMgmt.lable.orderBy']}" />
+				<p:inputText id="orderBy"
+					value="#{addLovController.tempIntrValue}" readonly="true"
+					required="true" label="#{msg['lovMgmt.lable.orderBy']}">
+					<f:validateLength minimum="0" maximum="2" />
+				</p:inputText>
+				<p:message for="orderBy" display="icon" />
+
+				<h:outputLabel for="isActive"
+					value="#{msg['agencyMgmt.tblHeader.isActive']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="isActive"
+				    styleClass="drop_down_style"
+					value="#{addLovController.lovVo.isActive}" required="true"
+					label="#{msg['agencyMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{addLovController.isTempActive}" var="devi"
+						itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

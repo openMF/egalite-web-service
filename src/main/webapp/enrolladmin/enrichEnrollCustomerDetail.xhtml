@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{enrollCustomerController.enrollCustomer.enrollmentId}"></f:viewParam>
+			<f:event listener="#{enrollCustomerController.loadEnrollCustomer}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="contentSection">
+		<h:form id="form" enctype="multipart/form-data">
+			<p:panel id="contentPanel">
+				<f:facet name="header">
+					<h:outputText value="#{msg['nav.enrollCustomer']}" />
+				</f:facet>
+				<p:panel id="panel">
+					<f:facet name="header">
+						<p:panel styleClass="maintenanceFormPanelHeader">
+							<span class="pageHeaderTitle"><h:outputText
+									value="#{msg['customerMgmt.title']}" /> </span>
+							<span class="pageHeaderControls"> <p:commandButton
+									id="btnSave" value="#{msg['agencyMgmt.btn.save']}"
+									update="panel"
+									action="#{enrollCustomerController.enrichCustomer}"
+									style="margin-left: 182px;">
+								</p:commandButton> <p:commandButton id="btnCancel"
+									value="#{msg['agencyMgmt.nav.cancel']}" action="cancel" />
+							</span>
+						</p:panel>
+					</f:facet>
+					<p:panel styleClass="maintenanceFormWithAuditTrail">
+						<p:panel style="width:46%;height:410px; float:left">
+							<!--  styleClass="maintenanceFormWithAuditTrail" -->
+							<!-- <h:panelGrid columns="2"> -->
+
+							<p:tabView orientation="top">
+								<p:tab title="Personal Information">
+									<h:panelGrid columns="2">
+										<h:panelGrid columns="2">
+											<h:outputLabel for="id"
+												value="#{msg['customerMgmt.label.enrolID']}" />
+											<p:inputText id="id" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.enrollmentId}"
+												label="#{msg['customerMgmt.label.enrolID']}">
+											</p:inputText>
+											<h:outputLabel for="firstName"
+												value="#{msg['customerMgmt.label.custfName']}" />
+											<p:inputText id="firstName" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.firstName}"
+												label="#{msg['customerMgmt.label.custfName']}">
+											</p:inputText>
+											<h:outputLabel for="middleName"
+												value="#{msg['customerMgmt.label.custmName']}" />
+											<p:inputText id="middleName" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.middleName}"
+												label="#{msg['customerMgmt.label.custmName']}">
+											</p:inputText>
+											<h:outputLabel for="lastName"
+												value="#{msg['customerMgmt.label.custlName']}" />
+											<p:inputText id="lastName" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.lastName}"
+												label="#{msg['customerMgmt.label.custlName']}">
+											</p:inputText>
+											<h:outputLabel for="gender"
+												value="#{msg['customerMgmt.label.custGender']}" />
+											<p:inputText id="gender" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.gender}"
+												label="#{msg['customerMgmt.label.custGender']}">
+											</p:inputText>
+											<h:outputLabel for="dob"
+												value="#{msg['customerMgmt.label.custDob']}" />
+											<p:inputText id="dob" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.dob}"
+												label="#{msg['customerMgmt.label.custDob']}">
+												<f:convertDateTime pattern="dd-MMM-yyyy" />
+											</p:inputText>
+											<h:outputLabel for="martialStatus"
+												value="#{msg['customerMgmt.label.maritalStat']}" />
+											<p:inputText id="martialStatus" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.martialStatus}"
+												label="#{msg['customerMgmt.label.maritalStat']}">
+											</p:inputText>
+											<h:outputLabel for="contactNumber"
+												value="#{msg['customerMgmt.label.phoneNumber']}" />
+
+											<p:inputText id="contactNumber" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.contactNumber}"
+												label="#{msg['customerMgmt.label.phoneNumber']}">
+											</p:inputText>
+										</h:panelGrid>
+										<p:panel>
+											<p:graphicImage cache="false"
+												value="#{enrollCustomerController.documentContent}"
+												width="250" height="250" circular="true">
+												<f:param name="documentName" value="Photo" />
+												<f:param name="enrollmentId"
+													value="#{enrollCustomerController.enrollCustomer.enrollmentId}" />
+											</p:graphicImage>
+										</p:panel>
+									</h:panelGrid>
+								</p:tab>
+
+								<p:tab title="Location Information">
+									<h:panelGrid columns="2">
+										<h:outputLabel for="address1"
+											value="#{msg['customerMgmt.label.custAdd1']}" />
+										<p:inputText id="address1" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.address1}"
+											label="#{msg['customerMgmt.label.custAdd1']}">
+										</p:inputText>
+
+										<h:outputLabel for="address2"
+											value="#{msg['customerMgmt.label.custAdd2']}" />
+										<p:inputText id="address2" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.address2}"
+											label="#{msg['customerMgmt.label.custAdd2']}">
+										</p:inputText>
+
+										<h:outputLabel for="emailId"
+											value="#{msg['customerMgmt.label.emailID']}" />
+										<p:inputText id="emailId" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.emailId}"
+											label="#{msg['customerMgmt.label.emailID']}">
+										</p:inputText>
+
+										<h:outputLabel for="state"
+											value="#{msg['customerMgmt.label.state']}" />
+										<p:inputText id="state" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.state}"
+											label="#{msg['customerMgmt.label.state']}">
+										</p:inputText>
+										<h:outputLabel for="zipCode"
+											value="#{msg['customerMgmt.label.postalID']}" />
+										<p:inputText id="zipCode" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.zipCode}"
+											label="#{msg['customerMgmt.label.postalID']}">
+										</p:inputText>
+										<h:outputLabel for="country"
+											value="#{msg['customerMgmt.label.country']}" />
+										<p:inputText id="country" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.country}"
+											label="#{msg['customerMgmt.label.country']}">
+										</p:inputText>
+									</h:panelGrid>
+
+								</p:tab>
+
+								<p:tab title="Others Information">
+									<h:panelGrid columns="2">
+									<h:outputLabel for="accountType"
+											value="#{msg['customerMgmt.label.accountType']}" />
+										<p:inputText id="accountType" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.accountType}"
+											label="#{msg['customerMgmt.label.accountType']}">
+										</p:inputText>
+										<h:outputLabel for="accountTypeRem"
+											value="#{msg['customerMgmt.label.accountTypeRem']}" />
+										<p:inputText id="accountTypeRem" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.accountTypeRem}"
+											label="#{msg['customerMgmt.label.accountTypeRem']}">
+										</p:inputText>
+										<h:outputLabel for="currency"
+											value="#{msg['customerMgmt.label.custCurrency']}" />
+										<p:inputText id="currency" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.currency}"
+											label="#{msg['customerMgmt.label.custCurrency']}">
+										</p:inputText>
+										<h:outputLabel for="residentialType"
+											value="#{msg['customerMgmt.label.residentailType']}" />
+										<p:inputText id="residentialType" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.residentialType}"
+											label="#{msg['customerMgmt.label.residentailType']}">
+										</p:inputText>
+										<h:outputLabel for="nationality"
+											value="#{msg['customerMgmt.label.custnationalty']}" />
+										<p:inputText id="nationality" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.nationality}"
+											label="#{msg['customerMgmt.label.custnationalty']}">
+										</p:inputText>
+
+										<h:outputLabel for="profession"
+											value="#{msg['customerMgmt.label.profession']}" />
+										<p:inputText id="profession" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.profession}"
+											label="#{msg['customerMgmt.label.profession']}">
+										</p:inputText>
+										<h:outputLabel for="professionRemark"
+											value="#{msg['customerMgmt.label.professionRemark']}" />
+										<p:inputText id="professionRemark" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.professionRemark}"
+											label="#{msg['customerMgmt.label.professionRemark']}">
+										</p:inputText>
+										<h:outputLabel for="enrollmentdate"
+											value="#{msg['customerMgmt.label.enrollmentdate']}" />
+										<p:inputText id="enrollmentdate" readonly="true"
+											value="#{enrollCustomerController.enrollCustomer.enrollmentdate}"
+											label="#{msg['customerMgmt.label.enrollmentdate']}">
+											<f:convertDateTime pattern="dd-MMM-yyyy" />
+										</p:inputText>
+									</h:panelGrid>
+								</p:tab>
+								<p:tab title="KYC">
+									<p:dataTable id="tblDocuments" var="document"
+										value="#{enrollCustomerController.documentsForKyc}"
+										widgetVar="documentsTable" rowKey="#{document.documentName}"
+										emptyMessage="#{emptyMessage}">
+										<p:column headerText="Image">
+											<p:graphicImage
+												value="#{enrollCustomerController.documentContent}"
+												width="250" height="250" circular="true" cache="false">
+												<f:param name="documentName"
+													value="#{document.documentName}" />
+												<f:param name="enrollmentId"
+													value="#{enrollCustomerController.enrollCustomer.enrollmentId}" />
+											</p:graphicImage>
+										</p:column>
+										<p:column headerText="Name">
+											<h:outputText value="#{document.documentName}" />
+										</p:column>
+										<p:column headerText="Tags">
+											<h:outputText value="#{document.documentTag}" />
+										</p:column>
+									</p:dataTable>
+								</p:tab>
+
+							</p:tabView>
+							<!-- </h:panelGrid> -->
+						</p:panel>
+						<p:tab title="Enrichment Details">
+							<p:panel style="width:52%;height:410px; float:right">
+								<h:panelGrid columns="2">
+									<h:outputLabel for="enrollcustCategory"
+										value="#{msg['customerMgmt.label.custCategory']}" />
+									<h:selectOneMenu id="enrollcustCategory" styleClass="drop_down_style"
+										value="#{enrollCustomerController.enrollCustomer.custCategory}"
+										required="true"
+										label="#{msg['customerMgmt.label.custCategory']}">
+										<f:selectItems
+											value="#{enrollCustomerController.custCategory}"
+											var="agentType" itemValue="#{agentType.desn}"
+											itemLabel="#{agentType.desn}" />
+									</h:selectOneMenu>
+									<h:outputLabel />
+									<p:message for="enrollcustCategory" id="msgcustCategory"
+										display="icon" />
+
+									<h:outputLabel for="enrollhomeBranch"
+										value="#{msg['customerMgmt.label.homeBranch']}" />
+									<h:selectOneMenu id="enrollhomeBranch" styleClass="drop_down_style"
+										value="#{enrollCustomerController.enrollCustomer.homeBranch}"
+										required="true"
+										label="#{msg['customerMgmt.label.homeBranch']}">
+										<f:selectItems value="#{enrollCustomerController.homeBranch}"
+											var="agentType" itemValue="#{agentType.desn}"
+											itemLabel="#{agentType.desn}" />
+									</h:selectOneMenu>
+
+									<h:outputLabel />
+									<p:message for="enrollhomeBranch" id="msghomeBranch"
+										display="icon" />
+
+									<h:outputLabel for="enrollrelOfficer"
+										value="#{msg['customerMgmt.label.relOfficer']}" />
+									<h:selectOneMenu id="enrollrelOfficer" styleClass="drop_down_style"
+										value="#{enrollCustomerController.enrollCustomer.relOfficer}"
+										required="true"
+										label="#{msg['customerMgmt.label.relOfficer']}">
+										<f:selectItems value="#{enrollCustomerController.relOfficer}"
+											var="agentType" itemValue="#{agentType.desn}"
+											itemLabel="#{agentType.desn}" />
+									</h:selectOneMenu>
+									<h:outputLabel />
+									<p:message for="enrollrelOfficer" id="msgrelOfficer"
+										display="icon" />
+								</h:panelGrid>
+							</p:panel>
+						</p:tab>
+					</p:panel>
+				</p:panel>
+				<ui:include src="/templates/includes/auditTrail.xhtml"></ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

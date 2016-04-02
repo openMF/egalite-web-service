@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['cashMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['cashMgmt.title.listCashSettlements']}" />
+	<ui:param name="emptyMessage" value="#{msg['cashMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['cashMgmt.nav.add']}" />
+	<ui:param name="addOutcome" value="addCashSettlement" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addCashSettlement')}" />
+	<ui:param name="listController" value="#{cashSettlementListController}" />
+	
+	<!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{cashSettlementListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- ADD END -->
+<!-- Txn Currency Code and Is Active are removed ==  Changes for Asomi Nirmal kanna S-->
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{cashSettlementListController.listSelect}" />
+
+		<p:column id="tillId" headerText="#{msg['cashMgmt.tblHeader.tillId']}"
+			filterBy="#{record.tillId}" sortBy="#{record.tillId}">
+			<h:outputText value="#{record.tillId}" />
+		</p:column>
+
+		<p:column id="id" headerText="#{msg['cashMgmt.tblHeader.agentId']}"
+			filterBy="#{record.agentId}" sortBy="#{record.agentId}">
+			<h:outputText value="#{record.agentId}" />
+		</p:column>
+
+		<p:column id="txnCode"
+			headerText="#{msg['cashMgmt.tblHeader.txnCode']}"
+			filterBy="#{record.txnCode}" sortBy="#{record.txnCode}">
+			<h:outputText value="#{record.txnCode}" />
+		</p:column>
+
+		<!-- <p:column id="txnCcyCode"
+			headerText="#{msg['cashMgmt.tblHeader.txnCcyCode']}"
+			filterBy="#{record.currencyCode}" sortBy="#{record.currencyCode}">
+			<h:outputText value="#{record.currencyCode}" />
+		</p:column> -->
+
+		<p:column id="cashAmount"
+			headerText="#{msg['cashMgmt.tblHeader.cashAmount']}"
+			filterBy="#{record.cashAmount}" sortBy="#{record.cashAmount}">
+			<h:outputText value="#{record.cashAmount}">
+				<f:convertNumber type="number" groupingUsed="true"
+					minFractionDigits="0" />
+			</h:outputText>
+		</p:column>
+
+		<p:column id="txnRemarks"
+			headerText="#{msg['cashMgmt.tblHeader.remarks']}"
+			filterBy="#{record.txnRemarks}" sortBy="#{record.txnRemarks}">
+			<h:outputText value="#{record.txnRemarks}" />
+		</p:column>
+
+		<!-- <p:column id="isActive" filterBy="#{record.cashSettlementText}"
+			headerText="#{msg['cashMgmt.tblHeader.isActive']}"
+			sortBy="#{record.isActive}">
+			<h:outputText value="#{record.cashSettlementText}" />
+		</p:column> -->
+
+		<p:column id="authStatus" filterBy="#{record.authStatusText}"
+			headerText="#{msg['agencyMgmt.tblHeader.authStatus']}"
+			sortBy="#{record.authStatusText}">
+			<h:outputText value="#{record.authStatusText}" />
+		</p:column>
+
+	</ui:define>
+</ui:composition>

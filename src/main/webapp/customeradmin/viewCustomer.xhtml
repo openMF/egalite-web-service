@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{customerController.customer.customerId}"></f:viewParam>
+			<f:event listener="#{customerController.loadCustomer}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['customerMgmt.title.custManagement']}" />
+		</f:facet>
+	</ui:define> -->
+	<!--Image Removed == changes for Asomi Nirmal kanna S  -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['customerMgmt.title.viewCustomer']}" /></span>
+				<span class="pageHeaderControls"> <p:button id="btnClose"
+						value="#{msg['customerMgmt.btn.close']}" outcome="openClose"
+						style="margin-left: 182px;" /> <p:spacer width="5px" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left" >
+				<h:panelGrid columns="2">
+					
+					<h:outputLabel for="id"
+						value="#{msg['customerMgmt.label.customerId']}" />
+					<p:inputText id="id" readonly="true"
+						value="#{customerController.customer.customerId}"
+						label="#{msg['customerMgmt.label.customerId']}">
+					</p:inputText>
+					
+					<h:outputLabel for="customerCategory"
+						value="#{msg['customerMgmt.label.customerCategory']}" />
+					<p:inputText id="customerCategory" readonly="true"
+						value="#{customerController.customer.customerCategory}"
+						label="#{msg['customerMgmt.label.customerCategory']}">
+					</p:inputText>
+					
+					<h:outputLabel for="localBranchCode"
+						value="#{msg['customerMgmt.label.localBranchCode']}" />
+					<p:inputText id="localBranchCode" readonly="true"
+						value="#{customerController.customer.localBranchCode}"
+						label="#{msg['customerMgmt.label.localBranchCode']}">
+					</p:inputText>
+					
+					<h:outputLabel for="customerFullName"
+						value="#{msg['customerMgmt.label.customerFullName']}" />
+					<p:inputText id="customerFullName" readonly="true"
+						value="#{customerController.customer.customerFullName}"
+						label="#{msg['customerMgmt.label.customerFullName']}">
+					</p:inputText>
+					
+					<h:outputLabel for="customerShortName"
+						value="#{msg['customerMgmt.label.customerShortName']}" />
+					<p:inputText id="customerShortName" readonly="true"
+						value="#{customerController.customer.customerShortName}"
+						label="#{msg['customerMgmt.label.customerShortName']}">
+					</p:inputText>
+					
+					<h:outputLabel for="dob" value="#{msg['customerMgmt.label.dob']}" />
+					<p:calendar id="dob"
+					value="#{customerController.customer.dob}" pattern="dd-MMM-yyyy"
+					showOn="label" readonlyInput="true" />
+					
+					 <h:outputLabel for="isParentCust"
+						value="#{msg['customerMgmt.label.isParentCust']}" />
+					<p:inputText id="isParentCust" readonly="true"
+						value="#{customerController.customer.isParentCust}"
+						label="#{msg['customerMgmt.label.isParentCust']}">
+					</p:inputText>
+					
+					 <h:outputLabel for="parentCustId"
+						value="#{msg['customerMgmt.label.parentCustId']}" />
+					<p:inputText id="parentCustId" readonly="true"
+						value="#{customerController.customer.parentCustId}"
+						label="#{msg['customerMgmt.label.parentCustId']}">
+					</p:inputText>
+					
+					<h:outputLabel for="gender" value="#{msg['customerMgmt.label.gender']}" />
+					<p:inputText id="gender" readonly="true"
+						value="#{customerController.customer.gender}"
+						label="#{msg['customerMgmt.label.gender']}">
+					</p:inputText>
+					
+					<h:outputLabel for="customerSince" value="#{msg['customerMgmt.label.customerSince']}" />
+					<p:calendar id="customerSince"
+					value="#{customerController.customer.customerSince}" pattern="dd-MMM-yyyy"
+					showOn="label" readonlyInput="true" />
+					
+					<h:outputLabel for="groupId"
+						value="#{msg['customerMgmt.label.groupId']}" />
+					<p:inputText id="groupId" readonly="true"
+						value="#{customerController.customer.groupId}"
+						label="#{msg['customerMgmt.label.groupId']}">
+					</p:inputText>
+					
+					<h:outputLabel for="allocateAgentId"
+						value="#{msg['customerMgmt.label.allocateAgentId']}" />
+					<p:inputText id="allocateAgentId" readonly="true"
+						value="#{customerController.customer.allocatedAgentId}"
+						label="#{msg['customerMgmt.label.allocateAgentId']}">
+					</p:inputText>
+					
+					 <h:outputLabel for="creditOfficer"
+						value="#{msg['customerMgmt.label.creditOfficer']}" />
+					<p:inputText id="creditOfficer" readonly="true"
+						value="#{customerController.customer.creditOfficer}"
+						label="#{msg['customerMgmt.label.creditOfficer']}">
+					</p:inputText>
+					
+					<h:outputLabel for="locationCode"
+						value="#{msg['customerMgmt.label.locCode']}" />
+					<p:inputText id="locationCode" readonly="true"
+						value="#{customerController.customer.locationCode}"
+						label="#{msg['customerMgmt.label.locCode']}">
+					</p:inputText>
+					
+					<h:outputLabel for="collectKyc"
+						value="#{msg['customerMgmt.label.collectKyc']}" />
+					<p:inputText id="collectKyc" readonly="true"
+						value="#{customerController.customer.collectKyc}"
+						label="#{msg['customerMgmt.label.collectKyc']}">
+					</p:inputText>
+					
+				</h:panelGrid>
+			</p:panel>
+			
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2" >
+				    
+				    <h:outputLabel for="mobileNumber"
+						value="#{msg['customerMgmt.label.mobileNumber']}" />
+					<p:inputText id="mobileNumber" readonly="true"
+						value="#{customerController.customer.mobileNumber}"
+						label="#{msg['customerMgmt.label.mobileNumber']}">
+					</p:inputText>
+					
+					<h:outputLabel for="smsFromMbs"
+						value="#{msg['customerMgmt.label.smsFromMbs']}" />
+					<p:inputText id="smsFromMbs" readonly="true"
+						value="#{customerController.customer.smsFromMbs}"
+						label="#{msg['customerMgmt.label.smsFromMbs']}">
+					</p:inputText>
+					
+					<h:outputLabel for="smsFromIbs"
+						value="#{msg['customerMgmt.label.smsFromIbs']}" />
+					<p:inputText id="smsFromIbs" readonly="true"
+						value="#{customerController.customer.smsFromIbs}"
+						label="#{msg['customerMgmt.label.smsFromIbs']}">
+					</p:inputText>
+				    
+				   <h:outputLabel for="addressLine1"
+						value="#{msg['customerMgmt.label.addressLine1']}" />
+					<p:inputText id="addressLine1" readonly="true"
+						value="#{customerController.customer.addressLine1}"
+						label="#{msg['customerMgmt.label.addressLine1']}">
+					</p:inputText>
+
+					<h:outputLabel for="addressLine2"
+						value="#{msg['customerMgmt.label.addressLine2']}" />
+					<p:inputText id="addressLine2" readonly="true"
+						value="#{customerController.customer.addressLine2}"
+						label="#{msg['customerMgmt.label.addressLine2']}">
+					</p:inputText>
+						
+					<h:outputLabel for="addressLine3"
+						value="#{msg['customerMgmt.label.addressLine3']}" />
+					<p:inputText id="addressLine3" readonly="true"
+						value="#{customerController.customer.addressLine3}"
+						label="#{msg['customerMgmt.label.addressLine3']}">
+					</p:inputText>
+					
+					<h:outputLabel for="addressLine4"
+						value="#{msg['customerMgmt.label.addressLine4']}" />
+					<p:inputText id="addressLine4" readonly="true"
+						value="#{customerController.customer.addressLine4}"
+						label="#{msg['customerMgmt.label.addressLine4']}">
+					</p:inputText>
+					
+					<h:outputLabel for="zipcode"
+						value="#{msg['customerMgmt.label.zipCode']}" />
+					<p:inputText id="zipcode" readonly="true"
+						value="#{customerController.customer.zipcode}"
+						label="#{msg['customerMgmt.label.zipCode']}">
+					</p:inputText>
+					
+						<h:outputLabel for="city" value="#{msg['customerMgmt.label.city']}" />
+					<p:inputText id="city" readonly="true"
+						value="#{customerController.customer.city}"
+						label="#{msg['customerMgmt.label.city']}">
+					</p:inputText>
+					
+					<h:outputLabel for="country"
+						value="#{msg['customerMgmt.label.country']}" />
+					<p:inputText id="country" readonly="true"
+						value="#{customerController.customer.country}"
+						label="#{msg['customerMgmt.label.country']}">
+					</p:inputText>
+
+					<h:outputLabel for="state"
+						value="#{msg['customerMgmt.label.state']}" />
+					<p:inputText id="state" readonly="true"
+						value="#{customerController.customer.state}"
+						label="#{msg['customerMgmt.label.state']}">
+					</p:inputText>
+					
+					<h:outputLabel for="nationality"
+						value="#{msg['customerMgmt.label.nationality']}" />
+					<p:inputText id="nationality" readonly="true"
+						value="#{customerController.customer.nationality}"
+						label="#{msg['customerMgmt.label.nationality']}">
+					</p:inputText>
+					
+					<h:outputLabel for="emailAddress"
+						value="#{msg['customerMgmt.label.emailAddress']}" />
+					<p:inputText id="emailAddress" readonly="true"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+						value="#{customerController.customer.emailAddress}"
+						label="#{msg['customerMgmt.label.emailAddress']}">
+					</p:inputText>
+					
+					 <h:outputLabel for="recordStat"
+						value="#{msg['customerMgmt.label.recordStat']}" />
+					<p:inputText id="recordStat" readonly="true"
+						value="#{customerController.customer.recordStat}"
+						label="#{msg['customerMgmt.label.recordStat']}">
+					</p:inputText>
+                   
+					<h:outputLabel for="cbsUpldJobId"
+						value="#{msg['customerMgmt.label.cbsUpldJobId']}" />
+					<p:inputText id="cbsUpldJobId" readonly="true"
+						value="#{customerController.customer.cbsUpldJobId}"
+						label="#{msg['customerMgmt.label.cbsUpldJobId']}">
+					</p:inputText>
+				  
+					
+					<!-- <h:outputLabel for="viewFile"
+						value="#{msg['customerMgmt.label.viewFile']}" />
+					<p:inputText id="viewFile" readonly="true"
+						value="#{customerController.customer.viewFile}"
+						label="#{msg['customerMgmt.label.viewFile']}">
+					</p:inputText>
+					
+                     <h:outputLabel for="cbsGroupCode"
+						value="#{msg['customerMgmt.label.cbsGroupCode']}" />
+					<p:inputText id="cbsGroupCode" readonly="true"
+						value="#{customerController.customer.cbsGroupCode}"
+						label="#{msg['customerMgmt.label.cbsGroupCode']}">
+					</p:inputText>
+					
+					 -->
+					
+					<!-- <h:outputLabel for="preferredLanguage"
+						value="#{msg['customerMgmt.label.preferredLanguage']}" />
+					<p:inputText id="preferredLanguage" readonly="true"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+						value="#{customerController.customer.preferredLanguage}"
+						label="#{msg['customerMgmt.label.preferredLanguage']}">
+					</p:inputText> -->
+						
+				</h:panelGrid>
+			</p:panel>
+		</p:panel>
+		
+	</ui:define>
+</ui:composition>

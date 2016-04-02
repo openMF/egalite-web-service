@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+<ui:define name="metadata">
+<script type="text/javascript">
+//<![CDATA[
+        
+function inputLimiter(e,allow) {
+    var AllowableCharacters = '';
+
+    if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+
+    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+    if (k!=13 && k!=8 && k!=0){
+        if ((e.ctrlKey==false) && (e.altKey==false)) {
+        	return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+        } else {
+        	return true;
+        }
+    } else {
+        return true;
+    }
+}
+//]]>
+</script>
+	
+	<f:metadata>
+		<f:viewParam name="id" value="#{cashSettlementController.cashSettlement.id}"></f:viewParam>
+		<f:event listener="#{cashSettlementController.loadCashSettlement}" type="preRenderView"></f:event>
+	</f:metadata>
+</ui:define>
+	
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['cashMgmt.modify']}" />
+		</f:facet>
+	</ui:define> -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader" >
+				<span class="pageHeaderTitle"> <h:outputText value="#{msg['cashMgmt.title.cashDetailModify']}" /></span>
+				<span class="pageHeaderControls">
+				 
+					<p:commandButton id="btnSave" value="#{msg['cashMgmt.nav.save']}" update="panel" action="#{cashSettlementController.checkModifyForUpdate}" style="margin-left: 182px;"/>
+					<p:spacer width="2px" /> 
+					
+					<p:button id="btnCancel" value="#{msg['agentMgmt.btn.cancel']}" outcome="cancel">
+					<f:param name="id" value="#{cashSettlementController.cashSettlement.id}"/></p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="3" id="panelGrid">
+
+			<h:outputLabel for="tillId"
+					value="#{msg['cashMgmt.tblHeader.tillId']}" />
+				<p:inputText id="tillId"
+					value="#{cashSettlementController.cashSettlement.tillId}"
+					readonly="true" label="#{msg['cashMgmt.label.tillId']}" />
+				<p:message for="tillId" display="icon" />
+				
+				<h:outputLabel for="agentId"
+					value="#{msg['cashMgmt.label.agentId']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="agentId" styleClass="drop_down_style"
+					value="#{cashSettlementController.cashSettlement.agentId}"
+					required="true" label="#{msg['cashMgmt.label.agentId']}">
+					<f:selectItems value="#{cashSettlementController.agentIds}"
+						var="agent" itemValue="#{agent.agentId}"
+						itemLabel="#{agent.agentId}" />
+				</h:selectOneMenu>
+				<p:message for="agentId" id="msgAgentId" display="icon" />
+
+				<h:outputLabel for="cashTxntype"
+					value="#{msg['cashMgmt.label.cashTxntype']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="cashTxntype" styleClass="drop_down_style"
+					value="#{cashSettlementController.cashSettlement.cashTxnTypeText}"
+					required="true" label="#{msg['cashMgmt.label.cashTxntype']}">
+					<f:selectItems value="#{cashSettlementController.txnTypes}"
+						var="dev" itemValue="#{dev.listValue}" itemLabel="#{dev.desn}" />
+				</h:selectOneMenu>
+				<p:message for="cashTxntype" id="msgcashTxntype" display="icon" />
+
+				<h:outputLabel for="txnCode"
+					value="#{msg['cashMgmt.label.txnCode']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="txnCode"
+					value="#{cashSettlementController.cashSettlement.txnCode}"
+					required="true" label="#{msg['cashMgmt.label.txnCode']}">
+					<f:selectItem itemLabel="CashIn" itemValue="CashIn" />
+					<f:selectItem itemLabel="CashOut" itemValue="CashOut" />
+				</h:selectOneMenu>
+				<p:message for="txnCode" id="msgTxnCode" display="icon" />
+				
+				<h:outputLabel for="txnCcyCode"
+					value="#{msg['cashMgmt.label.txnCcyCode']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="txnCcyCode" styleClass="drop_down_style"
+					value="#{cashSettlementController.cashSettlement.currencyCode}"
+					required="true" label="#{msg['cashMgmt.label.txnCcyCode']}">
+					<f:selectItems value="#{cashSettlementController.currencyCodes}"
+						var="cash" itemValue="#{cash.currencyCode}"
+						itemLabel="#{cash.currencyCode}" />
+				</h:selectOneMenu>
+				<p:message for="txnCcyCode" id="msgTxnCcyCode" display="icon" />
+				
+				<h:outputLabel for="cashAmount"
+					value="#{msg['cashMgmt.label.cashAmount']}" />
+				<p:inputText id="cashAmount"
+				    onkeypress="return inputLimiter(event,'Numbers')"
+					value="#{cashSettlementController.cashSettlement.cashAmount}"
+					readonly="true" label="#{msg['cashMgmt.label.cashAmount']}" />
+				<p:message for="cashAmount" display="icon" />
+
+				<h:outputLabel for="txnRemarks"
+					value="#{msg['cashMgmt.label.txnRemarks']}" />
+				<p:inputText id="txnRemarks"
+					value="#{cashSettlementController.cashSettlement.txnRemarks}"
+					readonly="true" label="#{msg['cashMgmt.label.txnRemarks']}" />
+				<p:message for="txnRemarks" display="icon" />
+
+				<h:outputLabel for="isActive"
+					value="#{msg['cashMgmt.label.isactive']}" />
+				<h:selectOneMenu id="isActive"
+					value="#{cashSettlementController.cashSettlement.isActive}"
+					required="true" label="#{msg['cashMgmt.label.isactive']}">
+					<f:selectItems value="#{cashSettlementController.cashStatuss}"
+						var="devs" itemValue="#{devs.listValue}" itemLabel="#{devs.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+				
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

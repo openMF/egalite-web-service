@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+
+	<!-- <ui:param name="pageTitle" value="#{msg['userMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['userMgmt.title.listUsers']}" />
+	<ui:param name="emptyMessage" value="#{msg['userMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['userMgmt.tblNav.add']}" />
+	<ui:param name="addOutcome" value="addUser" />
+	<ui:param name="addAuthority" value="#{auth.checkAuthority('addUser')}" />
+	<ui:param name="listController" value="#{userListController}" />
+
+	<!-- ADD -->
+	<ui:param name="selectionMode" value="single" />
+	<ui:param name="selection" value="#{userListController.selectedRecord}" />
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- ADD END -->
+
+	<!-- 	<ui:param name="listData" value="#{userListController.users}"/>
+	<ui:param name="selectedRecords" value="#{userListController.selectedUser}"/>
+	<ui:param name="filteredRecords" value="#{userListController.filteredUsers}"/>
+ -->
+ 
+ <!--  Added branch code == changes for Asomi Nirmal kanna S-->
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{userListController.listSelect}" />
+
+		<p:column id="id" filterBy="#{record.id}" headerText="#{msg['userMgmt.tblHeader.userId']}"
+			filterMatchMode="contains" sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+		
+		<p:column id="cbsCoCode" filterBy="#{record.cbsCoCode}" headerText="#{msg['userMgnt.tblHeader.cbsCoCode']}" 
+			filterMatchMode="contains" sortBy="#{record.cbsCoCode}">
+			<h:outputText value="#{record.cbsCoCode}" />
+		</p:column>
+
+		<p:column id="branchCode" filterBy="#{record.branchCode}" headerText="#{msg['userMgmt.label.branchCode']}" 
+			filterMatchMode="contains" sortBy="#{record.branchCode}">
+			<h:outputText value="#{record.branchCode}" />
+		</p:column>
+
+		<p:column id="firstName" filterBy="#{record.firstName}"	headerText="#{msg['userMgmt.tblHeader.firstName']}"
+			filterMatchMode="contains" sortBy="#{record.firstName}">
+			<h:outputText value="#{record.firstName}" />
+		</p:column>
+
+		<p:column id="lastName" filterBy="#{record.lastName}" headerText="#{msg['userMgmt.tblHeader.lastName']}"
+			filterMatchMode="contains" sortBy="#{record.lastName}">
+			<h:outputText value="#{record.lastName}" />
+		</p:column>
+
+		<p:column id="userStatus" filterBy="#{record.userStatusText}"
+			headerText="#{msg['userMgmt.tblHeader.userStatus']}" sortBy="#{record.userStatus}">
+			<h:outputText value="#{record.userStatusText}" />
+		</p:column>
+
+		<p:column id="authStatus" filterBy="#{record.authStatusText}"
+			headerText="#{msg['SmsConfigMgmt.tblHeader.authStatus']}" sortBy="#{record.authStatusText}">
+			<h:outputText value="#{record.authStatusText}" />
+		</p:column>
+
+	</ui:define>
+</ui:composition>

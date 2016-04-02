@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	
+	<!-- [EGA-MN15-000001 point :1]
+	1- validation put for dropdown change in cbsCoCode
+	2- Lenght of Roles display box must be small.
+	 -->
+
+	<ui:define name="metadata">
+
+		<script type="text/javascript">
+			//<![CDATA[
+
+		function makeFNameCapitalize(){
+        	var st = document.getElementById('form:firstName').value;
+			var sp = st.split(' ');
+			var wl=0;
+			var f ,r;
+			var word = new Array();
+			for (i = 0 ; i < sp.length ; i ++ ) {
+			f = sp[i].substring(0,1).toUpperCase();
+			r = sp[i].substring(1);
+			word[i] = f+r;
+			}
+			newstring = word.join(' ');
+			document.getElementById('form:firstName').value = newstring;
+        }
+        
+        function makeLNameCapitalize(){
+        	var st = document.getElementById('form:lastName').value;
+			var sp = st.split(' ');
+			var wl=0;
+			var f ,r;
+			var word = new Array();
+			for (i = 0 ; i < sp.length ; i ++ ) {
+			f = sp[i].substring(0,1).toUpperCase();
+			r = sp[i].substring(1);
+			word[i] = f+r;
+			}
+			newstring = word.join(' ');
+			document.getElementById('form:lastName').value = newstring;
+        }        	           
+		
+        function makeNameCapitalize(id) {
+				var st = document.getElementById(id).value;
+				var sp = st.split(' ');
+				var wl = 0;
+				var f, r;
+				var word = new Array();
+				for (i = 0; i < sp.length; i++) {
+					f = sp[i].substring(0, 1).toUpperCase();
+					r = sp[i].substring(1);
+					word[i] = f + r;
+				}
+				newstring = word.join(' ');
+				document.getElementById(id).value = newstring;
+			}
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'OnlyCaps'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0987654321';
+				}
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			function inputLimiterForName(e, allow, id) {
+				var AllowableCharacters = '';
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				makeNameCapitalize(id);
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			if (navigator.userAgent.toLowerCase().indexOf('chrome') >= 0) {
+				setTimeout(function() {
+				}, 500);
+			}
+
+			function validPass() {
+				var paswd = document.getElementById('form:password').value;
+				var cpaswd = document.getElementById('form:cPassword').value;
+				if (!(paswd == cpaswd)) {
+					alert("Password and confirm password should be same");
+					return false;
+				}
+			}
+			//]]>
+		</script>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['userMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<!-- Branch code logic changed desc added for drop down => changes for Asomi Nirmal kanna S -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['userMgmt.title.newUser']}" /></span>
+
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['userMgmt.nav.save']}"
+						style="margin-left: 182px;" action="#{userController.userCreate}"
+						update="form" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['userMgmt.nav.cancel']}"
+						outcome="cancel" />
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<h:panelGrid columns="4" style="display:none">
+
+				<h:outputLabel for="lastNameMASK"
+					value="#{msg['userMgmt.label.lastName']}" styleClass="" />
+
+				<p:inputText autocomplete="off" id="lastNameMASK" required="false"
+					label="#{msg['userMgmt.label.lastName']}" />
+
+				<h:outputLabel for="passwordMASK"
+					value="#{msg['userMgmt.label.password']}" styleClass="" />
+				<p:password autocomplete="off" id="passwordMASK" required="false" />
+
+
+			</h:panelGrid>
+			<h:panelGrid columns="4">
+
+				<h:outputLabel for="userId" value="#{msg['userMgmt.label.userId']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="userId" value="#{userController.user.id}"
+					onkeyup="this.value=this.value.toUpperCase();"
+					onkeypress="return inputLimiter(event,'OnlyCaps')"
+					required="true" label="#{msg['userMgmt.label.userId']}">
+					<p:ajax event="change" listener="#{userController.validateUserId}"
+						update="userId msgs" process="@this" />
+				</p:inputText><h:outputLabel />	<p:message for="userId" display="icon" />
+
+				<h:outputLabel for="userType" value="#{msg['userMgmt.label.userType']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="userType" styleClass="drop_down_style"
+					value="#{userController.user.userType}" required="true"
+					label="#{msg['userMgmt.label.userType']}">
+					<f:selectItems value="#{userController.userTypes}" var="agentType"
+						itemValue="#{agentType.listValue}" itemLabel="#{agentType.desn}" />
+					<p:ajax render="cbsCoCode"/>
+				</h:selectOneMenu><h:outputLabel /><p:message for="userType" id="msgUserType" display="icon" />
+
+				<h:outputLabel for="cbsCoCode" value="#{msg['userMgnt.label.cbsCoCode']}" styleClass="required_asterisk" />
+				<h:selectOneMenu id="cbsCoCode" styleClass="drop_down_style" value="#{userController.user.cbsCoCode}"
+					required="#{userController.user.userType == '1'}" label="#{msg['userMgnt.label.cbsCoCode']}"
+					requiredMessage="#{msg['userMgnt.co.req.msg']}" >
+					<p:ajax listener="#{userController.validateCbscoCode()}"  event="change"  />
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{userController.cbsCodes}"
+						var="dev" itemValue="#{dev.dlValue}" itemLabel="#{dev.dlValue} ~ #{dev.dlDesc} " />
+				</h:selectOneMenu><h:outputLabel />	<p:message for="cbsCoCode" display="icon" />
+							
+				<h:outputLabel for="firstName" value="#{msg['userMgmt.label.firstName']}"
+					styleClass="required_asterisk" />
+				<p:inputText autocomplete="off" id="firstName"
+					onkeypress="return inputLimiterForName(event,'Letters','form:firstName');"
+					value="#{userController.user.firstName}" required="true"
+					label="#{msg['userMgmt.label.firstName']}" />
+				<h:outputLabel />	<p:message for="firstName" display="icon" />
+
+				<h:outputLabel for="lastName" value="#{msg['userMgmt.label.lastName']}"
+					styleClass="required_asterisk" />
+				<p:inputText autocomplete="off" id="lastName"
+					value="#{userController.user.lastName}" required="true"
+					onkeypress="return inputLimiterForName(event,'Letters','form:lastName'); "
+					label="#{msg['userMgmt.label.lastName']}" />
+				<h:outputLabel />	<p:message for="lastName" id="msgLastName" display="icon" />
+
+				<h:outputLabel for="password" value="#{msg['userMgmt.label.password']}"
+					styleClass="required_asterisk"/>
+				<p:password autocomplete="off" id="password" value="#{userController.user.password}" required="true"
+					validatorMessage="#{msg['agentMgmt.validate.password']}"
+					process=":form:password" binding="#{passwordComponent}" href="#" title="#{msg['agentMgmt.validate.passwordmg']}" >
+					<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16})" />
+				</p:password><h:outputLabel />	<p:message for="password" id="msgPassword" display="icon" />
+
+				<h:outputLabel for="cPassword" value="#{msg['userMgmt.label.cPassword']}"
+					styleClass="required_asterisk" />
+				<p:password id="cPassword" value="#{userController.user.cPassword}"
+					autocomplete="off" process=":form:cPassword" required="true"
+					label="#{msg['userMgmt.label.cPassword']}" href="#" title="#{msg['agentMgmt.validate.passwordmg']}">
+					<f:validator validatorId="confirmPasswordValidator" />
+					<f:attribute name="passwordComponent" value="#{passwordComponent}" />
+				</p:password> <h:outputLabel />	<p:message for="cPassword" display="icon" />
+				
+				<h:outputLabel for="branchCode" value="#{msg['userMgmt.label.branchCode']}" styleClass="required_asterisk" />
+				<h:selectOneMenu id="branchCode" styleClass="drop_down_style" value="#{userController.user.branchCode}" 
+					required="true" >
+					<f:selectItems value="#{userController.cbsBrnCodes}"
+						var="dev" itemValue="#{dev.dlValue}" itemLabel="#{dev.dlValue} ~ #{dev.dlDesc}" />
+				</h:selectOneMenu><h:outputLabel />
+				<p:message for="branchCode" id="msgBranchCode" display="icon" />
+				
+				<h:outputLabel for="userStatus"	value="#{msg['userMgmt.label.userStatus']}" />
+				<h:selectOneMenu id="userStatus" styleClass="drop_down_style"
+					value="#{userController.user.userStatus}" required="true"
+					label="#{msg['userMgmt.label.userType']}">
+					<f:selectItems value="#{userController.userStatus}" var="status"
+						itemValue="#{status.listValue}" itemLabel="#{status.desn}" />
+				</h:selectOneMenu>	<h:outputLabel /><p:message for="userStatus" id="msgUserStatus" display="icon" />
+
+				<h:outputLabel for="startDate" value="#{msg['userMgmt.label.startDate']}"
+					styleClass="required_asterisk" />
+				<p:calendar binding="#{startDateComponent}" pattern="dd-MMM-yyyy"
+					showOn="button" required="true" yearRange="c:+100"
+					navigator="true" id="startDate"
+					mindate="#{userController.user.startDate}"
+					label="#{msg['userMgmt.label.startDate']}">
+				</p:calendar><h:outputLabel />	<p:message for="startDate" id="msgStartDate" display="icon" />
+
+				<h:outputLabel for="endDate" value="#{msg['userMgmt.label.endDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy" showOn="button"
+					yearRange="c:+100" navigator="true" id="endDate"
+					value="#{userController.user.endDate}"
+					label="#{msg['userMgmt.label.endDate']}">
+					<f:validator validatorId="userDateRangeValidator" />
+					<f:attribute name="startDateComponent"
+						value="#{startDateComponent}" />
+				</p:calendar>	<h:outputLabel /><p:message for="endDate" id="msgEndDate" display="icon" />
+
+			</h:panelGrid>
+
+			<p:panel id="rolePanel" >
+				<f:facet name="header">
+					<p:panel styleClass="maintenanceFormPanelHeader">
+						<span class="pageHeaderTitle"> <h:outputText
+								value="#{msg['userMgmt.tblHeader.moveRoleRecords']}" />
+						</span>
+					</p:panel>
+				</f:facet>
+
+				<p:panelGrid id="roleTables">
+					<p:row >
+					 
+						<p:column>
+						  <div id="colsrc">
+							<p:dataTable id="srcTable" widgetVar="roleTable" var="role" 
+								value="#{userController.availableRoles}" rowKey="#{role.id}"
+								selection="#{userController.selectedAvailableRoles}"
+								filteredValue="#{userController.filteredRoles}">
+								<p:column selectionMode="multiple" />
+								<p:column filterPosition="top"
+									headerText="#{msg['roleMgmt.label.roleId']}"
+									filterBy="#{role.id}" filterMatchMode="contains"
+									sortBy="#{role.id}">#{role.id}</p:column>
+								<p:column headerText="#{msg['roleMgmt.label.roleName']}"
+									filterPosition="top" filterBy="#{role.roleName}"
+									filterMatchMode="contains" sortBy="#{role.roleName}">#{role.roleName}</p:column>
+							</p:dataTable>
+							</div>
+						</p:column>
+						<p:column >
+							<p:commandButton value="#{msg['userMgmt.nav.forward']}"
+								ajax="true" type="button" onclick="moveToDest();" />
+							<p:remoteCommand name="moveToDest" process="@this rolePanel"
+								actionListener="#{userController.moveToDest}"
+								update="srcTable,destTable,roleTables"></p:remoteCommand>
+							<br />
+							<p:commandButton value="#{msg['userMgmt.nav.back']}" ajax="true"
+								type="button" onclick="moveToSource();" />
+							<p:remoteCommand name="moveToSource" process="@this rolePanel"
+								actionListener="#{userController.moveToSource}"
+								update="srcTable,destTable,roleTables">
+							</p:remoteCommand>
+						</p:column>
+						<p:column>
+						 <div id="colsrc1">
+							<p:dataTable id="destTable" var="destRole"
+								value="#{userController.user.allocatedRoles}"
+								rowKey="#{destRole.id}"
+								selection="#{userController.selectedAllocatedRoles}">
+								<p:column selectionMode="multiple" />
+								<p:column sortBy="#{destRole.id}"
+									headerText="#{msg['roleMgmt.label.roleId']}">#{destRole.id}</p:column>
+								<p:column sortBy="#{destRole.roleName}"
+									headerText="#{msg['roleMgmt.label.roleName']}">#{destRole.roleName}</p:column>
+							</p:dataTable>
+							</div>
+						</p:column>
+						
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

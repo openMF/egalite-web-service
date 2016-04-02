@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutNavigation.xhtml">
+<ui:define name="metadata">
+	<f:metadata>
+		<f:viewParam name="id" value="#{userController.userIdToLoad}"></f:viewParam>
+		<f:event listener="#{userController.logedInloadUser}" type="preRenderView"></f:event>
+	</f:metadata>
+
+<script type="text/javascript">
+//<![CDATA[
+
+function inputLimiter(e, allow) {
+	var AllowableCharacters = '';
+
+	if (allow == 'Letters') { AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; }
+	if (allow == 'Numbers') { AllowableCharacters = '1234567890'; }
+	if (allow == 'NameCharacters') { AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';	}
+	if (allow == 'NameCharactersAndNumbers') { AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';	}
+
+	var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+	if (k != 13 && k != 8 && k != 0) {
+		if ((e.ctrlKey == false) && (e.altKey == false)) {
+			return (AllowableCharacters.indexOf(String.fromCharCode(k)) != -1);
+		} else {
+			return true;
+		}
+	} else {
+		return true;
+	}
+}
+
+//]]>
+</script>
+</ui:define>
+
+<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['userMgmt.title']}" />
+		</f:facet>
+</ui:define> -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader" >
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['userMgmt.title.changePassword']}" />
+				</span>
+				<span class="pageHeaderControls"> 
+			       
+			       <p:commandButton	id="btnSave" value="#{msg['userMgmt.nav.save']}" update="panel"
+						action="#{userController.firstloginUserpaswdchanged}" style="margin-left: 182px;" /> 
+					<p:button id="btnCancel"
+						value="#{msg['deviceMgmt.btn.cancel']}" outcome="cancel" />
+					<p:spacer width="2px" />
+					
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithoutAuditTrail">
+			<h:outputLabel for="id" value="#{msg['userMgmt.label.forcepaswd']}" />
+			<h:outputLabel/>
+			<h:panelGrid columns="3" id="panelGrid">
+
+				<h:outputLabel for="id" value="#{msg['userMgmt.label.userId']}" />
+				<p:inputText id="id" value="#{userController.user.id}"
+					readonly="true" label="#{msg['userMgmt.label.userId']}" />
+				<p:message for="id" display="icon" />
+				
+				<h:outputLabel for="password" value="#{msg['userMgmt.label.password']}" styleClass="required_asterisk" />
+					<p:password autocomplete="off" id="password" value="#{userController.user.password}" required="true" 
+					process=":form:password" binding="#{passwordComponent}" validatorMessage="#{msg['agentMgmt.validate.password']}" 
+					href="#" title="#{msg['agentMgmt.validate.passwordmg']}">
+					<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16})" />
+				</p:password>
+				<p:message for="password" id="msgPassword" display="icon" />
+				
+				<h:outputLabel for="cPassword" value="#{msg['userMgmt.label.cPassword']}" styleClass="required_asterisk" />
+				<p:password id="cPassword" value="#{userController.user.cPassword}" autocomplete="off"  process=":form:cPassword"
+					required="true" label="#{msg['userMgmt.label.cPassword']}" 
+					href="#" title="#{msg['agentMgmt.validate.passwordmg']}">
+					<f:validator validatorId="confirmPasswordValidator" />
+					 <f:attribute name="passwordComponent" value="#{passwordComponent}" /></p:password>
+				<p:message for="cPassword" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

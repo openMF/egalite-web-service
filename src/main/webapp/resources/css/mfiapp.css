@@ -1,0 +1,626 @@
+@CHARSET "ISO-8859-1";
+
+.mainBody {
+	font-family: "Calibri", Calibri, serif;
+	margin: 0px 0px;
+	padding: 0px";
+}
+
+.hintsWithcolorRed {
+	font-family: "Times New Roman", Times, serif;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-style: italic;
+}
+
+.pageHeaderTitle {
+	float: left;
+}
+
+.pageHeaderControls {
+	float: right;
+}
+
+.ui-widget {
+	font-family: "Calibri", Calibri, serif !important;
+}
+
+.ui-layout-unit .ui-layout-unit-content {
+	padding: 0em !important;
+	overflow: hidden !important;
+}
+
+.ui-datatable-header {
+	overflow: hidden !important;
+	padding: 0em !important;
+	border: none !important;
+}
+
+.ui-panel-content {
+	padding: 0em !important;
+	/*background-color: rgba(0,0,0,0.2)!important;*/
+}
+
+.ui-panel .ui-scrollPanel {
+	overflow: hidden !important;
+	padding: 0em !important;
+	border: none !important;
+	/*background-color: rgba(0,0,0,0);*/
+}
+
+.ui-widget-header {
+	/*background-color: rgba(0,0,0,0.2)!important;*/
+	color:#0D0202 !important;
+	border: none !important;
+}
+
+.ui-widget-content {
+	/*background-color: rgba(0,0,0,0);*/
+	border: none;
+}
+
+.ui-datepicker {
+	/*background-color: rgba(200,200,250,0.9)!important;*/
+}
+
+.ui-menu {
+	width: 95% !important;
+	height: 95% !important;
+	/*background-color: rgba(0,0,0,0.1)!important;*/
+	border: 0px;
+}
+
+.ui-datatable-tablewrapper {
+	height: 440px;
+	overflow-x: auto !important;
+	overflow-y: auto !important; 
+}
+
+.loginHeading {
+	text-align: center;
+	color: rgb(255, 255, 255);
+}
+
+.loginBody {
+	/* background: url("../images/login.jpg");
+	width: 95% !important;
+	height: 95% !important;
+	background-size: cover;
+	background-repeat: no-repeat; */
+	background-image: url('../images/backImage.png'); 
+    /* width: 95% !important;
+	height: 95% !important;
+	background-repeat: no-repeat; 
+    background-attachment:fixed;
+	background-position:center;
+	background-size: cover; */
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+  	
+}
+
+.logo1 {
+	background-image: url('../images/logo_withbox.png'); 
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+  	height: 55px;
+  	width: 55px;
+  	max-height: 55px;
+  	max-width: 55px;
+}
+
+.logo2 {
+	background-image: url('../images/bfsilogo.png'); 
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+  	height: 55px;
+  	width: 60px;
+  	max-height: 55px;
+  	max-width: 60px;
+}
+
+.logo {
+	background-image: url('../images/logo.png');
+	background-repeat: no-repeat;
+    height: 18em;
+	width: 7em;
+}
+
+.smtBtn {
+	text-align: center;
+}
+
+.footerCSS {
+	position: absolute;
+	text-align: top;
+	top: 39em;
+	right: 28em;
+	
+}
+.loginFooter {
+	text-align: center;
+	border: none !important;
+	top: 25em;
+	right: 34em;
+}
+
+.logoCSS {
+	position: absolute;
+	top: 10em;
+	right: 38em;
+	
+}
+
+.loginForm {
+	position: absolute;
+	top: 19em;
+	right: 34em;
+	border: 0.1em solid;
+	border-color: black;
+	border-radius: 1.5em;
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 0.5em;
+	background-color: #FF8C00;
+}
+
+.actionOk {.
+	background-color : #F7A71A;
+	border : black;
+	border-radius : 0.5em;
+	padding-top : 0.3em;
+	padding-left : 0.3em;
+	padding-right : 0.3em;
+	padding-bottom : 0.3em;
+	color : black;
+	align : left;
+	border : 0.1em solid;
+	border-color : black;
+	
+}
+
+.buttonRow {
+	text-align : right;
+}
+
+.formTitle {
+	color : black;
+	font-size : 20px;
+}
+
+.formLabel {
+	font-size : 16px;
+	float: right;
+}
+
+.formInput {
+	border-radius: 0.4em;
+}
+
+.footer {
+	text-align: center;
+	border: none !important;
+}
+
+.footerText {
+	/*font-size: xx-small !important;*/
+	font-size: 1.2em;
+	font-family: "Calibri", Calibri, serif;
+}
+
+.northPanel .westPanel .westPanelMenu .westPanelSubMenu {
+	border: none !important;
+	background-color: rgba(0, 0, 0, 0) !important;
+	overflow: hidden !important;
+}
+
+.westPanelMenu .westPanelSubMenu .westPanelMenuItem {
+	/*	background-color: rgba(0,0,0,0)!important;	*/
+}
+
+.northToolbar {
+	width: auto;
+}
+
+.mainCaption {
+	font-size: 1.5em;
+}
+
+.maintenanceFormWithoutAuditTrail {
+	/* width:300px; */
+	height: 350px;
+	overflow-x: auto !important;
+	overflow-y: auto !important;
+}
+.loanTapBody{
+	/* width:300px; */
+	height: 200px;
+	/* overflow : auto; */
+}
+
+.bodyWithoutAuditTrail {
+	/* width:300px; */
+	height: 480px;
+	overflow : auto;
+}
+
+.maintenanceFormPanelHeader {
+	padding: 0em !important;
+}
+
+.maintenanceFormWithAuditTrail {
+	/* width:300px; */
+	height: 420px;
+	overflow: scroll;
+}
+
+.settingsOverlayPanel {
+	padding: 0em;
+}
+
+.top_align_column {
+	vertical-align: top;
+}
+
+.space_between_columns {
+	margin-bottom: 5px
+}
+
+.required_asterisk:after {
+	color: #e32;
+	content: " *";
+	display: inline;
+}
+
+.customClassName.ui-menuitem-link.ui-corner-all {
+	color: #59C411;
+}
+
+.displayNone {
+	
+}
+
+.auditTrailTable {
+	height: 140px !important;
+	/* overflow-y: auto; */
+}
+
+.ui-menu.ui-menu-dynamic.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix.ui-shadow{
+	height:60px !important;
+	width: 160px !important;
+}
+
+
+.loginImage {
+    background-image: url('../resources/images/EgaBckImage.png');
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+/* Shabu Changes Starts */
+div[id="LoginGrowl_container"] {
+    position:absolute;
+    top: 20em;
+	right: 39em;
+    width: 360px;
+    height: 110px;
+    z-index:9999; 
+}
+
+.ui-growl-title {
+    font: 14px "Times New Roman", Monaco;
+    font-weight:bold;
+    color:#36210B;
+}
+/* Shabu Changes Ends */
+
+
+/* Header alignment. */
+.ui-panel-title{
+	line-height: 2em !important;
+}
+
+.pageHeaderTitle2{
+margin-left:12px;
+line-height:2em;
+color:#131111;
+}
+
+/* *************Jyoti Ranjan *******************
+         *  Customize Themes start *      
+************************************************/
+
+
+/* Main manu item text font size AND Login text input size */
+.ui-widget{
+	font-size: 0.8em;
+}
+
+/* Agent management contact No label example text color */
+.hintsWithcolorRed{
+	color:#912525;
+}
+
+.bodButton {
+	background-image: url('../images/bod.png');
+	cursor: pointer;
+    width: 122px;
+    height: 60px;
+    
+    /* border: none; */    
+}
+
+.button {
+	cursor: pointer;
+    width: 60px;
+    height: 30px;
+    border : black;
+	border-radius : 0.5em;
+	padding-top : 0.3em;
+	padding-left : 0.3em;
+	padding-right : 0.3em;
+	padding-bottom : 0.3em;
+    /* border: none; */    
+}
+.textbox
+{
+	width : 147px;
+	font-family : Calibri, Tahoma, Serif, Arial, sans-serif;
+	border : black;
+	border-radius : 0.5em;
+	padding-top : 0.3em;
+	padding-left : 0.3em;
+	padding-right : 0.3em;
+	padding-bottom : 0.3em;	
+}
+
+
+.bigbutton {
+	cursor: pointer;
+    width: 75px;
+    height: 30px;
+	border-radius : 0.5em;
+	/* padding-top : 0.1em;
+	padding-left : 0.5em;
+	padding-right : 0.5em;
+	padding-bottom : 0.5em; */
+	color : #4682B4;
+	align : center;
+	background-color: white;
+	font-weight: bold;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 12px;
+	font-style: italic;    
+}
+
+.smallbutton {
+	cursor: pointer;
+    width: 65px;
+    height: 25px;
+    border-radius : 0.5em;
+	padding-top : 0.5em;
+	padding-left : 0.5em;
+	padding-right : 0.5em;
+	padding-bottom : 0.5em;
+	color : #0095b6;
+	align : left;
+	background-color: white;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 8px;
+	font-style: italic;    
+}
+
+.centered {
+	text-align: center;
+	margin-left: 35%;
+	font-size: 2em;
+}
+
+.bfsilogofooter {
+	background-image: url('../images/bfsilogofooter.png');
+	background-repeat: no-repeat;
+    height: 04em;
+	width: 7em;
+}
+
+.TaglineCSS {
+	position: absolute;
+	text-align: top;
+	top: 17em;
+	right: 38em;
+	
+}
+.tagline {
+	text-align: center;
+	border: none !important;
+	top: 25em;
+	right: 34em;
+}
+.logoFooterCSS {
+	position: absolute;
+	top: 35em;
+	right: 38em;
+	
+}
+
+/* *************Jyoti Ranjan ***************************
+         *  Customize Themes End  *
+********************************************************/
+
+.consoleHeaderText {
+	font-family: Calibri, sans-serif ;
+	color: #3A3636;
+	font-size: 14px;
+	/* font-style: italic; */
+	font-weight: bold;
+	
+}
+
+.imggreen {
+	background-image: url('../images/green-right-icon.png'); 
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+  	height: 15px;
+  	width: 15px;
+}
+
+.imgred{
+	background-image: url('../images/red-right-icon.png'); 
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+  	height: 15px;
+  	width: 15px;
+}
+.imgyellow{
+	background-image: url('../images/pending-task.jpg'); 
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+  	height: 15px;
+  	width: 15px;
+	
+}
+.imgprogress{
+	background-image: url('../images/progress-bar.gif'); 
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+  	height: 15px;
+  	width: 15px;
+	
+}
+ .blank{
+	
+ }
+ 
+ .ui-growl {
+        position:fixed;
+        top:120px;
+        right:25px;
+        width:301px;
+}
+
+.background_image{
+   background-image: url('../images/background_image.gif');
+   width: 70px;
+   padding:0px;
+ }
+
+.last_background_image{
+	 background-image: url('../images/background_image.gif');
+   width: 179px;
+   padding:0px;
+}
+
+
+.drop_down_style
+{
+	 font-family: "Calibri", Calibri, serif !important;
+	 height: 26px;
+	 width:147px;
+	border-radius: 0.5em;
+	padding-top: 0.3em;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+	padding-bottom: 0.3em;
+	 
+}
+
+.ie .drop_down_style {
+	 font-family: "Calibri", Calibri, serif !important;
+	 height: 26px;
+	 width:160px;
+	border-radius: 0.5em;
+	padding-top: 0.3em;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+	padding-bottom: 0.3em;
+	border-left-color: #cccccc;
+	border-top-color: #cccccc;
+	 
+}
+
+.ui-datatable-scrollable-header-box{
+	 margin-right: 0px !important;
+} 
+.ui-datatable-scrollable-body{
+	margin-right: 0px !important;
+}
+.ui-tabs .ui-tabs-panel{
+padding: 0em 0em !important;
+}
+
+.setImageTop{
+	position: fixed;
+	top: 5%;
+	left: 43%;
+}
+.maintenanceFormWithAuditTrailforEnrollment{
+	/* width:300px; */
+	height: 420px;
+	overflow: scroll;
+}
+.maintenanceFormWithAuditTrailmodifySMSTemp{
+	height: 360px;
+	overflow: scroll;
+}
+
+.ui-datatable-tablewrapperforsys {
+/* height: 473px; */
+width: 596px !important;
+overflow-x: auto !important;
+overflow-y: auto !important;
+}
+
+.ids { 
+	width: 150px; 
+}
+
+.greybgcolor
+{
+	background-color: #DCDCDC;
+}
+
+
+#colsrc .ui-datatable-tablewrapper{
+	height: auto !important;
+}
+
+
+#colsrc1 .ui-datatable-tablewrapper{
+	height: auto !important;
+}
+.maintenanceFormWithAuditTrailPrint {
+	 width:756px;
+	height: inherit;
+}
+.printScrollPanel {
+	 height:558px;
+	 overflow: scroll;
+	 overflow-x: auto;
+	 overflow-y: auto;
+}
+.maintenanceFormWithAuditTrailPrintKyc {
+	 width:756px;
+	height: inherit;
+}

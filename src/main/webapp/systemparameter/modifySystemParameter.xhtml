@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<!-- 	 <ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{systemParameterController.systemparam.paramName}"></f:viewParam>
+			<f:event listener="#{systemParameterController.loadSystemParameter}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>  -->
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['systemParameterMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader" >
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['systemParameterMgmt.title.systemParameterModify']}" /></span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['systemParameterMgmt.btn.save']}"
+						update="panel"
+						action="#{systemParameterListController.checkModifyForUpdate}"
+						style="margin-left: 182px;"/> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['systemParameterMgmt.btn.cancel']}"
+						outcome="cancel">
+					</p:button>
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+
+			<p:panel id="Panel">
+				<p:panelGrid id="sysparamTables">
+					<p:row>
+						<p:column>
+							<p:dataTable id="srcTable" widgetVar="sysparamTable" 
+								var="sysparam" scrollable="true" scrollHeight="35%" scrollWidth="true" 
+								value="#{systemParameterListController.systemParamVOs}"
+								rowKey="#{sysparam.paramName}">
+								<!--  <p:column headerText="#{msg['systemParameterMgmt.label.paramName']}">
+								<p:inputText id="id" value="#{agencyController.agency.agencyCode}"
+					             readonly="true" label="#{msg['agencyMgmt.label.agencyCode']}" />
+								</p:column> -->
+
+								<p:column 
+									headerText="#{msg['systemParameterMgmt.label.paramName']}">
+									#{sysparam.paramName}</p:column>
+								<p:column
+									headerText="#{msg['systemParameterMgmt.label.paramValue']}">
+									<p:inputText id="paramValue" value="#{sysparam.paramValue}" required="true" autocomplete="off" style="width:90%"
+										label="#{sysparam.paramName}" readonly="#{systemParameterListController.getParameterStatus(sysparam)}" >	
+									</p:inputText>
+								</p:column>
+
+							</p:dataTable>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

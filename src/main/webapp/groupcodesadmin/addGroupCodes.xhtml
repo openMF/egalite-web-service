@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	<ui:define name="metadata">
+	<script type="text/javascript">
+        //<![CDATA[
+        
+  function inputLimiter(e,allow) {
+    var AllowableCharacters = '';
+
+    if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'NameCharactersAndNumbersWithNoBlankSpace'){AllowableCharacters='1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+
+    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+    if (k!=13 && k!=8 && k!=0){
+        if ((e.ctrlKey==false) && (e.altKey==false)) {
+        return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+        } else {
+        return true;
+        }
+    } else {
+        return true;
+    }
+} 
+    	function ieClicked() {
+    		if (document.all) {
+    			return false;
+    		}
+    	}
+    	function firefoxClicked(e) {
+    		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+    			if (e.which==2||e.which==3) {
+    				return false;
+    			}
+    		}
+    	}
+    	if (document.layers){
+    		document.captureEvents(Event.MOUSEDOWN);
+    		document.onmousedown=firefoxClicked;
+    	}else{
+    		document.onmouseup=firefoxClicked;
+    		document.oncontextmenu=ieClicked;
+    	}
+    	document.oncontextmenu=new Function("return false")
+
+    
+
+        //]]>
+    </script>
+	</ui:define>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['groupCodesMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['groupCodesMgmt.label.newGrpCodEntry']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['agencyMgmt.btn.save']}" update="panel"
+						action="#{groupCodeController.create}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['agencyMgmt.nav.cancel']}"
+						outcome="cancel" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithoutAuditTrail">
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="groupId"
+					value="#{msg['groupCodesMgmt.tblHeader.groupId']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="groupId"
+					value="#{groupCodeController.groupcode.id}" readonly="true"
+					required="true" label="#{msg['groupCodesMgmt.tblHeader.groupId']}"
+					onkeypress="return inputLimiter(event,'NameCharactersAndNumbers')">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="groupId" display="icon" />
+
+
+				<h:outputLabel for="cbsBranchCode"
+					value="#{msg['groupCodesMgmt.tblHeader.cbsBranchCode']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="cbsBranchCode"
+					value="#{groupCodeController.groupcode.cbsBranchCode}" readonly="false"
+					required="true" label="#{msg['groupCodesMgmt.tblHeader.cbsBranchCode']}">
+					<f:validateLength minimum="2" maximum="5" />
+				</p:inputText>
+				<p:message for="cbsBranchCode" display="icon" />
+
+				<h:outputLabel for="cbsGroupId"
+					value="#{msg['groupCodesMgmt.tblHeader.cbsGroupId']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="cbsGroupId"
+					value="#{groupCodeController.groupcode.cbsGroupId}" readonly="false"
+					required="true" label="#{msg['groupCodesMgmt.tblHeader.cbsGroupId']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="cbsGroupId" display="icon" />
+
+				<h:outputLabel for="groupName"
+					value="#{msg['groupCodesMgmt.label.groupName']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="groupName"
+					value="#{groupCodeController.groupcode.groupName}" readonly="false"
+					required="true" label="#{msg['groupCodesMgmt.label.groupName']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="groupName" display="icon" />
+
+				<h:outputLabel for="cbsCoId"
+					value="#{msg['groupCodesMgmt.tblHeader.cbsCoId']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="cbsCoId"
+					value="#{groupCodeController.groupcode.cbsCoId}" readonly="false"
+					required="true" label="#{msg['groupCodesMgmt.tblHeader.cbsCoId']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="cbsCoId" display="icon" />
+
+				<h:outputLabel for="ibsCoId"
+					value="#{msg['groupCodesMgmt.tblHeader.ibsCoId']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="ibsCoId"
+					value="#{groupCodeController.ibsCoId}" readonly="false"
+					required="true" label="#{msg['groupCodesMgmt.tblHeader.ibsCoId']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="ibsCoId" display="icon" />
+
+				<h:outputLabel for="contactNumber"
+					value="#{msg['groupCodesMgmt.tblHeader.contactNumber']}" 
+					styleClass="required_asterisk" />
+				<p:inputText id="contactNumber"
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+						 value="#{groupCodeController.groupcode.contactNumber}"
+						required="true" label="#{msg['groupCodesMgmt.tblHeader.contactNumber']}">
+					<f:validateLength minimum="0" maximum="25" />
+				</p:inputText>
+				<p:message for="contactNumber" display="icon" />
+				
+				
+				<h:outputLabel for="isActive"
+					value="#{msg['groupCodesMgmt.tblHeader.isActive']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="isActive" styleClass="drop_down_style"
+					value="#{groupCodeController.groupcode.isActive}" required="true"
+					label="#{msg['groupCodesMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{groupCodeController.groupCodeStatuss}" var="devi"
+						itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

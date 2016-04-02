@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+    <ui:param name="pageTitle" value="#{msg['custAcMgmt.title']}" /> 
+	<ui:param name="pageHeaderTitle" value="#{msg['custAcMgmt.title.custAc']}" />
+	<ui:param name="emptyMessage" value="#{msg['custAcMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{casaListController}" />
+
+	<!-- start-->
+	<ui:param name="selectionMode" value="single"></ui:param>
+	<ui:param name="selection" value="#{casaListController.selectedRecord}" />
+
+	<ui:param name="addControlText"	value="#{msg['agencyAllocationsMgmt.tblNav.bulkAssignAgent']}" />
+	<ui:param name="addOutcome" value="bulkAssign" />
+	<ui:param name="cancelControlText" value="#{msg['agencyAllocationsMgmt.tblNav.selectedAssignAgent']}" />
+	<ui:param name="cancelOutcome" value="selectedAssign" />
+	<ui:param name="addAuthority" value="#{auth.checkAuthority('addAgentAllocations')}" />
+
+	<ui:define name="pageHeaderControls">
+		<p:splitButton
+			value="#{msg['agencyAllocationsMgmt.tblNav.allocateAgent']}"
+			style="margin-left: 82px;" 
+			rendered="#{agentCustAcAllocListController.isAssignAgentAllowed()}">
+			<p:menuitem value="#{addControlText}" styleClass="ui-menu" 
+				url="/casaadmin/bulkAgentAllocations.xhtml" outcome="#{addOutcome}" />
+			<p:menuitem value="#{cancelControlText}" styleClass="ui-menu" 
+				url="/casaadmin/agentAllocation.xhtml" outcome="#{cancelOutcome}"
+				/>
+		</p:splitButton>
+	</ui:define>
+	<!-- end -->
+	 <!-- Balance,  type remove ==> changes for Asomi Nirmal kanna S -->
+	 <ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{casaListController.listSelect}" />
+		<!-- <p:column selectionMode="multiple" style="width:2%"
+			disabledSelection="true" /> -->
+
+		<p:column id="id" filterBy="#{record.id}"
+				headerText="#{msg['custAcMgmt.tblHeader.custAcNo']}"
+				filterMatchMode="contains" sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+
+       <p:column id="customerId" filterBy="#{record.customerId}"
+				headerText="#{msg['custAcMgmt.tblHeader.customerId']}"
+				filterMatchMode="contains" sortBy="#{record.customerId}">
+			<h:outputText value="#{record.customerId}" />
+		</p:column>
+       
+		<p:column id="branchCode" filterBy="#{record.branchCode}"
+				headerText="#{msg['custAcMgmt.tblHeader.branchCode']}"
+				filterMatchMode="contains" sortBy="#{record.branchCode}">
+			<h:outputText value="#{record.branchCode}" />
+		</p:column>
+
+		<!-- <p:column id="accountType" filterBy="#{record.accountType}"
+					headerText="#{msg['custAcMgmt.tblHeader.accountType']}"
+					filterMatchMode="contains" sortBy="#{record.accountType}">
+					<h:outputText value="#{record.accountType}" />
+		</p:column> -->
+		
+		<p:column id="acStatNoDr" filterBy="#{record.acStatNoDr}"
+				headerText="#{msg['custAcMgmt.tblHeader.acStatNoDr']}"
+				filterMatchMode="contains" sortBy="#{record.acStatNoDr}">
+			<h:outputText value="#{record.acStatNoDr}" />
+		</p:column>
+		
+		<p:column id="acStatNoCr" filterBy="#{record.acStatNoCr}"
+				headerText="#{msg['custAcMgmt.tblHeader.acStatNoCr']}"
+				filterMatchMode="contains" sortBy="#{record.acStatNoCr}">
+			<h:outputText value="#{record.acStatNoCr}" />
+		</p:column>
+	
+		<!-- <p:column id="acyAvailBal" filterBy="#{record.acyAvailBal}"
+					headerText="#{msg['custAcMgmt.tblHeader.acyAvailBal']}"
+					filterMatchMode="contains" sortBy="#{record.acyAvailBal}">
+					<h:outputText value="#{record.acyAvailBal}" />
+		</p:column> -->
+			
+		 <p:column id="agentId" filterBy="#{record.agentId}"
+				headerText="#{msg['custAcMgmt.tblHeader.agentId']}"
+				filterMatchMode="contains" sortBy="#{record.agentId}">
+			<h:outputText value="#{record.agentId}" />
+		</p:column>
+		
+		<p:column id="locationCode" filterBy="#{record.locationCode}"
+				headerText="#{msg['custAcMgmt.tblHeader.locationCode']}"
+				filterMatchMode="contains" sortBy="#{record.locationCode}">
+			<h:outputText value="#{record.locationCode}" />
+		</p:column>
+		
+		<p:column id="creditOfficerId" filterBy="#{record.creditOfficerId}"
+				headerText="#{msg['custAcMgmt.tblHeader.creditOfficerId']}"
+				filterMatchMode="contains" sortBy="#{record.creditOfficerId}">
+			<h:outputText value="#{record.creditOfficerId}" />
+		</p:column>		
+				
+	</ui:define>
+</ui:composition>

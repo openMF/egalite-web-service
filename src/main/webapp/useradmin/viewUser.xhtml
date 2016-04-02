@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{userController.userIdToLoad}"></f:viewParam>
+			<f:event listener="#{userController.loadUser}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['userMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle">
+				<h:outputText value="#{msg['userMgmt.title.viewUser']}" /></span>
+				<span class="pageHeaderControls"> 
+				
+				<p:button id="btnAdd" value="Add" rendered="#{auth.checkAuthority('addUser')}"
+						outcome="openAdd" style="margin-left: 182px;" />
+				<p:spacer width="2px" /> 
+				
+				<p:button id="btnModify" value="Modify" outcome="openModify" rendered="#{auth.checkAuthority('modifyUser')}"
+						disabled="#{userController.isModifyAllowed()}">
+				<f:param name="id" value="#{userController.user.id}" />
+				</p:button> <p:spacer width="2px" /> 
+				
+				<p:commandButton id="btnDelete" value="#{msg['agentMgmt.btn.delete']}" update="panel"
+						rendered="#{(auth.checkAuthority('deleteUser')) and (userController.isDeleteAllowed())}"
+						disabled="#{userController.isEnableDeleteAllowed()}" action="#{userController.deleteUnAuthorized}" >
+				
+				<p:confirm header="Confirmation" message="#{msg['msg.confirm.dialog']}"	icon="ui-icon-alert" /></p:commandButton> 
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+				
+				<p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog> <p:spacer width="2px" /> 
+				
+				<p:button id="btnList" value="List"	outcome="openList" rendered="#{auth.checkAuthority('listUsers')}" />
+				<p:spacer width="2px" /> 
+				
+				<p:commandButton id="btnAuth" value="#{msg['agentMgmt.btn.auth']}" update="auditTrail panel"
+						rendered="#{userController.isAuthorizeAllowed()}" disabled="#{userController.isAuthorizeEnable()}"
+						actionListener="#{userController.userAuthorize}" /><p:spacer width="2px"/> 
+				
+				<p:button id="btnReset"	value="#{msg['userMgmt.btn.reset']}" outcome="openReset"
+						rendered="#{auth.checkAuthority('resetUser')}" disabled="#{userController.isResetAllowed()}">
+				<f:param name="id" value="#{userController.user.id}" /></p:button><p:spacer width="2px" /> 
+				
+				<p:commandButton id="btnUnLock"	value="#{msg['userMgmt.btn.unLock']}" update="panel"
+						rendered="#{auth.checkAuthority('unLockUser')}"	disabled="#{userController.isUnlockAllowed()}"
+						actionListener="#{userController.unLockUser}" /> <p:spacer width="2px" /> 
+				
+				<p:commandButton id="btnSession" value="#{msg['userMgmt.btn.clearSession']}" update="panel"
+						rendered="#{auth.checkAuthority('clearsession')}" disabled="#{userController.clearSession()}"
+						actionListener="#{userController.isSessionCleared}" /> <p:spacer width="2px" /></span>
+				
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id" value="#{msg['userMgmt.label.userId']}" />
+				<p:inputText readonly="true" id="id"
+					value="#{userController.user.id}" required="true"
+					label="#{msg['userMgmt.label.userId']}" />
+					
+					<h:outputLabel for="userType"
+					value="#{msg['userMgmt.label.userType']}" />
+				<p:inputText id="userType" readonly="true"
+					value="#{userController.userType}"
+					label="#{msg['userMgmt.label.userType']}" />
+					
+					<h:outputLabel for="cbsCoCode" value="#{msg['userMgnt.label.cbsCoCode']}" />
+				<p:inputText readonly="true" id="cbsCoCode"
+					value="#{userController.user.cbsCoCode}" required="false"
+					label="#{msg['userMgnt.label.cbsCoCode']}" />
+
+				<h:outputLabel for="firstName"
+					value="#{msg['userMgmt.label.firstName']}" />
+				<p:inputText readonly="true" id="firstName"
+					value="#{userController.user.firstName}" required="true"
+					label="#{msg['userMgmt.label.firstName']}" />
+
+				<h:outputLabel for="lastName"
+					value="#{msg['userMgmt.label.lastName']}" />
+				<p:inputText readonly="true" id="lastName"
+					value="#{userController.user.lastName}"
+					label="#{msg['userMgmt.label.lastName']}" required="true" />
+
+				<h:outputLabel for="branchCode"
+					value="#{msg['userMgmt.label.branchCode']}" />
+				<p:inputText readonly="true" id="branchCode"
+					value="#{userController.user.branchCode}"
+					label="#{msg['userMgmt.label.branchCode']}" required="true" />
+				
+				<h:outputLabel for="userStatus"
+					value="#{msg['userMgmt.label.userStatus']}" />
+				<p:inputText id="userStatus" readonly="true"
+					value="#{userController.isStatusActive}"
+					label="#{msg['userMgmt.label.userStatus']}" />
+
+				<h:outputLabel for="startDate"
+					value="#{msg['userMgmt.label.startDate']}" />
+				<p:calendar id="startDate" readonly="true"
+					value="#{userController.user.startDate}" pattern="dd-MMM-yyyy"
+					showOn="label" />
+
+				<h:outputLabel for="endDate"
+					value="#{msg['userMgmt.label.endDate']}" />
+				<p:calendar id="endDate" readonly="true"
+					value="#{userController.user.endDate}" pattern="dd-MMM-yyyy"
+					showOn="label" />
+
+			</h:panelGrid>
+
+			<p:panel id="rolePanel">
+				<f:facet name="header">
+					<p:panel styleClass="maintenanceFormPanelHeader">
+						<span class="pageHeaderTitle"> <h:outputText
+								value="#{msg['userMgmt.tblHeader.allocatedRoles']}" />
+						</span>
+					</p:panel>
+				</f:facet>
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+						   <div id="colsrc">
+							<p:dataTable id="destTable" var="destRole"
+								value="#{userController.user.allocatedRoles}"
+								rowKey="#{destRole.id}"
+								selection="#{userController.modifySelectedAllocatedRoles}">
+								<p:column sortBy="#{destRole.id}" filterPosition="top"
+									filterBy="#{destRole.id}" filterMatchMode="contains"
+									headerText="#{msg['roleMgmt.label.roleId']}">#{destRole.id}</p:column>
+								<p:column sortBy="#{destRole.roleName}" filterPosition="top"
+									filterBy="#{destRole.roleName}" filterMatchMode="contains"
+									headerText="#{msg['roleMgmt.label.roleName']}">#{destRole.roleName}</p:column>
+							</p:dataTable>
+							</div>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>

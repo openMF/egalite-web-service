@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'NameCharactersAndNumbersWithNoBlankSpace') {
+					AllowableCharacters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+		
+			function ieClicked() {
+				if (document.all) {
+					return false;
+				}
+			}
+			function firefoxClicked(e) {
+				if(document.layers||(document.getElementById(!document.all))) {
+					if (e.which==2||e.which==3) {
+						return false;
+					}
+				}
+			}
+			if (document.layers){
+				document.captureEvents(Event.MOUSEDOWN);
+				document.onmousedown=firefoxClicked;
+			}else{
+				document.onmouseup=firefoxClicked;
+				document.oncontextmenu=ieClicked;
+			}
+			document.oncontextmenu=new Function("return false")
+
+			//]]>
+		</script>
+		<f:metadata>
+			<f:viewParam name="id" value="#{agencyController.agency.agencyCode}"></f:viewParam>
+			<f:event listener="#{agencyController.loadAgency}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['agencyMgmt.title.agencyDetailModify']}" /></span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['agencyMgmt.btn.save']}" update="panel"
+						action="#{agencyController.checkModifyForUpdate}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['agencyMgmt.nav.cancel']}"
+						outcome="cancel">
+						<f:param name="id" value="#{agencyController.agency.agencyCode}" />
+					</p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="3" id="panelGrid">
+
+				<h:outputLabel for="id" value="#{msg['agencyMgmt.tblHeader.agencyCode']}" />
+				<p:inputText id="id" value="#{agencyController.agency.agencyCode}"
+					readonly="true" label="#{msg['agencyMgmt.label.agencyCode']}"
+					onkeypress="return inputLimiter(event,'NameCharactersAndNumbers')" />
+				<p:message for="id" display="icon" />
+
+				<h:outputLabel for="agencyDesc" value="#{msg['agencyMgmt.label.agencyDesc']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="agencyDesc" value="#{agencyController.agency.agencyDesc}" required="true"
+					label="#{msg['agencyMgmt.label.agencyDesc']}"
+					onkeypress="return inputLimiter(event,'NameCharacters')">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="agencyDesc" display="icon" />
+
+				<h:outputLabel for="category" value="#{msg['agencyMgmt.tblHeader.category']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="category" styleClass="drop_down_style"
+					value="#{agencyController.agency.category}" required="true"
+					label="#{msg['agencyMgmt.tblHeader.category']}" >
+					<f:selectItems value="#{agencyController.agencyCategorys}"
+						var="devi" itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<p:message for="category" display="icon" />
+				
+				<h:outputLabel for="allocatedCo" value="#{msg['agencyMgmt.label.allocatedCo']}" 
+					styleClass="required_asterisk"/>
+				<h:selectOneMenu id="allocatedCo" styleClass="drop_down_style"
+					value="#{agencyController.agency.allocatedCo}"
+					 label="#{msg['agencyMgmt.label.allocatedCo']}" required="true">
+					 <f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{agencyController.coCodes}"
+						var="dev" itemValue="#{dev.id}"
+						itemLabel="#{dev.id}"  />					
+				</h:selectOneMenu>
+				<p:message for="allocatedCo" display="icon" />
+				
+				<h:outputLabel for="address1" value="#{msg['agencyMgmt.label.address1']}" styleClass="required_asterisk" />
+				<p:inputText id="address1" value="#{agencyController.agency.address1}" required="true"
+					label="#{msg['agencyMgmt.label.address1']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="address1" id="msgaddress1" display="icon" />
+
+				<h:outputLabel for="address2" value="#{msg['agencyMgmt.label.address2']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="address2" value="#{agencyController.agency.address2}" required="true"
+					label="#{msg['agencyMgmt.label.address2']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="address2" id="msgaddress2" display="icon" />
+
+				<h:outputLabel for="address3" value="#{msg['agencyMgmt.label.address3']}" />
+				<p:inputText id="address3" value="#{agencyController.agency.address3}" required="false"
+					label="#{msg['agencyMgmt.label.address3']}">
+					<f:validateLength minimum="0" maximum="25" />
+				</p:inputText>
+				<p:message for="address3" id="msgaddress3" display="icon" />
+
+				<h:outputLabel for="address4" value="#{msg['agencyMgmt.label.address4']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="address4"	value="#{agencyController.agency.address4}" required="true"
+					label="#{msg['agencyMgmt.label.address4']}"
+					onkeypress="return inputLimiter(event,'NameCharactersAndNumbersWithNoBlankSpace')">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="address4" id="msgaddress4" display="icon" />
+
+				<h:outputLabel for="zipCode" value="#{msg['agencyMgmt.tblHeader.zipCode']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="zipCode" value="#{agencyController.agency.zipCode}"
+					readonly="false" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+					required="true" label="#{msg['agencyMgmt.tblHeader.zipCode']}">
+					<f:validateRegex pattern="[0-9]*" />
+					<f:validateLength minimum="2" maximum="15" />
+				</p:inputText>
+				<p:message for="zipCode" display="icon" />
+
+				<h:outputLabel for="city" styleClass="required_asterisk"
+					value="#{msg['agencyMgmt.tblHeader.city']}" />
+				<p:inputText id="city" onkeypress="return inputLimiter(event,'Letters')"
+					value="#{agencyController.agency.city}" readonly="false"
+					required="true" label="#{msg['agencyMgmt.tblHeader.city']}">
+					<f:validateLength minimum="0" maximum="15" />
+				</p:inputText>
+				<p:message for="city" display="icon" />
+
+				<h:outputLabel for="state" styleClass="required_asterisk"
+					value="#{msg['agencyMgmt.tblHeader.state']}" />
+				<p:inputText id="state" onkeypress="return inputLimiter(event,'Letters')"
+					value="#{agencyController.agency.state}" readonly="false"
+					required="true" label="#{msg['agencyMgmt.tblHeader.state']}">
+					<f:validateLength minimum="0" maximum="15" />
+				</p:inputText>
+				<p:message for="state" display="icon" />
+
+				<h:outputLabel styleClass="required_asterisk" for="country"
+					value="#{msg['agencyMgmt.tblHeader.country']}" />
+				<h:selectOneMenu id="country" styleClass="drop_down_style"
+					required="true" label="#{msg['agencyMgmt.tblHeader.country']}">
+					<f:selectItems value="#{agencyController.countryCodes}" var="code"
+						itemValue="#{code.countryCode}" itemLabel="#{code.description}" />
+				</h:selectOneMenu>
+				<p:message for="country" display="icon" />
+
+				<h:outputLabel for="emailAddress" value="#{msg['agencyMgmt.tblHeader.emailAddress']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="emailAddress" value="#{agencyController.agency.emailAddress}" readonly="false"
+					required="true" label="#{msg['agencyMgmt.tblHeader.emailAddress']}">
+					<f:validator validatorId="emailValidator" />
+				</p:inputText>
+				<p:message for="emailAddress" display="icon" />
+
+				<h:outputLabel for="contactNumber" value="#{msg['agencyMgmt.tblHeader.contactNumber']}"
+					styleClass="required_asterisk" />
+				<p:inputMask id="contactNumber" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+					value="#{agencyController.agency.contactNumber}" required="true"
+					validatorMessage="#{msg['agencyMgmt.errmsg.mobileNo']}">
+					<f:validateLength minimum="8" maximum="16" />
+				</p:inputMask>
+				<p:message for="contactNumber" display="icon" />
+
+				<h:outputLabel for="isActive" value="#{msg['agencyMgmt.tblHeader.isActive']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="isActive" styleClass="drop_down_style"
+					value="#{agencyController.agency.isActive}" required="true"
+					label="#{msg['agencyMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{agencyController.agencyStatuss}" var="devi"
+						itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

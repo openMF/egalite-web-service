@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<!-- Tag No: EGA-MN15-000031
+	1. User ID added above User Name.  
+	-->
+	
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<h:form id="toolBarFor">
+
+		<p:toolbar styleClass="northToolbar" id="toolBarImage">
+
+			<p:toolbarGroup align="left" id="toolGroup">
+				<h:outputText styleClass="mainCaption"
+					value="#{msg['header.title.name']}" />
+				<p:commandLink type="push" title="Home" ajax="false"
+					action="/index.xhtml">
+					<table>
+						<tr>
+							<td>
+								<div class="logo1" />
+							</td>
+							<td>
+								<div class="logo2" />
+							</td>
+						</tr>
+					</table>
+					<!-- <p:graphicImage styleClass="logo1"/>
+					<p:graphicImage styleClass="logo2"/> -->
+				</p:commandLink>
+			</p:toolbarGroup>
+			
+			<p:toolbarGroup align="right">
+				<p:commandLink id="dynaButton" type="push" title="Settings">
+					<p:graphicImage url="#{resource['images:sett-icon1.png']}" /> 
+														
+				</p:commandLink>
+				<p:overlayPanel id="settingsPanel" for="dynaButton"
+					hideEffect="fade" appendToBody="true"
+					 style="padding: 0em;vertical-align: bottom;">
+					<p:menu trigger="dynaButton" id="menuButt">
+						<p:menuitem value="Logout" url="/useradmin/logout.xhtml"
+							outcome="logout" />
+						<p:menuitem value="Change password"
+							url="/useradmin/userChangePasswd.xhtml" outcome="change" />
+					</p:menu>
+				</p:overlayPanel>
+			</p:toolbarGroup>
+			<p:toolbarGroup align="left"  styleClass="centered">
+				<h:outputText value="Touching the Unbanked" />
+			</p:toolbarGroup>
+			<p:toolbarGroup align="right">
+			<h:outputText id="userID" value="#{auth.userID}">		
+				</h:outputText>
+				<br />
+				<p:outputLabel value="#{auth.userName}"></p:outputLabel>
+				<br />
+				<!-- 
+				<h:outputText value="#{auth.lastLoggedTime}">
+					<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss" />
+				</h:outputText>	
+				 -->
+				 <h:outputText id="systemMode" value="#{auth.systemMode}">		
+				</h:outputText>
+				<!-- <p:poll ignoreAutoUpdate="true" async="true" interval="10" 
+			  	update="systemMode,appDateStr" /> -->
+				<br/>
+				<h:outputText value="#{auth.appDateToday}" id="appDateStr">
+					<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss" />
+				</h:outputText>	
+				
+			</p:toolbarGroup>
+
+		</p:toolbar>
+	</h:form>
+</ui:composition>

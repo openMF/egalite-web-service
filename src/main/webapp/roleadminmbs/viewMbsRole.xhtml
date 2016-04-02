@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{roleMbsController.rolembs.id}"></f:viewParam>
+			<f:event listener="#{roleMbsController.loadRole}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['roleMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['roleMgmt.header.mbsViewRole']}" />
+				</span>
+				<span class="pageHeaderControls">
+				<ui:include	src="/templates/includes/viewPageControls.xhtml">
+					<ui:param name="controller" value="#{roleMbsController}"></ui:param>
+				</ui:include> 
+				<p:commandButton id="btnDelete" value="#{msg['deviceMgmt.btn.delete']}"
+					rendered="#{roleMbsController.isDeleteAllowed()}" update="panel"
+					disabled="#{roleMbsController.isEnableDeleteAllowed()}" action="#{roleMbsController.deleteUnAuthorized}" >
+						<p:confirm header="Confirmation" message="#{msg['msg.confirm.dialog']}"
+							icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</span>
+			</p:panel>
+		</f:facet>
+
+		<!--  <p:messages id="msgs" />
+		<p:growl id="growl" showDetail="true" sticky="false" /> -->
+		<!-- Role Id is added for Asomi by Nirmal kanna S -->  
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="3">
+				
+				<h:outputLabel for="roleId" value="#{msg['roleMgmt.label.roleId']}" />
+				<p:inputText id="roleId" value="#{roleMbsController.rolembs.id}" readonly="true"
+						required="true" label="#{msg['roleMgmt.label.roleId']}"/>
+			    <p:message for="roleId" display="icon" />
+				
+				<h:outputLabel for="roleName"
+					value="#{msg['roleMgmt.label.roleName']} " />
+				<p:inputText id="roleName" readonly="true"
+					value="#{roleMbsController.rolembs.roleName}" required="true"
+					label="#{msg['roleMgmt.label.roleName']}">
+				</p:inputText>
+				<p:message for="roleName" display="icon" />
+
+				<h:outputLabel for="roleDesc"
+					value="#{msg['roleMgmt.label.roleDescription']} " />
+				<p:inputText id="roleDesc" readonly="true"
+					value="#{roleMbsController.rolembs.roleDesc}" required="true"
+					label="#{msg['roleMgmt.label.roleDescription']}">
+				</p:inputText>
+				<p:message for="roleDesc" display="icon" />
+				
+				<h:outputLabel for="roleStatus"
+					value="#{msg['roleMgmt.tblHeader.deviceStatus']}" />
+				<p:inputText id="roleStatus" readonly="true"
+					value="#{roleMbsController.isStatusActive}">
+				</p:inputText>
+				<p:message for="roleStatus" display="icon" />
+				
+				<p:dataTable id="functionDataTable" var="function"
+					emptyMessage="#{msg['roleMgmt.msg.noEntitlements']}"
+					value="#{roleMbsController.rolembs.functionsmbs}">
+					<p:column id="baseFunc"
+						headerText="#{msg['roleMgmt.label.baseFunction']}">
+						<h:outputText value="#{function.baseFunc}" />
+					</p:column>
+				</p:dataTable>
+
+			</h:panelGrid>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>

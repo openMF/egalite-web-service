@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:viewParam name="roleId" value="#{roleController.role.id}"></f:viewParam>
+	<f:event listener="#{roleController.loadRole}" type="preRenderView"></f:event>
+</f:metadata>
+
+<h:head>
+</h:head>
+<h:body>
+	<h1>#{msg['roleMgmt.title']}</h1>
+
+	<h:form id="view_role_form">
+
+		<p:panel id="panel" header="Roles">
+
+			<p:messages id="msgs" />
+			<p:growl id="growl" showDetail="true" sticky="false" />
+
+			<p:commandButton id="btnDelete" value="#{msg['roleMgmt.nav.delete']}"
+				update="panel" action="#{roleController.delete}" />
+			<p:button id="btnCancel" value="#{msg['roleMgmt.nav.cancel']}"
+				outcome="cancel">
+				<f:param name="roleId" value="#{roleController.role.id}" />
+			</p:button>
+
+			<h:panelGrid columns="3">
+				<h:outputLabel for="roleId" value="#{msg['roleMgmt.label.roleId']} " />
+				<p:inputText id="roleId" disabled="true"
+					value="#{roleController.role.id}" required="true"
+					label="#{msg['roleMgmt.label.roleId']}">
+				</p:inputText>
+				<p:message for="roleId" display="icon" />
+
+				<h:outputLabel for="roleName"
+					value="#{msg['roleMgmt.label.roleName']} " />
+				<p:inputText id="roleName" disabled="true"
+					value="#{roleController.role.roleName}" required="true"
+					label="#{msg['roleMgmt.label.roleName']}">
+				</p:inputText>
+				<p:message for="roleName" display="icon" />
+
+				<h:outputLabel for="roleDesc"
+					value="#{msg['roleMgmt.label.roleDescription']} " />
+				<p:inputText id="roleDesc" disabled="true"
+					value="#{roleController.role.roleDesc}" required="true"
+					label="#{msg['roleMgmt.label.roleDescription']}">
+				</p:inputText>
+				<p:message for="roleDesc" display="icon" />
+
+				<p:dataTable id="functionDataTable" var="function"
+					value="#{roleController.role.functions}">
+					<p:column id="baseFunc"
+						headerText="#{msg['roleMgmt.label.baseFunction']}">
+						<h:outputText value="#{function.baseFunc}" />
+					</p:column>
+
+					<p:column id="funDesc"
+						headerText="#{msg['roleMgmt.label.functionDescription']}">
+						<h:outputText value="#{function.funcDesc}" />
+					</p:column>
+				</p:dataTable>
+
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

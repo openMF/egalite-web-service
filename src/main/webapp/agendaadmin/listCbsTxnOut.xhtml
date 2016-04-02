@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['agentMgmt.title.agent']}" /> -->
+	<ui:param name="pageHeaderTitle" value="#{msg['cbsTxnOutMgmt.label.listCbsOut']}" />
+	<ui:param name="emptyMessage" value="#{msg['msg.noRecords']}" />
+	<ui:param name="listController" value="#{cbsTxnOutListController}" />
+	
+	<!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{cbsTxnOutListController.selectedRecord}"/>
+	<!-- ADD END -->
+	
+<h:outputScript library="js" name="menu.js" />
+
+	<ui:define name="dataTableContent">
+	
+		<p:ajax event="rowDblselect" listener="#{cbsTxnOutListController.listSelect}" />
+
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.mfiOutSeqno']}"
+				filterBy="#{record.mfiOutSeqno}" id="id" sortBy="#{record.mfiOutSeqno}">
+				<h:outputText value="#{record.mfiOutSeqno}" />
+			</p:column>
+
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.cbsAcRefNo']}"
+				filterBy="#{record.cbsAcRefNo}" id="cbsAcRefNo" sortBy="#{record.cbsAcRefNo}">
+				<h:outputText value="#{record.cbsAcRefNo}" />
+			</p:column>
+
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.customerId']}"
+				filterBy="#{record.customerId}" id="customerId" sortBy="#{record.customerId}">
+				<h:outputText value="#{record.customerId}" />
+			</p:column>
+
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.cbsBranchCode']}"
+				filterBy="#{record.cbsBranchCode}" id="cbsBranchCode" sortBy="#{record.cbsBranchCode}">
+				<h:outputText value="#{record.cbsBranchCode}" />
+			</p:column>
+
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.moduleCode']}"
+				filterBy="#{record.moduleCode}" id="moduleCode" sortBy="#{record.moduleCode}">
+				<h:outputText value="#{record.moduleCode}" />
+			</p:column>
+
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.txnCode']}"
+				filterBy="#{record.txnCode}" id="txnCode" sortBy="#{record.txnCode}">
+				<h:outputText value="#{record.txnCode}" />
+			</p:column>
+			<!-- 
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.txnIdentifier']}"
+				filterBy="#{record.txnIdentifier}" id="txnIdentifier" sortBy="#{record.txnIdentifier}">
+				<h:outputText value="#{record.txnIdentifier}" />
+			</p:column>
+
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.syncType']}"
+				filterBy="#{record.syncType}" id="syncType" sortBy="#{record.syncType}">
+				<h:outputText value="#{record.syncType}" />
+			</p:column>
+			 -->
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.reqOrTxn']}"
+				filterBy="#{record.reqOrTxn}" id="reqOrTxn" sortBy="#{record.reqOrTxn}">
+				<h:outputText value="#{record.reqOrTxn}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['cbsTxnOutMgmt.label.sentToCbs']}"
+				filterBy="#{record.sentToCbs}" id="sentToCbs" sortBy="#{record.sentToCbs}">
+				<h:outputText value="#{record.sentToCbs}" />
+			</p:column>
+			
+	</ui:define>
+</ui:composition>

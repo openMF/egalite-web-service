@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cxf="http://cxf.apache.org/core"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx 
+    	http://www.springframework.org/schema/tx/spring-tx.xsd 
+    	http://www.springframework.org/schema/security 
+    	http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd http://cxf.apache.org/core 
+		http://cxf.apache.org/schemas/core.xsd
+		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<context:component-scan base-package="com.bfsi" />
+	<context:component-scan base-package="com.ofss" />
+	<context:annotation-config />
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<bean class="org.apache.cxf.interceptor.LoggingInInterceptor" id="loggingInInterceptor" />
+	<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" id="logOutInterceptor" />
+
+<cxf:bus>
+		<cxf:features>
+			<cxf:logging />
+		</cxf:features>
+	</cxf:bus>
+	
+	<!-- <cxf:bus> <cxf:ininterceptors> <ref bean="loggingInInterceptor" /> 
+		</cxf:ininterceptors> <cxf:outinterceptors> <ref bean="logOutInterceptor" 
+		/> </cxf:outinterceptors> </cxf:bus> -->
+
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+
+	<jaxrs:server id="userManagerREST" address="/">
+		<jaxrs:serviceBeans>
+			<ref bean="branchSyncServiceImpl" />
+			<ref bean="depositTransactionServiceImpl" />
+			<ref bean="currencySyncServiceImpl" />
+			<!-- <ref bean="customerInfoSyncServiceImpl" /> -->
+			<ref bean="depositReqSyncServiceImpl" />
+			<ref bean="agentSyncLogFile" />
+			<ref bean="cashInfoServiceImpl" />
+			<ref bean="systemParamsServiceImpl" />
+			<ref bean="agentRegistrationServiceImpl" />
+			<ref bean="agentDetailServiceImpl" />
+			<ref bean="transactionSyncServiceImpl" />
+			<ref bean="customerDetailServiceImpl" />
+			<ref bean="deviceDetailServiceImpl" />
+			<ref bean="loanDetailServiceImpl" />
+			<ref bean="pigmyDepositSyncServiceImpl" />
+			<ref bean="staticDataSyncServiceImpl" /> 
+			<ref bean="loanDetailsSyncServiceImpl" />
+			<ref bean="depositDetailsSyncServiceImpl" /> 
+			<ref bean="messageSyncServiceImpl" /> 
+			<ref bean="agentAgendaSyncServiceImpl" />
+			<ref bean="cashTransactionSyncServiceImpl" />  
+			<ref bean="customerEnrolmentSyncServiceImpl" />
+			<ref bean="customerAccountSyncServiceImpl" />
+			<ref bean="lovDetailSyncServiceImpl" />
+			<ref bean="agentCashPositionSyncServiceImpl" />
+			<ref bean="agentValidationSyncServiceImpl" /> <!-- EGA-MN15-000017 -->
+		</jaxrs:serviceBeans>
+
+		<jaxrs:providers>
+			<ref bean='jsonProvider' />
+		</jaxrs:providers>
+	</jaxrs:server>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<bean id="cbsDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+		<property name="driverClassName" value="${cbs.jdbc.driverClassName}" />
+		<property name="url" value="${cbs.jdbc.url}" />
+		<property name="username" value="${cbs.jdbc.username}"  />
+		<property name="password" value="${cbs.jdbc.password}" />
+	</bean>
+	
+	<!-- <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/db" /> -->
+	
+	<context:property-placeholder location="jdbc.properties" />
+
+	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
+		<property name="dataSource" ref="dataSource" /> <property name="configLocations"> 
+		<value>classpath:hibernate.cfg.xml</value> </property> <property name="annotatedClasses"> 
+		<list> <value>com.bfsi.mfi.entity.User</value> </list> </property> </bean> 
+		<bean id="ormTransactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"> 
+		<property name="sessionFactory" ref="sessionFactory" /> </bean> -->
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<security:http pattern="/favicon.ico" security="none" />
+	<security:http pattern="/resources/**" security="none" />
+	<security:http pattern="/javax.faces.resource/**" security="none" />
+	<security:http pattern="/login*" security="none" />
+	<security:http pattern="/Rest/**" security="none" />
+	<security:http auto-config="false" entry-point-ref="authenticationProcessingFilterEntryPoint" use-expressions="true">
+	
+		<security:intercept-url pattern="/**" access="isAuthenticated()" />
+		<security:logout logout-url="/j_spring_security_logout"	logout-success-url="/login.xhtml" invalidate-session="true"
+			delete-cookies="true" />
+		<security:custom-filter position="FORM_LOGIN_FILTER" ref="authenticationProcessingFilter" />
+
+		<security:session-management
+			invalid-session-url="/login.xhtml" session-authentication-error-url="/login.xhtml" 
+			session-fixation-protection="migrateSession">
+			<security:concurrency-control
+				max-sessions="1" error-if-maximum-exceeded="true" expired-url="/login.xhtml" />
+		</security:session-management>
+	</security:http>
+
+	<bean id="authenticationProcessingFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="authenticationFailureHandler" ref="failureHandler" />
+		<property name="authenticationSuccessHandler" ref="successHandler" />
+	</bean>
+
+	<!-- <bean id="successHandler"
+		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<property name="defaultTargetUrl" value="/index.xhtml" />
+	</bean>
+	
+	 -->
+	 
+	 <bean id="successHandler"
+		class="com.bfsi.mfi.auth.UserAuthenticationSuccessHandler">
+		<property name="defaultTargetUrl" value="/index.xhtml" />
+	</bean>
+
+	<bean id="failureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/login.xhtml" />
+	</bean>
+
+	<bean id="defaultFailureUrl"
+		class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+		<property name="allowSessionCreation" value="true" />
+		<property name="exceptionMappings">
+			<props>
+				<prop
+					key="org.springframework.security.authentication.CredentialsExpiredException">/login.xhtml</prop>
+				<prop
+					key="org.springframework.security.authentication.BadCredentialsException">/login.xhtml</prop>
+				<prop key="org.springframework.security.authentication.LockedException">/login.xhtml</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="authenticationProcessingFilterEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<property name="loginFormUrl" value="/login.xhtml" />
+		<property name="forceHttps" value="false" />
+	</bean>
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider
+			user-service-ref="userAuthenticationService">
+			<security:password-encoder hash="sha-256" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<!-- <bean id="mfiSession" class="com.bfsi.mfi.vo.MfiSessionImpl" scope="session"> 
+		<aop:scoped-proxy proxy-target-class="false" /> </bean> -->
+
+	<bean id="encoder"
+		class="org.springframework.security.crypto.password.StandardPasswordEncoder" />
+	<bean id="daoAuthenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userAuthenticationService" />
+	</bean>
+
+	<bean id="authenticationManager"
+		class="org.springframework.security.authentication.ProviderManager">
+		<constructor-arg name="providers">
+			<list>
+				<ref bean="daoAuthenticationProvider" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="accessDeniedHandler" class="com.bfsi.mfi.controller.MfiAccessDeniedHandler">
+		<property name="accessDeniedUrl" value="403.jsp" />
+	</bean>
+</beans>

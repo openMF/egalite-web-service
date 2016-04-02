@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	
+	 <!--[EGA-MN15-000006]
+		2-	Splitting screens for Agent Maintenance
+		7-	Lenght of Roles display box must be small. It is too big
+	 -->
+
+	<ui:define name="metadata">
+
+	<script type="text/javascript">
+//<![CDATA[
+        
+            function makeFNameCapitalize(){
+        	var st = document.getElementById('form:fname').value;
+			var sp = st.split(' ');
+			var wl=0;
+			var f ,r;
+			var word = new Array();
+			for (i = 0 ; i < sp.length ; i ++ ) {
+			f = sp[i].substring(0,1).toUpperCase();
+			r = sp[i].substring(1);
+			word[i] = f+r;
+			}
+			newstring = word.join(' ');
+			document.getElementById('form:fname').value = newstring;
+        }
+        
+        function makeLNameCapitalize(){
+        	var st = document.getElementById('form:lname').value;
+			var sp = st.split(' ');
+			var wl=0;
+			var f ,r;
+			var word = new Array();
+			for (i = 0 ; i < sp.length ; i ++ ) {
+			f = sp[i].substring(0,1).toUpperCase();
+			r = sp[i].substring(1);
+			word[i] = f+r;
+			}
+			newstring = word.join(' ');
+			document.getElementById('form:lname').value = newstring;
+        }        
+           
+        
+        function inputLimiterForName(e, allow, id) {
+			var AllowableCharacters = '';
+			if (allow == 'Letters') {
+				AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+			}
+			makeNameCapitalize(id);
+			var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+			if (k != 13 && k != 8 && k != 0) {
+				if ((e.ctrlKey == false) && (e.altKey == false)) {
+					return (AllowableCharacters.indexOf(String
+							.fromCharCode(k)) != -1);
+				} else {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		}
+        
+        function makeNameCapitalize(id) {
+			var st = document.getElementById(id).value;
+			var sp = st.split(' ');
+			var wl = 0;
+			var f, r;
+			var word = new Array();
+			for (i = 0; i < sp.length; i++) {
+				f = sp[i].substring(0, 1).toUpperCase();
+				r = sp[i].substring(1);
+				word[i] = f + r;
+			}
+			newstring = word.join(' ');
+			document.getElementById(id).value = newstring;
+		}
+
+		function inputLimiter(e,allow) {
+    		var AllowableCharacters = '';
+
+	    	if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+		    if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+		    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+		    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+		    if (allow == 'OnlyCaps'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0987654321';}
+		    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+		    if (k!=13 && k!=8 && k!=0){
+		        if ((e.ctrlKey==false) && (e.altKey==false)) {
+		        	return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+	        } else {
+	        	return true;
+	        }
+		    } else {
+		        return true;
+		    }
+		} 
+//]]>
+</script>
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{agentController.agent.agentId}"></f:viewParam>
+			<f:event listener="#{agentController.loadAgent}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agentMgmt.title.agent']}" />
+		</f:facet>
+	</ui:define> -->
+<!-- Firstname,Lastname,Username Validation,Agent CO Code,Agent A/C CO,Agency code validation removed 
+	 is added for Asomi by Nirmal kanna S -->  
+<!-- Credit officer id to IBS Credit Officer ID == Changes for Asomi by Nirmal kanna S -->  
+<!-- Contact number mandatory to Optional =  Changes for Asomi Nirmal kanna S -->
+				
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['userMgmt.title.modifyAgent']}" /></span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['agentMgmt.nav.save']}" update="panel"
+						action="#{agentController.checkModifyForUpdate}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['agentMgmt.btn.cancel']}"
+						outcome="cancel">
+						<f:param name="id" value="#{agentController.agent.agentId}" />
+					</p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+		
+		   <p:panel>
+		    <p:panel style="width:43%;height:410px; float:left" >
+			<h:panelGrid columns="4" id="panelGrid">
+
+				<h:outputLabel for="id" value="#{msg['agentMgmt.label.agentId']}" />
+				<p:inputText id="id" value="#{agentController.agent.agentId}"
+					readonly="true" label="#{msg['agentMgmt.label.agentId']}" />
+				<h:outputLabel />
+				<p:message for="id" display="icon" />
+
+				<h:outputLabel for="cbsagentcode" value="#{msg['agentMgmt.label.cbsagentcode']}" styleClass="required_asterisk"/>
+				<h:selectOneMenu id="cbsagentcode" styleClass="drop_down_style"
+					value="#{agentController.agent.cbsagentcode}" required="true" label="#{msg['agentMgmt.label.cbsagentcode']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{agentController.cbsAgentCodes}"	var="dev" itemValue="#{dev.dlValue}"
+						itemLabel="#{dev.dlValue}" /></h:selectOneMenu><h:outputLabel />
+				<p:message for="cbsagentcode" display="icon" />
+
+				<h:outputLabel for="agentAccId"	value="#{msg['agentMgmt.label.agentAccId']}" />
+				<p:inputText id="agentAccId" value="#{agentController.agent.agentAccId}" 
+					label="#{msg['agentMgmt.label.agentAccId']}"/>
+				<h:outputLabel /><p:message for="agentAccId" display="icon" />
+
+				<h:outputLabel for="userName" value="#{msg['agentMgmt.label.userName']}" styleClass="required_asterisk" />
+				<p:inputText id="userName" value="#{agentController.agent.userName}"
+					required="true"	onkeyup="this.value=this.value.toUpperCase();"
+					onkeypress="return inputLimiter(event,'OnlyCaps')" label="#{msg['agentMgmt.label.userName']}"/>
+				<h:outputLabel /><p:message for="userName" display="icon" />
+
+				<h:outputLabel for="locationCode" value="#{msg['agentMgmt.label.locationCode']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="locationCode" styleClass="drop_down_style" required="true"
+					value="#{agentController.agent.locationCode}" label="#{msg['agentMgmt.label.locationCode']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{agentController.locationCodes}" var="code"
+						itemValue="#{code.locationCode}" itemLabel="#{code.locationCode}" />
+				</h:selectOneMenu>	<h:outputLabel /><p:message for="locationCode" display="icon" />
+
+				<h:outputLabel for="cashLimit" value="#{msg['agentMgmt.label.cashLimit']}" />
+				<p:inputText id="cashLimit" value="#{agentController.agent.cashLimit}"
+					onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+					label="#{msg['agentMgmt.label.cashLimit']}" >
+					<f:validateDoubleRange minimum="0.000000001"/>
+				</p:inputText> <h:outputLabel /><p:message for="cashLimit" display="icon" />
+
+				<h:outputLabel for="agentType" value="#{msg['agentMgmt.label.agentType']}"	styleClass="required_asterisk" />
+				<h:selectOneMenu id="agentType" styleClass="drop_down_style" required="true"
+					value="#{agentController.agent.agentType}">
+					<f:selectItems value="#{agentController.agentTypes}" var="agentType" itemValue="#{agentType.listValue}"
+						itemLabel="#{agentType.desn}" />
+				</h:selectOneMenu>	<h:outputLabel /><p:message for="agentType" display="icon" />
+
+				<h:outputLabel styleClass="required_asterisk" for="creditofficer"
+					value="#{msg['agentMgmt.label.creditofficerId']}" />
+				<h:selectOneMenu id="creditofficer" styleClass="drop_down_style" required="true" 
+					value="#{agentController.agent.creditOfficer}" label="#{msg['agentMgmt.label.creditofficerId']}">
+					<f:selectItems value="#{agentController.creditOfficers}"
+						var="credit" itemValue="#{credit.id}" itemLabel="#{credit.id}" />
+				</h:selectOneMenu>	<h:outputLabel /><p:message for="creditofficer" display="icon" />
+
+				<h:outputLabel for="agencyCode"	value="#{msg['agentMgmt.label.agencyCode']}" styleClass="required_asterisk"/>
+				<h:selectOneMenu id="agencyCode" styleClass="drop_down_style" required="true"
+					value="#{agentController.agent.agencyCode}"	label="#{msg['agentMgmt.label.agencyCode']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{agentController.agencyCodes}"
+						var="agencyCode" itemValue="#{agencyCode.agencyCode}"
+						itemLabel="#{agencyCode.agencyCode}" />
+				</h:selectOneMenu> <h:outputLabel /><p:message for="agencyCode" display="icon" />
+
+				<h:outputLabel for="deviceId" value="#{msg['agentMgmt.label.deviceId']}" />
+				<h:selectOneMenu id="deviceId" styleClass="drop_down_style"
+					value="#{agentController.agent.deviceId}" label="#{msg['agentMgmt.label.deviceId']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{agentController.devices}" var="d"
+						itemValue="#{d.deviceId}" itemLabel="#{d.deviceId}" />
+				</h:selectOneMenu>	<h:outputLabel /><p:message for="deviceId" display="icon" />
+
+				<h:outputLabel for="externalDeviceId" value="#{msg['extdeviceMgmt.label.deviceId']}" />
+				<h:selectOneMenu id="externalDeviceId" styleClass="drop_down_style"
+					value="#{agentController.agent.externalDeviceId}" label="#{msg['extdeviceMgmt.label.deviceId']}">
+					<f:selectItem itemLabel="Select" itemValue=" " />
+					<f:selectItems value="#{agentController.externalDevices}" var="exd"
+						itemValue="#{exd.id}" itemLabel="#{exd.id}" />
+				</h:selectOneMenu>  <h:outputLabel />	<p:message for="externalDeviceId" display="icon" />
+
+				<h:outputLabel for="fname" value="#{msg['agentMgmt.label.firstName']}" styleClass="required_asterisk" />
+				<p:inputText id="fname" value="#{agentController.agent.fname}"
+					onkeyup="var a=inputLimiter(event,'Letters'); var b=makeFNameCapitalize(); return a,b"
+					onkeypress="return inputLimiterForName(event,'Letters','form:fname'); "
+					required="true" label="#{msg['agentMgmt.label.firstName']}">
+					<f:validateLength minimum="2" /></p:inputText>	<h:outputLabel />
+				<p:message for="fname" display="icon" />
+
+				<h:outputLabel for="lname" value="#{msg['agentMgmt.label.lastName']}" styleClass="required_asterisk" />
+				<p:inputText id="lname" value="#{agentController.agent.lname}"
+					onkeyup="var a=inputLimiter(event,'Letters');var b=makeLNameCapitalize(); return a,b"
+					onkeypress="return inputLimiterForName(event,'Letters','form:lname'); "
+					required="true" label="#{msg['agentMgmt.label.lastName']}">
+					<f:validateLength minimum="2" /></p:inputText>	<h:outputLabel />
+				<p:message for="lname" display="icon" />
+
+				<h:outputLabel for="dob" value="#{msg['agentMgmt.label.dob']}" styleClass="required_asterisk" />
+				<p:calendar pattern="dd-MMM-yyyy" showOn="button" required="true"
+					yearRange="-100:+0" navigator="true" value="#{agentController.agent.dob}" id="dob"
+					label="#{msg['agentMgmt.label.dob']}" />
+				<h:outputLabel /><p:message for="dob" display="icon" />
+				
+			</h:panelGrid>
+			</p:panel>
+				
+			<p:panel  >
+			    <h:panelGrid columns="4" id="panelGrid2">
+					
+				<h:outputLabel for="gender" value="#{msg['agentMgmt.label.gender']}" styleClass="required_asterisk" />
+				<p:selectOneRadio id="gender" value="#{agentController.agent.gender}" required="true"
+					label="#{msg['agentMgmt.label.gender']}">
+					<f:selectItems value="#{agentController.genders}" var="gend"
+						itemValue="#{gend.listValue}" itemLabel="#{gend.desn}" />
+				</p:selectOneRadio>	<h:outputLabel /><p:message for="gender" display="icon" />
+				
+				<h:outputLabel for="address1" value="#{msg['agentMgmt.label.commAddr1']}" />
+				<p:inputText id="address1" value="#{agentController.agent.commAddr1}"
+					label="#{msg['agentMgmt.label.commAddr1']}">
+					<f:validateLength minimum="2" />
+				</p:inputText><h:outputLabel /><p:message for="address1" display="icon" />
+
+				<h:outputLabel for="address2" value="#{msg['agentMgmt.label.commAddr2']} " />
+				<p:inputText id="address2" value="#{agentController.agent.commAddr2}"
+					label="#{msg['agentMgmt.label.commAddr2']}" />
+				<h:outputLabel/><p:message for="address2" display="icon" />
+
+				<h:outputLabel for="address3" value="#{msg['agentMgmt.label.commAddr3']} " />
+				<p:inputText id="address3" value="#{agentController.agent.commAddr3}"
+					label="#{msg['agentMgmt.label.commAddr3']}" />
+				<h:outputLabel/><p:message for="address3" display="icon" />
+
+				<h:outputLabel for="zipCode" value="#{msg['agentMgmt.label.zipCode']}" />
+				<p:inputText id="zipCode" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+					value="#{agentController.agent.zipCode}" label="#{msg['agentMgmt.label.zipCode']}" />
+				<h:outputLabel /><p:message for="zipCode" display="icon" />
+
+				<h:outputLabel for="city" value="#{msg['agentMgmt.label.city']}" styleClass="required_asterisk" />
+				<h:selectOneMenu id="city" styleClass="drop_down_style" value="#{agentController.agent.city}"
+					required="true" label="#{msg['agentMgmt.label.city']}">
+					<f:selectItems value="#{agentController.citys}"
+						var="code" itemValue="#{code.codeValue}"
+						itemLabel="#{code.codeValue}" /></h:selectOneMenu>	
+				<h:outputLabel /><p:message for="city" display="icon" />
+
+				<h:outputLabel styleClass="required_asterisk" for="address4" value="#{msg['agentMgmt.label.district']}" />
+				<h:selectOneMenu id="address4" styleClass="drop_down_style" value="#{agentController.agent.commAddr4}"
+					required="true" label="#{msg['agentMgmt.label.district']}"> 
+					<f:selectItems value="#{routeCodeController.districts}"	var="code" itemValue="#{code.codeValue}"
+						itemLabel="#{code.codeValue}" />	</h:selectOneMenu>
+				<h:outputLabel /><p:message for="address4" display="icon" />
+				
+				<h:outputLabel styleClass="required_asterisk" for="state" value="#{msg['agentMgmt.label.state']}" />
+				<h:selectOneMenu id="state" styleClass="drop_down_style" value="#{agentController.agent.state}"
+					required="true" label="#{msg['agentMgmt.label.state']}">
+					<f:selectItems value="#{agentController.states}" var="code" itemValue="#{code.codeValue}"
+						itemLabel="#{code.codeValue}" /></h:selectOneMenu>
+				<h:outputLabel /><p:message for="state" display="icon" />
+
+				<h:outputLabel for="country" value="#{msg['agentMgmt.label.country']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="country" styleClass="drop_down_style" value="#{agentController.agent.country}" 
+					required="true" label="#{agentController.agent.country}">
+					<f:selectItems value="#{agentController.countryCodes}"
+						var="code" itemValue="#{code.countryCode}" itemLabel="#{code.description}" /></h:selectOneMenu>
+				<h:outputLabel /><p:message for="country" display="icon" />
+
+				<h:outputLabel for="contactNumber" value="#{msg['agentMgmt.label.contactNumber']}" />
+				<p:inputMask id="contactNumber"	value="#{agentController.agent.contactNumber}" 
+					label="#{msg['agentMgmt.label.contactNumber']}"	onkeypress="return inputLimiter(event,'Numbers')"
+					validatorMessage="#{msg['agentMgmt.errmsg.ContactNo']}">
+					<f:validateLength minimum="8" maximum="16" /></p:inputMask>
+				<h:outputLabel styleClass="hintsWithcolorRed" for="contactNumber" value="#{msg['agentMgmt.msg.mobileNo']}" />
+				<p:message for="contactNumber" display="icon" />
+
+				<h:outputLabel for="startDate" value="#{msg['agentMgmt.label.startDate']}" styleClass="required_asterisk" />
+				<p:calendar binding="#{startDateComponent}" pattern="dd-MMM-yyyy"
+					showOn="button" required="true" id="startDate" yearRange="-100:+100" navigator="true"
+					value="#{agentController.agent.startDate}" label="Start Date">
+				</p:calendar>	<h:outputLabel /><p:message for="startDate" display="icon" />
+
+				<h:outputLabel for="endDate" value="#{msg['agentMgmt.label.endDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy" showOn="button" yearRange="-100:+100" navigator="true"
+					value="#{agentController.agent.endDate}" id="endDate" label="#{msg['agentMgmt.label.endDate']}">
+					<f:validator validatorId="dateRangeValidator" />
+					<f:attribute name="startDateComponent" value="#{startDateComponent}" />
+				</p:calendar> <h:outputLabel />	<p:message for="endDate" display="icon" />
+
+				<h:outputLabel styleClass="required_asterisk" for="agentLang" value="#{msg['agentMgmt.label.Language']}" />
+				<h:selectOneMenu id="agentLang" styleClass="drop_down_style" required="true"
+					value="#{agentController.agent.agentLang}" label="#{msg['agentMgmt.label.Language']}">
+					<f:selectItems value="#{agentController.languages}" var="lang"
+						itemValue="#{lang.listValue}" itemLabel="#{lang.desn}" />
+				</h:selectOneMenu> <h:outputLabel /><p:message for="agentLang" display="icon" />
+
+				<h:outputLabel styleClass="required_asterisk" for="isActive" value="#{msg['agentMgmt.label.isActive']}" />
+				<h:selectOneMenu id="isActive" styleClass="drop_down_style" required="true"
+					value="#{agentController.agent.isActive}" label="#{msg['agentMgmt.label.isActive']}">
+					<f:selectItems value="#{agentController.isActive}" var="status"
+						itemValue="#{status.listValue}" itemLabel="#{status.desn}" />
+				</h:selectOneMenu>	<h:outputLabel /><p:message for="isActive" display="icon" />
+
+				<h:outputLabel for="emailAddress" value="#{msg['agentMgmt.label.emailAddress']}" />
+				<p:inputText id="emailAddress" value="#{agentController.agent.emailAddress}"
+					label="#{msg['agentMgmt.label.emailAddress']}"
+					validatorMessage="#{msg['agentMgmt.validate.emailAddress']}">
+					<f:validateRegex
+						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+				</p:inputText> <h:outputLabel /><p:message for="emailAddress" display="icon" />
+
+			</h:panelGrid>
+			</p:panel>
+			</p:panel>
+
+			<p:panel id="rolePanelA">
+				<f:facet name="header">
+					<p:panel styleClass="maintenanceFormPanelHeader">
+						<span class="pageHeaderTitle"> <h:outputText
+								value="#{msg['userMgmt.tblHeader.moveRoleRecords']}" />
+						</span>
+					</p:panel>
+				</f:facet>
+
+				<p:panelGrid id="roleTablesA">
+					<p:row>
+
+						<p:column>
+						   <div id="colsrc">
+							<p:dataTable id="srcTableA" widgetVar="roleTable" var="role"
+								value="#{agentController.modifyAvailableRoles}"
+								rowKey="#{role.id}"
+								selection="#{agentController.modifySelectedAvailableRoles}"
+								filteredValue="#{agentController.modifyFilteredRoles}">
+								<p:column selectionMode="multiple" />
+
+								<p:column filterPosition="top"
+									headerText="#{msg['roleMgmt.label.roleId']}"
+									filterBy="#{role.id}" filterMatchMode="contains"
+									sortBy="#{role.id}">#{role.id}</p:column>
+								<p:column headerText="#{msg['roleMgmt.label.roleName']}"
+									filterPosition="top" filterBy="#{role.roleName}"
+									filterMatchMode="contains" sortBy="#{role.roleName}">#{role.roleName}</p:column>
+							</p:dataTable>
+							</div>
+						</p:column>
+
+						<p:column>
+							<p:commandButton value="#{msg['userMgmt.nav.forward']}"
+								ajax="true" type="button" onclick="moveToDest();" />
+							<p:remoteCommand name="moveToDest" process="@this rolePanelA"
+								actionListener="#{agentController.moveToModifyDest}"
+								update="srcTableA,destTableA"></p:remoteCommand>
+							<br />
+							<p:commandButton value="#{msg['userMgmt.nav.back']}" ajax="true"
+								type="button" onclick="moveToSource();" />
+							<p:remoteCommand name="moveToSource" process="@this rolePanelA"
+								actionListener="#{agentController.moveToModifySource}"
+								update="srcTableA,destTableA">
+							</p:remoteCommand>
+						</p:column>
+
+						<p:column>
+						   <div id="colsrc1">
+							<p:dataTable id="destTableA" var="destRole"
+								value="#{agentController.agent.allocatedRoles}"
+								rowKey="#{destRole.id}"
+								selection="#{agentController.modifySelectedAllocatedRoles}">
+								<p:column selectionMode="multiple" />
+								<p:column sortBy="#{destRole.id}"
+									headerText="#{msg['roleMgmt.label.roleId']}">#{destRole.id}</p:column>
+								<p:column sortBy="#{destRole.roleName}"
+									headerText="#{msg['roleMgmt.label.roleName']}">#{destRole.roleName}</p:column>
+							</p:dataTable>
+							</div>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

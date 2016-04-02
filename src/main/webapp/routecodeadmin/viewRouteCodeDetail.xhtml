@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	
+	<!-- Modification under Tag No [ EGA-MN15-000002 ]
+	1. Panel Added under maintenance form for splitting Screen.
+	2. to zipCode and from zipCode placed after addressLine3.
+	3. Route Code Desc placed below CBS RouteCode
+	 -->
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{routeCodeController.routeCodes.routeCode}"></f:viewParam>
+			<f:event listener="#{routeCodeController.loadRouteCode}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['routeMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['routeMgmt.title.routeDetail']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{routeCodeController}"></ui:param>
+					</ui:include> <p:commandButton id="btnDelete"
+						value="#{msg['routeMgmt.btn.delete']}"
+						rendered="#{routeCodeController.isDeleteAllowed()}"
+						disabled="#{routeCodeController.isEnableDeleteAllowed()}"
+						action="#{routeCodeController.deleteUnAuthorized}">
+						<p:confirm header="Confirmation"
+							message="#{msg['msg.confirm.dialog']}" icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+		<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['routeMgmt.tblHeader.routeCode']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{routeCodeController.routeCodes.routeCode}"
+					label="#{msg['routeMgmt.tblHeader.routeCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="cbsRouteCode"
+					value="#{msg['routeMgmt.tblHeader.cbsRouteCode']}" />
+				<p:inputText id="cbsRouteCode" readonly="true"
+					value="#{routeCodeController.routeCodes.cbsRouteCode}"
+					label="#{msg['routeMgmt.tblHeader.cbsRouteCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="routeCodeDesc"
+					value="#{msg['routeMgmt.tblHeader.routeCodeDesc']}" />
+				<p:inputText id="routeCodeDesc" readonly="true"
+					value="#{routeCodeController.routeCodes.routeCodeDesc}"
+					label="#{msg['routeMgmt.tblHeader.routeCodeDesc']}">
+				</p:inputText>
+
+				<h:outputLabel for="ibsLocationCode"
+					value="#{msg['routeMgmt.tblHeader.ibsLocationCode']}" />
+				<p:inputText id="ibsLocationCode" readonly="true"
+					value="#{routeCodeController.routeCodes.ibsLocationCode}"
+					label="#{msg['routeMgmt.tblHeader.ibsLocationCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="cbsBranchCode"
+					value="#{msg['routeMgmt.tblHeader.cbsBranchCode']}" />
+				<p:inputText id="cbsBranchCode" readonly="true"
+					value="#{routeCodeController.routeCodes.cbsBranchCode}"
+					label="#{msg['routeMgmt.tblHeader.cbsBranchCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="contactNumber"
+					value="#{msg['routeMgmt.tblHeader.contactNumber']}" />
+				<p:inputText id="contactNumber" readonly="true"
+					value="#{routeCodeController.routeCodes.contactNumber}"
+					label="#{msg['routeMgmt.tblHeader.contactNumber']}">
+				</p:inputText>
+				
+				<h:outputLabel for="frmAddressLine1"
+					value="#{msg['routeMgmt.tblHeader.frmAddressLine1']}" />
+				<p:inputText id="frmAddressLine1" readonly="true"
+					value="#{routeCodeController.routeCodes.frmAddressLine1}"
+					label="#{msg['routeMgmt.tblHeader.frmAddressLine1']}">
+				</p:inputText>
+
+				<h:outputLabel for="frmAddressLine2"
+					value="#{msg['routeMgmt.tblHeader.frmAddressLine2']}" />
+				<p:inputText id="frmAddressLine2" readonly="true"
+					value="#{routeCodeController.routeCodes.frmAddressLine2}"
+					label="#{msg['routeMgmt.tblHeader.frmAddressLine2']}">
+				</p:inputText>
+
+				<h:outputLabel for="frmAddressLine3"
+					value="#{msg['routeMgmt.tblHeader.frmAddressLine3']}" />
+				<p:inputText id="frmAddressLine3" readonly="true"
+					value="#{routeCodeController.routeCodes.frmAddressLine3}"
+					label="#{msg['routeMgmt.tblHeader.frmAddressLine3']}">
+				</p:inputText>
+				
+				<h:outputLabel for="frmZipCode"
+					value="#{msg['routeMgmt.tblHeader.frmZipCode']}" />
+				<p:inputText id="frmZipCode" readonly="true"
+					value="#{routeCodeController.routeCodes.frmZipCode}"
+					label="#{msg['routeMgmt.tblHeader.frmZipCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="frmAddressLine4"
+					value="#{msg['routeMgmt.tblHeader.frmAddressLine4']}" />
+				<p:inputText id="frmAddressLine4" readonly="true"
+					value="#{routeCodeController.routeCodes.frmAddressLine4}"
+					label="#{msg['routeMgmt.tblHeader.frmAddressLine4']}">
+				</p:inputText>
+
+				<h:outputLabel for="frmCity"
+					value="#{msg['routeMgmt.tblHeader.frmCity']}" />
+				<p:inputText id="frmCity" readonly="true"
+					value="#{routeCodeController.routeCodes.frmCity}"
+					label="#{msg['routeMgmt.tblHeader.frmCity']}">
+				</p:inputText>
+
+				<h:outputLabel for="frmState"
+					value="#{msg['routeMgmt.tblHeader.frmState']}" />
+				<p:inputText id="frmState" readonly="true"
+					value="#{routeCodeController.routeCodes.frmState}"
+					label="#{msg['routeMgmt.tblHeader.frmState']}">
+				</p:inputText>
+
+				<h:outputLabel for="frmCountry"
+					value="#{msg['routeMgmt.tblHeader.frmCountry']}" />
+				<p:inputText id="frmCountry" readonly="true"
+					value="#{routeCodeController.fromCountryName}"
+					label="#{msg['routeMgmt.tblHeader.frmCountry']}">
+				</p:inputText>
+				
+				</h:panelGrid>
+			</p:panel>	
+					<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2" >
+
+				<h:outputLabel for="toAddressLine1"
+					value="#{msg['routeMgmt.tblHeader.toAddressLine1']}" />
+				<p:inputText id="toAddressLine1" readonly="true"
+					value="#{routeCodeController.routeCodes.toAddressLine1}"
+					label="#{msg['routeMgmt.tblHeader.toAddressLine1']}">
+				</p:inputText>
+
+				<h:outputLabel for="toAddressLine2"
+					value="#{msg['routeMgmt.tblHeader.toAddressLine2']}" />
+				<p:inputText id="toAddressLine2" readonly="true"
+					value="#{routeCodeController.routeCodes.toAddressLine2}"
+					label="#{msg['routeMgmt.tblHeader.toAddressLine2']}">
+				</p:inputText>
+
+				<h:outputLabel for="toAddressLine3"
+					value="#{msg['routeMgmt.tblHeader.toAddressLine3']}" />
+				<p:inputText id="toAddressLine3" readonly="true"
+					value="#{routeCodeController.routeCodes.toAddressLine3}"
+					label="#{msg['routeMgmt.tblHeader.toAddressLine3']}">
+				</p:inputText>
+				
+				<h:outputLabel for="toZipCode"
+					value="#{msg['routeMgmt.tblHeader.toZipCode']}" />
+				<p:inputText id="toZipCode" readonly="true"
+					value="#{routeCodeController.routeCodes.toZipCode}"
+					label="#{msg['routeMgmt.tblHeader.toZipCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="toAddressLine4"
+					value="#{msg['routeMgmt.tblHeader.toAddressLine4']}" />
+				<p:inputText id="toAddressLine4" readonly="true"
+					value="#{routeCodeController.routeCodes.toAddressLine4}"
+					label="#{msg['routeMgmt.tblHeader.toAddressLine4']}">
+				</p:inputText>
+
+				<h:outputLabel for="toCity"
+					value="#{msg['routeMgmt.tblHeader.toCity']}" />
+				<p:inputText id="toCity" readonly="true"
+					value="#{routeCodeController.routeCodes.toCity}"
+					label="#{msg['routeMgmt.tblHeader.toCity']}">
+				</p:inputText>
+
+				<h:outputLabel for="toState"
+					value="#{msg['routeMgmt.tblHeader.toState']}" />
+				<p:inputText id="toState" readonly="true"
+					value="#{routeCodeController.routeCodes.toState}"
+					label="#{msg['routeMgmt.tblHeader.toState']}">
+				</p:inputText>
+
+				<h:outputLabel for="toCountry"
+					value="#{msg['routeMgmt.tblHeader.toCountry']}" />
+				<p:inputText id="toCountry" readonly="true"
+					value="#{routeCodeController.toCountryName}"
+					label="#{msg['routeMgmt.tblHeader.toCountry']}">
+				</p:inputText>
+
+				<h:outputLabel for="isActive"
+					value="#{msg['routeMgmt.tblHeader.isActive']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{routeCodeController.isStatusActive}">
+				</p:inputText>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="8" >
+				<h:outputText id="day" value="#{msg['centerMgmt.tblHeader.week']}" />
+				<p:selectBooleanCheckbox id="onSunday" disabled="true" value="#{routeCodeController.routeCodes.onSunday}" itemLabel="Sunday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onMonday" disabled="true" value="#{routeCodeController.routeCodes.onMonday}" itemLabel="Monday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onTuesday" disabled="true" value="#{routeCodeController.routeCodes.onTuesday}" itemLabel="Tuesday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onWednesday" disabled="true" value="#{routeCodeController.routeCodes.onWednesday}" itemLabel="Wednesday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onThursday" disabled="true" value="#{routeCodeController.routeCodes.onThursday}" itemLabel="Thursday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onFriday" disabled="true" value="#{routeCodeController.routeCodes.onFriday}" itemLabel="Friday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onSaturday" disabled="true" value="#{routeCodeController.routeCodes.onSaturday}" itemLabel="Saturday"/>&nbsp;
+				<p:message for="day" display="icon" />
+			</h:panelGrid>
+		</p:panel>
+	</p:panel>
+	</ui:define>
+</ui:composition>

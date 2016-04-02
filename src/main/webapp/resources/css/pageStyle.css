@@ -1,0 +1,26 @@
+//This style is for user management layout
+.leftLayout{
+	width: 274px;
+	
+}
+.centerLayout{
+	left: 285px;
+    width: 1043px;
+    border: 0px;
+}
+.panelTitle .ui-panel-titlebar{
+	margin:0px 0px;
+	padding: 0px 0px;
+}
+.srollPannelStyle {
+	margin-top: 26px;
+	position: absolute;
+	width:100%;
+	height:91.5%;
+	border:0;
+}
+.northPanel .ui-layout-unit-content{
+	overflow: hidden;
+	padding-bottom: -1px;
+	margin-bottom: -1px;
+}

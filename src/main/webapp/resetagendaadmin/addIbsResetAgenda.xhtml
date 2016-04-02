@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	<ui:define name="metadata">
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			if (navigator.userAgent.toLowerCase().indexOf('chrome') >= 0) {
+
+				setTimeout(function() {
+
+				}, 500);
+			}
+
+			//]]>
+		</script>
+	</ui:define>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['reAgendaMgmt.label.newResetAgenda']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['agencyMgmt.btn.save']}" update="panel"
+						action="#{ibsResetAgendaController.create}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['agencyMgmt.nav.cancel']}"
+						outcome="cancel" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<h:panelGrid columns="4">
+
+				<h:outputLabel for="resetAgendaId"
+					value="#{msg['reAgendaMgmt.label.resetAgendaId']}" />
+				<p:inputText id="resetAgendaId"
+					value="#{ibsResetAgendaController.ibsResetAgenda.id}"
+					readonly="true" required="true"
+					label="#{msg['reAgendaMgmt.label.resetAgendaId']}">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<h:outputLabel />
+				<p:message for="resetAgendaId" display="icon" />
+
+				<h:outputLabel for="resetOption"
+					value="#{msg['reAgendaMgmt.label.resetOption']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="resetOption"
+					styleClass="drop_down_style"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetOption}"
+					required="true" label="#{msg['reAgendaMgmt.label.resetOption']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{ibsResetAgendaController.agendaOptions}"
+						var="opt" itemValue="#{opt.listValue}" itemLabel="#{opt.desn}" />
+					<p:ajax event="change" update="agentId" process="@this"
+						listener="#{ibsResetAgendaController.updateAgents()}" />
+				</h:selectOneMenu>
+				<h:outputLabel />
+				<p:message for="resetOption" display="icon" />
+
+
+				<h:outputLabel for="agentId"
+					value="#{msg['agentMgmt.label.agentId']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="agentId" styleClass="drop_down_style"
+					value="#{ibsResetAgendaController.ibsResetAgenda.agentId}"
+					required="true" label="#{msg['agentMgmt.label.agentId']}"
+					disabled="#{ibsResetAgendaController.isOptAgtsDisable()}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{ibsResetAgendaController.agents}"
+						var="tempAgent" itemValue="#{tempAgent.id}"
+						itemLabel="#{tempAgent.id}  ~  #{tempAgent.fname}">
+					</f:selectItems>
+				</h:selectOneMenu>
+				<h:outputLabel />
+				<p:message for="agentId" display="icon" />
+
+				<h:outputLabel for="resetRemarks"
+					value="#{msg['reAgendaMgmt.label.resetRemarks']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="resetRemarks"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetRemarks}"
+					readonly="false" required="true"
+					label="#{msg['reAgendaMgmt.label.resetRemarks']}">
+					<f:validateLength minimum="3" maximum="200" />
+				</p:inputText>
+				<h:outputLabel />
+				<p:message for="resetRemarks" display="icon" />
+
+				<h:outputLabel for="isActive"
+					value="#{msg['agencyMgmt.tblHeader.isActive']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="isActive" styleClass="drop_down_style"
+					value="#{ibsResetAgendaController.ibsResetAgenda.isActive}"
+					required="true" label="#{msg['agencyMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{ibsResetAgendaController.activeStatuss}"
+						var="devi" itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<h:outputLabel />
+				<p:message for="isActive" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

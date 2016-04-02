@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<ui:define name="contentSection">
+		<h:form id="form">
+			<p:panel id="panel">
+				
+				<p:messages id="msgs" severity="error" showDetail="true" closable="true" />
+				<p:growl id="growl" severity="info" showDetail="true" sticky="false" />
+				
+				<ui:insert name="topSearchContent" />
+				<p:dataTable id="tblUsers" var="record"
+					value="#{listController.records}" widgetVar="recordsTable"
+					paginator="true" rows="16" paginatorPosition="bottom" rowKey="#{record.id}"
+					emptyMessage="#{emptyMessage}" selection="#{selection}"
+					filteredValue="#{listController.filteredRecords}"
+					selectionMode="#{selectionMode}">
+
+					<f:facet name="header">
+						<span class="pageHeaderTitle"> <h:outputText
+								value="#{pageHeaderTitle}" styleClass="pageHeaderTitle2" />
+						</span>
+						<span class="pageHeaderControls"> <h:outputText 
+								value="#{msg['agentMgmt.label.searchallflds']}" /> <p:inputText
+								id="globalFilter" onkeyup="recordsTable.filter()"
+								style="width:150px; height:20px" /> <ui:insert name="pageHeaderControls"/>
+						</span>
+					</f:facet>
+					<ui:insert name="dataTableContent" />
+				</p:dataTable>
+				<div style="overflow: auto; height: 20px;  width: 200px"></div>
+				<ui:insert name="extraContent" />
+				
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

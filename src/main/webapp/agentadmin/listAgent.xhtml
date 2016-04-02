@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['agentMgmt.title.agent']}" /> -->
+	<ui:param name="pageHeaderTitle" value="#{msg['agentMgmt.label.listAgent']}" />
+	<ui:param name="emptyMessage" value="#{msg['agentMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['agentMgmt.tblNav.add']}" />
+	<ui:param name="addOutcome" value="addAgent" />
+	<ui:param name="addAuthority" value="#{auth.checkAuthority('addAgent')}" />
+	<ui:param name="listController" value="#{agentListController}" />
+	
+	<!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{agentListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- ADD END -->
+	<!-- Credit officer id to IBS Credit Officer ID == Changes for Asomi by Nirmal kanna S -->  
+	<!-- New Fields added and rearranged == Changes for Asomi by Nirmal kanna S -->  
+	
+<h:outputScript library="js" name="menu.js" />
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect" listener="#{agentListController.listSelect}" />
+
+			<p:column headerText="#{msg['agentMgmt.label.agentId']}"
+				filterBy="#{record.agentId}" id="id" sortBy="#{record.agentId}">
+				<h:outputText value="#{record.agentId}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agentMgmt.label.cbsagentcode']}"
+				filterBy="#{record.cbsagentcode}" id="cbsagentcode" sortBy="#{record.cbsagentcode}">
+				<h:outputText value="#{record.cbsagentcode}" />
+			</p:column>
+						
+			<p:column headerText="#{msg['agentMgmt.label.userName']}"
+				filterBy="#{record.userName}" id="userName" sortBy="#{record.userName}">
+				<h:outputText value="#{record.userName}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentMgmt.label.firstName']}"
+				filterBy="#{record.fname}" id="fname" sortBy="#{record.fname}">
+				<h:outputText value="#{record.fname}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agentMgmt.label.lastName']}"
+				filterBy="#{record.lname}" id="lname" sortBy="#{record.lname}">
+				<h:outputText value="#{record.lname}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentMgmt.label.locationCode']}"
+				filterBy="#{record.locationCode}" id="locationCode" sortBy="#{record.locationCode}">
+				<h:outputText value="#{record.locationCode}" readonly="true" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentMgmt.label.authStatus']}"
+				filterBy="#{record.authStatusText}" id="authStatus" sortBy="#{record.authStatusText}">
+				<h:outputText value="#{record.authStatusText}" readonly="true" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentMgmt.label.deviceId']}"
+				filterBy="#{record.deviceId}" id="deviceId" sortBy="#{record.deviceId}">
+				<h:outputText value="#{record.deviceId}" />
+			</p:column>
+			
+			<!-- <p:column headerText="#{msg['agentMgmt.label.agencyCode']}"
+				filterBy="#{record.agencyCode}" id="agencyCode" sortBy="#{record.agencyCode}">
+				<h:outputText value="#{record.agencyCode}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentMgmt.label.creditofficerId']}"
+				filterBy="#{record.creditOfficer}" id="creditOfficer" sortBy="#{record.creditOfficer}">
+				<h:outputText value="#{record.creditOfficer}" />
+			</p:column>
+
+			 <p:column headerText="#{msg['agentMgmt.label.agentType']}"
+				filterBy="#{record.agentTypeText}" id="agentType" sortBy="#{record.agentTypeText}">
+				<h:outputText value="#{record.agentTypeText}" readonly="true" />
+			</p:column> 
+
+			<p:column headerText="#{msg['agentMgmt.label.isActive']}"
+				filterBy="#{record.agentStatusText}" id="isActive" sortBy="#{record.agentStatusText}">
+				<h:outputText value="#{record.agentStatusText}" readonly="true" />
+			</p:column>
+					
+			<p:column headerText="#{msg['agentMgmt.label.regStatus']}"
+				filterBy="#{record.regStatusText}" id="regStatus" sortBy="#{record.regStatusText}">
+				<h:outputText value="#{record.regStatusText}" readonly="true" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentMgmt.label.genkey']}"
+				filterBy="#{record.regKey}" id="regKey" sortBy="#{record.regKey}">
+				<h:outputText value="#{record.regKey}" readonly="true" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentMgmt.label.genkeyTimeStamp']}"
+				filterBy="#{record.keyExpiryText}" id="keyExpiryText" sortBy="#{record.keyExpiryText}">
+				<h:outputText value="#{record.keyExpiryText}" readonly="true" />
+			</p:column>  -->
+			
+	</ui:define>
+</ui:composition>

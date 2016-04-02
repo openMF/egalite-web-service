@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	<ui:define name="metadata">
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'NameCharactersAndNumbersWithNoBlankSpace') {
+					AllowableCharacters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			function test(value) {
+				document.getElementById('form:display').value += " " + value
+						+ " ";
+
+				/* var dfield = document.getElementById('form:dynamicfield').value;
+				if (dfield.length <= 0) {
+					document.getElementById('form:dynamicfield').value = value;
+				} else {
+					document.getElementById('form:dynamicfield').value = dfield
+							+ "," + value;
+				} */
+			}
+
+			function testdfield(value) {
+				document.getElementById('form:dynamicfield1').value += " "
+						+ value + ", ";
+				document.getElementById('form:dynamicfield').value += " "
+					+ value + ", ";
+
+				/* var dfield = document.getElementById('form:dynamicfield').value;
+				if (dfield.length <= 0) {
+					document.getElementById('form:dynamicfield').value = value;
+				} else {
+					document.getElementById('form:dynamicfield').value = dfield
+							+ "," + value;
+				} */
+			}
+
+			function clearAll() {
+				document.getElementById('form:display').value = "";
+				document.getElementById('form:dynamicfield1').value = "";
+				document.getElementById('form:dynamicfield').value = "";
+			}
+	
+			//]]>
+		</script>
+	</ui:define>
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['SmsTemplateMgmt.label.newSmsTemplate']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['agencyMgmt.btn.save']}" update="panel"
+						action="#{smsTemplateController.create}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['agencyMgmt.nav.cancel']}"
+						outcome="cancel" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+
+
+	<ui:define name="maintenanceForm">
+		<p:panel>
+			<p:panel>
+				<h:outputText value="#{msg['SmsTemplateMgmt.tblHeader.templateId']}" />
+				<p:inputText id="templateId"
+					value="#{smsTemplateController.smstemplatevo.id}" readonly="false"
+					required="true">
+					<f:validateLength minimum="2" maximum="100" />
+				</p:inputText>
+				<p:message for="templateId" display="icon" />
+
+				<h:outputText value="#{msg['SmsTemplateMgmt.tblHeader.desc']}  " />
+				<p:inputText id="description"
+					value="#{smsTemplateController.smstemplatevo.description}"
+					readonly="false" required="true">
+					<f:validateLength minimum="2" maximum="100" />
+				</p:inputText>
+				<p:message for="description" display="icon" />
+
+
+			</p:panel>
+
+
+			<h:panelGrid columns="2" id="left">
+				<h:outputText value="Text Message Template:" />
+				<p:spacer />
+				<p:inputTextarea id="display" process=":form:display"
+					value="#{smsTemplateController.inputar}" name="display" rows="6"
+					cols="33" />
+				<p:spacer />
+
+			</h:panelGrid>
+			<h:panelGrid columns="2" id="right">
+				<h:outputLabel for="dynamicfield1"
+					value="#{msg['SmsTemplateMgmt.tblHeader.dynamicFields']}" />
+				<!-- <p:inputText id="dynamicfield" value="#{smsTemplateController.dfld}"
+					readonly="false" required="true" process=":form:dynamicfield">
+				</p:inputText> -->
+				<p:inputTextarea id="dynamicfield1" process=":form:dynamicfield1"
+					value="#{smsTemplateController.dfld}" name="display" rows="6" readonly="true"
+					cols="33"/>
+				<h:inputHidden value="#{smsTemplateController.dfld}"  id="dynamicfield" />
+				
+			</h:panelGrid>
+
+
+			<p:panel styleClass="bodyWithoutAuditTrail"
+				style="width:100%;height:350px; float:left">
+				<f:facet name="footer">
+				<p:scrollPanel style="width:1150px;height:80px"> 
+					<h:panelGrid columns="1">
+						<h:panelGroup style="white-space: nowrap;">
+
+							<h:button id="amount" name="amount" value="Amount"
+								onclick=" var b = test('AMOUNT'); var a=testdfield('AMOUNT'); return b,a"
+								process=":form:amount" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="cusname" name="cusname" value="Customer Name"
+								onclick=" var b = test('CUSTNAME'); var a=testdfield('CUSTNAME'); return b,a"
+								process=":form:cusname" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="accno" name="accno" value="Account Number"
+								onclick=" var b = test('ACCNO'); var a=testdfield('ACCNO'); return b,a"
+								process=":form:accno" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="dt" name="dt" value="Date"
+								onclick="var b = test('DATE'); var a=testdfield('DATE'); return b,a"
+								process=":form:dt" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="agentId" name="agentId" value="Agent Id"
+								onclick=" var b = test('AGENTID'); var a=testdfield('AGENTID'); return b,a"
+								process=":form:agentId" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="txnAmount" name="txnAmount" value="Txn Amount"
+								onclick=" var b = test('TXNAMOUNT'); var a=testdfield('TXNAMOUNT'); return b,a"
+								process=":form:txnAmount" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="businessDate" name="businessDate"
+								value="Date of Transaction"
+								onclick=" var b = test('BUSINESSDATE'); var a=testdfield('BUSINESSDATE'); return b,a"
+								process=":form:businessDate" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="cbsAccount" name="cbsAccount" value="CBS Account"
+								onclick=" var b = test('CBSACREFNO'); var a=testdfield('CBSACREFNO'); return b,a"
+								process=":form:cbsAccount" style="width: 130px;" />
+							<p:spacer width="2px" />
+
+						</h:panelGroup>
+						<h:panelGroup style="white-space: nowrap">
+							<h:button id="currency" name="currency" value="Currency"
+								onclick=" var b = test('CCY'); var a=testdfield('CCY'); return b,a"
+								process=":form:currency" style="width: 130px;" />
+							<p:spacer width="2px" />
+
+							<h:button id="customerId" name="customerId" value="Customer Id"
+								onclick=" var b = test('CUSTOMERID'); var a=testdfield('CUSTOMERID'); return b,a"
+								process=":form:customerId" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="transactionId" name="transactionId"
+								value="Transaction ID "
+								onclick=" var b = test('TXNID'); var a=testdfield('TXNID'); return b,a"
+								process=":form:transactionId" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="transactionTime" name="transactionTime"
+								value="Transaction Time "
+								onclick=" var b = test('TXNTIME'); var a=testdfield('TXNTIME'); return b,a"
+								process=":form:transactionTime" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="transactionCode" name="transactionCode"
+								value="Transaction Code"
+								onclick=" var b = test('TXNCODE'); var a=testdfield('TXNCODE'); return b,a"
+								process=":form:transactionCode" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="debitIndicator" name="debitIndicator"
+								value="Debit Indicator"
+								onclick=" var b = test('DRIND'); var a=testdfield('DRIND'); return b,a"
+								process=":form:debitIndicator" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="creditIndicator" name="creditIndicator"
+								value="Credit Indicator"
+								onclick=" var b = test('CRIND'); var a=testdfield('CRIND'); return b,a"
+								process=":form:creditIndicator" style="width: 130px;" />
+							<p:spacer width="2px" />
+							<h:button id="availableBalance" name="availableBalance"
+								value="Available Balance"
+								onclick=" var b = test('AVAILBAL'); var a=testdfield('AVAILBAL'); return b,a"
+								process=":form:availableBalance" style="width: 130px;" />
+							<p:spacer width="5px" />
+							<h:button id="ctext" name="ctext" value="Clear Text"
+								onclick="return clearAll()" process=":form:ctext"
+								style="width: 130px;" />
+						</h:panelGroup>
+					</h:panelGrid>
+					</p:scrollPanel> 
+				</f:facet>
+			</p:panel>
+
+
+		</p:panel>
+
+	</ui:define>
+</ui:composition>
+

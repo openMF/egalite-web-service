@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewTemplate.xhtml">
+	<ui:param name="selectionMode" value="single"></ui:param>
+	<ui:param name="selection"
+		value="#{agentAllocationsListController.selectedRecord}" />
+	<ui:param name="pageTitle" value="#{msg['agentAllocationsMgmt.title']}" />
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['agentAllocationsMgmt.title.listAgentAllocations']}" />
+	<ui:param name="emptyMessage" value="#{msg['agentAllocationsMgmt.msg.noRecords']}" />
+	
+	<ui:param name="addControlText"
+		value="#{msg['agencyAllocationsMgmt.tblNav.bulkAssignAgent']}" />
+	<ui:param name="addOutcome" value="bulkAssign" />
+	<ui:param name="cancelControlText" 
+	              value="#{msg['agencyAllocationsMgmt.tblNav.selectedAssignAgent']}" />
+	<ui:param name="cancelOutcome" value="selectedAssign" />
+	  
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addAgentAllocations')}" />
+	<ui:param name="listController"
+		value="#{agentAllocationsListController}" />
+
+	<ui:define name="pageHeaderControls">
+		<p:toolbarGroup align="right">
+			<p:button id="btnBulkAssign" value="#{addControlText}"
+				rendered="#{agentAllocationsListController.isAssignAgentAllowed()}"
+				outcome="#{addOutcome}" style="margin-left: 82px;" />
+			<p:button id="btnSelectedAssign" value="#{cancelControlText}"
+				rendered="#{agentAllocationsListController.isAssignAgentAllowed()}"
+				outcome="#{cancelOutcome}" />
+		</p:toolbarGroup>
+	</ui:define>
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{agentAllocationsListController.listSelect}" />
+        <p:column selectionMode="multiple" style="width:2%" disabledSelection="true"/>
+         
+		<p:column id="id" filterBy="#{record.loan.id}"
+			headerText="#{msg['loanMgmt.tblHeader.loanAcNo']}"
+			filterMatchMode="contains" sortBy="#{record.loan.id}">
+			<h:outputText value="#{record.loan.id}" />
+		</p:column>
+
+		<!--  <p:column id="customerId" filterBy="#{record.loan.customerId}"
+			headerText="#{msg['loanMgmt.tblHeader.customerId']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.loan.customerId}" />
+		</p:column> -->
+
+
+		  <p:column id="customerName" filterBy="#{record.loan.customerName}"
+			headerText="#{msg['loanMgmt.tblHeader.customerName']}"
+			filterMatchMode="contains" sortBy="#{record.loan.customerName}">
+			<h:outputText value="#{record.loan.customerName}" />
+		 </p:column> 
+
+		<!--  <p:column id="locationId" filterBy="#{record.locationId}"
+			headerText="#{msg['loanMgmt.tblHeader.locationId']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.locationId}" />
+		</p:column> -->
+
+		<!--  <p:column id="locationName" filterBy="#{record.locationName}"
+			headerText="#{msg['loanMgmt.tblHeader.locationName']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.locationName}" />
+		</p:column> -->
+
+		<!-- <p:column id="groupName" filterBy="#{record.groupName}"
+			headerText="#{msg['loanMgmt.tblHeader.groupName']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.groupName}" />
+		</p:column>  -->
+		
+         <p:column id="agentCreditOfficer" filterBy="#{record.loan.creditOfficer}"
+             headerText="#{msg['agentMgmt.label.creditofficer']}"
+			 filterMatchMode="contains" sortBy="#{record.loan.creditOfficer}">
+			<h:outputText value="#{record.loan.creditOfficer}" />
+		</p:column>
+		
+		<p:column id="agentId" filterBy="#{record.agent.id}"
+			headerText="#{msg['loanMgmt.tblHeader.agentId']}"
+			filterMatchMode="contains" sortBy="#{record.agent.id}">
+			<h:outputText value="#{record.agent.id}" />
+		</p:column>
+		
+		<!--  <p:column id="recordStatusId" filterBy="#{record.recordStatus}"
+			headerText="#{msg['loanMgmt.tblHeader.recordStatus']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.recordStatus}" />
+		</p:column> -->
+
+		<p:column id="agentFirstName" filterBy="#{record.agent.fname}"
+			headerText="#{msg['agentAllocationsMgmt.tblHeader.firstName']}"
+			filterMatchMode="contains" sortBy="#{record.agent.fname}">
+			<h:outputText value="#{record.agent.fname}" />
+		</p:column>
+		
+	</ui:define>
+</ui:composition>

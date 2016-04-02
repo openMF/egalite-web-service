@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'NameCharactersAndNumbersWithNoBlankSpace') {
+					AllowableCharacters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+		
+			function ieClicked() {
+				if (document.all) {
+					return false;
+				}
+			}
+			function firefoxClicked(e) {
+				if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+					if (e.which==2||e.which==3) {
+						return false;
+					}
+				}
+			}
+			if (document.layers){
+				document.captureEvents(Event.MOUSEDOWN);
+				document.onmousedown=firefoxClicked;
+			}else{
+				document.onmouseup=firefoxClicked;
+				document.oncontextmenu=ieClicked;
+			}
+			document.oncontextmenu=new Function("return false")
+
+			//]]>
+		</script>
+		<f:metadata>
+			<f:viewParam name="id" value="#{lovBaseController.lovBaseVO.id}"></f:viewParam>
+			<f:event listener="#{lovBaseController.loadLov}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['lovMgmt.title.lovDispModify']}" /></span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['agencyMgmt.btn.save']}" update="panel"
+						action="#{lovBaseController.checkModifyForUpdate}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['agencyMgmt.nav.cancel']}"
+						outcome="cancel">
+						<f:param name="id" value="#{lovBaseController.lovBaseVO.id}" />
+					</p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="3" id="panelGrid">
+
+				<h:outputLabel for="id" value="#{msg['lovMgmt.label.lovid']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="id" value="#{lovBaseController.lovBaseVO.id}"
+					readonly="true" label="#{msg['lovMgmt.label.lovid']}"
+					onkeypress="return inputLimiter(event,'NameCharactersAndNumbers')" />
+				<p:message for="id" display="icon" />
+
+				<h:outputLabel for="lovDesc" value="#{msg['lovMgmt.label.lovDesc']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="lovDesc"
+					value="#{lovBaseController.lovBaseVO.lovDesc}" required="true"
+					label="#{msg['lovMgmt.label.lovDesc']}">
+					<f:validateLength minimum="2" maximum="100" />
+				</p:inputText>
+				<p:message for="lovDesc" display="icon" />
+
+
+				<h:outputLabel for="isActive"
+					value="#{msg['agencyMgmt.tblHeader.isActive']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="isActive"
+					styleClass="drop_down_style"
+					value="#{lovBaseController.lovBaseVO.isActive}" required="true"
+					label="#{msg['agencyMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{lovBaseController.isTempActive}" var="devi"
+						itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

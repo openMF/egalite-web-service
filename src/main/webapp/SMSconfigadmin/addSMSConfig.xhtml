@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	<ui:define name="metadata">
+		<script type="text/javascript">
+        //<![CDATA[
+        
+  function inputLimiter(e,allow) {
+    var AllowableCharacters = '';
+
+    if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+    if (allow == 'NameCharactersAndNumbersWithNoBlankSpace'){AllowableCharacters='1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+
+    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+    if (k!=13 && k!=8 && k!=0){
+        if ((e.ctrlKey==false) && (e.altKey==false)) {
+        return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+        } else {
+        return true;
+        }
+    } else {
+        return true;
+    }
+} 
+    	function ieClicked() {
+    		if (document.all) {
+    			return false;
+    		}
+    	}
+    	function firefoxClicked(e) {
+    		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+    			if (e.which==2||e.which==3) {
+    				return false;
+    			}
+    		}
+    	}
+    	if (document.layers){
+    		document.captureEvents(Event.MOUSEDOWN);
+    		document.onmousedown=firefoxClicked;
+    	}else{
+    		document.onmouseup=firefoxClicked;
+    		document.oncontextmenu=ieClicked;
+    	}
+    	document.oncontextmenu=new Function("return false")
+
+    
+
+        //]]>
+    </script>
+	</ui:define>
+	<ui:define name="pageTitleBar">
+
+	</ui:define>
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['SmsConfigMgmt.label.newSmsConfigEntry']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['agencyMgmt.btn.save']}" update="panel"
+						action="#{smsConfigController.create}" style="margin-left: 182px;" />
+					<p:spacer width="2px" /> <p:button id="btnCancel"
+						value="#{msg['agencyMgmt.nav.cancel']}" outcome="cancel" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithoutAuditTrail">
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="txnCode"
+					value="#{msg['SmsConfigMgmt.tblHeader.txnType']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="txnCode" styleClass="drop_down_style"
+					value="#{smsConfigController.smsconfig.id}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{smsConfigController.txnIds}" var="dev"
+						itemValue="#{dev.txnCode}" itemLabel="#{dev.txnDesc}" />
+				</h:selectOneMenu>
+				<p:message for="txnCode" display="icon" />
+
+				<h:outputText id="sms" value="Send SMS FromMbs: " />
+				<p:selectBooleanCheckbox id="SMSmbs"
+					value="#{smsConfigController.smsconfig.sendSmsFromMbs}" />
+				<p:message for="sms" display="icon" />
+
+				<h:outputLabel for="smsTemplateMbs"
+					value="#{msg['SmsConfigMgmt.tblHeader.smsTemplateMbs']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="smsTemplateMbs" 
+					value="#{smsConfigController.smsconfig.smsTemplateMbs}"
+					label="smsTemplateMbs" styleClass="drop_down_style">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{smsConfigController.templateIds}" var="dev"
+						itemValue="#{dev.id}" itemLabel="#{dev.id} ~ #{dev.description}" />
+					<p:ajax event="change" update="SmsText" process="@this" />
+				</h:selectOneMenu>
+				<p:message for="smsTemplateMbs" display="icon" />
+
+				<h:outputLabel for="SmsText"
+					value="#{msg['SmsConfigMgmt.tblHeader.smsText']}"
+					styleClass="required_asterisk" />
+				<p:inputTextarea id="SmsText" rows="4" cols="25" readonly="true"
+					value="#{smsConfigController.displaySmsText()}" />
+				<p:message for="SmsText" display="icon" />
+
+
+				<h:outputText id="ibssms" value="Send SMS FromIbs: " />
+				<p:selectBooleanCheckbox id="SMSibs"
+					value="#{smsConfigController.smsconfig.sendSmsFromIbs}" />
+				<p:message for="ibssms" display="icon" />
+
+				<h:outputLabel for="smsTemplateIbs"
+					value="#{msg['SmsConfigMgmt.tblHeader.smsTemplateIbs']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="smsTemplateIbs"  
+					value="#{smsConfigController.smsconfig.smsTemplateIbs}"
+					label="smsTemplateIbs" styleClass="drop_down_style">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{smsConfigController.templateIds}" var="dev"
+						itemValue="#{dev.id}" itemLabel="#{dev.id} ~ #{dev.description}" />
+					<p:ajax event="change" update="SmsText1" process="@this" />
+				</h:selectOneMenu>
+				<p:message for="smsTemplateIbs" display="icon" />
+
+
+
+				<h:outputLabel for="SmsText1"
+					value="#{msg['SmsConfigMgmt.tblHeader.smsText']}"
+					styleClass="required_asterisk" />
+				<p:inputTextarea id="SmsText1" rows="4" cols="25" readonly="true"
+					value="#{smsConfigController.displaySmsTextForIbs()}" />
+				<p:message for="SmsText" display="icon" />
+
+
+
+				<h:outputLabel for="isActive" 
+					value="#{msg['SmsConfigMgmt.tblHeader.isActive']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="isActive" styleClass="drop_down_style"
+					value="#{smsConfigController.smsconfig.isActive}" required="true"
+					label="#{msg['SmsConfigMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{smsConfigController.smsConfigStatuss}"
+						var="devi" itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+
+
+				<h:outputLabel for="InfoandExample"
+					value="#{msg['SmsConfigMgmt.title.infoAndExample']}" />
+				<h:outputLabel id="InfoandExample" value="dynamic value" />
+				<p:message for="InfoandExample" display="icon" />
+
+
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

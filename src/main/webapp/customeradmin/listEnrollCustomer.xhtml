@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceListTemplate.xhtml">
+	<ui:param name="pageTitle" value="#{msg['customerMgmt.title']}" />
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['customerMgmt.title.listEnrollCustomers']}" />
+	<ui:param name="emptyMessage" value="#{msg['customerMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{enrollCustomerListController}" />
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{enrollCustomerListController.listSelect}" />
+
+		<p:column id="id" filterBy="#{record.id}"
+			headerText="#{msg['customerMgmt.label.enrolID']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+		<p:column id="enrollmentdate" filterBy="#{record.enrollmentdate}"
+			headerText="#{msg['customerMgmt.label.enrollmentdate']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.enrollmentdate}" />
+		</p:column>
+		<p:column id="firstName" filterBy="#{record.firstName}"
+			headerText="#{msg['customerMgmt.label.custfName']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.firstName}" />
+		</p:column>
+		<!-- <p:column id="middleName" filterBy="#{record.middleName}"
+			headerText="#{msg['customerMgmt.label.custmName']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.middleName}" />
+		</p:column> -->
+		<p:column id="lastName" filterBy="#{record.lastName}"
+			headerText="#{msg['customerMgmt.label.custlName']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.lastName}" />
+		</p:column>
+		<p:column id="gender" filterBy="#{record.gender}"
+			headerText="#{msg['customerMgmt.label.custGender']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.gender}" />
+		</p:column>
+		<!-- <p:column id="dob" filterBy="#{record.dob}"
+			headerText="#{msg['customerMgmt.label.custDob']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.dob}" />
+		</p:column>
+		<p:column id="address1" filterBy="#{record.address1}"
+			headerText="#{msg['customerMgmt.label.custAdd1']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.address1}" />
+		</p:column>
+		<p:column id="address2" filterBy="#{record.address2}"
+			headerText="#{msg['customerMgmt.label.custAdd2']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.address2}" />
+		</p:column>
+		<p:column id="emailId" filterBy="#{record.emailId}"
+			headerText="#{msg['customerMgmt.label.emailID']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.emailId}" />
+		</p:column>
+		<p:column id="contactNumber" filterBy="#{record.contactNumber}"
+			headerText="#{msg['customerMgmt.label.phoneNumber']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.contactNumber}" />
+		</p:column>
+		<p:column id="state" filterBy="#{record.state}"
+			headerText="#{msg['customerMgmt.label.state']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.state}" />
+		</p:column>
+		<p:column id="zipCode" filterBy="#{record.zipCode}"
+			headerText="#{msg['customerMgmt.label.postalID']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.zipCode}" />
+		</p:column>
+		<p:column id="country" filterBy="#{record.country}"
+			headerText="#{msg['customerMgmt.label.country']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.country}" />
+		</p:column>
+		<p:column id="currency" filterBy="#{record.currency}"
+			headerText="#{msg['customerMgmt.label.custCurrency']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.currency}" />
+		</p:column> -->
+		<p:column id="residentialType" filterBy="#{record.residentialType}"
+			headerText="#{msg['customerMgmt.label.residentailType']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.residentialType}" />
+		</p:column>
+		<p:column id="nationality" filterBy="#{record.nationality}"
+			headerText="#{msg['customerMgmt.label.custnationalty']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.nationality}" />
+		</p:column>
+		<!-- <p:column id="martialStatus" filterBy="#{record.martialStatus}"
+			headerText="#{msg['customerMgmt.label.maritalStat']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.martialStatus}" />
+		</p:column> -->
+		<p:column id="profession" filterBy="#{record.profession}"
+			headerText="#{msg['customerMgmt.label.profession']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.profession}" />
+		</p:column>
+		<p:column id="enrichmentStatus" filterBy="#{record.enrichmentStatus}"
+			headerText="#{msg['customerMgmt.label.enrichmentStatus']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.enrichmentStatus}" />
+		</p:column>
+	</ui:define> 
+			 
+</ui:composition>

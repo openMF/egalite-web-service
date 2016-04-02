@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+      <!--[EGA-MN15-000006]
+		2-	Splitting screens for Agent Maintenance
+		7-	Lenght of Roles display box must be small. It is too big
+	 -->
+
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{agentController.agent.agentId}"></f:viewParam>
+			<f:event listener="#{agentController.loadAgent}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agentMgmt.title.agent']}" />
+		</f:facet>
+	</ui:define> -->
+	<!-- Firstname,Lastname,Username Validation,Agent CO Code,Agent A/C CO,Agency code validation removed 
+	 is added for Asomi by Nirmal kanna S -->  
+<!-- Credit officer id to IBS Credit Officer ID == Changes for Asomi by Nirmal kanna S -->  
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['agentMgmt.title.viewAgent']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{agentController}"></ui:param>
+					</ui:include> <p:commandButton id="btnDelete"
+						value="#{msg['agentMgmt.btn.delete']}"
+						rendered="#{agentController.isDeleteAllowed()}" update="panel"
+						disabled="#{agentController.isEnableDeleteAllowed()}"
+						action="#{agentController.deleteUnAuthorized}">
+						<p:confirm header="Confirmation"
+							message="#{msg['msg.confirm.dialog']}" icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog> <p:spacer width="2px" /> <p:commandButton id="btnKey"
+						value="#{msg['agentMgmt.btn.genkey']}"
+						rendered="#{auth.checkAuthority('generateKeyAgent')}"
+						disabled="#{agentController.shouldDisableGenerateRegKey()}"
+						onClick="this.value='Submitting..';this.disabled=true;"
+						update="panel" actionListener="#{agentController.generatekey}" />
+
+					<p:spacer width="2px" /> <p:commandButton id="btnUnReg"
+						value="#{msg['agentMgmt.btn.btnUnReg']}"
+						rendered="#{agentController.isUnregisterAllowed()}"
+						disabled="#{agentController.shouldDisableUnregister()}"
+						onClick="this.value='Submitting..';this.disabled=true;"
+						update="panel" actionListener="#{agentController.unregisterAgent}" />
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+
+           <p:panel>
+            <p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id" value="#{msg['agentMgmt.label.agentId']}" />
+				<p:inputText id="id" value="#{agentController.agent.agentId}"
+					readonly="true" />
+
+				<h:outputLabel for="cbsagentcode" value="#{msg['agentMgmt.label.cbsagentcode']}" />
+				<p:inputText id="cbsagentcode" value="#{agentController.agent.cbsagentcode}" readonly="true" />
+
+				<h:outputLabel for="agentAccId"	value="#{msg['agentMgmt.label.agentAccId']}" />
+				<p:inputText id="agentAccId" value="#{agentController.agent.agentAccId}" readonly="true" />
+
+				<h:outputLabel for="userName" value="#{msg['agentMgmt.label.userName']}" />
+				<p:inputText id="userName" value="#{agentController.agent.userName}" readonly="true" />
+
+				<h:outputLabel for="locationCode" value="#{msg['agentMgmt.label.locationCode']}" />
+				<p:inputText id="locationCode" value="#{agentController.agent.locationCode}" readonly="true" />
+
+				<h:outputLabel for="cashLimit" value="#{msg['agentMgmt.label.cashLimit']}" />
+				<p:inputText id="cashLimit"	value="#{agentController.agent.cashLimit}" readonly="true" />
+
+				<h:outputLabel for="agentType" value="#{msg['agentMgmt.label.agentType']}" />
+				<p:inputText id="agentType" value="#{agentController.agentType}" readonly="true" />
+
+				<h:outputLabel for="creditofficer"	value="#{msg['agentMgmt.label.creditofficerId']}" />
+				<p:inputText id="creditofficer"	value="#{agentController.agent.creditOfficer}" readonly="true"
+					label="#{msg['agentMgmt.label.creditofficerId']}">
+					<f:selectItems value="#{agentController.creditOfficers}"
+						var="credit" itemValue="#{credit.id}" itemLabel="#{credit.id}" />
+				</p:inputText>
+
+				<h:outputLabel for="agencyCode"	value="#{msg['agentMgmt.label.agencyCode']}" />
+				<p:inputText id="agencyCode" value="#{agentController.agent.agencyCode}" readonly="true" />
+
+				<h:outputLabel for="deviceId" value="#{msg['agentMgmt.label.deviceId']}" />
+				<p:inputText id="deviceId" value="#{agentController.agent.deviceId}" readonly="true" />
+
+				<h:outputLabel for="externalDeviceId" value="#{msg['extdeviceMgmt.label.deviceId']}" />
+				<p:inputText id="externalDeviceId" value="#{agentController.agent.externalDeviceId}" readonly="true" />
+
+				<h:outputLabel for="regKey" value="#{msg['agentMgmt.label.genkey']}" />
+				<p:inputText id="regKey" value="#{agentController.agent.regKey}" readonly="true" />
+
+				<h:outputLabel for="regKeyExpiryTime" value="#{msg['agentMgmt.label.genkeyTimeStamp']}" />
+				<p:calendar id="regKeyExpiryTime" value="#{agentController.agent.regKeyExpiryTime}"
+					pattern="dd-MMM-yyyy hh:mm:ss" showOn="label" readonlyInput="true" />
+
+				<h:outputLabel for="fname"	value="#{msg['agentMgmt.label.firstName']}" />
+				<p:inputText id="fname" value="#{agentController.agent.fname}" readonly="true" />
+
+				<h:outputLabel for="lname"
+					value="#{msg['agentMgmt.label.lastName']}" />
+				<p:inputText id="lname" value="#{agentController.agent.lname}"
+					readonly="true" />
+    
+              </h:panelGrid>
+              </p:panel>
+              
+              <p:panel >
+			   <h:panelGrid columns="2">
+			   
+         		<h:outputLabel for="dob" value="#{msg['agentMgmt.label.dob']}" />
+				<p:calendar id="dob" value="#{agentController.agent.dob}"
+					pattern="dd-MMM-yyyy" showOn="label" readonly="true" />       
+				
+				<h:outputLabel for="gender" value="#{msg['agentMgmt.label.gender']}" />
+				<p:inputText id="gender" value="#{agentController.gender}"	readonly="true" />
+
+				<h:outputLabel for="address1" value="#{msg['agentMgmt.label.commAddr1']}" />
+				<p:inputText id="address1" value="#{agentController.agent.commAddr1}" readonly="true" />
+
+				<h:outputLabel for="address2" value="#{msg['agentMgmt.label.commAddr2']} " />
+				<p:inputText id="address2" value="#{agentController.agent.commAddr2}" readonly="true" />
+
+				<h:outputLabel for="address3" value="#{msg['agentMgmt.label.commAddr3']} " />
+				<p:inputText id="address3" value="#{agentController.agent.commAddr3}" readonly="true" />
+
+				<h:outputLabel for="zipCode" value="#{msg['agentMgmt.label.zipCode']}" />
+				<p:inputText id="zipCode" value="#{agentController.agent.zipCode}"	readonly="true" />
+
+				<h:outputLabel for="city" value="#{msg['agentMgmt.label.city']}" />
+				<p:inputText id="city" value="#{agentController.agent.city}" readonly="true" />
+
+				<h:outputLabel for="address4" value="#{msg['agentMgmt.label.district']}" />
+				<p:inputText id="address4" value="#{agentController.agent.commAddr4}" readonly="true" />
+					
+				<h:outputLabel for="state" value="#{msg['agentMgmt.label.state']}" />
+				<p:inputText id="state" value="#{agentController.agent.state}" readonly="true" />
+
+				<h:outputLabel for="country" value="#{msg['agentMgmt.label.country']}" />
+				<p:inputText id="country" value="#{agentController.countryName}" readonly="true" />
+
+				<h:outputLabel for="contactNumber" value="#{msg['agentMgmt.label.contactNumber']}" />
+				<p:inputText id="contactNumber" value="#{agentController.agent.contactNumber}" readonly="true" />
+
+				<h:outputLabel for="startDate" value="#{msg['agentMgmt.label.startDate']}" />
+				<p:calendar id="startDate" value="#{agentController.agent.startDate}" pattern="dd-MMM-yyyy"
+					showOn="label" readonlyInput="true" />
+
+				<h:outputLabel for="endDate" value="#{msg['agentMgmt.label.endDate']}" />
+				<p:calendar id="endDate" value="#{agentController.agent.endDate}"
+					pattern="dd-MMM-yyyy" showOn="label" readonlyInput="true" />
+
+				<h:outputLabel for="isActive" value="#{msg['agentMgmt.label.isActive']}" />
+				<p:inputText id="isActive" value="#{agentController.isStatusActive}" readonly="true" />
+
+				<h:outputLabel for="regStatus" value="#{msg['agentMgmt.label.regStatus']}" />
+				<p:inputText id="regStatus"	value="#{lov['regStatus~'.concat(agentController.agent.regStatus.trim())]}"	readonly="true" />
+
+				<h:outputLabel for="emailAddress" value="#{msg['agentMgmt.label.emailAddress']}" />
+				<p:inputText id="emailAddress" value="#{agentController.agent.emailAddress}" readonly="true" />
+
+			</h:panelGrid>
+			</p:panel>
+			</p:panel>
+			
+			
+			<p:panel id="rolePanel">
+				<f:facet name="header">
+					<p:panel styleClass="maintenanceFormPanelHeader">
+						<span class="pageHeaderTitle"> <h:outputText
+								value="#{msg['userMgmt.tblHeader.allocatedRoles']}" />
+						</span>
+					</p:panel>
+				</f:facet>
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+						 <div id="colsrc">
+							<p:dataTable id="destTable" var="destRole"
+								value="#{agentController.agent.allocatedRoles}"
+								rowKey="#{destRole.id}"
+								selection="#{agentController.modifySelectedAllocatedRoles}">
+								<p:column sortBy="#{destRole.id}" filterPosition="top"
+									filterBy="#{destRole.id}" filterMatchMode="contains"
+									headerText="#{msg['roleMgmt.label.roleId']}">#{destRole.id}</p:column>
+								<p:column sortBy="#{destRole.roleName}" filterPosition="top"
+									filterBy="#{destRole.roleName}" filterMatchMode="contains"
+									headerText="#{msg['roleMgmt.label.roleName']}">#{destRole.roleName}</p:column>
+							</p:dataTable>
+							</div>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>

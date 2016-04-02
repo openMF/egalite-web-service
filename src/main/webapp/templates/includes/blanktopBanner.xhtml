@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<h:form id="toolBarFor">
+		<p:toolbar styleClass="northToolbar" id="toolBarImage">
+			<p:toolbarGroup align="left" id="toolGroup">
+				<h:outputText styleClass="mainCaption" value="#{msg['header.title.name']}" />
+				<p:commandLink type="push" title="Home" ajax ="false" action="/index.xhtml">
+					<p:graphicImage url="#{resource['images:home-icon.png']}" />
+				</p:commandLink>
+			</p:toolbarGroup>
+			<p:toolbarGroup align="right">
+				<p:outputLabel value="#{auth.userName}"></p:outputLabel><br/>
+				<h:outputText value="#{auth.lastLoggedTime}" ><f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss" /></h:outputText>
+			</p:toolbarGroup>
+			
+		</p:toolbar>
+	</h:form>
+</ui:composition>

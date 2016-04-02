@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	<ui:param name="selectionMode" value="single"></ui:param>
+	<ui:param name="selection"
+		value="#{agentAllocationsListController.selectedRecords}" />
+	<!-- <ui:param name="pageTitle" value="#{msg['agentAllocationsMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['agentAllocationsMgmt.title.loanasignAgent']}">
+	</ui:param>
+	<ui:param name="emptyMessage"
+		value="#{msg['agentAllocationsMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText"
+		value="#{msg['agencyAllocationsMgmt.tblNav.assignAgent']}" />
+	<ui:param name="addOutcome" value="openAdd" />
+	<ui:param name="saveControlText"
+		value="#{msg['agencyAllocationsMgmt.btn.save']}" />
+	<!--  <ui:param name="saveOutcome" value="doSave" />  -->
+	<ui:param name="cancelControlText"
+		value="#{msg['agencyAllocationsMgmt.btn.cancel']}" />
+	<ui:param name="cancelOutcome" value="doCancel" />
+
+	<ui:param name="listController"
+		value="#{agentAllocationsListController}" />
+
+	<ui:define name="pageHeaderControls">
+		<p:toolbarGroup align="right">
+			<p:commandButton id="btnSave" value="#{saveControlText}"
+				style="margin-left: 182px;" update=":form:msgs"
+				action="#{agentAllocationsListController.allocateAgent}" />
+				<p:spacer width="2px" /> 
+			<p:button id="btnCancel" value="#{cancelControlText}"
+				outcome="#{cancelOutcome}" />
+		</p:toolbarGroup>
+	</ui:define>
+	<ui:define name="dataTableContent">
+		<p:column selectionMode="multiple" disabledSelection="true"
+			style="width:2%">
+		</p:column>
+
+		<p:column filterBy="#{record.loan.id}"
+			headerText="#{msg['loanMgmt.tblHeader.loanAcNo']}"
+			filterMatchMode="contains" sortBy="#{record.loan.id}">
+			<h:outputText value="#{record.loan.id}" />
+		</p:column>
+
+		<p:column
+			headerText="#{msg['agentAllocationsMgmt.tblHeader.agentId']}"
+			filterMatchMode="contains">
+			<h:selectOneMenu styleClass="drop_down_style" value="#{record.agent.id}"
+				label="#{msg['agentMgmt.label.agentId']}">
+				<f:selectItem itemLabel="Select" itemValue="" />
+				<f:selectItems value="#{agentAllocationsListController.agents}"
+					var="tempAgent" itemValue="#{tempAgent.id}"
+					itemLabel="#{tempAgent.id}  ~  #{tempAgent.fname}">
+				</f:selectItems>
+			</h:selectOneMenu>
+			
+		</p:column>
+
+         <p:column id="locationCode" filterBy="#{record.locationCode}"
+			headerText="#{msg['loanMgmt.tblHeader.locationCode']}"
+			filterMatchMode="contains" sortBy="#{record.locationCode}">
+			<h:outputText value="#{record.locationCode}" />
+		</p:column> 
+		
+		 <p:column id="allocatedBy" filterBy="#{record.allocateUser}"
+			headerText="#{msg['loanMgmt.tblHeader.allocateBy']}"
+			filterMatchMode="contains" sortBy="#{record.allocateUser}">
+			<h:outputText value="#{record.allocateUser}" />
+		</p:column>
+		
+		<p:column id="allocationTime" filterBy="#{record.allocationTime}"
+			headerText="allocationTime"
+			filterMatchMode="contains" sortBy="#{record.allocationTime}">
+			<h:outputText value="#{record.allocationTime}" >
+			<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a" />
+			</h:outputText>
+		</p:column>
+
+		<!-- <p:column
+			headerText="#{msg['agentAllocationsMgmt.tblHeader.firstName']}"
+			filterMatchMode="contains">
+
+			<h:selectOneMenu  styleClass="drop_down_style"
+				value="#{record.agent.id}" required="true"
+				label="#{msg['agentMgmt.label.agentId']}">
+				<f:selectItem itemLabel="Select" itemValue="" />
+				<f:selectItems value="#{agentAllocationsListController.agents}"
+					var="tempAgent" itemValue="#{tempAgent.id}"
+					itemLabel="#{tempAgent.fname}" >		
+				</f:selectItems>
+			</h:selectOneMenu> 
+
+			<h:outputText value="#{record.agent.fname}" />
+		</p:column> -->
+ 
+	</ui:define>
+</ui:composition>

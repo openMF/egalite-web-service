@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<ui:param name="selectionMode" value="checkbox"></ui:param>
+	<ui:param name="selection"
+		value="#{agentAllocationDepositController.selectedRecords}" />
+	<!-- <ui:param name="pageTitle" value="#{msg['agentAllocationsMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['agentAllocationsMgmt.title.bulkAgentAllocations']}" />
+	<ui:param name="emptyMessage" value="#{msg['agentAllocationsMgmt.msg.noRecords']}" />
+	
+	<ui:param name="addControlText"
+		value="#{msg['agencyAllocationsMgmt.tblNav.assignAgent']}" />
+	<ui:param name="addOutcome" value="openAdd" />
+	 <ui:param name="okControlText" value="OK" /> 
+
+	<ui:param name="cancelControlText" value="#{msg['agencyAllocationsMgmt.btn.cancel']}" />
+	<ui:param name="cancelOutcome" value="doCancel" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addAgentAllocations')}" />
+	<ui:param name="listController"
+		value="#{agentAllocationDepositController}" />
+
+	<ui:define name="pageHeaderControls">
+		<p:toolbarGroup align="right">
+			<p:commandButton id="dynaButton" value="#{msg['agentAllocationsMgmt.nav.save']}"
+				action="#{agentAllocationDepositController.showDialog}" type="push" update=":form:msgs"
+				title="Settings" style="margin-left: 82px;">
+			</p:commandButton><p:spacer width="2px" /> 
+			
+			<p:button id="btnCancel" value="#{cancelControlText}" outcome="#{cancelOutcome}" />
+		</p:toolbarGroup>
+		 <p:dialog id="bulkAgentAllocationsId"
+			header="Choose Agent You want to assign" widgetVar="choseAgent"
+			modal="false">
+			<h:form id="agentAllocationForm">
+				<h:selectOneMenu id="firstName" styleClass="drop_down_style" effect="drop"
+					value="#{agentAllocationDepositController.agent.id}"
+					label="#{msg['agentMgmt.label.agentId']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{agentAllocationDepositController.agents}"
+						var="tempAgent" itemValue="#{tempAgent.id}"
+						itemLabel="#{tempAgent.id}" />
+				</h:selectOneMenu>
+				<p:commandButton id="btnOk" value="#{okControlText}" ajax="false"
+					action="#{agentAllocationDepositController.bulkAllocateAgent}" />
+			</h:form>
+		</p:dialog> 
+	</ui:define>
+	<ui:define name="dataTableContent">
+		<p:column selectionMode="multiple" style="width:2%" />
+
+		<p:column id="id" filterBy="#{record.deposit.id}"
+			headerText="#{msg['loanMgmt.tblHeader.loanAcNo']}"
+			filterMatchMode="contains" sortBy="#{record.deposit.id}">
+			<h:outputText value="#{record.deposit.id}" />
+		</p:column>
+		
+		<p:column id="agentId">
+			<f:facet name="header">
+					<h:outputText value="#{msg['loanMgmt.tblHeader.agentId']}"></h:outputText>
+					<br />
+					
+					<h:selectOneMenu id="agentName" styleClass="drop_down_style" effect="drop"
+						value="#{agentAllocationDepositController.agent.id}"
+						label="#{msg['agentMgmt.label.agentId']}">
+						<f:selectItem itemLabel="#{msg['agentAllocationsMgmt.msg.selectedAgentToAssign']}" itemValue="" />  
+						<f:selectItems value="#{agentAllocationDepositController.agents}"
+							var="tempAgent" itemValue="#{tempAgent.id}"
+							itemLabel="#{tempAgent.id}  ~  #{tempAgent.fname}" />
+					</h:selectOneMenu>
+				
+			</f:facet>
+			<h:outputText value="#{record.agent.id}" />
+		</p:column>
+		
+		
+
+		  <p:column id="locationCode" filterBy="#{record.locationCode}"
+			headerText="#{msg['pigmydeposit.label.locationCode']}"
+			filterMatchMode="contains">
+			<h:outputText value="#{record.locationCode}" />
+		</p:column> 
+
+		<p:column filterBy="#{record.allocateUser}"
+			headerText="#{msg['deposit.tblHeader.allocatedby']}"
+			filterMatchMode="contains" sortBy="#{record.allocateUser}">
+			<h:outputText value="#{record.allocateUser}" />
+		</p:column>
+
+		<p:column filterBy="#{record.allocationTime}"
+			headerText="#{msg['deposit.label.allocationTime']}"
+			filterMatchMode="contains" sortBy="#{record.allocationTime}">
+			<h:outputText value="#{record.allocationTime}" >
+			<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a" />
+			</h:outputText>
+		</p:column>
+
+	</ui:define>
+</ui:composition>

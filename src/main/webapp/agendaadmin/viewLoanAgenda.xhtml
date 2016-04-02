@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://java.sun.com/jsp/jstl/core"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{loanAgendaController.agenda.id}"></f:viewParam>
+			<f:event listener="#{loanAgendaController.loadLoanAgenda}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			 <h:outputText value="#{msg['transMgmt.title.transtracker']}" /> 
+		</f:facet>
+	</ui:define> -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader" >
+				
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['loanAgndMgmt.title.loanAgenda']}" /></span>
+				
+				<span class="pageHeaderControls"> 
+					<p:button id="btnList" value="#{msg['agendaMgmt.label.close']}" outcome="openList" /> 
+				</span>
+						
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaId']}" />
+               			<p:inputText id="id" value="#{loanAgendaController.agenda.id}" readonly="true" />
+										
+ 					<h:outputLabel value="#{msg['agendaMgmt.label.seqNoAgenda']}" />
+						<p:inputText id="seqNo" value="#{loanAgendaController.agenda.seqNo}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaMbsDate']}" />
+						<p:calendar id="agendaMbsDate" value="#{loanAgendaController.agenda.agendaMbsDate}" showOn="label" pattern="dd-MMM-yyyy" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agendaMgmt.label.branchCode']}" />
+						<p:inputText id="branchCode" value="#{loanAgendaController.agenda.branchCode}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.cbdAccRefNo']}" />
+						<p:inputText id="cbdAccRefNo" value="#{loanAgendaController.agenda.cbdAccRefNo}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.customerId']}" />
+						<p:inputText id="customerId" value="#{loanAgendaController.agenda.customerId}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agendaMgmt.label.customerName']}" />
+						<p:inputText id="customerName" value="#{loanAgendaController.agenda.customerName}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['loanMgmt.label.Group_typecategory']}" />
+						<p:inputText id="isGroupLoan" value="#{loanAgendaController.agenda.isGroupLoan}" readonly="true"/>
+
+					<h:outputLabel value="#{msg['agendaMgmt.label.loanType']}" />
+						<p:inputText id="isParentLoan" value="#{loanAgendaController.agenda.isParentLoan}" readonly="true"/>
+
+					<h:outputLabel value="#{msg['agendaMgmt.label.loanCustomerType']}" />
+						<p:inputText id="isParentCust" value="#{loanAgendaController.agenda.isParentCust}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['loanMgmt.label.parentCustId']}" />
+						<p:inputText id="parentCustId" value="#{loanAgendaController.agenda.parentCustId}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.parentCbsAcRefNo']}" />
+						<p:inputText id="parentCbsAcRefNo" value="#{loanAgendaController.agenda.parentCbsAcRefNo}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.txnDesc']}" />
+						<p:inputText id="txnDesc" value="#{loanAgendaController.agenda.getTxnDesc()}"  readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaStatus']}" />
+						<p:inputText id="agendaStatus" value="#{loanAgendaController.agenda.agendaStatus}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaCmpName']}" />
+						<p:inputText id="agendaCmpName" value="#{loanAgendaController.agenda.agendaCmpName}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaCmpStartDate']}" />
+               			<p:calendar id="agendaCmpStartDate" value="#{loanAgendaController.agenda.agendaCmpStartDate}" pattern="dd-MMM-yyyy" showOn="label" readonly="true" />
+					
+					</h:panelGrid>
+			</p:panel>
+			
+			<p:panel style="width:52%;height:410px; float:right">
+			<h:panelGrid columns="2">
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaCmpEndDate']}" />
+						<p:calendar id="agendaCmpEndDate" value="#{loanAgendaController.agenda.agendaCmpEndDate}" pattern="dd-MMM-yyyy" showOn="label" readonly="true" />
+								
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaCcyCode']}" />
+						<p:inputText id="agendaCcyCode" value="#{loanAgendaController.agenda.agendaCcyCode}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaAmount']}" />
+						<p:inputText id="agendaAmount" value="#{loanAgendaController.agenda.agendaAmount}" readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaSettledAmount']}" />
+						<p:inputText id="agendaSettledAmount" value="#{loanAgendaController.agenda.agendaSettledAmount}" readonly="true"/>
+
+					<h:outputLabel value="#{msg['agendaMgmt.label.isFull']}" />
+						<p:inputText id="isFull" value="#{loanAgendaController.agenda.isFull}" readonly="true"/>
+
+					<h:outputLabel value="#{msg['agendaMgmt.label.smsMobileNo']}" />
+						<p:inputText id="smsMobileNo" value="#{loanAgendaController.agenda.smsMMobile}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.loanDisbType']}" />
+						<p:inputText id="loanDisbType" value="#{loanAgendaController.agenda.loanDisbType}" readonly="true"/>
+
+					<h:outputLabel value="#{msg['agendaMgmt.label.isLoanFutureSch']}" />
+						<p:inputText id="isLoanFutureSch" value="#{loanAgendaController.agenda.isLoanFutureSch}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agentId']}" />
+               			<p:inputText id="agentId" value="#{loanAgendaController.agenda.agentId}" readonly="true" />
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.locCode']}" />
+               			<p:inputText id="locCode" value="#{loanAgendaController.agenda.locCode}" readonly="true" />
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.deviceId']}" />
+						<p:inputText id="deviceId" value="#{loanAgendaController.agenda.deviceId}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaUploadTime']}" />
+						<p:calendar id="agendaUploadTime" value="#{loanAgendaController.agenda.agendaUploadTime}" showOn="label" pattern="dd-MMM-yyyy HH:mm:ss" readonly="true"/> 
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.mbsSyncUploadTime']}" />
+						<p:calendar id="mbsSyncUploadTime" value="#{loanAgendaController.agenda.mbsSyncUpldTime}" showOn="label" pattern="dd-MMM-yyyy HH:mm:ss" readonly="true"/>
+
+					<h:outputLabel value="#{msg['agendaMgmt.label.mbsTxnId']}" />
+						<p:inputText id="mbsTxnId" value="#{loanAgendaController.agenda.mbsTxnId}" readonly="true"/>
+
+					<h:outputLabel value="#{msg['agendaMgmt.label.cbsUploadJobId']}" />
+						<p:inputText id="cbsUploadJobId" value="#{loanAgendaController.agenda.cbsUploadJobId}" readonly="true"/>
+
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaValidity']}" />
+						<p:inputText id="isValid" value="#{loanAgendaController.agenda.isValid}" readonly="true"/>
+
+					<!--  
+					<h:outputLabel value="#{msg['agendaMgmt.label.moduleCode']}" />
+						<p:inputText id="moduleCode" value="#{loanAgendaController.agenda.moduleCode}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.txnCode']}" />
+						<p:inputText id="txnCode" value="#{loanAgendaController.agenda.txnCode}"  readonly="true"/>
+						
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaSettledAmountCcy']}" />
+						<p:inputText id="agendaSettledAmountCcy" value="#{loanAgendaController.agenda.agendaSettledAmountCcy}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.isLoanRedemption']}" />
+						<p:inputText id="isLoanRedemption" value="#{loanAgendaController.agenda.isLoanRedemption}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaLocCcyCode']}" />
+						<p:inputText id="agendaLocCcyCode" value="#{loanAgendaController.agenda.agendaLocCcyCode}" readonly="true"/>
+					
+					<h:outputLabel value="#{msg['agendaMgmt.label.agendaAmountCcy']}" />
+						<p:inputText id="agendaAmountCcy" value="#{loanAgendaController.agenda.agendaAmountCcy}" readonly="true"/>
+					
+					 -->
+			</h:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

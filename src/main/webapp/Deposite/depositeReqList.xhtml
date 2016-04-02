@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['depositMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['depositMgmt.title.listdeposit']}" />
+	<ui:param name="emptyMessage" value="#{msg['depositMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{depositeReqListController}" />
+	
+	<!-- Add  -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{depositeReqListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- Add End -->
+	
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{depositeReqListController.listSelect}" />
+
+		<p:column id="id" filterBy="#{record.id}"
+			headerText="#{msg['depositeMgmt.label.mbstxnId']}"
+			filterMatchMode="contains" sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+		
+		<p:column id="txnDesc" filterBy="#{record.txnDesc}"
+			headerText="#{msg['DepositeMgmt.label.txnDesc']}"
+			filterMatchMode="contains" sortBy="#{record.txnDesc}">
+			<h:outputText value="#{record.txnDesc}" />
+		</p:column>
+		
+		
+		<p:column id="branchCode" filterBy="#{record.branchCode}"
+			headerText="#{msg['DepositeMgmt.label.BranchCode']}"
+			filterMatchMode="contains" sortBy="#{record.branchCode}">
+			<h:outputText value="#{record.branchCode}" />
+		</p:column>
+		
+		<!-- <p:column id="txnCode" filterBy="#{record.txnCode}"
+			headerText="#{msg['DepositeMgmt.label.txnCode']}"
+			filterMatchMode="contains" sortBy="#{record.txnCode}">
+			<h:outputText value="#{record.txnCode}" />
+		</p:column> -->
+		
+		<p:column id="cbsAcRefNo" filterBy="#{record.cbsAcRefNo}"
+			headerText="#{msg['DepositeMgmt.label.cbsAcRefNo']}"
+			filterMatchMode="contains" sortBy="#{record.cbsAcRefNo}">
+			<h:outputText value="#{record.cbsAcRefNo}" />
+		</p:column>
+		
+		<p:column id="customerId" filterBy="#{record.customerId}"
+			headerText="#{msg['DepositeMgmt.label.CustomerId']}"
+			filterMatchMode="contains" sortBy="#{record.customerId}">
+			<h:outputText value="#{record.customerId}" />
+		</p:column>
+		
+		<p:column id="agentId" filterBy="#{record.agentId}"
+			headerText="#{msg['DepositeMgmt.label.AgentId']}"
+			filterMatchMode="contains" sortBy="#{record.agentId}">
+			<h:outputText value="#{record.agentId}" />
+		</p:column>
+		
+		<p:column id="locationCode" filterBy="#{record.locationCode}"
+			headerText="#{msg['DepositeMgmt.label.locationCode']}"
+			filterMatchMode="contains" sortBy="#{record.locationCode}">
+			<h:outputText value="#{record.locationCode}" />
+		</p:column>
+		
+		<p:column id="deviceId" filterBy="#{record.deviceId}"
+			headerText="#{msg['DepositeMgmt.label.DeviceId']}"
+			filterMatchMode="contains" sortBy="#{record.deviceId}">
+			<h:outputText value="#{record.deviceId}" />
+		</p:column>
+		
+		<!-- <p:column id="txnInitTime" filterBy="#{record.txnInitTime}"
+			headerText="#{msg['DepositeMgmt.label.txnInitTime']}">
+			<h:outputText value="#{record.txnInitTime}" >
+			<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a" /> 
+			</h:outputText>
+		</p:column>
+		
+		<p:column id="txnStatusDesc" filterBy="#{record.txnStatusDesc}"
+			headerText="#{msg['DepositeMgmt.label.txnStatusDesc']}"
+			filterMatchMode="contains" sortBy="#{record.txnStatusDesc}">
+			<h:outputText value="#{record.txnStatusDesc}" />
+		</p:column> -->
+			
+	</ui:define> 		 
+</ui:composition>

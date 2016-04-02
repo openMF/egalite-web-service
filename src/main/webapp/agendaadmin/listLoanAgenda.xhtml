@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['agentMgmt.title.agent']}" /> -->
+	<ui:param name="pageHeaderTitle" value="#{msg['loanMgmt.label.listLoanAgent']}" />
+	<ui:param name="emptyMessage" value="#{msg['msg.noRecords']}" />
+	<ui:param name="listController" value="#{loanAgendaListController}" />
+	
+	<!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{loanAgendaListController.selectedRecord}"/>
+	<!-- ADD END -->
+	
+<h:outputScript library="js" name="menu.js" />
+
+	<ui:define name="dataTableContent">
+	
+		<p:ajax event="rowDblselect" listener="#{loanAgendaListController.listSelect}" />
+
+			<p:column headerText="#{msg['agendaMgmt.label.agendaId']}"
+				filterBy="#{record.agendaId}" id="id" sortBy="#{record.agendaId}">
+				<h:outputText value="#{record.agendaId}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agendaMgmt.label.seqNo']}"
+				filterBy="#{record.seqNo}" id="seqNo" sortBy="#{record.seqNo}">
+				<h:outputText value="#{record.seqNo}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agendaMgmt.label.agendaStatus']}"
+				filterBy="#{record.agendaStatus}" id="agendaStatus" sortBy="#{record.agendaStatus}">
+				<h:outputText value="#{record.agendaStatus}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agendaMgmt.label.branchCode']}"
+				filterBy="#{record.branchCode}" id="branchCode" sortBy="#{record.branchCode}">
+				<h:outputText value="#{record.branchCode}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agendaMgmt.label.cbdAccRefNo']}"
+				filterBy="#{record.cbdAccRefNo}" id="cbdAccRefNo" sortBy="#{record.cbdAccRefNo}">
+				<h:outputText value="#{record.cbdAccRefNo}" />
+			</p:column>
+			
+			<!-- <p:column headerText="#{msg['agendaMgmt.label.moduleCode']}"
+				filterBy="#{record.moduleCode}" id="moduleCode" sortBy="#{record.moduleCode}">
+				<h:outputText value="#{record.moduleCode}" />
+			</p:column> -->
+
+			 <p:column headerText="#{msg['agentTxnMgmt.label.txnDesc']}"
+				filterBy="#{record.getTxnDesc()}" id="txnDesc" sortBy="#{record.getTxnDesc()}">
+				<h:outputText value="#{record.getTxnDesc()}" />
+			</p:column> 
+			
+			 <p:column headerText="#{msg['agentTxnMgmt.label.customerId']}"
+				filterBy="#{record.customerId}" id="customerId" sortBy="#{record.customerId}">
+				<h:outputText value="#{record.customerId}" />
+			</p:column> 
+
+			<p:column headerText="#{msg['agendaMgmt.label.isGroupLoan']}"
+				filterBy="#{record.isGroupLoan}" id="isGroupLoan" sortBy="#{record.isGroupLoan}">
+				<h:outputText value="#{record.isGroupLoan}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agendaMgmt.label.isParentLoan']}"
+				filterBy="#{record.isParentLoan}" id="isParentLoan" sortBy="#{record.isParentLoan}">
+				<h:outputText value="#{record.isParentLoan}" />
+			</p:column>
+
+			<!-- <p:column headerText="#{msg['agendaMgmt.label.agendaStatus']}"
+				filterBy="#{record.agendaStatus}" id="agendaStatus" sortBy="#{record.agendaStatus}">
+				<h:outputText value="#{record.agendaStatus}" />
+			</p:column> -->
+
+			<p:column headerText="#{msg['agendaMgmt.label.isParentCust']}"
+				filterBy="#{record.isParentCust}" id="isParentCust" sortBy="#{record.isParentCust}">
+				<h:outputText value="#{record.isParentCust}" />
+			</p:column>
+
+			<p:column headerText="#{msg['loanMgmt.label.parentCustId']}"
+				filterBy="#{record.parentCustId}" id="parentCustId" sortBy="#{record.parentCustId}">
+				<h:outputText value="#{record.parentCustId}" />
+			</p:column>
+
+			<p:column headerText="#{msg['loanMgmt.label.parentLoanAcNo']}"
+				filterBy="#{record.parentCbsAcRefNo}" id="parentCbsAcRefNo" sortBy="#{record.parentCbsAcRefNo}">
+				<h:outputText value="#{record.parentCbsAcRefNo}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agendaMgmt.label.isFull']}"
+				filterBy="#{record.isFull}" id="isFull" sortBy="#{record.isFull}">
+				<h:outputText value="#{record.isFull}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agendaMgmt.label.deviceId']}"
+				filterBy="#{record.deviceId}" id="deviceId" sortBy="#{record.deviceId}">
+				<h:outputText value="#{record.deviceId}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agendaMgmt.label.isValid']}"
+				filterBy="#{record.isValid}" id="isValid" sortBy="#{record.isValid}">
+				<h:outputText value="#{record.isValid}" />
+			</p:column>
+			
+	</ui:define>
+</ui:composition>

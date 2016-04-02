@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceListTemplate.xhtml">
+	<ui:define name="metadata">
+
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			if (navigator.userAgent.toLowerCase().indexOf('chrome') >= 0) {
+
+				setTimeout(function() {
+
+				}, 500);
+			}
+
+			//]]>
+		</script>
+	</ui:define>
+	<ui:param name="pageTitle" value="#{msg['customerMgmt.title.cbsCustomers']}" />
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['customerMgmt.title.listCustomersView']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['customerMgmt.msg.noRecords']}" />
+	<!-- <ui:param name="addControlText" value="#{msg['userMgmt.tblNav.add']}" />
+	<ui:param name="addOutcome" value="addUser" />
+	<ui:param name="addAuthority" value="#{auth.checkAuthority('addUser')}" /> -->
+	<ui:param name="listController" value="#{customerListController}" />
+	<!-- 	<ui:param name="listData" value="#{userListController.users}"/>
+	<ui:param name="selectedRecords" value="#{userListController.selectedUser}"/>
+	<ui:param name="filteredRecords" value="#{userListController.filteredUsers}"/>
+ -->
+
+	<ui:define name="topSearchContent">
+		<p:panel>
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="custID"
+					value="#{msg['customerMgmt.tblHeader.customerId']}" />
+				<p:inputText id="custID"
+					onkeypress="return inputLimiter(event,'NameCharactersAndNumbers')"
+					value="#{customerListController.custId}" readonly="false"
+					label="#{msg['customerMgmt.tblHeader.customerId']}">
+				</p:inputText>
+				<p:message for="custID" display="icon" />
+
+				<h:outputLabel for="locCode"
+					value="#{msg['customerMgmt.tblHeader.locationCode']}" />
+				<p:inputText id="locCode"
+					onkeypress="return inputLimiter(event,'NameCharactersAndNumbers')"
+					value="#{customerListController.locCode}" readonly="false"
+					label="#{msg['customerMgmt.tblHeader.locationCode']}">
+				</p:inputText>
+				<p:message for="locCode" display="icon" />
+
+				<h:outputLabel for="locBrCode"
+					value="#{msg['customerMgmt.label.localBranchCode']}" />
+				<p:inputText id="locBrCode"
+					onkeypress="return inputLimiter(event,'NameCharactersAndNumbers')"
+					value="#{customerListController.locBrCode}" readonly="false"
+					label="#{msg['customerMgmt.label.localBranchCode']}">
+				</p:inputText>
+				<p:message for="locBrCode" display="icon" />
+
+				<h:outputLabel for="space"
+					value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+				<p:commandButton id="btnSearch"
+					value="#{msg['commonMgmt.btn.search']}" update="panel"
+					action="#{customerListController.load()}" />
+
+			</h:panelGrid>
+		</p:panel>
+
+	</ui:define>
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{customerListController.listSelect}" />
+
+		<p:column id="id"
+			headerText="#{msg['customerMgmt.tblHeader.customerId']}"
+			filterBy="#{record.id}" sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+
+         <p:column id="localBranchCode"
+			headerText="#{msg['customerMgmt.label.localBranchCode']}"
+			filterBy="#{record.localBranchCode}"
+			sortBy="#{record.localBranchCode}">
+			<h:outputText value="#{record.localBranchCode}" />
+		</p:column>
+
+         <p:column id="isParentCust"
+			headerText="#{msg['customerMgmt.label.isParentCust']}"
+			filterBy="#{record.isParentCust}"
+			sortBy="#{record.isParentCust}">
+			<h:outputText value="#{record.isParentCust}" />
+		</p:column>
+         
+          <p:column id="parentCustId"
+			headerText="#{msg['customerMgmt.label.parentCustId']}"
+			filterBy="#{record.parentCustId}"
+			sortBy="#{record.parentCustId}">
+			<h:outputText value="#{record.parentCustId}" />
+		</p:column>
+		
+		<p:column id="allocatedAgentId"
+			headerText="#{msg['customerMgmt.label.allocateAgentId']}"
+			filterBy="#{record.allocatedAgentId}"
+			sortBy="#{record.allocatedAgentId}">
+			<h:outputText value="#{record.allocatedAgentId}" />
+		</p:column>
+		
+		<p:column id="creditOfficer"
+			headerText="#{msg['customerMgmt.label.creditOfficer']}"
+			filterBy="#{record.creditOfficer}" sortBy="#{record.creditOfficer}">
+			<h:outputText value="#{record.creditOfficer}" />
+		</p:column>
+		
+		 <p:column id="locationCode"
+			headerText="#{msg['customerMgmt.tblHeader.locationCode']}"
+			filterBy="#{record.locationCode}" sortBy="#{record.locationCode}">
+			<h:outputText value="#{record.locationCode}" />
+		</p:column>
+		
+		<!-- <p:column id="customerFullName"
+			headerText="#{msg['customerMgmt.tblHeader.customerFullName']}"
+			filterBy="#{record.customerFullName}"
+			sortBy="#{record.customerFullName}">
+			<h:outputText value="#{record.customerFullName}" />
+		</p:column> -->
+
+		<!-- <p:column id="customerShortName"
+			headerText="#{msg['customerMgmt.tblHeader.customerShortName']}"
+			filterBy="#{record.customerShortName}"
+			sortBy="#{record.customerShortName}">
+			<h:outputText value="#{record.customerShortName}" />
+		</p:column> -->
+
+		<!-- <p:column id="customerCategory"
+			headerText="#{msg['customerMgmt.tblHeader.customerCategory']}"
+			filterBy="#{record.customerCategory}"
+			sortBy="#{record.customerCategory}">
+			<h:outputText value="#{record.customerCategory}" />
+		</p:column> -->
+
+
+		<!-- <p:column id="gender"
+			headerText="#{msg['customerMgmt.tblHeader.gender']}"
+			filterBy="#{record.gender}" sortBy="#{record.gender}">
+			<h:outputText value="#{record.gender}" />
+		</p:column>
+
+		<p:column id="dobDateText" filterBy="#{record.dobDateText}"
+			headerText="#{msg['customerMgmt.tblHeader.dob']}"
+			sortBy="#{record.dobDateText}">
+			<h:outputText value="#{record.dobDateText}" showOn="label"
+				readonly="true">
+			</h:outputText>
+		</p:column> -->
+
+		<!-- <p:column id="customerSince"
+			headerText="#{msg['customerMgmt.tblHeader.customerSince']}"
+			filterBy="#{record.customerSince}" sortBy="#{record.customerSince}">
+			 <h:outputText value="#{record.customerSince}" >
+			  </h:outputText>
+		</p:column> -->
+		
+
+		<!-- <p:column id="mobileNumber"
+			headerText="#{msg['customerMgmt.tblHeader.mobileNumber']}"
+			filterBy="#{record.mobileNumber}" sortBy="#{record.mobileNumber}">
+			<h:outputText value="#{record.mobileNumber}" />
+		</p:column> -->
+
+		<!-- <p:column id="city" headerText="#{msg['customerMgmt.tblHeader.city']}"
+			filterBy="#{record.city}" sortBy="#{record.city}">
+			<h:outputText value="#{record.city}" />
+		</p:column> -->
+         
+	</ui:define>
+</ui:composition>

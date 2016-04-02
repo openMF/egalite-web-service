@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://java.sun.com/jsp/jstl/core"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+<!--EGA-MN15-000022  added columns generated_sms,sms_mobile_no,sms_content,generated_revr,full_part_ind,sync_type
+-->
+ 
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{newDepositAccController.newdepositRequestVO.id}"></f:viewParam>
+			<f:event listener="#{newDepositAccController.loadNewDepositAcc}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['depositMgmt.title.Reqtracker']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['depositMgmt.title.newAccReq']}" /></span>
+				<span class="pageHeaderControls"> <p:button id="btnList"
+						value="#{msg['agentTxnMgmt.label.close']}" outcome="openList" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left">
+				<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.RequestId']}" />
+					<p:inputText id="requestId"
+						value="#{newDepositAccController.newdepositRequestVO.id}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnDescription']}" />
+					<p:inputText id="txnCode"
+						value="#{newDepositAccController.newdepositRequestVO.txnCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.BranchCode']}" />
+					<p:inputText id="branchCode"
+						value="#{newDepositAccController.newdepositRequestVO.branchCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerId']}" />
+					<p:inputText id="customerId"
+						value="#{newDepositAccController.newdepositRequestVO.customerId}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerName']}" />
+					<p:inputText id="customerFullName"
+						value="#{newDepositAccController.newdepositRequestVO.customerFullName}"
+						readonly="true" />
+
+					<h:outputLabel
+						value="#{msg['depositeMgmt.label.depositRequestDate']}" />
+					<p:inputText id="depositRequestDate"
+						value="#{newDepositAccController.newdepositRequestVO.depositRequestDate}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy" />
+					</p:inputText>
+
+					<h:outputLabel
+						value="#{msg['depositeMgmt.label.agreedInstallmentAmount']}" />
+					<p:inputText id="agreedInstallmentAmount"
+						value="#{newDepositAccController.newdepositRequestVO.agreedInstallmentAmount}"
+						readonly="true" />
+
+					<h:outputLabel
+						value="#{msg['depositeMgmt.label.proposedInstallmentNumber']}" />
+					<p:inputText id="proposedInstallmentNumber"
+						value="#{newDepositAccController.newdepositRequestVO.proposedInstallmentNumber}"
+						readonly="true" />
+
+					<h:outputLabel
+						value="#{msg['depositeMgmt.label.expectedMaturityDate']}" />
+					<p:inputText id="expectedMaturityDate"
+						value="#{newDepositAccController.newdepositRequestVO.expectedMaturityDate}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy" />
+					</p:inputText>
+
+					<h:outputLabel
+						value="#{msg['depositeMgmt.label.proposedInterestRate']}" />
+					<p:inputText id="proposedInterestRate"
+						value="#{newDepositAccController.newdepositRequestVO.proposedInterestRate}"
+						readonly="true" />
+
+					<h:outputLabel
+						value="#{msg['depositeMgmt.label.proposedTenureType']}" />
+					<p:inputText id="proposedTenureType"
+						value="#{newDepositAccController.newdepositRequestVO.proposedTenureType}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['depositeMgmt.label.proposedTenure']}" />
+					<p:inputText id="proposedTenure"
+						value="#{newDepositAccController.newdepositRequestVO.proposedTenure}"
+						readonly="true" />
+
+					<h:outputLabel
+						value="#{msg['depositeMgmt.label.proposedFrequencyType']}" />
+					<p:inputText id="proposedFrequencyType"
+						value="#{newDepositAccController.newdepositRequestVO.proposedFrequencyType}"
+						readonly="true" />
+
+					<h:outputLabel
+						value="#{msg['depositeMgmt.label.proposedFrequency']}" />
+					<p:inputText id="proposedFrequency"
+						value="#{newDepositAccController.newdepositRequestVO.proposedFrequency}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.AgentId']}" />
+					<p:inputText id="agentId"
+						value="#{newDepositAccController.newdepositRequestVO.agentId}"
+						readonly="true" />
+
+				</h:panelGrid>
+			</p:panel>
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2">
+
+
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.AgentName']}" />
+					<p:inputText id="agentName"
+						value="#{newDepositAccController.newdepositRequestVO.agentName}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.locationCode']}" />
+					<p:inputText id="locationCode"
+						value="#{newDepositAccController.newdepositRequestVO.locationCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.locationDesc']}" />
+					<p:inputText id="locationDesc"
+						value="#{newDepositAccController.newdepositRequestVO.locationDesc}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['depositeMgmt.label.txnNarrative']}" />
+					<p:inputText id="txnNarrative"
+						value="#{newDepositAccController.newdepositRequestVO.txnNarrative}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnInitTime']}" />
+					<p:inputText id="txnInitTime"
+						value="#{newDepositAccController.newdepositRequestVO.txnInitTime}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a" />
+					</p:inputText>
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.SyncTime']}" />
+					<p:inputText id="txnSyncTime"
+						value="#{newDepositAccController.newdepositRequestVO.txnSyncTime}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a" />
+					</p:inputText>
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnStatusDesc']}" />
+					<p:inputText id="txnStatusDesc"
+						value="#{newDepositAccController.newdepositRequestVO.txnStatusDesc}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnErrCode']}" />
+					<p:inputText id="txnErrCode"
+						value="#{newDepositAccController.newdepositRequestVO.txnErrCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnErrMessage']}" />
+					<p:inputText id="txnErrMessage"
+						value="#{newDepositAccController.newdepositRequestVO.txnErrMessage}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.generatedSms']}" />
+					<p:inputText id="generatedSms"
+						value="#{newDepositAccController.newdepositRequestVO.generatedSms}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.smsMobileNo']}" />
+					<p:inputText id="smsMobileNo"
+						value="#{newDepositAccController.newdepositRequestVO.smsMobileNo}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.smsContent']}" />
+					<p:inputText id="smsContent"
+						value="#{newDepositAccController.newdepositRequestVO.smsContent}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.genetatedRevr']}" />
+					<p:inputText id="genetatedRevr"
+						value="#{newDepositAccController.newdepositRequestVO.generatedRevr}"
+						readonly="true" />
+
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.fullPartInd']}" />
+					<p:inputText id="fullPartInd"
+						value="#{newDepositAccController.newdepositRequestVO.fullPartInd}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.syncType']}" />
+					<p:inputText id="syncType"
+						value="#{newDepositAccController.newdepositRequestVO.syncType}"
+						readonly="true" />
+
+
+
+				</h:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+

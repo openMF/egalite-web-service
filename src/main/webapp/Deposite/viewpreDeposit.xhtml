@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://java.sun.com/jsp/jstl/core"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{preeDepositController.depositRequestVO.requestId}"></f:viewParam>
+			<f:event listener="#{preeDepositController.loadpreDeposit}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['depositMgmt.title.Reqtracker']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['depositMgmt.title.preDepositReq']}" /></span>
+				<span class="pageHeaderControls"> <p:button id="btnList"
+						value="#{msg['agentTxnMgmt.label.close']}" outcome="openList" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel value="#{msg['DepositeMgmt.label.RequestId']}" />
+				<p:inputText id="requestId"
+					value="#{preeDepositController.depositRequestVO.requestId}"
+					readonly="true" />
+
+				<h:outputLabel value="#{msg['DepositeMgmt.label.RequestType']}" />
+				<p:inputText id="requestTypeText"
+					value="#{preeDepositController.depositRequestVO.requestTypeText}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.Requeststatus']}" />
+				<p:inputText id="requeststatusText"
+					value="#{preeDepositController.depositRequestVO.requeststatusText}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.AuthStatus']}" />
+				<p:inputText id="authstatusText"
+					value="#{preeDepositController.depositRequestVO.authstatusText}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.DepositAccNum']}" />
+				<p:inputText id="depositAccNum"
+					value="#{preeDepositController.depositRequestVO.depositAccNum}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerId']}" />
+				<p:inputText id="customerId"
+					value="#{preeDepositController.depositRequestVO.customerId}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerName']}" />
+				<p:inputText id="customerName"
+					value="#{preeDepositController.depositRequestVO.customerName}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.AgentName']}" />
+				<p:inputText id="agentName"
+					value="#{preeDepositController.depositRequestVO.agentName}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.DepositCcy']}" />
+				<p:inputText id="depositCcy"
+					value="#{preeDepositController.depositRequestVO.depositCcy}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.PrepaymentAmt']}" />
+				<p:inputText id="prepaymentAmt"
+					value="#{preeDepositController.depositRequestVO.prepaymentAmt}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.narrative']}" />
+				<p:inputText id="narrative"
+					value="#{preeDepositController.depositRequestVO.narrative}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.RequestDate']}" />
+				<p:inputText id="requestDate"
+					value="#{preeDepositController.depositRequestVO.requestDate}" readonly="true" >
+					   <f:convertDateTime pattern="dd-MMM-yyyy" />
+				</p:inputText>
+				<h:outputLabel value="#{msg['DepositeMgmt.label.SyncTime']}" />
+				<p:inputText id="syncTime"
+					value="#{preeDepositController.depositRequestVO.syncTimeText}"
+					readonly="true" />
+				<h:outputLabel value="#{msg['DepositeMgmt.label.MaturityDate']}" />
+				<p:inputText id="maturityDate"
+					value="#{preeDepositController.depositRequestVO.maturityDate}" 
+					readonly="true">
+					<f:convertDateTime pattern="dd-MMM-yyyy"/>
+				</p:inputText>
+				<h:outputLabel value="#{msg['DepositeMgmt.label.ReqError']}" />
+				<p:inputText id="reqError"
+					value="#{preeDepositController.depositRequestVO.reqError}"
+					readonly="true" />
+               
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

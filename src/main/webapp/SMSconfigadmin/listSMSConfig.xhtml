@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceListTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['SmsConfigMgmt.title.listsmsConfig']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['SmsConfigMgmt.msg.noRecords']}" />
+		
+	<ui:param name="addControlText" value="#{msg['SmsConfigMgmt.nav.add']}" />
+	<ui:param name="addOutcome" value="addSMSConfig" />
+	 <ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addSmsConfig')}" />  
+	<ui:param name="listController" value="#{smsConfigListController}" />
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{smsConfigListController.listSelect}" />
+
+	   <p:column id="id" filterBy="#{record.id}"
+			headerText="#{msg['SmsConfigMgmt.tblHeader.txnCode']}"
+			sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+		
+		<p:column id="sendSmsFromMbs" filterBy="#{record.sendSmsFromMbs}"
+			headerText="#{msg['SmsConfigMgmt.tblHeader.sendSmsFromMbs']}"
+			sortBy="#{record.sendSmsFromMbs}">
+			<h:outputText value="#{record.sendSmsFromMbs}" />
+		</p:column>
+		
+		<p:column id="smsTemplateMbs" filterBy="#{record.smsTemplateMbs}"
+				headerText="#{msg['SmsConfigMgmt.tblHeader.smsTemplateMbs']}"
+				sortBy="#{record.smsTemplateMbs}">
+				<h:outputText value="#{record.smsTemplateMbs}" />
+		</p:column>
+		
+		<p:column id="sendSmsFromIbs" filterBy="#{record.sendSmsFromIbs}"
+			headerText="#{msg['SmsConfigMgmt.label.sendSmsFromIbs']}"
+			sortBy="#{record.sendSmsFromIbs}">
+			<h:outputText value="#{record.sendSmsFromIbs}" />
+		</p:column>
+
+
+		<p:column id="smsTemplateIbs" filterBy="#{record.smsTemplateIbs}"
+			headerText="#{msg['SmsConfigMgmt.tblHeader.smsTemplateIbs']}"
+			sortBy="#{record.smsTemplateIbs}">
+			<h:outputText value="#{record.smsTemplateIbs}" />
+		</p:column>
+
+
+		<p:column id="authStatus" filterBy="#{record.authStatusText}"
+			headerText="#{msg['SmsConfigMgmt.tblHeader.authStatus']}"
+			sortBy="#{record.authStatusText}">
+			<h:outputText value="#{record.authStatusText}" />
+			</p:column>
+
+		<p:column id="isActive" filterBy="#{record.smsConfigStatusText}"
+				headerText="#{msg['SmsConfigMgmt.tblHeader.isActive']}"
+				sortBy="#{record.isActive}">
+				<h:outputText value="#{record.smsConfigStatusText}" />
+		</p:column>
+		
+	
+	
+	</ui:define>
+</ui:composition>

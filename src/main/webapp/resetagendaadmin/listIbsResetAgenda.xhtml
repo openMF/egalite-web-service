@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['reAgendaMgmt.title.listAgendas']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['reAgendaMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['reAgendaMgmt.tblNav.add']}" />
+	<ui:param name="addOutcome" value="addIbsResetAgenda" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addIbsResetAgenda')}" />
+	<ui:param name="listController" value="#{ibsResetAgendaListController}" />
+
+     <!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{ibsResetAgendaListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- ADD END -->
+
+
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{ibsResetAgendaListController.listSelect}" />
+
+		<p:column id="id" filterBy="#{record.id}"
+			headerText="#{msg['reAgendaMgmt.tblHeader.reAgendaId']}"
+			sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+		
+		<p:column id="resetOption" filterBy="#{record.resetOption}"
+			headerText="#{msg['reAgendaMgmt.tblHeader.resetOption']}"
+			sortBy="#{record.resetOption}">
+			<h:outputText value="#{record.resetOption}" />
+		</p:column>
+		
+		<p:column id="agentId" filterBy="#{record.agentId}"
+				headerText="#{msg['reAgendaMgmt.tblHeader.agentId']}"
+				sortBy="#{record.agentId}">
+				<h:outputText value="#{record.agentId}" />
+		</p:column>
+		
+		<p:column id="initByUserId"
+			filterBy="#{record.initByUserId}"
+			headerText="#{msg['reAgendaMgmt.tblHeader.initByUserId']}"
+			sortBy="#{record.initByUserId}">
+			<h:outputText value="#{record.initByUserId}" />
+		</p:column>
+        
+        <p:column id="verifyByUserId"
+			filterBy="#{record.verifyByUserId}"
+			headerText="#{msg['reAgendaMgmt.tblHeader.verifyByUserId']}"
+			sortBy="#{record.verifyByUserId}">
+			<h:outputText value="#{record.verifyByUserId}" />
+		</p:column>
+
+		<p:column id="authStatus" filterBy="#{record.authStatusText}"
+			headerText="#{msg['agencyMgmt.tblHeader.authStatus']}"
+			sortBy="#{record.authStatusText}">
+			<h:outputText value="#{record.authStatusText}" />
+		</p:column>
+
+		 <p:column id="isActive" filterBy="#{record.reAgendaStatusText}"
+				headerText="#{msg['agencyMgmt.tblHeader.isActive']}"
+				sortBy="#{record.reAgendaStatusText}">
+				<h:outputText value="#{record.reAgendaStatusText}" />
+		</p:column> 
+		
+		 <p:column id="processStatus" filterBy="#{record.processStatus}"
+				headerText="#{msg['agencyMgmt.tblHeader.processStatus']}"
+				sortBy="#{record.processStatus}">
+				<h:outputText value="#{record.processStatus}" />
+		</p:column>
+		
+		
+		
+	</ui:define>
+</ui:composition>

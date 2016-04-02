@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'NameCharactersAndNumbersWithNoBlankSpace') {
+					AllowableCharacters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			function ieClicked() {
+				if (document.all) {
+					return false;
+				}
+			}
+			function firefoxClicked(e) {
+				if (document.layers || (document.getElementById(!document.all))) {
+					if (e.which == 2 || e.which == 3) {
+						return false;
+					}
+				}
+			}
+			if (document.layers) {
+				document.captureEvents(Event.MOUSEDOWN);
+				document.onmousedown = firefoxClicked;
+			} else {
+				document.onmouseup = firefoxClicked;
+				document.oncontextmenu = ieClicked;
+			}
+			document.oncontextmenu = new Function("return false")
+
+			//]]>
+		</script>
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{ibsResetAgendaController.ibsResetAgenda.id}"></f:viewParam>
+			<f:event listener="#{ibsResetAgendaController.loadResetAgendaModify}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['reAgendaMgmt.title.reAgdModify']}" /></span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['agencyMgmt.btn.save']}" update="panel"
+						action="#{ibsResetAgendaController.checkModifyForUpdate}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['agencyMgmt.nav.cancel']}"
+						outcome="cancel">
+						<f:param name="id"
+							value="#{ibsResetAgendaController.ibsResetAgenda.id}" />
+					</p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="3" id="panelGrid">
+
+				<h:outputLabel for="id"
+					value="#{msg['reAgendaMgmt.label.resetAgendaId']}" />
+				<p:inputText id="id"
+					value="#{ibsResetAgendaController.ibsResetAgenda.id}"
+					readonly="true" label="#{msg['reAgendaMgmt.label.resetAgendaId']}" />
+				<p:message for="id" display="icon" />
+
+				<h:outputLabel for="resetOption"
+					value="#{msg['reAgendaMgmt.label.resetOption']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="resetOption" styleClass="drop_down_style"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetOption}"
+					required="true" label="#{msg['reAgendaMgmt.label.resetOption']}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{ibsResetAgendaController.agendaOptions}"
+						var="opt" itemValue="#{opt.listValue}" itemLabel="#{opt.desn}" />
+					<p:ajax event="change" update="agentId" process="@this"
+						listener="#{ibsResetAgendaController.updateAgents()}" />
+				</h:selectOneMenu>
+				<p:message for="resetOption" display="icon" />
+
+
+				<h:outputLabel for="agentId"
+					value="#{msg['agentMgmt.label.agentId']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="agentId" styleClass="drop_down_style"
+					value="#{ibsResetAgendaController.ibsResetAgenda.agentId}"
+					required="true" label="#{msg['agentMgmt.label.agentId']}"
+					disabled="#{ibsResetAgendaController.isModifyOptAgtsDisable()}">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{ibsResetAgendaController.agents}"
+						var="tempAgent" itemValue="#{tempAgent.id}"
+						itemLabel="#{tempAgent.id}  ~  #{tempAgent.fname}">
+					</f:selectItems>
+				</h:selectOneMenu>
+				<p:message for="agentId" display="icon" />
+
+				<h:outputLabel for="resetRemarks"
+					value="#{msg['reAgendaMgmt.label.resetRemarks']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="resetRemarks"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetRemarks}"
+					readonly="false" required="true"
+					label="#{msg['reAgendaMgmt.label.resetRemarks']}">
+					<f:validateLength minimum="3" maximum="200" />
+				</p:inputText>
+				<p:message for="resetRemarks" display="icon" />
+
+				<h:outputLabel for="resetInitDateTime"
+					value="#{msg['reAgendaMgmt.label.resetInitDateTime']}" />
+				<p:inputText id="resetInitDateTime" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetInitDateTime}"
+					label="#{msg['reAgendaMgmt.label.resetInitDateTime']}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</p:inputText>
+				<p:message for="resetInitDateTime" display="icon" />
+
+
+				<h:outputLabel for="resetAuthDateTime"
+					value="#{msg['reAgendaMgmt.label.resetAuthDateTime']}" />
+				<p:inputText id="resetAuthDateTime" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetAuthDateTime}"
+					label="#{msg['reAgendaMgmt.label.resetAuthDateTime']}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</p:inputText>
+				<p:message for="resetAuthDateTime" display="icon" />
+
+
+
+				<h:outputLabel for="processStatus"
+					value="#{msg['reAgendaMgmt.label.processStatus']}" />
+				<p:inputText id="processStatus" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.processStatus}"
+					label="#{msg['reAgendaMgmt.label.processStatus']}">
+				</p:inputText>
+				<p:message for="processStatus" display="icon" />
+
+
+
+				<h:outputLabel for="isActive"
+					value="#{msg['agencyMgmt.tblHeader.isActive']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="isActive" styleClass="drop_down_style"
+					value="#{ibsResetAgendaController.ibsResetAgenda.isActive}"
+					required="true" label="#{msg['agencyMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{ibsResetAgendaController.activeStatuss}"
+						var="devi" itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isActive" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

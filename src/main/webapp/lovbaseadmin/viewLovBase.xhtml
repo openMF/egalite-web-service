@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{lovBaseController.lovBaseVO.id}"></f:viewParam>
+			<f:event listener="#{lovBaseController.loadLov}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['lovMgmt.title.lovDisplayDetail']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{lovBaseController}"></ui:param>
+					</ui:include> <p:commandButton id="btnDelete"
+						value="#{msg['agencyMgmt.btn.delete']}"
+						rendered="#{lovBaseController.isDeleteAllowed()}"
+						disabled="#{lovBaseController.isEnableDeleteAllowed()}"
+						action="#{lovBaseController.deleteUnAuthorized}">
+						 <p:confirm header="Confirmation" message="#{msg['msg.confirm.dialog']}"
+							icon="ui-icon-alert" />
+					</p:commandButton>  <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['lovMgmt.label.lovid']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{lovBaseController.lovBaseVO.id}"
+					label="#{msg['lovMgmt.label.lovid']}">
+				</p:inputText>
+
+				<h:outputLabel for="lovDesc"
+					value="#{msg['lovMgmt.label.lovDesc']}" />
+				<p:inputText id="lovDesc" readonly="true"
+					value="#{lovBaseController.lovBaseVO.lovDesc}"
+					label="#{msg['lovMgmt.label.lovDesc']}">
+				</p:inputText>
+
+				<h:outputLabel for="isActive"
+					value="#{msg['agencyMgmt.tblHeader.isActive']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{lovBaseController.isStatusActive}">
+				</p:inputText>
+				
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

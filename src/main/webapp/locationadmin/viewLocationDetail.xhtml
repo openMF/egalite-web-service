@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	
+	<!-- Modification under Tag No [ EGA-MN15-000003 ]
+	1. Panel Added under maintenance form for splitting Screen.
+	2. zipCode placed after addressLine3.
+	 -->
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{locationController.location.locationCode}"></f:viewParam>
+			<f:event listener="#{locationController.loadLocation}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['locationMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['locationMgmt.tblHeader.locationDetail']}" /></span>
+						<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{locationController}"></ui:param>
+					</ui:include> <p:commandButton id="btnDelete"
+						value="#{msg['locationMgmt.btn.delete']}"
+						rendered="#{locationController.isDeleteAllowed()}" update="panel"
+						disabled="#{locationController.isEnableDeleteAllowed()}"
+						action="#{locationController.deleteUnAuthorized}" >
+						<p:confirm header="Confirmation" message="#{msg['msg.confirm.dialog']}"
+							icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+		<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['locationMgmt.tblHeader.locationCode']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{locationController.location.locationCode}"
+					label="#{msg['locationMgmt.tblHeader.locationCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="locationDesc"
+					value="#{msg['locationMgmt.tblHeader.locationDesc']}" />
+				<p:inputText id="locationDesc" readonly="true"
+					value="#{locationController.location.locationDesc}"
+					label="#{msg['locationMgmt.tblHeader.locationDesc']}">
+				</p:inputText>
+				
+				<h:outputLabel for="cbsLocationCode"
+					value="#{msg['locationMgmt.tblHeader.cbsLocationCode']}" />
+				<p:inputText id="cbsLocationCode" readonly="true"
+					value="#{locationController.location.cbsLocationCode}"
+					label="#{msg['locationMgmt.tblHeader.cbsLocationCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="cbsBranchCode"
+					value="#{msg['locationMgmt.tblHeader.cbsBranchCode']}" />
+				<p:inputText id="cbsBranchCode" readonly="true"
+					value="#{locationController.location.cbsBranchCode}"
+					label="#{msg['locationMgmt.tblHeader.cbsBranchCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="address1"
+					value="#{msg['locationMgmt.tblHeader.address1']}" />
+				<p:inputText id="address1" readonly="true"
+					value="#{locationController.location.address1}"
+					label="#{msg['locationMgmt.tblHeader.address1']}">
+				</p:inputText>
+
+				<h:outputLabel for="address2"
+					value="#{msg['locationMgmt.tblHeader.address2']}" />
+				<p:inputText id="address2" readonly="true"
+					value="#{locationController.location.address2}"
+					label="#{msg['locationMgmt.tblHeader.address2']}">
+				</p:inputText>
+
+				<h:outputLabel for="address3"
+					value="#{msg['locationMgmt.tblHeader.address3']}" />
+				<p:inputText id="address3" readonly="true"
+					value="#{locationController.location.address3}"
+					label="#{msg['locationMgmt.tblHeader.address3']}">
+				</p:inputText>
+				
+				</h:panelGrid>
+			</p:panel>	
+					<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2" >
+				
+				<h:outputLabel for="zipCode"
+					value="#{msg['locationMgmt.tblHeader.zipCode']}" />
+				<p:inputText id="zipCode" readonly="true"
+					value="#{locationController.location.zipCode}"
+					label="#{msg['locationMgmt.tblHeader.zipCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="address4"
+					value="#{msg['locationMgmt.tblHeader.address4']}" />
+				<p:inputText id="address4" readonly="true"
+					value="#{locationController.location.address4}"
+					label="#{msg['locationMgmt.tblHeader.address4']}">
+				</p:inputText>
+				
+				<h:outputLabel for="city"
+					value="#{msg['locationMgmt.tblHeader.city']}" />
+				<p:inputText id="city" readonly="true"
+					value="#{locationController.location.city}"
+					label="#{msg['locationMgmt.tblHeader.city']}">
+				</p:inputText>
+				
+				<h:outputLabel for="state"
+					value="#{msg['locationMgmt.tblHeader.state']}" />
+				<p:inputText id="state" readonly="true"
+					value="#{locationController.location.state}"
+					label="#{msg['locationMgmt.tblHeader.state']}">
+				</p:inputText>
+				
+				<h:outputLabel for="country"
+					value="#{msg['locationMgmt.tblHeader.country']}" />
+				<p:inputText id="country" readonly="true"
+					value="#{locationController.countryName}"
+					label="#{msg['locationMgmt.tblHeader.country']}">
+				</p:inputText>
+
+				<h:outputLabel for="contactNumber"
+					value="#{msg['locationMgmt.tblHeader.contactNumber']}" />
+				<p:inputText id="contactNumber" readonly="true"
+					value="#{locationController.location.contactNumber}"
+					label="#{msg['locationMgmt.tblHeader.contactNumber']}">
+				</p:inputText>
+				
+				<h:outputLabel for="isActive"
+					value="#{msg['locationMgmt.tblHeader.isActive']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{locationController.locationStatus}">
+				</p:inputText>
+			</h:panelGrid>
+		</p:panel>
+	</p:panel>	
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['transMgmt.title.transtracker']}" /> -->
+	<ui:param name="pageHeaderTitle" value="#{msg['agentTxnMgmt.label.listAgent']}" />
+	<ui:param name="emptyMessage" value="#{msg['agentTxnMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{depositTxnTrackerListController}" />
+	
+	<!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{depositTxnTrackerListController.selectedRecord}"/>
+	<!-- <ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define> -->
+	<!-- ADD END -->
+	
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect" listener="#{depositTxnTrackerListController.listSelect}" />
+
+			<p:column headerText="#{msg['agentTxnMgmt.label.mbsTxnId']}" sortBy="#{record.id}" 
+					filterBy="#{record.id}" id="id">
+				<h:outputText value="#{record.id}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agentTxnMgmt.label.txnDesc']}" sortBy="#{record.txnDesc}"
+					filterBy="#{record.txnDesc}" id="txnDesc">
+				<h:outputText value="#{record.txnDesc}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agentTxnMgmt.label.agendaId']}" sortBy="#{record.agendaId}"
+					filterBy="#{record.agendaId}" id="agendaId">
+				<h:outputText value="#{record.agendaId}" />
+			</p:column>
+				
+			<p:column headerText="#{msg['agentTxnMgmt.label.agnSeqNo']}" sortBy="#{record.seqNo}"
+					filterBy="#{record.seqNo}" id="seqNo">
+				<h:outputText value="#{record.seqNo}" readonly="true"/>
+			</p:column>
+			
+			<p:column headerText="#{msg['agentTxnMgmt.label.branchCode']}" sortBy="#{record.branchCode}"
+					filterBy="#{record.branchCode}" id="branchCode">
+				<h:outputText value="#{record.branchCode}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentTxnMgmt.label.depACNo']}" sortBy="#{record.cbsAcRefNo}"
+					filterBy="#{record.cbsAcRefNo}" id="cbsAcRefNo">
+				<h:outputText value="#{record.cbsAcRefNo}" readonly="true"/>
+			</p:column>
+			
+			<p:column headerText="#{msg['agentTxnMgmt.label.customerId']}" sortBy="#{record.customerId}"
+					filterBy="#{record.customerId}" id="customerId">
+				<h:outputText value="#{record.customerId}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentTxnMgmt.label.agentId']}" sortBy="#{record.agentId}"
+					filterBy="#{record.agentId}" id="agentId">
+				<h:outputText value="#{record.agentId}" />
+			</p:column> 
+				
+			<p:column headerText="#{msg['agentTxnMgmt.label.locationCode']}" sortBy="#{record.locationCode}"
+					filterBy="#{record.locationCode}" id="locationCode">
+				<h:outputText value="#{record.locationCode}" />
+			</p:column>
+					
+			<p:column headerText="#{msg['agentTxnMgmt.label.deviceId']}" sortBy="#{record.deviceId}"
+					filterBy="#{record.deviceId}" id="deviceId">
+				<h:outputText value="#{record.deviceId}" />
+			</p:column>
+			
+			<!-- <p:column headerText="#{msg['agentTxnMgmt.label.txnInitTime']}" sortBy="#{record.txnInitTime}" 
+					filterBy="#{record.txnInitTime}" id="txnInitTime">
+				<h:outputText value="#{record.txnInitTime}" />
+			</p:column>
+			
+			<p:column headerText="#{msg['agentTxnMgmt.label.txnCode']}" sortBy="#{record.txnCode}" 
+					filterBy="#{record.txnCode}" id="txnCode">
+				<h:outputText value="#{record.txnCode}" />
+			</p:column>
+
+			<p:column headerText="#{msg['agentTxnMgmt.label.txnStatus']}" sortBy="#{record.txnStatusDesc}" 
+					filterBy="#{record.txnStatusDesc}" id="txnStatusDesc">
+				<h:outputText value="#{record.txnStatusDesc}" />
+			</p:column> -->
+					
+	</ui:define>
+</ui:composition>

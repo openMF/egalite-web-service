@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['errcodMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['errcodMgmt.title.listErrorCodes']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['errcodMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{errorCodeListController}" />
+
+	<ui:define name="dataTableContent">
+
+
+
+		<p:column id="msgCode"
+			headerText="#{msg['errcodMgmt.tblHeader.msgCode']}"
+			filterBy="#{record.msgCode}" sortBy="#{record.msgCode}">
+			<h:outputText value="#{record.msgCode}" />
+		</p:column>
+
+
+		<p:column id="lang" headerText="#{msg['errcodMgmt.tblHeader.lang']}"
+			filterBy="#{record.lang}" sortBy="#{record.lang}">
+			<h:outputText value="#{record.lang}" />
+		</p:column>
+
+		<p:column id="msgDesc" filterBy="#{record.msgDesc}"
+			headerText="#{msg['errcodMgmt.tblHeader.msgDesc']}"
+			sortBy="#{record.msgDesc}">
+			<h:outputText value="#{record.msgDesc}" />
+		</p:column>
+
+
+
+		<p:column id="errType"
+			headerText="#{msg['errcodMgmt.tblHeader.errorType']}"
+			filterBy="#{record.errType}" sortBy="#{record.errType}">
+			<h:outputText value="#{record.errType}" />
+		</p:column>
+
+		<p:column id="subSys"
+			headerText="#{msg['errcodMgmt.tblHeader.subSystem']}"
+			filterBy="#{record.subSys}" sortBy="#{record.subSys}">
+			<h:outputText value="#{record.subSys}" />
+		</p:column>
+
+
+
+		<p:column id="msgType"
+			headerText="#{msg['errcodMgmt.tblHeader.msgType']}"
+			filterBy="#{record.msgType}" sortBy="#{record.msgType}">
+			<h:outputText value="#{record.msgType}" />
+		</p:column>
+
+
+
+
+	</ui:define>
+</ui:composition>

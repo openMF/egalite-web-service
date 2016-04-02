@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	 <script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>  
+	<ui:param name="pageTitle" value="#{msg['branchMgmt.title']}" />
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['branchMgmt.title.listBranch']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['branchMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{branchListController}" />
+	
+ <ui:param name="selectionMode" value="single"/> 
+
+
+	<ui:define name="dataTableContent">
+
+		<p:column id="id" filterBy="#{record.branchCode}"
+			headerText="#{msg['branchMgmt.tblHeader.branchCode']}"
+			sortBy="#{record.branchCode}">
+			<h:outputText value="#{record.branchCode}" />
+		</p:column>
+		
+		<p:column id="parentBrnCode" filterBy="#{record.parentBrnCode}"
+			headerText="#{msg['branchMgmt.tblHeader.parentBrnCode']}"
+			sortBy="#{record.parentBrnCode}">
+			<h:outputText value="#{record.parentBrnCode}" />
+		</p:column>
+
+		<p:column id="branchName" filterBy="#{record.branchName}"
+			headerText="#{msg['branchMgmt.tblHeader.branchName']}"
+			sortBy="#{record.branchName}">
+			<h:outputText value="#{record.branchName}" />
+		</p:column>
+		<!-- 
+		<p:column id="brnAdd1" filterBy="#{record.brnAdd1}"
+			headerText="#{msg['branchMgmt.tblHeader.brnAdd1']}"
+			sortBy="#{record.brnAdd1}">
+			<h:outputText value="#{record.brnAdd1}" />
+		</p:column>
+
+		<p:column id="brnAdd2" filterBy="#{record.brnAdd2}"
+			headerText="#{msg['branchMgmt.tblHeader.brnAdd2']}"
+			sortBy="#{record.brnAdd2}">
+			<h:outputText value="#{record.brnAdd2}" />
+		</p:column>
+
+
+		<p:column id="brnAdd3" filterBy="#{record.brnAdd3}"
+			headerText="#{msg['branchMgmt.tblHeader.brnAdd3']}"
+			sortBy="#{record.brnAdd3}">
+			<h:outputText value="#{record.brnAdd3}" />
+		</p:column>
+
+		<p:column id="brnAdd4" filterBy="#{record.brnAdd4}"
+			headerText="#{msg['branchMgmt.tblHeader.brnAdd4']}"
+			sortBy="#{record.brnAdd4}">
+			<h:outputText value="#{record.brnAdd4}" />
+		</p:column>
+		
+		<p:column id="zipCode" filterBy="#{record.zipCode}"
+			headerText="#{msg['branchMgmt.tblHeader.zipCode']}"
+			sortBy="#{record.zipCode}">
+			<h:outputText value="#{record.zipCode}" />
+		</p:column>
+
+		<p:column id="city" filterBy="#{record.city}"
+			headerText="#{msg['branchMgmt.tblHeader.city']}"
+			sortBy="#{record.city}">
+			<h:outputText value="#{record.city}" />
+		</p:column>
+
+		<p:column id="state" filterBy="#{record.state}"
+			headerText="#{msg['branchMgmt.tblHeader.state']}"
+			sortBy="#{record.state}">
+			<h:outputText value="#{record.state}" />
+		</p:column>
+
+		<p:column id="country" filterBy="#{record.country}"
+			headerText="#{msg['branchMgmt.tblHeader.country']}"
+			sortBy="#{record.country}">
+			<h:outputText value="#{record.country}" />
+		</p:column>
+		 -->
+		<p:column id="branchDate" filterBy="#{record.branchTodayDateText}"
+			headerText="#{msg['branchMgmt.tblHeader.branchDate']}"
+			sortBy="#{record.branchTodayDateText}">
+			<h:outputText value="#{record.branchTodayDateText}" />
+		</p:column>
+		
+		<p:column id="changeDate" filterBy="#{record.changeDate}"
+			headerText="#{msg['branchMgmt.tblHeader.dateChanged']}"
+			sortBy="#{record.changeDate}">
+			<h:outputText value="#{record.changeDate}" />
+		</p:column>
+		<!--
+		<p:column id="branchEodStatus" filterBy="#{record.branchEodStatus}"
+			headerText="#{msg['branchMgmt.tblHeader.branchEodStatus']}"
+			sortBy="#{record.branchEodStatus}">
+			<h:outputText value="#{record.branchEodStatus}" />
+		</p:column>
+		-->
+		<p:column id="branchLcy" filterBy="#{record.branchLcy}"
+			headerText="#{msg['branchMgmt.tblHeader.branchLcy']}"
+			sortBy="#{record.branchLcy}">
+			<h:outputText value="#{record.branchLcy}" />
+		</p:column>
+		<!--
+		<p:column id="recordStat" filterBy="#{record.recordStat}"
+			headerText="#{msg['branchMgmt.tblHeader.recordStat']}"
+			sortBy="#{record.recordStat}">
+			<h:outputText value="#{record.recordStat}" />
+		</p:column>
+		 -->
+		<p:column id="cbs_upload_Job_Id"
+			filterBy="#{record.cbs_upload_Job_Id}"
+			headerText="#{msg['branchMgmt.tblHeader.cbs_upload_Job_Id']}"
+			sortBy="#{record.cbs_upload_Job_Id}">
+			<h:outputText value="#{record.cbs_upload_Job_Id}" />
+		</p:column>
+		 
+	</ui:define>
+</ui:composition>

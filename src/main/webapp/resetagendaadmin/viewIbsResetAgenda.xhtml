@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{ibsResetAgendaController.ibsResetAgenda.id}"></f:viewParam>
+			<f:event listener="#{ibsResetAgendaController.loadResetAgenda}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['reAgendaMgmt.title.reAgdDetail']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{ibsResetAgendaController}"></ui:param>
+					</ui:include> <p:commandButton id="btnDelete"
+						value="#{msg['agencyMgmt.btn.delete']}"
+						rendered="#{ibsResetAgendaController.isDeleteAllowed()}"
+						disabled="#{ibsResetAgendaController.isEnableDeleteAllowed()}"
+						action="#{ibsResetAgendaController.deleteUnAuthorized}">
+						<p:confirm header="Confirmation"
+							message="#{msg['msg.confirm.dialog']}" icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['reAgendaMgmt.label.resetAgendaId']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.id}"
+					label="#{msg['reAgendaMgmt.label.resetAgendaId']}">
+				</p:inputText>
+
+				<h:outputLabel for="resetOption"
+					value="#{msg['reAgendaMgmt.label.resetOption']}" />
+				<p:inputText id="resetOption" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetOption}"
+					label="#{msg['reAgendaMgmt.label.resetOption']}">
+				</p:inputText>
+
+				<h:outputLabel for="agentId"
+					value="#{msg['agentMgmt.label.agentId']}" />
+				<p:inputText id="agentId" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.agentId}"
+					label="#{msg['agentMgmt.label.agentId']}">
+				</p:inputText>
+
+				<h:outputLabel for="resetRemarks"
+					value="#{msg['reAgendaMgmt.label.resetRemarks']}" />
+				<p:inputText id="resetRemarks" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetRemarks}"
+					label="#{msg['reAgendaMgmt.label.resetRemarks']}">
+				</p:inputText>
+
+				<h:outputLabel for="initByUserId"
+					value="#{msg['reAgendaMgmt.label.initByUserId']}" />
+				<p:inputText id="initByUserId" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.initByUserId}"
+					label="#{msg['reAgendaMgmt.label.initByUserId']}">
+				</p:inputText>
+
+				<h:outputLabel for="verifyByUserId"
+					value="#{msg['reAgendaMgmt.label.verifyByUserId']}" />
+				<p:inputText id="verifyByUserId" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.verifyByUserId}"
+					label="#{msg['reAgendaMgmt.label.verifyByUserId']}">
+				</p:inputText>
+
+				<h:outputLabel for="resetInitDateTime"
+					value="#{msg['reAgendaMgmt.label.resetInitDateTime']}" />
+				<p:inputText id="resetInitDateTime" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetInitDateTime}"
+					label="#{msg['reAgendaMgmt.label.resetInitDateTime']}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</p:inputText>
+
+
+				<h:outputLabel for="resetAuthDateTime"
+					value="#{msg['reAgendaMgmt.label.resetAuthDateTime']}" />
+				<p:inputText id="resetAuthDateTime" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.resetAuthDateTime}"
+					label="#{msg['reAgendaMgmt.label.resetAuthDateTime']}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</p:inputText>
+
+                 <h:outputLabel for="processStatus"
+					value="#{msg['reAgendaMgmt.label.processStatus']}" />
+				<p:inputText id="processStatus" readonly="true"
+					value="#{ibsResetAgendaController.ibsResetAgenda.processStatus}"
+					label="#{msg['reAgendaMgmt.label.processStatus']}">
+				</p:inputText>
+
+				<h:outputLabel for="isActive"
+					value="#{msg['agencyMgmt.tblHeader.isActive']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{ibsResetAgendaController.isActiveStatus}">
+				</p:inputText>
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

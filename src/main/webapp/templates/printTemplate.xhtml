@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<!-- # Tag no : EGA-MN15-000018
+	-->
+	
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+	
+	<!--[if !IE]><!-->
+	if (/*@cc_on!@*/false) {
+	    document.documentElement.className+=' ie';
+	}
+	<!--<![endif]-->
+	
+	function checkReloadCount() {
+		   if(localStorage.getItem('isLoaded') !== 'yes') {
+		      localStorage.setItem('isLoaded', 'yes');
+		      //put reload script here
+		   }
+		}
+	
+</script>
+<f:view contentType="text/html" locale="en">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="cache-control" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+		</f:facet>
+		<f:facet name="last">
+			<link rel="stylesheet" type="text/css"
+				href="/resources/css/mfiapp.css" />
+		</f:facet>
+			<p:messages id="msgs" severity="error" showDetail="true" closable="true" />
+				<p:growl id="growl" severity="info" showDetail="true" sticky="false" />
+		<ui:insert name="metadata" />
+	</h:head>
+	<h:body styleClass="mainBody">
+		<p:layout id="layoutBanner" fullPage="true">
+			<p:layoutUnit position="center" id="centerPanel"
+				styleClass="centerPanel" resizable="false" closable="false"
+				collapsible="false">
+				<ui:insert name="contentSection" />
+			</p:layoutUnit>
+			<p:layoutUnit position="south" size="0" resizable="false"
+				closable="false" collapsible="false" styleClass="footer">
+				<h:outputText styleClass="footerText"
+					value="Copyright ©2014. bfsi Software Consulting Pvt. Ltd. All rights reserved." />
+			</p:layoutUnit>
+		</p:layout>
+	</h:body>
+</f:view>
+
+</html>

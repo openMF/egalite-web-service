@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['manualAgnSetMgmt.title.listAgenda']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['manualAgnSetMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['manualAgnSetMgmt.tblNav.add']}" />
+	<ui:param name="addOutcome" value="addManualAgendaSettle" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addManualAgendaSettle')}" />
+	<ui:param name="listController" value="#{manualAgendaSettleListController}" />
+
+     <!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{manualAgendaSettleListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<!-- <p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" /> -->
+	</ui:define>
+	<!-- ADD END -->
+
+
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{manualAgendaSettleListController.listSelect}" />
+
+		<p:column id="agendaId" filterBy="#{record.agendaId}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.agendaId']}"
+			sortBy="#{record.agendaId}">
+			<h:outputText value="#{record.agendaId}" />
+		</p:column>
+		
+		<p:column id="seqNo" filterBy="#{record.seqNo}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.seqNo']}"
+			sortBy="#{record.seqNo}">
+			<h:outputText value="#{record.seqNo}" />
+		</p:column>
+		
+		<p:column id="cbsAcRefNo" filterBy="#{record.cbsAcRefNo}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.cbsAcRefNo']}"
+			sortBy="#{record.cbsAcRefNo}">
+			<h:outputText value="#{record.cbsAcRefNo}" />
+		</p:column>
+		
+		
+		<p:column id="txnCode" filterBy="#{record.txnCode}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.txnCode']}"
+			sortBy="#{record.txnCode}">
+			<h:outputText value="#{record.txnCode}" />
+		</p:column>
+		
+		<p:column id="customerId" filterBy="#{record.customerId}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.customerId']}"
+			sortBy="#{record.customerId}">
+			<h:outputText value="#{record.customerId}" />
+		</p:column>
+		
+		<p:column id="agentId" filterBy="#{record.agentId}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.agentId']}"
+			sortBy="#{record.agentId}">
+			<h:outputText value="#{record.agentId}" />
+		</p:column>
+		
+		<p:column id="deviceId" filterBy="#{record.deviceId}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.deviceId']}"
+			sortBy="#{record.deviceId}">
+			<h:outputText value="#{record.deviceId}" />
+		</p:column>
+		
+		<p:column id="locationCode" filterBy="#{record.locationCode}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.locationCode']}"
+			sortBy="#{record.locationCode}">
+			<h:outputText value="#{record.locationCode}" />
+		</p:column>
+		
+		<p:column id="agnCmpName" filterBy="#{record.agnCmpName}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.agnCmpName']}"
+			sortBy="#{record.agnCmpName}">
+			<h:outputText value="#{record.agnCmpName}" />
+		</p:column>
+		
+		<p:column id="agnCmpStDate" filterBy="#{record.agnCmpStDate}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.agnCmpStDate']}"
+			sortBy="#{record.agnCmpStDate}">
+			<h:outputText value="#{record.agnCmpStDate}" />
+		</p:column>
+		
+		<p:column id="agnCmpEndDate" filterBy="#{record.agnCmpEndDate}"
+				headerText="#{msg['manualAgnSetMgmt.tblHeader.agnCmpEndDate']}"
+				sortBy="#{record.agnCmpEndDate}">
+				<h:outputText value="#{record.agnCmpEndDate}" />
+		</p:column>
+		
+		<p:column id="agnCcyCode" filterBy="#{record.agnCcyCode}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.agnCcyCode']}"
+			sortBy="#{record.agnCcyCode}">
+			<h:outputText value="#{record.agnCcyCode}" />
+		</p:column>
+
+         <p:column id="agnAgendaAmt" filterBy="#{record.agnAgendaAmt}"
+			headerText="#{msg['manualAgnSetMgmt.tblHeader.agnAgendaAmt']}"
+			sortBy="#{record.agnAgendaAmt}">
+			<h:outputText value="#{record.agnAgendaAmt}" />
+		</p:column>
+		
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{roleMbsController.rolembs.id}"></f:viewParam>
+			<f:event listener="#{roleMbsController.loadRole}" type="preRenderView"></f:event>
+		</f:metadata>
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function setValueToInput() {
+				document.getElementById('form:treeSelections').value = 'ok';
+			}
+
+			function makeCapitalize(){
+				var st = document.getElementById('form:roleName').value;
+				var sp = st.split(' ');
+				var wl=0;
+				var f ,r;
+				var word = new Array();
+				for (i = 0 ; i < sp.length ; i ++ ) {
+				f = sp[i].substring(0,1).toUpperCase();
+				r = sp[i].substring(1);
+				word[i] = f+r;
+				}
+				newstring = word.join(' ');
+				document.getElementById('form:roleName').value = newstring;
+			}
+			
+			
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			//]]>
+		</script>
+	</ui:define>
+
+   <!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['roleMgmt.title']}" />
+		</f:facet>
+  </ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['roleMgmt.header.mbsModifyRole']}" />
+				</span>
+				<span class="pageHeaderControls"> 
+					<p:commandButton id="btnSave" value="#{msg['userMgmt.nav.save']}"
+						action="#{roleMbsController.checkModifyForUpdate}" update="panel">
+						<f:param name="roleId" value="#{roleMbsController.rolembs.id}" />
+					</p:commandButton> <p:spacer width="2px" /> 
+					<p:button id="btnCancel" value="#{msg['roleMgmt.nav.cancel']}" outcome="cancel">
+						<f:param name="id" value="#{roleMbsController.rolembs.id}" />
+					</p:button>
+				</span>
+			</p:panel>
+		</f:facet>
+		<!--  <p:messages id="msgs" closable="true" />
+		<p:growl id="growl" showDetail="true" sticky="false" /> -->
+		<!-- Role Id is added for Asomi by Nirmal kanna S -->  
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="3" columnClasses="top_align_column" style="margin-bottom:3px" cellpadding="5" >
+
+	 		 	<h:outputLabel for="roleId" value="#{msg['roleMgmt.label.roleId']}" />
+				<p:inputText id="roleId" value="#{roleMbsController.rolembs.id}" readonly="true"
+						required="true" label="#{msg['roleMgmt.label.roleId']}"/>
+				<p:message for="roleId" display="icon" />
+			
+				<h:outputLabel for="roleName"
+					value="#{msg['roleMgmt.label.roleName']}" styleClass="required_asterisk"/>
+				<p:inputText id="roleName" disabled="false"
+					value="#{roleMbsController.rolembs.roleName}" required="true"
+					onkeypress="var a=inputLimiter(event,'NameCharactersAndNumbers'); var b=makeCapitalize(); return a,b"
+					label="#{msg['roleMgmt.label.roleName']}">
+					<f:validateLength minimum="2" maximum="50" />
+				</p:inputText>
+				<p:message for="roleName" display="icon" />
+
+				<h:outputLabel for="roleDesc"
+					value="#{msg['roleMgmt.label.roleDescription']}" styleClass="required_asterisk"/>
+				<p:inputText id="roleDesc" disabled="false"
+					value="#{roleMbsController.rolembs.roleDesc}" onkeypress="return inputLimiter(event,'NameCharacters')" 
+					required="true"	label="#{msg['roleMgmt.label.roleDescription']}">
+					<f:validateLength minimum="2" maximum="100" />
+				</p:inputText>
+				<p:message for="roleDesc" display="icon" />
+				
+				<h:outputLabel for="roleStatus"
+					value="#{msg['roleMgmt.tblHeader.deviceStatus']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="roleStatus"
+				    styleClass="drop_down_style" 
+					value="#{roleMbsController.rolembs.roleStatus}" required="true"
+					label="#{msg['roleMgmt.tblHeader.deviceStatus']}">
+					<f:selectItems value="#{roleMbsController.roleStatuss}" var="devi"
+					itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" /> 
+				</h:selectOneMenu>
+				<p:message for="roleStatus" display="icon" />
+				
+				<h:outputLabel styleClass="required_asterisk" for="functionsmbs" value="#{msg['roleMgmt.label.roles']}" />
+				<p:selectManyMenu id="functionsmbs" style="width:250px" value="#{roleMbsController.rolembs.mbsFns}" 
+					required="true"	label="#{msg['roleMgmt.label.roles']}" showCheckbox="true" >
+					<f:selectItems value="#{roleMbsController.functionsmbsfunc}" var="credit" itemValue="#{credit.id}" 
+						itemLabel="#{credit.baseFunc}" />
+				</p:selectManyMenu><h:outputLabel/><p:message for="functionsmbs" display="icon" /> 
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-store" />
+		<meta http-equiv="cache-control" content="must-revalidate" />
+		<meta http-equiv="expires" content="0" />
+	</f:facet>
+	<f:facet name="last">
+		<link rel="stylesheet" type="text/css"
+			href="/resources/css/mfiapp.css" />
+	</f:facet>
+	
+<script language="JavaScript">
+
+function inputLimiter(e, allow) {
+	var AllowableCharacters = '';
+	if (allow == 'OnlyCaps'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0987654321';
+	}
+	var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+	if (k != 13 &amp;&amp; k != 8 &amp;&amp; k != 0) {
+		if ((e.ctrlKey == false) &amp;&amp; (e.altKey == false)) {
+			return (AllowableCharacters.indexOf(String
+					.fromCharCode(k)) != -1);
+		} else {
+			return true;
+		}
+	} else {
+		return true;
+	}
+}
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+	
+</script>	
+	
+	
+</h:head>
+<h:body styleClass="loginBody" onload='document.loginForm.j_username.focus();'>
+	<h1 class="loginHeading"></h1>
+	
+	<div class="logoCSS">
+		<div class="logo"></div>
+	</div>
+	
+	<div class="TaglineCSS">
+		<div class="tagline">
+		<font face="calibri">Touching the Unbanked</font></div>
+	</div>
+	
+		 
+	<div class="loginForm">
+	
+		<h3 class="formTitle">Sign In</h3>
+		<font face="calibri">
+		<h:form id="loginForm" prependId="false">
+		<p:growl id="LoginGrowl" showDetail="true" sticky="false" globalOnly="true" autoUpdate="false" redisplay="false" life="3000"/> 
+			<!-- Messages must be global here, to show bad credentials -->
+		<!-- <h:messages globalOnly="true" />  -->
+		
+			<h:panelGrid columns="3" style="display:none">
+				<h:outputLabel styleClass="" for="j_usernameMASK" value="#{msg['user.label.username']}"  />
+				<p:inputText  id="j_usernameMASK" required="false" label="username"  autocomplete="off"/>
+		
+				<h:outputLabel styleClass="" for="j_passwordMASK" value="#{msg['user.label.password']}" />
+				<p:password  id="j_passwordMASK" label="password" required="false"  autocomplete="off"/>
+				
+			</h:panelGrid>
+			
+			<!-- Id's must not be changed to support spring security check -->
+			
+			<h:panelGrid columns="3">
+				<h:outputLabel styleClass="formLabel" for="j_username" value="#{msg['user.label.username']}:"  />
+				<p:inputText  id="j_username" required="false" label="false"  autocomplete="off" onkeyup="this.value=this.value.toUpperCase();"
+				href="#" title="#{msg['userMgmt.validate.userLetterNamecaps']}" onkeypress="return inputLimiter(event,'OnlyCaps')"/>
+			<!-- 	<h:message for="j_username" display="text" style="color:red" />  -->
+
+				<h:outputLabel styleClass="formLabel" for="j_password" value="#{msg['user.label.password']}:" />
+				<p:password  id="j_password" label="password" required="false"  autocomplete="off"/>
+			<!-- 	<h:message for="j_password" display="text" style="color:red" />  -->
+
+				<!-- <h:outputLabel for="_spring_security_remember_me" styleClass="formLabel" 
+					value="Remember me: " />
+				<h:selectBooleanCheckbox id="_spring_security_remember_me" /> -->
+			</h:panelGrid>
+			
+			<div class="smtBtn">
+				<h:commandButton type="submit" id="login" value="Login" styleClass="actionOk" 
+					action="#{loginController.doLogin}" />
+			</div>
+			</h:form></font>
+		</div>
+		<div class="logoFooterCSS">
+		<div class="bfsilogofooter"></div>
+	</div>
+		
+		<div class="footerCSS">
+		<div class="loginFooter">
+		<font face="calibri">Copyright ©2014. bfsi Software Consulting Pvt. Ltd. All rights reserved.</font></div>
+	</div>
+</h:body>
+</html>

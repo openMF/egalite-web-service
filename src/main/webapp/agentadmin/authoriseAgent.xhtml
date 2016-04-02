@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterTemplate.xhtml">
+	<ui:define name="contentSection">
+		<h1>Authorise Agent</h1>
+		<h:form id="form">
+			<p:panel id="panel" header="Authorise Agent">
+
+				<p:growl id="growl" showDetail="true" sticky="false" />
+				<h:panelGrid columns="3">
+
+					<h:outputLabel for="agentId" value="Agent ID :" />
+					<p:inputText id="agentId" value="#{agentController.agent.agentId}"
+						required="true" label="Agent Id">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="agentId" display="icon" />
+
+					<h:outputLabel for="creditofficer" value="Credit Officer Name :" />
+					<p:inputText id="creditofficer"
+						value="#{agentController.agent.creditOfficer}" required="true"
+						label="Credit Officer Name">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="creditofficer" display="icon" />
+
+					<h:outputLabel for="agentType" value="Agent Type :" />
+					<p:selectOneMenu id="agentType"
+						value="#{agentController.agent.agentType}" required="true"
+						label="Agent Type">
+						<f:selectItem itemLabel="Credit Officer" itemValue="C" />
+						<f:selectItem itemLabel="Field Officer" itemValue="F" />
+					</p:selectOneMenu>
+					<p:message for="agentType" display="icon" />
+
+					<h:outputLabel for="cashLimit" value="Cash Limit :" />
+					<p:inputText id="cashLimit"
+						onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+						value="#{agentController.agent.cashLimit}" required="true"
+						label="Cash Limit">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="cashLimit" display="icon" />
+
+					<h:outputLabel for="deviceId" value="Device ID :" />
+					<p:inputText id="deviceId"
+						value="#{agentController.agent.deviceId}" required="true"
+						label="Device Id">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="deviceId" display="icon" />
+
+					<h:outputLabel for="fname" value="First name :" />
+					<p:inputText id="fname" value="#{agentController.agent.fname}"
+						required="true" label="First Name">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="fname" display="icon" />
+
+					<h:outputLabel for="lname" value="Last name :" />
+					<p:inputText id="lname" value="#{agentController.agent.lname}"
+						required="true" label="Last Name">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="lname" display="icon" />
+
+					<h:outputLabel for="dob" value="Date of Birth :" />
+					<p:calendar pattern="dd-MM-yyyy" navigator="true"
+						yearRange="c-100:c-17" required="true"
+						value="#{agentController.agent.dob}" id="dob"
+						label="Date of Birth :" />
+					<p:message for="dob" display="icon" />
+
+					<h:outputLabel for="gender" value="Gender :" />
+					<p:selectOneRadio id="gender"
+						value="#{agentController.agent.gender}" required="true"
+						label="Gender">
+						<f:selectItem itemLabel="Male" itemValue="M" />
+						<f:selectItem itemLabel="Female" itemValue="F" />
+					</p:selectOneRadio>
+					<p:message for="gender" display="icon" />
+
+					<h:outputLabel for="address1" value=" Company Address  :" />
+					<p:inputText id="address1"
+						value="#{agentController.agent.commAddr1}" required="true"
+						label="Address Line 1">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="address1" display="icon" />
+
+					<h:outputLabel for="address2" value=" " />
+					<p:inputText id="address2"
+						value="#{agentController.agent.commAddr2}" required="true"
+						label="Address Line 2">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="address2" display="icon" />
+
+					<h:outputLabel for="address3" value=" " />
+					<p:inputText id="address3"
+						value="#{agentController.agent.commAddr3}" required="true"
+						label="Address Line 3">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="address3" display="icon" />
+
+					<h:outputLabel for="commPostCode" value="Postal Code :" />
+					<p:inputText id="commPostCode"
+						onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+						value="#{agentController.agent.commPostCode}" required="true"
+						label="Postal Code">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="commPostCode" display="icon" />
+
+					<h:outputLabel for="mobile" value="Mobile :" />
+					<p:inputText id="mobile"
+						onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"
+						value="#{agentController.agent.mobile}" required="true"
+						label="Mobile">
+						<f:validateLength minimum="2" />
+					</p:inputText>
+					<p:message for="mobile" display="icon" />
+
+					<h:outputLabel for="emailId" value="Email :" />
+					<p:inputText id="emailId" value="#{agentController.agent.emailId}"
+						required="true" label="Email ID"
+						validatorMessage="Invalid email format">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+					</p:inputText>
+					<p:message for="emailId" display="icon" />
+
+					<h:outputLabel for="agentStartDate" value="Agent Start Date :" />
+					<p:calendar pattern="dd-MM-yyyy" showButtonPanel="true"
+						navigator="true" required="true"
+						value="#{agentController.agent.agentStartDate}"
+						id="agentStartDate" label="Agent Start Date">
+						<f:validateLength minimum="2" />
+					</p:calendar>
+					<p:message for="agentStartDate" display="icon" />
+
+					<h:outputLabel for="agentEndDate" value="Agent End Date :" />
+					<p:calendar pattern="dd-MM-yyyy" showButtonPanel="true"
+						navigator="true" required="true"
+						value="#{agentController.agent.agentEndDate}" id="agentEndDate"
+						label="Agent End Date" />
+					<p:message for="agentEndDate" display="icon" />
+
+					<h:outputLabel for="agentLang" value="Agent Language :" />
+					<p:selectOneMenu id="agentLang"
+						value="#{agentController.agent.agentLang}" required="true"
+						label="Agent Language">
+						<f:selectItem itemLabel="English" itemValue="English" />
+						<f:selectItem itemLabel=" Khmer" itemValue=" Khmer" />
+					</p:selectOneMenu>
+					<p:message for="agentLang" display="icon" />
+
+					<h:outputLabel for="agencyCode" value="Agency Code :" />
+					<p:selectOneMenu id="agencyCode"
+						value="#{agentController.agent.agencyCode}" required="true"
+						label="Agency Code">
+						<f:selectItem itemLabel="123456" itemValue="123456" />
+						<f:selectItem itemLabel="678912" itemValue="678912" />
+					</p:selectOneMenu>
+					<p:message for="agencyCode" display="icon" />
+
+					<p:commandButton id="btnSave" value="Authorise" update="panel"
+						actionListener="#{agentController.create}" />
+					<p:button id="btnCancel" value="Cancel" outcome="cancel" />
+				</h:panelGrid>
+				<p:messages id="msgs" />
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

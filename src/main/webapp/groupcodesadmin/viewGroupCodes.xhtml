@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{groupCodeController.groupcode.id}"></f:viewParam>
+			<f:event listener="#{groupCodeController.loadGroupCode}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['groupCodesMgmt.title']}" />
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['groupCodesMgmt.title.groupCodeDetail']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{groupCodeController}"></ui:param>
+					</ui:include> <p:commandButton id="btnDelete"
+						value="#{msg['agencyMgmt.btn.delete']}"
+						rendered="#{groupCodeController.isDeleteAllowed()}"
+						disabled="#{groupCodeController.isEnableDeleteAllowed()}"
+						action="#{groupCodeController.deleteUnAuthorized}">
+						<p:confirm header="Confirmation" message="#{msg['msg.confirm.dialog']}"
+							icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['groupCodesMgmt.tblHeader.groupId']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{groupCodeController.groupcode.id}"
+					label="#{msg['groupCodesMgmt.tblHeader.groupId']}">
+				</p:inputText>
+
+				<h:outputLabel for="cbsBranchCode"
+					value="#{msg['groupCodesMgmt.tblHeader.cbsBranchCode']}" />
+				<p:inputText id="cbsBranchCode" readonly="true"
+					value="#{groupCodeController.groupcode.cbsBranchCode}"
+					label="#{msg['groupCodesMgmt.tblHeader.cbsBranchCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="cbsGroupId"
+					value="#{msg['groupCodesMgmt.tblHeader.cbsGroupId']}" />
+				<p:inputText id="cbsGroupId" readonly="true"
+					value="#{groupCodeController.groupcode.cbsGroupId}"
+					label="#{msg['groupCodesMgmt.tblHeader.cbsGroupId']}">
+				</p:inputText>
+
+				<h:outputLabel for="groupName"
+					value="#{msg['groupCodesMgmt.label.groupName']}" />
+				<p:inputText id="groupName" readonly="true"
+					value="#{groupCodeController.groupcode.groupName}"
+					label="#{msg['groupCodesMgmt.label.groupName']}">
+				</p:inputText>
+
+				<h:outputLabel for="cbsCoId"
+					value="#{msg['groupCodesMgmt.tblHeader.cbsCoId']}" />
+				<p:inputText id="cbsCoId" readonly="true"
+					value="#{groupCodeController.groupcode.cbsCoId}"
+					label="#{msg['groupCodesMgmt.tblHeader.cbsCoId']}">
+				</p:inputText>
+				
+				<h:outputLabel for="ibsCoId"
+					value="#{msg['groupCodesMgmt.tblHeader.ibsCoId']}" />
+				<p:inputText id="ibsCoId" readonly="true"
+					value="#{groupCodeController.groupcode.ibsCoId}"
+					label="#{msg['groupCodesMgmt.tblHeader.ibsCoId']}">
+				</p:inputText>
+
+				<h:outputLabel for="contactNumber"
+					value="#{msg['groupCodesMgmt.tblHeader.contactNumber']}" />
+				<p:inputText id="contactNumber" readonly="true"
+					value="#{groupCodeController.groupcode.contactNumber}"
+					label="#{msg['groupCodesMgmt.tblHeader.contactNumber']}">
+				</p:inputText>
+
+
+				<h:outputLabel for="isActive"
+					value="#{msg['agencyMgmt.tblHeader.isActive']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{groupCodeController.isStatusActive}">
+				</p:inputText>
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

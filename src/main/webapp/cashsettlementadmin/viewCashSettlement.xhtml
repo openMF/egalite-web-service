@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{cashSettlementController.cashSettlement.id}"></f:viewParam>
+			<f:event listener="#{cashSettlementController.loadCashSettlement}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['cashMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+	<ui:param name="addOutcome" value="addCashSettlement" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addCashSettlement')}" />
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader" >
+				
+				<span class="pageHeaderTitle"><h:outputText value="#{msg['cashMgmt.nav.viewLink']}" /></span>
+				<span class="pageHeaderControls"> 
+					
+					<p:button id="btnAdd" value="#{msg['cashMgmt.btn.add']}"
+						outcome="#{addOutcome}" style="margin-left: 182px;"	rendered="#{addAuthority}" />
+					<p:spacer width="2px" />
+					
+					<p:commandButton id="btnAuth"	value="#{msg['cashMgmt.btn.auth']}"
+						update="panel" rendered="#{cashSettlementController.isAuthorizeAllowed()}"
+						disabled="#{cashSettlementController.isAuthorizeEnable()}"
+						actionListener="#{cashSettlementController.cashAuthorize}" />
+					<p:spacer width="2px" />
+					
+					<p:button id="btnList" value="#{msg['agentMgmt.nav.List']}"
+						outcome="openList" rendered="#{cashSettlementController.isListAllowed()}" />
+					<p:spacer width="2px" /> 
+				</span>
+				
+			</p:panel>
+			</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="tillId"	value="#{msg['cashMgmt.tblHeader.tillId']}" />
+				<p:inputText readonly="true" id="tillId" value="#{cashSettlementController.cashSettlement.tillId}" />
+				<h:outputLabel/>
+				
+				<h:outputLabel for="agentId" value="#{msg['cashMgmt.label.agentId']}" />
+				<p:inputText readonly="true" id="agentId" value="#{cashSettlementController.cashSettlement.agentId}" />
+				<h:outputLabel/>
+				
+				<h:outputLabel for="txnInitDatetime" value="#{msg['cashMgmt.label.txnTime']}" />
+				<p:calendar id="txnInitDatetime" value="#{cashSettlementController.cashSettlement.txnInitDatetime}"
+					pattern="dd-MMM-yyyy" showOn="label" readonlyInput="true" />
+				<h:outputLabel/>
+				
+				<h:outputLabel for="txnCode"	value="#{msg['cashMgmt.tblHeader.txnCode']}" />
+				<p:inputText readonly="true" id="txnCode" value="#{cashSettlementController.cashSettlement.txnCode}" />
+				<h:outputLabel/>
+				
+				<h:outputLabel for="currencyCode"	value="#{msg['cashMgmt.tblHeader.txnCcyCode']}" />
+				<p:inputText readonly="true" id="currencyCode" value="#{cashSettlementController.cashSettlement.currencyCode}" />
+				<h:outputLabel/>
+				
+				<h:outputLabel for="cashAmount"	value="#{msg['cashMgmt.tblHeader.cashAmount']}" />
+				<p:inputText readonly="true" id="cashAmount" value="#{cashSettlementController.cashSettlement.cashAmount}" />
+				<h:outputLabel/>
+				
+				<h:outputLabel for="txnRemarks"	value="#{msg['cashMgmt.tblHeader.remarks']}" />
+				<p:inputText readonly="true" id="txnRemarks" value="#{cashSettlementController.cashSettlement.txnRemarks}" />
+				<h:outputLabel/>
+				
+				<h:outputLabel for="isActive"	value="#{msg['cashMgmt.tblHeader.isActive']}" />
+				<p:inputText readonly="true" id="isActive" value="#{cashSettlementController.isStatusActive}" />
+				<h:outputLabel/>
+				
+				<h:outputLabel for="authStatus"	value="#{msg['cashMgmt.tblHeader.authStatus']}" />
+				<p:inputText readonly="true" id="authStatus" value="#{cashSettlementController.isAuthorise}" />
+				<h:outputLabel/>
+				
+				
+				
+			</h:panelGrid>
+			
+		</p:panel>
+	</ui:define>
+</ui:composition>

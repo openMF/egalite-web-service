@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	
+	<!-- Modification under Tag No [ EGA-MN15-000004 ]
+	1. Panel Added under maintenance form for splitting Screen.
+	2. zipCode placed after addressLine3 and changed to non-mandatory Field.
+	3. Center Code Desc placed below CBS CenterCode
+	 -->
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{centerCodeController.centerCodes.centerCode}"></f:viewParam>
+			<f:event listener="#{centerCodeController.loadCenterCode}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['centerMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['centerMgmt.title.centerDetail']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{centerCodeController}"></ui:param>
+					</ui:include> <p:commandButton id="btnDelete"
+						value="#{msg['routeMgmt.btn.delete']}"
+						rendered="#{centerCodeController.isDeleteAllowed()}"
+						disabled="#{centerCodeController.isEnableDeleteAllowed()}"
+						action="#{centerCodeController.deleteUnAuthorized}">
+						<p:confirm header="Confirmation" message="#{msg['msg.confirm.dialog']}"
+							icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+		<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['centerMgmt.tblHeader.centerCode']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{centerCodeController.centerCodes.centerCode}"
+					label="#{msg['centerMgmt.tblHeader.centerCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="cbsCenterCode"
+					value="#{msg['centerMgmt.tblHeader.cbsCenterCode']}" />
+				<p:inputText id="cbsCenterCode" readonly="true"
+					value="#{centerCodeController.centerCodes.cbsCenterCode}"
+					label="#{msg['centerMgmt.tblHeader.cbsCenterCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="centerCodeDesc"
+					value="#{msg['centerMgmt.tblHeader.centerCodeDesc']}" />
+				<p:inputText id="centerCodeDesc" readonly="true"
+					value="#{centerCodeController.centerCodes.centerCodeDesc}"
+					label="#{msg['centerMgmt.tblHeader.centerCodeDesc']}">
+				</p:inputText>
+				
+				<h:outputLabel for="ibsLocationCode"
+					value="#{msg['routeMgmt.tblHeader.ibsLocationCode']}" />
+				<p:inputText id="ibsLocationCode" readonly="true"
+					value="#{centerCodeController.centerCodes.ibsLocationCode}"
+					label="#{msg['routeMgmt.tblHeader.ibsLocationCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="cbsBranchCode"
+					value="#{msg['routeMgmt.tblHeader.cbsBranchCode']}" />
+				<p:inputText id="cbsBranchCode" readonly="true"
+					value="#{centerCodeController.centerCodes.cbsBranchCode}"
+					label="#{msg['routeMgmt.tblHeader.cbsBranchCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="contactNumber"
+					value="#{msg['routeMgmt.tblHeader.contactNumber']}" />
+				<p:inputText id="contactNumber" readonly="true"
+					value="#{centerCodeController.centerCodes.contactNumber}"
+					label="#{msg['routeMgmt.tblHeader.contactNumber']}">
+				</p:inputText>
+				
+				<h:outputLabel for="addressLine1"
+					value="#{msg['centerMgmt.tblHeader.addressLine1']}" />
+				<p:inputText id="addressLine1" readonly="true"
+					value="#{centerCodeController.centerCodes.addressLine1}"
+					label="#{msg['centerMgmt.tblHeader.addressLine1']}">
+				</p:inputText>
+				
+				<h:outputLabel for="addressLine2"
+					value="#{msg['centerMgmt.tblHeader.addressLine2']}" />
+				<p:inputText id="addressLine2" readonly="true"
+					value="#{centerCodeController.centerCodes.addressLine2}"
+					label="#{msg['centerMgmt.tblHeader.addressLine2']}">
+				</p:inputText>
+				
+				<h:outputLabel for="addressLine3"
+					value="#{msg['centerMgmt.tblHeader.addressLine3']}" />
+				<p:inputText id="addressLine3" readonly="true"
+					value="#{centerCodeController.centerCodes.addressLine3}"
+					label="#{msg['centerMgmt.tblHeader.addressLine3']}">
+				</p:inputText>
+				
+				</h:panelGrid>
+			</p:panel>	
+					<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2" >
+				
+				<h:outputLabel for="zipCode"
+					value="#{msg['centerMgmt.tblHeader.zipCode']}" />
+				<p:inputText id="zipCode" readonly="true"
+					value="#{centerCodeController.centerCodes.zipCode}"
+					label="#{msg['centerMgmt.tblHeader.zipCode']}">
+				</p:inputText>
+				
+				<h:outputLabel for="addressLine4"
+					value="#{msg['centerMgmt.tblHeader.addressLine4']}" />
+				<p:inputText id="addressLine4" readonly="true"
+					value="#{centerCodeController.centerCodes.addressLine4}"
+					label="#{msg['centerMgmt.tblHeader.addressLine4']}">
+				</p:inputText>
+				
+				<h:outputLabel for="city"
+					value="#{msg['centerMgmt.tblHeader.city']}" />
+				<p:inputText id="city" readonly="true"
+					value="#{centerCodeController.centerCodes.city}"
+					label="#{msg['centerMgmt.tblHeader.city']}">
+				</p:inputText>
+				
+				<h:outputLabel for="state"
+					value="#{msg['centerMgmt.tblHeader.state']}" />
+				<p:inputText id="state" readonly="true"
+					value="#{centerCodeController.centerCodes.state}"
+					label="#{msg['centerMgmt.tblHeader.state']}">
+				</p:inputText>
+				
+				<h:outputLabel for="country"
+					value="#{msg['centerMgmt.tblHeader.country']}" />
+				<p:inputText id="country" readonly="true"
+					value="#{centerCodeController.countryName}"
+					label="#{msg['centerMgmt.tblHeader.country']}">
+				</p:inputText>
+				
+				<h:outputLabel for="isActive"
+					value="#{msg['centerMgmt.tblHeader.isActive']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{centerCodeController.isStatusActive}">
+				</p:inputText>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="8" >
+				<h:outputText id="day" value="#{msg['centerMgmt.tblHeader.week']}" />
+				<p:selectBooleanCheckbox id="onSunday" disabled="true" value="#{centerCodeController.centerCodes.onSunday}" itemLabel="Sunday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onMonday" disabled="true" value="#{centerCodeController.centerCodes.onMonday}" itemLabel="Monday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onTuesday" disabled="true" value="#{centerCodeController.centerCodes.onTuesday}" itemLabel="Tuesday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onWednesday" disabled="true" value="#{centerCodeController.centerCodes.onWednesday}" itemLabel="Wednesday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onThursday" disabled="true" value="#{centerCodeController.centerCodes.onThursday}" itemLabel="Thursday"/>&nbsp;
+				<p:selectBooleanCheckbox id="onFriday" disabled="true" value="#{centerCodeController.centerCodes.onFriday}" itemLabel="Friday"/><br/>&nbsp;
+				<p:selectBooleanCheckbox id="onSaturday" disabled="true" value="#{centerCodeController.centerCodes.onSaturday}" itemLabel="Saturday"/>
+				<p:message for="day" display="icon" />
+			</h:panelGrid>
+		</p:panel>
+	</p:panel>
+	</ui:define>
+</ui:composition>

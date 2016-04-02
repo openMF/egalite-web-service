@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['deviceMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['extdeviceMgmt.title.listDevices']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['extdeviceMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['extdeviceMgmt.tblNav.add']}" />
+	<ui:param name="addOutcome" value="addExternalDevice" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addExternalDevice')}" />
+	<ui:param name="listController" value="#{externalDeviceListController}" />
+
+     <!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{externalDeviceListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- ADD END -->
+
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{externalDeviceListController.listSelect}" />
+
+		<p:column id="id" filterBy="#{record.id}"
+			headerText="#{msg['extdeviceMgmt.tblHeader.deviceId']}"
+			sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+       
+		<p:column id="macId" filterBy="#{record.macId}"
+			headerText="#{msg['extdeviceMgmt.tblHeader.macId']}"
+			sortBy="#{record.macId}">
+			<h:outputText value="#{record.macId}" />
+		</p:column>
+
+        <p:column id="manufacturer" filterBy="#{record.manufacturer}"
+			headerText="#{msg['extdeviceMgmt.tblHeader.manufacturer']}"
+			sortBy="#{record.manufacturer}">
+			<h:outputText value="#{record.manufacturer}" />
+		</p:column>
+
+		<p:column id="issuedDateText" filterBy="#{record.issuedDateText}"
+			headerText="#{msg['deviceMgmt.tblHeader.issuedDate']}"
+			sortBy="#{record.issuedDateText}">
+			<h:outputText value="#{record.issuedDateText}" showOn="label"
+				readonly="true">
+			</h:outputText>
+		</p:column>
+
+		<p:column id="issuedByCo" filterBy="#{record.issuedByCo}"
+			headerText="#{msg['deviceMgmt.tblHeader.issuedBy']}"
+			sortBy="#{record.issuedByCo}">
+			<h:outputText value="#{record.issuedByCo}" />
+		</p:column>
+
+		<p:column id="modelNo" filterBy="#{record.modelNo}"
+			headerText="#{msg['extdeviceMgmt.tblHeader.modelNo']}"
+			sortBy="#{record.modelNo}">
+			<h:outputText value="#{record.modelNo}" />
+		</p:column>
+
+	 <!--  <p:column id="licenceFile" filterBy="#{record.licenceFileName}"
+			headerText="#{msg['extdeviceMgmt.tblHeader.licenceFile']}"
+			sortBy="#{record.licenceFileName}">
+			<h:outputText value="#{record.licenceFileName}" />
+		</p:column>  -->
+
+		<p:column id="authStatus" filterBy="#{record.authStatusText}"
+			headerText="#{msg['deviceMgmt.tblHeader.authorize']}"
+			sortBy="#{record.authStatusText}">
+			<h:outputText value="#{record.authStatusText}" />
+		</p:column>
+
+		<p:column id="isActive" filterBy="#{record.deviceStatusText}"
+			headerText="#{msg['deviceMgmt.tblHeader.deviceStatus']}"
+			sortBy="#{record.isActive}">
+			<h:outputText value="#{record.deviceStatusText}" />
+		</p:column>
+
+
+	</ui:define>
+</ui:composition>

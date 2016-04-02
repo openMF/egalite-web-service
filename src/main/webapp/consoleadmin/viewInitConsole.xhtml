@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	
+	<ui:define name="metadata">
+		<f:metadata>
+		<!-- <f:event   listener="#{cbsJobHistoryController.loadTab1Msg}"
+				type="preRenderView"></f:event>
+				<f:event listener="#{initConsoleController.loadCheckinUser}"
+				type="preRenderView"></f:event>  -->	
+		</f:metadata>
+	</ui:define>
+
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-store" />
+		<meta http-equiv="cache-control" content="must-revalidate" />
+		<meta http-equiv="expires" content="0" />
+	</f:facet>
+
+	<f:facet name="last">
+		<link rel="stylesheet" type="text/css"
+			href="/resources/css/mfiapp.css" />
+	</f:facet>
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText value="#{msg['console.label.initiate']}" /> </span>
+				<span class="pageHeaderControls"> 
+				    <p:outputLabel value="#{initConsoleController.checkinUser}" id="chekedIn"/>
+				    <p:poll ignoreAutoUpdate="true" interval="5" listener="#{initConsoleController.getCheckinUser}" update="chekedIn" async="true"/>
+				   				    	
+				    <p:spacer width="4px" />			
+					<p:commandButton id="btnSave" value="Check In"   action="#{initConsoleController.performCheckin}"/> 
+					<p:spacer width="2px" /> 					
+					<p:commandButton id="btnCancel" value="Check Out"  action="#{initConsoleController.performCheckout}"/>
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel>
+			<p:panel styleClass="bodyWithoutAuditTrail"	style="width:42%;height:41px; float:right">
+				<h:panelGrid columns="4" id="right"></h:panelGrid>
+			</p:panel>
+		
+			<p:tabView orientation="top"  dynamic="true" id="tabviewmain">
+			   
+				<p:tab id="tab1" title="Group I >"  >
+				<p:poll ignoreAutoUpdate="true" async="true" interval="3" listener="#{initConsoleController.refreshJobStatus}" 
+				update="grp1Status1,grp1Status2,grp1Status3,grp1Status4,grp1Table,tab1rightbut1,tab1rightbut2
+				,tab1rightbut3,tab1rightbut4" />
+				
+				   <h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp1txt1}"  styleClass="consoleHeaderText"  />
+				    <br/><br/>
+				    <h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp1txt6}" />
+				     <br/><br/><br/> 
+				   
+					<h:panelGrid columns="8" cellpadding="1">
+						<div>
+							<h:panelGrid rows="3" cellpadding="1" align="center">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp1txt2}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_BUSINESS_DATE_UPLOAD')}" value="Submit" styleClass="bigbutton">
+							</p:commandButton>	
+							 <p:row>
+								<p:graphicImage id="tab1rightbut1"  styleClass="#{initConsoleController.checkStatus('MARK_BUSINESS_DATE_UPLOAD')}"/>
+								<h:outputLabel  id="grp1Status1" value="#{initConsoleController.initConsoleStatusVO.grp1Status1}" />
+							</p:row>					
+							</h:panelGrid>
+						</div>
+						<div>
+							<h:panelGrid rows="3" cellpadding="1">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp1txt3}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_IBS_CLEANUP')}" value="Submit" styleClass="bigbutton" />
+							<p:row>
+								<p:graphicImage id="tab1rightbut2"  styleClass="#{initConsoleController.checkStatus('MARK_IBS_CLEANUP')}"/>								
+								<h:outputLabel  id="grp1Status2" value="#{initConsoleController.initConsoleStatusVO.grp1Status2}" />
+							</p:row>
+							</h:panelGrid>
+						</div>
+						<div>
+							<h:panelGrid rows="3" cellpadding="1">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp1txt4}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_STAGE_DATA_UPLOAD')}" value="Submit" styleClass="bigbutton" />
+							<p:row>
+								<p:graphicImage id="tab1rightbut3"  styleClass="#{initConsoleController.checkStatus('MARK_STAGE_DATA_UPLOAD')}"/>								
+								<h:outputLabel  id="grp1Status3" value="#{initConsoleController.initConsoleStatusVO.grp1Status3}" />
+							</p:row>
+							</h:panelGrid>
+						</div>
+						<div>
+						   <h:panelGrid rows="3" cellpadding="1">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp1txt5}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_GROUP_1_RESET')}"  value="Submit" styleClass="bigbutton" >
+							<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+							</p:commandButton>
+							   <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+							        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							    </p:confirmDialog>
+							 <p:row>
+								<p:graphicImage id="tab1rightbut4"  styleClass="#{initConsoleController.checkStatus('MARK_GROUP_1_RESET')}"/>								
+								<h:outputLabel  id="grp1Status4" value="#{initConsoleController.initConsoleStatusVO.grp1Status4}" />
+							</p:row>
+							</h:panelGrid>
+						</div>
+					</h:panelGrid>
+					
+					
+					<!-- 
+					<h:panelGrid columns="1" cellpadding="1">
+						<h:commandButton styleClass="bigbutton" value="Refresh" ></h:commandButton>
+					</h:panelGrid>
+					 -->
+					 <br/><br/>
+					<p:dataTable id="grp1Table" var="grp1cbsDetail"
+						widgetVar="recordsTable1" 
+						value="#{cbsJobHistoryController.tab1Msgs}" scrollable="true"
+						scrollHeight="120" filterMatchMode="contains">
+						<f:facet name="header">
+							<span class="pageHeaderTitle"> <h:outputText
+									styleClass="pageHeaderTitle2"
+									value="View Exception" />
+
+					
+							</span>
+						</f:facet>
+						<!--  
+						<p:column id="grp1errorType" headerText="Type"
+							filterBy="#{grp1cbsDetail.errorType}" sortBy="#{grp1cbsDetail.errorType}">
+							<h:outputText value="#{grp1cbsDetail.errorType}" />
+						</p:column>
+						-->
+						<p:column id="grp1errorClass" headerText="Class" 
+							filterBy="#{grp1cbsDetail.errorClass}" sortBy="#{grp1cbsDetail.errorClass}">
+							<h:outputText value="#{grp1cbsDetail.errorClass}" />
+						</p:column>
+
+						<p:column id="grp1errorKey" headerText="Key" filterBy="#{grp1cbsDetail.errorKey}"
+							sortBy="#{grp1cbsDetail.errorKey}">
+							<h:outputText value="#{grp1cbsDetail.errorKey}" />
+						</p:column>
+						
+						<p:column id="grp1errorCode" headerText="Error Code" filterBy="#{grp1cbsDetail.errorCode}"
+							sortBy="#{grp1cbsDetail.errorCode}">
+							<h:outputText value="#{grp1cbsDetail.errorCode}" />
+						</p:column>
+						
+						<p:column id="grp1errorDesc" headerText="Error Description"  style="width:450px;"
+						   filterBy="#{grp1cbsDetail.errorDesc}" sortBy="#{grp1cbsDetail.errorDesc}">
+							<h:outputText value="#{grp1cbsDetail.errorDesc}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+				
+				<p:tab title="Group II >"    id="tab2">
+					<p:poll ignoreAutoUpdate="true" async="true" interval="3" listener="#{initConsoleController.refreshJobStatus}" 
+					update="grp2Status1,grp2Status2,grp2Table,tab2rightbut1,,tab2rightbut2" />
+					<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp2txt1}"  styleClass="consoleHeaderText"  />
+				    <br/><br/>
+				    <h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp2txt4}" />
+				     <br/><br/><br/>
+				     
+					<h:panelGrid columns="8" cellpadding="1">
+						<div>
+							<h:panelGrid rows="3" cellpadding="1" align="center">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp2txt2}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_IBS_UPLOAD')}" value="Submit" styleClass="bigbutton"/>
+							<p:row>
+								<p:graphicImage id="tab2rightbut1"  styleClass="#{initConsoleController.checkStatus('MARK_IBS_UPLOAD')}"/>								
+								<h:outputLabel  id="grp2Status1" value="#{initConsoleController.initConsoleStatusVO.grp2Status1}" />
+							</p:row>
+							</h:panelGrid>
+						</div>
+						<div>
+							<h:panelGrid rows="3" cellpadding="1">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp2txt3}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_GROUP_2_RESET')}" value="Submit" styleClass="bigbutton" >
+								<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+							</p:commandButton>
+							  <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+							        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						   		</p:confirmDialog>
+							<p:row>
+								<p:graphicImage id="tab2rightbut2"  styleClass="#{initConsoleController.checkStatus('MARK_GROUP_2_RESET') }"/>								
+								<h:outputLabel  id="grp2Status2" value="#{initConsoleController.initConsoleStatusVO.grp2Status2}" />
+							</p:row>
+							</h:panelGrid>
+						</div>
+					</h:panelGrid>
+					
+					
+					<!-- 
+					<h:panelGrid columns="1" cellpadding="1">
+						<h:commandButton styleClass="bigbutton" value="Refresh"></h:commandButton>
+					</h:panelGrid>
+					 -->
+					 <br/><br/>
+					<p:dataTable id="grp2Table" var="grp2cbsDetail"
+						widgetVar="recordsTable2" 
+						value="#{cbsJobHistoryController.tab2Msgs}" scrollable="true"
+						scrollHeight="120" filterMatchMode="contains">
+						<f:facet name="header">
+							<span class="pageHeaderTitle"> <h:outputText
+									styleClass="pageHeaderTitle2"
+									value="View Exception" />
+
+					
+							</span>
+						</f:facet>
+						<!-- 
+						<p:column id="grp2errorType" headerText="Type"
+							filterBy="#{grp2cbsDetail.errorType}" sortBy="#{grp2cbsDetail.errorType}">
+							<h:outputText value="#{grp2cbsDetail.errorType}" />
+						</p:column>
+						-->
+						<p:column id="grp2errorClass" headerText="Class"
+							filterBy="#{grp2cbsDetail.errorClass}" sortBy="#{grp2cbsDetail.errorClass}">
+							<h:outputText value="#{grp2cbsDetail.errorClass}" />
+						</p:column>
+
+						<p:column id="grp2errorKey" headerText="Key" filterBy="#{grp2cbsDetail.errorKey}"
+							sortBy="#{grp2cbsDetail.errorKey}">
+							<h:outputText value="#{grp2cbsDetail.errorKey}" />
+						</p:column>
+						
+						<p:column id="grp2errorCode" headerText="Error Code" filterBy="#{grp2cbsDetail.errorCode}"
+							sortBy="#{grp2cbsDetail.errorCode}">
+							<h:outputText value="#{grp2cbsDetail.errorCode}" />
+						</p:column>
+						
+						<p:column id="grp2errorDesc" headerText="Error Description" filterBy="#{grp2cbsDetail.errorDesc}"
+							sortBy="#{grp2cbsDetail.errorDesc}"   style="width:450px;" >
+							<h:outputText value="#{grp2cbsDetail.errorDesc}" />
+						</p:column>
+					</p:dataTable>
+					
+				</p:tab>
+				
+				<p:tab title="Group III >"   id="tab3">
+				<p:poll ignoreAutoUpdate="true" async="true" interval="3" listener="#{initConsoleController.refreshJobStatus}" 
+				update="grp3Status1,grp3Status2,grp3Table,tab3rightbut1,tab3rightbut2" />
+					<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp3txt1}"  styleClass="consoleHeaderText"  />
+				    <br/><br/>
+				    <h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp3txt4}"  />
+				     <br/><br/><br/>
+					
+					<h:panelGrid columns="8" cellpadding="1">
+						<div>
+							<h:panelGrid rows="3" cellpadding="1" align="center">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp3txt2}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_TXN_INPUT')}" value="Submit" styleClass="bigbutton"/>
+							<p:row>
+								<p:graphicImage id="tab3rightbut1"  styleClass="#{initConsoleController.checkStatus('MARK_TXN_INPUT') }"/>								
+								<h:outputLabel  id="grp3Status1" value="#{initConsoleController.initConsoleStatusVO.grp3Status1}" />
+							</p:row>
+							</h:panelGrid>
+						</div>
+						<div>
+							<h:panelGrid rows="3" cellpadding="1">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp3txt3}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_GROUP_3_RESET')}" value="Submit" styleClass="bigbutton" >
+								<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+							</p:commandButton>
+							  <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+							        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							    </p:confirmDialog>
+							<p:row>
+								<p:graphicImage id="tab3rightbut2"  styleClass="#{initConsoleController.checkStatus('MARK_GROUP_3_RESET')}"/>								
+								<h:outputLabel  id="grp3Status2" value="#{initConsoleController.initConsoleStatusVO.grp3Status2}" />
+							</p:row>
+							</h:panelGrid>
+						</div>
+					</h:panelGrid>
+					
+					
+					<!-- 
+					<h:panelGrid columns="1" cellpadding="1">
+						<h:commandButton styleClass="bigbutton" value="Refresh"></h:commandButton>
+					</h:panelGrid>
+					 -->
+					 
+					 <br/><br/>
+					<p:dataTable id="grp3Table" var="grp3cbsDetail"
+						widgetVar="recordsTable3"  
+						value="#{cbsJobHistoryController.tab3Msgs}" scrollable="true"
+						scrollHeight="120" filterMatchMode="contains">
+						<f:facet name="header">
+							<span class="pageHeaderTitle"> <h:outputText
+									styleClass="pageHeaderTitle2"
+									value="View Exception" />
+
+					
+							</span>
+						</f:facet>
+						<!-- 
+						<p:column id="grp3errorType" headerText="Type"
+							filterBy="#{grp3cbsDetail.errorType}" sortBy="#{grp3cbsDetail.errorType}">
+							<h:outputText value="#{grp3cbsDetail.errorType}" />
+						</p:column>
+						-->
+						<p:column id="grp3errorClass" headerText="Class"
+							filterBy="#{grp3cbsDetail.errorClass}" sortBy="#{grp3cbsDetail.errorClass}">
+							<h:outputText value="#{grp3cbsDetail.errorClass}" />
+						</p:column>
+
+						<p:column id="grp3errorKey" headerText="Key" filterBy="#{grp3cbsDetail.errorKey}"
+							sortBy="#{grp3cbsDetail.errorKey}">
+							<h:outputText value="#{grp3cbsDetail.errorKey}" />
+						</p:column>
+						
+						<p:column id="grp3errorCode" headerText="Error Code" filterBy="#{grp3cbsDetail.errorCode}"
+							sortBy="#{grp3cbsDetail.errorCode}">
+							<h:outputText value="#{grp3cbsDetail.errorCode}" />
+						</p:column>
+						
+						<p:column id="grp3errorDesc" headerText="Error Description" filterBy="#{grp3cbsDetail.errorDesc}"
+							sortBy="#{grp3cbsDetail.errorDesc}"   style="width:450px;">
+							<h:outputText value="#{grp3cbsDetail.errorDesc}" />
+						</p:column>
+					</p:dataTable>
+					
+				</p:tab>
+				
+				<p:tab title="Services >"  id="tab4">
+					<p:poll ignoreAutoUpdate="true" async="true" interval="3" listener="#{initConsoleController.refreshJobStatus}" 
+					update="grp4Status1,grp4Status2,tab4rightbut1,tab4rightbut2" />
+					<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp4txt1}"  styleClass="consoleHeaderText"  />
+				    <br/><br/>
+				    <h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp4txt4}"  />
+				     <br/><br/><br/>
+					
+					<h:panelGrid columns="8" cellpadding="1">
+						<div>
+							<h:panelGrid rows="3" cellpadding="1" align="center">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp4txt2}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_START_SERVICES')}" value="Submit" styleClass="bigbutton"/>
+							<p:row>
+								<p:graphicImage id="tab4rightbut1"  styleClass="#{initConsoleController.checkStatus('MARK_START_SERVICES')}"/>
+								
+								<h:outputLabel  id="grp4Status1" value="#{initConsoleController.initConsoleStatusVO.grp4Status1}" />
+							</p:row>
+							</h:panelGrid>
+						</div>
+						<div>
+							<h:panelGrid rows="3" cellpadding="1">
+							  <h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp4txt3}" />
+							  <p:commandButton action="#{initConsoleController.performAction('MARK_STOP_SERVICES')}" value="Submit" styleClass="bigbutton" />
+							  <p:row>
+								<p:graphicImage id="tab4rightbut2"  styleClass="#{initConsoleController.checkStatus('MARK_STOP_SERVICES') }"/>
+								
+								<h:outputLabel  id="grp4Status2" value="#{initConsoleController.initConsoleStatusVO.grp4Status2}" />
+							  </p:row>
+							</h:panelGrid>
+						</div>
+					</h:panelGrid>
+					
+					
+					 <!-- 
+					<h:panelGrid columns="1" cellpadding="1">
+						<h:commandButton styleClass="bigbutton" value="Refresh"></h:commandButton>
+					</h:panelGrid>
+					 -->
+					
+				
+					
+				</p:tab>
+				
+				<p:tab title="Group V >"  id="tab5">
+				<p:poll ignoreAutoUpdate="true" async="true" interval="3" listener="#{initConsoleController.refreshJobStatus}" 
+				update="grp5Status1,grp5Status2,grp5Table,tab5rightbut1,tab5rightbut2" />
+					<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp5txt1}" styleClass="consoleHeaderText"  />
+				    <br/><br/>
+				    <h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp5txt4}"   />
+				     <br/><br/><br/>
+					
+					<h:panelGrid columns="8" cellpadding="1">
+						<div>
+							<h:panelGrid rows="3" cellpadding="1" align="center">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp5txt2}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_STOP_TXN_INPUT')}" value="Submit" styleClass="bigbutton"/>
+							 <p:row>
+								<p:graphicImage id="tab5rightbut1"  styleClass="#{initConsoleController.checkStatus('MARK_STOP_TXN_INPUT')}"/>								
+								<h:outputLabel  id="grp5Status1" value="#{initConsoleController.initConsoleStatusVO.grp5Status1}" />
+							  </p:row>
+							</h:panelGrid>
+						</div>
+						<div>
+							<h:panelGrid rows="3" cellpadding="1">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp5txt3}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_GROUP_5_RESET')}"  value="Submit" styleClass="bigbutton" >
+								<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+							        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							    </p:confirmDialog>
+							 <p:row>
+								<p:graphicImage id="tab5rightbut2"  styleClass="#{initConsoleController.checkStatus('MARK_GROUP_5_RESET')}"/>								
+								<h:outputLabel  id="grp5Status2" value="#{initConsoleController.initConsoleStatusVO.grp5Status2}" />
+							  </p:row>
+							</h:panelGrid>
+						</div>
+					</h:panelGrid>
+					
+					<!-- 
+					<h:panelGrid columns="1" cellpadding="1">
+						<h:commandButton styleClass="bigbutton" value="Refresh"></h:commandButton>
+					</h:panelGrid>
+					 -->
+					 <br/><br/>
+					<p:dataTable id="grp5Table" var="grp5cbsDetail"
+						widgetVar="recordsTable5" 
+						value="#{cbsJobHistoryController.tab5Msgs}" scrollable="true"
+						scrollHeight="120" filterMatchMode="contains">
+						<f:facet name="header">
+							<span class="pageHeaderTitle"> <h:outputText
+									styleClass="pageHeaderTitle2"
+									value="View Exception" />
+
+					
+							</span>
+						</f:facet>
+						<!-- 
+						<p:column id="grp5errorType" headerText="Type"
+							filterBy="#{grp5cbsDetail.errorType}" sortBy="#{grp5cbsDetail.errorType}">
+							<h:outputText value="#{grp5cbsDetail.errorType}" />
+						</p:column>
+						-->
+						<p:column id="grp5errorClass" headerText="Class"
+							filterBy="#{grp5cbsDetail.errorClass}" sortBy="#{grp5cbsDetail.errorClass}">
+							<h:outputText value="#{grp5cbsDetail.errorClass}" />
+						</p:column>
+
+						<p:column id="grp5errorKey" headerText="Key" filterBy="#{grp5cbsDetail.errorKey}"
+							sortBy="#{grp5cbsDetail.errorKey}">
+							<h:outputText value="#{grp5cbsDetail.errorKey}" />
+						</p:column>
+						
+						<p:column id="grp5errorCode" headerText="Error Code" filterBy="#{grp5cbsDetail.errorCode}"
+							sortBy="#{grp5cbsDetail.errorCode}">
+							<h:outputText value="#{grp5cbsDetail.errorCode}" />
+						</p:column>
+						
+						<p:column id="grp5errorDesc" headerText="Error Description" filterBy="#{grp5cbsDetail.errorDesc}"
+							sortBy="#{grp5cbsDetail.errorDesc}"   style="width:450px;">
+							<h:outputText value="#{grp5cbsDetail.errorDesc}" />
+						</p:column>
+					</p:dataTable>
+					
+				</p:tab>
+				
+				<p:tab title="Group VI >" id="tab6">
+				<p:poll ignoreAutoUpdate="true" async="true" interval="3" listener="#{initConsoleController.refreshJobStatus}" 
+				  update="grp6Status1,grp6Status2,grp6Table,tab6rightbut1,tab6rightbut2" />
+					<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp6txt1}" styleClass="consoleHeaderText"/>
+				    <br/><br/>
+				    <h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp6txt4}"    />
+				     <br/><br/><br/>
+					<h:panelGrid columns="8" cellpadding="1">
+						<div>
+							<h:panelGrid rows="3" cellpadding="1" align="center">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp6txt2}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_STOP_FIN_INPUT')}" value="Submit" styleClass="bigbutton"/>
+							 <p:row>
+								<p:graphicImage id="tab6rightbut1"  styleClass="#{initConsoleController.checkStatus('MARK_STOP_FIN_INPUT')}"/>								
+								<h:outputLabel  id="grp6Status1" value="#{initConsoleController.initConsoleStatusVO.grp6Status1}" />
+							  </p:row>
+							</h:panelGrid>
+						</div>
+						<div>
+							<h:panelGrid rows="3" cellpadding="1">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp6txt3}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_GROUP_6_RESET')}"  value="Submit" styleClass="bigbutton" >
+								<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+							        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							    </p:confirmDialog>
+							 <p:row>
+								<p:graphicImage id="tab6rightbut2"  styleClass="#{initConsoleController.checkStatus('MARK_GROUP_6_RESET')}"/>
+								
+								<h:outputLabel  id="grp6Status2" value="#{initConsoleController.initConsoleStatusVO.grp6Status2}" />
+							  </p:row>
+							</h:panelGrid>
+						</div>
+					</h:panelGrid>
+					
+					
+					 <!-- 
+					<h:panelGrid columns="1" cellpadding="1">
+						<h:commandButton styleClass="bigbutton" value="Refresh"></h:commandButton>
+					</h:panelGrid>
+					 -->
+					<br/><br/>
+					<p:dataTable id="grp6Table" var="grp6cbsDetail"
+						widgetVar="recordsTable6" 
+						value="#{cbsJobHistoryController.tab6Msgs}" scrollable="true"
+						scrollHeight="120" filterMatchMode="contains">
+						<f:facet name="header">
+							<span class="pageHeaderTitle"> <h:outputText
+									styleClass="pageHeaderTitle2"
+									value="View Exception" />
+
+					
+							</span>
+						</f:facet>
+						<!--
+						<p:column id="grp6errorType" headerText="Type"
+							filterBy="#{grp6cbsDetail.errorType}" sortBy="#{grp6cbsDetail.errorType}">
+							<h:outputText value="#{grp6cbsDetail.errorType}" />
+						</p:column>
+						-->
+						<p:column id="grp6errorClass" headerText="Class"
+							filterBy="#{grp6cbsDetail.errorClass}" sortBy="#{grp6cbsDetail.errorClass}">
+							<h:outputText value="#{grp6cbsDetail.errorClass}" />
+						</p:column>
+
+						<p:column id="grp6errorKey" headerText="Key" filterBy="#{grp6cbsDetail.errorKey}"
+							sortBy="#{grp6cbsDetail.errorKey}">
+							<h:outputText value="#{grp6cbsDetail.errorKey}" />
+						</p:column>
+						
+						<p:column id="grp6errorCode" headerText="Error Code" filterBy="#{grp6cbsDetail.errorCode}"
+							sortBy="#{grp6cbsDetail.errorCode}">
+							<h:outputText value="#{grp6cbsDetail.errorCode}" />
+						</p:column>
+						
+						<p:column id="grp6errorDesc" headerText="Error Description" filterBy="#{grp6cbsDetail.errorDesc}"
+							sortBy="#{grp6cbsDetail.errorDesc}"  style="width:450px;" >
+							<h:outputText value="#{grp6cbsDetail.errorDesc}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+				
+				<p:tab title="Group VII "  id="tab7">
+				<p:poll ignoreAutoUpdate="true" async="true" interval="3" listener="#{initConsoleController.refreshJobStatus}" 
+				update="grp7Status1,grp7Status2,grp7Table,tab7rightbut1,tab7rightbut2" />
+					<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp7txt1}" styleClass="consoleHeaderText"/>
+				    <br/><br/>
+				    <h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp7txt4}"     />
+				     <br/><br/><br/>
+					
+					<h:panelGrid columns="8" cellpadding="1">
+						<div>
+							<h:panelGrid rows="3" cellpadding="1" align="center">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp7txt2}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_END_OF_BUSINESS_DAY')}" value="Submit" styleClass="bigbutton"/>
+							  <p:row>
+								<p:graphicImage id="tab7rightbut1"  styleClass="#{initConsoleController.checkStatus('MARK_END_OF_BUSINESS_DAY') }"/>								
+								<h:outputLabel  id="grp7Status1" value="#{initConsoleController.initConsoleStatusVO.grp7Status1}" />
+							  </p:row>
+						</h:panelGrid>
+						</div>
+						<div>
+							<h:panelGrid rows="3" cellpadding="1">
+							<h:outputLabel value="#{initConsoleController.initConsoleVO.tgrp7txt3}" />
+							<p:commandButton action="#{initConsoleController.performAction('MARK_GROUP_7_RESET')}"  value="Submit" styleClass="bigbutton" >
+								<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+							</p:commandButton>
+							<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+							        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							    </p:confirmDialog>
+							  <p:row>
+								<p:graphicImage id="tab7rightbut2"  styleClass="#{initConsoleController.checkStatus('MARK_GROUP_7_RESET') }"/>								
+								<h:outputLabel  id="grp7Status2" value="#{initConsoleController.initConsoleStatusVO.grp7Status2}" />
+							  </p:row>
+							</h:panelGrid>
+						</div>
+					</h:panelGrid>
+					
+					<!-- 
+					<h:panelGrid columns="1" cellpadding="1">
+						<h:commandButton styleClass="bigbutton" value="Refresh"></h:commandButton>
+					</h:panelGrid>
+					 -->
+					 <br/><br/>
+					<p:dataTable id="grp7Table" var="grp7cbsDetail"
+						widgetVar="recordsTable7" 
+						value="#{cbsJobHistoryController.tab7Msgs}" scrollable="true"
+						scrollHeight="120" filterMatchMode="contains">
+						<f:facet name="header">
+							<span class="pageHeaderTitle"> <h:outputText
+									styleClass="pageHeaderTitle2"
+									value="View Exception" />
+
+					
+							</span>
+						</f:facet>
+						<!-- 
+						<p:column id="grp7errorType" headerText="Type"
+							filterBy="#{grp7cbsDetail.errorType}" sortBy="#{grp7cbsDetail.errorType}">
+							<h:outputText value="#{grp7cbsDetail.errorType}" />
+						</p:column>
+						-->
+						<p:column id="grp7errorClass" headerText="Class"
+							filterBy="#{grp7cbsDetail.errorClass}" sortBy="#{grp7cbsDetail.errorClass}">
+							<h:outputText value="#{grp7cbsDetail.errorClass}" />
+						</p:column>
+
+						<p:column id="grp7errorKey" headerText="Key" filterBy="#{grp7cbsDetail.errorKey}"
+							sortBy="#{grp7cbsDetail.errorKey}">
+							<h:outputText value="#{grp7cbsDetail.errorKey}" />
+						</p:column>
+						
+						<p:column id="grp7errorCode" headerText="Error Code" filterBy="#{grp7cbsDetail.errorCode}"
+							sortBy="#{grp7cbsDetail.errorCode}">
+							<h:outputText value="#{grp7cbsDetail.errorCode}" />
+						</p:column>
+						
+						<p:column id="grp7errorDesc" headerText="Error Description" filterBy="#{grp7cbsDetail.errorDesc}"
+							sortBy="#{grp7cbsDetail.errorDesc}"  style="width:450px;" >
+							<h:outputText value="#{grp7cbsDetail.errorDesc}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+				
+			</p:tabView>
+		</p:panel>
+	</ui:define>
+</ui:composition>

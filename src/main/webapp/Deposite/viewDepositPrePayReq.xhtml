@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://java.sun.com/jsp/jstl/core"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+<!--EGA-MN15-000022  added columns generated_sms,sms_mobile_no,sms_content,generated_revr,full_part_ind,sync_type
+	-->
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.id}"></f:viewParam>
+			<f:event listener="#{reqDpPrepayController.loadReqDpPrepay}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['depositMgmt.title.Reqtracker']}" /> 
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['depositMgmt.title.preDepositReq']}" /></span>
+				<span class="pageHeaderControls"> <p:button id="btnList"
+						value="#{msg['agentTxnMgmt.label.close']}" outcome="openList" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left">
+				<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.RequestId']}" />
+					<p:inputText id="requestId"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.id}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnDescription']}" />
+					<p:inputText id="txnCode"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.txnCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.BranchCode']}" />
+					<p:inputText id="branCode"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.branCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.cbsAcRefNo']}" />
+					<p:inputText id="cbsAcRefNo"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.cbsAcRefNo}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['depositeMgmt.label.amountPaid']}" />
+					<p:inputText id="amountPaid"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.amountPaid}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerId']}" />
+					<p:inputText id="customerId"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.customerId}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerName']}" />
+					<p:inputText id="customerFullName"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.customerFullName}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.AgentId']}" />
+					<p:inputText id="agentId"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.agentId}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.AgentName']}" />
+					<p:inputText id="agentName"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.agentName}"
+						readonly="true" />
+						
+					
+					<h:outputLabel value="#{msg['DepositeMgmt.label.locationCode']}" />
+					<p:inputText id="locationCode"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.locationCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.locationDesc']}" />
+					<p:inputText id="locationDesc"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.locationDesc}"
+						readonly="true" />
+						
+
+				</h:panelGrid>
+			</p:panel>
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2">
+
+
+					<h:outputLabel value="#{msg['depositeMgmt.label.txnNarrative']}" />
+					<p:inputText id="txnNarrative"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.txnNarrative}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnInitTime']}" />
+					<p:inputText id="txnInitTime"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.txnInitTime}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy hh:ss:mm a" />
+					</p:inputText>
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.SyncTime']}" />
+					<p:inputText id="SyncTime"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.txnSyncTime}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy hh:ss:mm a" />
+					</p:inputText>
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnStatusDesc']}" />
+					<p:inputText id="txnStatusDesc"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.txnStatusDesc}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnErrCode']}" />
+					<p:inputText id="txnErrCode"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.txnErrCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnErrMessage']}" />
+					<p:inputText id="txnErrMessage"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.txnErrMessage}"
+						readonly="true" />
+
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.generatedSms']}" />
+					<p:inputText id="generatedSms"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.generatedSms}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.smsMobileNo']}" />
+					<p:inputText id="smsMobileNo"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.smsMobileNo}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.smsContent']}" />
+					<p:inputText id="smsContent"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.smsContent}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.genetatedRevr']}" />
+					<p:inputText id="genetatedRevr"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.generatedRevr}"
+						readonly="true" />
+
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.fullPartInd']}" />
+					<p:inputText id="fullPartInd"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.fullPartInd}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.syncType']}" />
+					<p:inputText id="syncType"
+						value="#{reqDpPrepayController.mbsReqDpPrepayViewVO.syncType}"
+						readonly="true" />
+
+
+
+
+				</h:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

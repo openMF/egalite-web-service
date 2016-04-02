@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{referenceCodeController.refcode.refMasterCode}"></f:viewParam>
+			<f:event listener="#{referenceCodeController.loadReferenceCode}"
+				type="preRenderView"></f:event>
+			<f:event listener="#{referenceCodeController.refCodeDetail}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['referenceMgmt.title.ref']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['referenceMgmt.title.viewref']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{referenceCodeController}"></ui:param>
+					</ui:include>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithoutAuditTrail">
+			<h:panelGrid columns="2">
+
+
+				<h:outputLabel for="id"
+					value="#{msg['referenceMgmt.tblHeader.refMasterCode']}" />
+				<p:inputText id="id"
+					value="#{referenceCodeController.refcode.refMasterCode}"
+					readonly="true" />
+				<h:outputLabel for="codeDesc"
+					value="#{msg['referenceMgmt.tblHeader.codeDesc']}" />
+				<p:inputText id="codeDesc" readonly="true"
+					value="#{referenceCodeController.refcode.codeDesc}"
+					label="#{msg['referenceMgmt.tblHeader.codeDesc']}">
+				</p:inputText>
+				<h:outputLabel for="purpose"
+					value="#{msg['referenceMgmt.tblHeader.purpose']}" />
+				<p:inputText id="purpose" readonly="true"
+					value="#{referenceCodeController.refcode.purpose}"
+					label="#{msg['referenceMgmt.tblHeader.purpose']}">
+				</p:inputText>
+
+				<h:outputLabel for="validRef"
+					value="#{msg['referenceMgmt.tblHeader.isValid']}" />
+				<p:inputText id="validRef" readonly="true"
+					value="#{lov['validRef~'.concat(referenceCodeController.refcode.validRef.trim())]}">
+				</p:inputText>
+				<p:message for="validRef" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+		<p:panel id="refCodeDetailPanel">
+			<f:facet name="header">
+				<p:panel styleClass="maintenanceFormPanelHeader">
+					<span class="pageHeaderTitle"> <h:outputText
+							value="#{msg['referenceMgmt.tblHeader.refcodeDetail']}" />
+					</span>
+				</p:panel>
+			</f:facet>
+			<p:panelGrid>
+				<p:row>
+					<p:column>
+						<p:dataTable id="refCodeDetailDataTable" var="refCodeDetail"
+							emptyMessage="#{msg['referenceMgmt.label.emptyMessage']}"
+							rowKey="#{refCodeDetail.id}" editable="true"
+							rowIndexVar="rowIndex"
+							value="#{referenceCodeController.refcodelist}" scrollable="true"
+							scrollHeight="120">
+
+							<p:ajax event="rowEdit"
+								listener="#{referenceCodeController.onRowEdit}"
+								update=":form:msgs" />  
+                    	<p:ajax event="rowEditCancel"
+								listener="#{referenceCodeController.onRowCancel}"
+								update=":form:msgs" />
+
+							<p:column id="refDetailCode"
+								headerText="#{msg['referenceMgmt.label.refDetailCode']}">
+								<p:cellEditor readonly="true">
+									<f:facet name="output">
+										<h:outputText value="#{refCodeDetail.refDetailCode}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{refCodeDetail.refDetailCode}"
+											style="width:100%" readonly="true" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column id="detailCodeDesc"
+								headerText="#{msg['referenceMgmt.label.detailCodeDesc']}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{refCodeDetail.detailCodeDesc}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{refCodeDetail.detailCodeDesc}"
+											style="width:100%" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column id="transValueEga"
+								headerText="#{msg['referenceMgmt.label.transValueEga']}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{refCodeDetail.transValueEga}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{refCodeDetail.transValueEga}"
+											style="width:100%" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column id="transValueInt"
+								headerText="#{msg['referenceMgmt.label.transValueInt']}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{refCodeDetail.transValueInt}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{refCodeDetail.transValueInt}"
+											style="width:100%" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column id="isValidText"
+								headerText="#{msg['referenceMgmt.label.isvalid']}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{refCodeDetail.isValidText}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:selectOneMenu id="validRefdetail"
+											value="#{referenceCodeController.refcode.validRefdetail}"
+											required="true"
+											label="#{msg['referenceMgmt.tblHeader.isValid']}">
+											<f:selectItems value="#{referenceCodeController.refValid}"
+												var="devi" itemValue="#{devi.listValue}"
+												itemLabel="#{devi.desn}" />
+										</h:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column id="codeSrNo"
+								headerText="#{msg['referenceMgmt.tblHeader.codeSrNo']}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{refCodeDetail.codeSrNo}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{refCodeDetail.codeSrNo}"
+											style="width:100%" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Options" style="width:50px">
+								<p:rowEditor />
+							</p:column>
+						</p:dataTable>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

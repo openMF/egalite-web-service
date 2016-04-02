@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{userController.userIdToLoad}"></f:viewParam>
+			<f:event listener="#{userController.loadUser}" type="preRenderView"></f:event>
+		</f:metadata>
+
+   <!-- [EGA-MN15-000001 point :1]
+	1- validation put for dropdown change in cbsCoCode column
+	2- Lenght of Roles display box must be small.  
+	 -->
+
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function makeNameCapitalize(id) {
+				var st = document.getElementById(id).value;
+				var sp = st.split(' ');
+				var wl = 0;
+				var f, r;
+				var word = new Array();
+				for (i = 0; i < sp.length; i++) {
+					f = sp[i].substring(0, 1).toUpperCase();
+					r = sp[i].substring(1);
+					word[i] = f + r;
+				}
+				newstring = word.join(' ');
+				document.getElementById(id).value = newstring;
+			}
+			function inputLimiterForName(e, allow, id) {
+				var AllowableCharacters = '';
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				makeNameCapitalize(id);
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			
+			function makeFNameCapitalize(){
+	        	var st = document.getElementById('form:firstName').value;
+				var sp = st.split(' ');
+				var wl=0;
+				var f ,r;
+				var word = new Array();
+				for (i = 0 ; i < sp.length ; i ++ ) {
+				f = sp[i].substring(0,1).toUpperCase();
+				r = sp[i].substring(1);
+				word[i] = f+r;
+				}
+				newstring = word.join(' ');
+				document.getElementById('form:firstName').value = newstring;
+	        }
+			
+			
+			      function makeLNameCapitalize(){
+			     	var st = document.getElementById('form:lastName').value;
+					var sp = st.split(' ');
+					var wl=0;
+					var f ,r;
+					var word = new Array();
+					for (i = 0 ; i < sp.length ; i ++ ) {
+					f = sp[i].substring(0,1).toUpperCase();
+					r = sp[i].substring(1);
+					word[i] = f+r;
+					}
+					newstring = word.join(' ');
+					document.getElementById('form:lastName').value = newstring;
+			     }   
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			//]]>
+		</script>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['userMgmt.title']}" />
+		</f:facet>
+</ui:define> -->
+
+<!-- Branch code logic changed desc added for drop down => changes for Asomi Nirmal kanna S -->
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['userMgmt.title.modifyUser']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['userMgmt.nav.save']}" update="panel"
+						action="#{userController.checkModifyForUpdate}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="Cancel" outcome="cancel">
+						<f:param name="id" value="#{userController.user.id}" />
+					</p:button>
+
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="4" id="panelGrid">
+
+				<h:outputLabel for="id" value="#{msg['userMgmt.label.userId']}" />
+				<p:inputText id="id" value="#{userController.user.id}"
+					readonly="true" label="#{msg['userMgmt.label.userId']}" />
+				<h:outputLabel />
+				<p:message for="id" display="icon" />
+				
+				<h:outputLabel for="userType"
+					value="#{msg['userMgmt.label.userType']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="userType" styleClass="drop_down_style"
+					value="#{userController.user.userType}" required="true"
+					label="#{msg['userMgmt.label.userType']}">
+					<f:selectItems value="#{userController.userTypes}" var="agentType"
+						itemValue="#{agentType.listValue}" itemLabel="#{agentType.desn}" />
+					<p:ajax render="cbsCoCode" />
+				</h:selectOneMenu>
+				<h:outputLabel />
+				<p:message for="userType" id="msgUserType" display="icon" />
+
+					<h:outputLabel for="cbsCoCode"
+					value="#{msg['userMgnt.label.cbsCoCode']}"
+					styleClass="required_asterisk"
+					/>
+				<h:selectOneMenu id="cbsCoCode"
+				    styleClass="drop_down_style" 
+					value="#{userController.user.cbsCoCode}"
+					required="#{userController.user.userType == '1'}" label="#{msg['userMgnt.label.cbsCoCode']}"
+					requiredMessage="#{msg['userMgnt.co.req.msg']}" >
+					<p:ajax listener="#{userController.validateCbscoCode()}"  event="change"  />
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{userController.cbsCodes}"
+						var="dev" itemValue="#{dev.dlValue}"
+						itemLabel="#{dev.dlValue} ~ #{dev.dlDesc}" />
+				</h:selectOneMenu>
+				<h:outputLabel />
+				<p:message for="cbsCoCode" display="icon" />
+
+				<h:outputLabel for="firstName"
+					value="#{msg['userMgmt.label.firstName']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="firstName"
+					onkeypress="return inputLimiterForName(event,'Letters','form:firstName');"
+					required="true" value="#{userController.user.firstName}"
+					label="#{msg['userMgmt.label.firstName']}" />
+				<h:outputLabel />
+				<p:message for="firstName" display="icon" />
+
+
+				<h:outputLabel for="lastName"
+					value="#{msg['userMgmt.label.lastName']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="lastName" value="#{userController.user.lastName}"
+					required="true"
+					onkeypress="return inputLimiterForName(event,'Letters','form:lastName'); "
+					label="#{msg['userMgmt.label.lastName']}" />
+				<h:outputLabel />
+				<p:message for="lastName" id="msgLastName" display="icon" />
+				
+				<h:outputLabel for="branchCode" value="#{msg['userMgmt.label.branchCode']}" styleClass="required_asterisk" />
+				<h:selectOneMenu id="branchCode" styleClass="drop_down_style" value="#{userController.user.branchCode}" 
+					required="true" >
+					<f:selectItems value="#{userController.cbsBrnCodes}"
+						var="dev" itemValue="#{dev.dlValue}" itemLabel="#{dev.dlValue} ~ #{dev.dlDesc} " />
+				</h:selectOneMenu><h:outputLabel />
+				<p:message for="branchCode" id="msgBranchCode" display="icon" />
+
+				<h:outputLabel for="userStatus"
+					value="#{msg['userMgmt.label.userStatus']}" />
+				<h:selectOneMenu id="userStatus" styleClass="drop_down_style"
+					value="#{userController.user.userStatus}" required="true"
+					label="#{msg['userMgmt.label.userType']}">
+					<f:selectItems value="#{userController.userStatus}" var="status"
+						itemValue="#{status.listValue}" itemLabel="#{status.desn}" />
+				</h:selectOneMenu>
+				<h:outputLabel />
+				<p:message for="userStatus" id="msgUserStatus" display="icon" />
+				
+				<h:outputLabel for="startDate"
+					value="#{msg['userMgmt.label.startDate']}" />
+				<p:calendar id="startDate" readonly="true"
+					value="#{userController.user.startDate}" pattern="dd-MMM-yyyy"
+					showOn="label" />
+					<h:outputLabel />
+				<p:message for="startDate" display="icon" />
+
+				<h:outputLabel for="endDate"
+					value="#{msg['userMgmt.label.endDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy" showOn="button" yearRange="c:+100"
+					navigator="true" id="endDate"
+					value="#{userController.user.endDate}"
+					label="#{msg['userMgmt.label.endDate']}">
+				</p:calendar>
+				<h:outputLabel />
+				<p:message for="endDate" id="msgEndDate" display="icon" />
+
+			</h:panelGrid>
+
+			<p:panel id="rolePanel">
+				<f:facet name="header">
+					<p:panel styleClass="maintenanceFormPanelHeader">
+						<span class="pageHeaderTitle"> <h:outputText
+								value="#{msg['userMgmt.tblHeader.moveRoleRecords']}" />
+						</span>
+					</p:panel>
+				</f:facet>
+				<p:panelGrid id="roleTables">
+					<p:row>
+						<p:column>
+						 <div id="colsrc">
+							<p:dataTable id="srcTable" widgetVar="roleTable" var="role"
+								value="#{userController.modifyAvailableRoles}"
+								rowKey="#{role.id}"
+								selection="#{userController.modifySelectedAvailableRoles}"
+								filteredValue="#{userController.modifyFilteredRoles}">
+								<p:column selectionMode="multiple" />
+								<p:column filterPosition="top"
+									headerText="#{msg['roleMgmt.label.roleId']}"
+									filterBy="#{role.id}" filterMatchMode="contains"
+									sortBy="#{role.id}">#{role.id}</p:column>
+								<p:column headerText="#{msg['roleMgmt.label.roleName']}"
+									filterPosition="top" filterBy="#{role.roleName}"
+									filterMatchMode="contains" sortBy="#{role.roleName}">#{role.roleName}</p:column>
+							</p:dataTable>
+							</div>
+						</p:column>
+						<p:column>
+							<p:commandButton value="#{msg['userMgmt.nav.forward']}"
+								ajax="true" type="button" onclick="moveToDest();" />
+							<p:remoteCommand name="moveToDest" process="@this rolePanel"
+								actionListener="#{userController.moveToModifyDest}"
+								update="srcTable,destTable"></p:remoteCommand>
+							<br />
+							<p:commandButton value="#{msg['userMgmt.nav.back']}" ajax="true"
+								type="button" onclick="moveToSource();" />
+							<p:remoteCommand name="moveToSource" process="@this rolePanel"
+								actionListener="#{userController.moveToModifySource}"
+								update="srcTable,destTable">
+							</p:remoteCommand>
+						</p:column>
+						<p:column>
+						   <div id="colsrc1">
+							<p:dataTable id="destTable" var="destRole"
+								value="#{userController.user.allocatedRoles}"
+								rowKey="#{destRole.id}"
+								selection="#{userController.modifySelectedAllocatedRoles}">
+								<p:column selectionMode="multiple" />
+								<p:column sortBy="#{destRole.id}"
+									headerText="#{msg['roleMgmt.label.roleId']}">#{destRole.id}</p:column>
+								<p:column sortBy="#{destRole.roleName}"
+									headerText="#{msg['roleMgmt.label.roleName']}">#{destRole.roleName}</p:column>
+							</p:dataTable>
+							 </div>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>

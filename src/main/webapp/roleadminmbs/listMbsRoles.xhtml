@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	
+	<!-- <ui:param name="pageTitle" value="#{msg['roleMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['roleMgmt.header.MbslistRoles']}" />
+	<ui:param name="emptyMessage" value="#{msg['roleMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['roleMgmt.nav.add']}" />
+	<ui:param name="addOutcome" value="openAdd" />
+	<ui:param name="addAuthority" value="#{auth.checkAuthority('addRole')}" />
+	<ui:param name="listController" value="#{roleMbsListController}" />
+	
+	<!-- Add -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{roleMbsListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- Role Id is added for Asomi by Nirmal kanna S -->  
+    <!-- Add End-->
+
+	<ui:define name="dataTableContent">
+
+		<p:ajax event="rowDblselect"
+			listener="#{roleMbsListController.listSelect}" />
+
+		<p:column id="roleId" filterBy="#{record.id}"
+			headerText="#{msg['roleMgmt.label.roleId']}"
+			sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+
+		<p:column id="roleName" filterBy="#{record.roleName}"
+			headerText="#{msg['roleMgmt.label.roleName']}"
+			sortBy="#{record.roleName}">
+			<h:outputText value="#{record.roleName}" />
+		</p:column>
+
+		<p:column id="roleDesc" filterBy="#{record.roleDesc}"
+			headerText="#{msg['roleMgmt.label.roleDescription']}"
+			sortBy="#{record.roleDesc}">
+			<h:outputText value="#{record.roleDesc}" />
+		</p:column>
+
+		<p:column id="roleAuthorize" filterBy="#{record.authStatusText}"
+			headerText="#{msg['roleMgmt.label.roleAuthStatus']}"
+			sortBy="#{record.authStatusText}">
+			<h:outputText value="#{record.authStatusText}" readonly="true" />
+		</p:column>
+		<p:column id="roleStatus" filterBy="#{record.roleStatusText}"
+			headerText="#{msg['roleMgmt.tblHeader.deviceStatus']}"
+			sortBy="#{record.roleStatus}">
+			<h:outputText value="#{record.roleStatusText}" />
+		</p:column>
+	</ui:define>
+</ui:composition>

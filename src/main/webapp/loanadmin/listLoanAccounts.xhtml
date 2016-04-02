@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewTemplate.xhtml">
+	<ui:define name="metadata">
+	<script type="text/javascript">
+	//<![CDATA[
+	        
+	function inputLimiter(e,allow) {
+	    var AllowableCharacters = '';
+	
+	    if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+	    if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+	    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+	    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+	
+	    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+	    if (k!=13 && k!=8 && k!=0){
+	        if ((e.ctrlKey==false) && (e.altKey==false)) {
+	        	return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+	        } else {
+	        	return true;
+	        }
+	    } else {
+	        return true;
+	    }
+	} 
+	//]]>
+	</script>
+	</ui:define>
+    <ui:param name="pageTitle" value="#{msg['loanMgmt.title']}" /> 
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['loanMgmt.title.listLoan']}" />
+	<ui:param name="emptyMessage" value="#{msg['loanMgmt.msg.noRecords']}" />
+	<ui:param name="listController" value="#{loanListController}" />
+
+	<!-- start-->
+	<ui:param name="selectionMode" value="single"></ui:param>
+	<ui:param name="selection" value="#{loanListController.selectedRecord}" />
+
+	<ui:param name="addControlText"
+		value="#{msg['agencyAllocationsMgmt.tblNav.bulkAssignAgent']}" />
+	<ui:param name="addOutcome" value="bulkAssign" />
+	<ui:param name="cancelControlText"
+		value="#{msg['agencyAllocationsMgmt.tblNav.selectedAssignAgent']}" />
+	<ui:param name="cancelOutcome" value="selectedAssign" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addAgentAllocations')}" />
+
+	<ui:define name="pageHeaderControls">
+		<p:splitButton
+			value="#{msg['agencyAllocationsMgmt.tblNav.allocateAgent']}"
+			style="margin-left: 82px;" 
+			rendered="#{agentAllocationsListController.isAssignAgentAllowed()}">
+			<p:menuitem value="#{addControlText}" styleClass="ui-menu" 
+				url="/loanadmin/bulkAgentAllocations.xhtml" outcome="#{addOutcome}" />
+			<p:menuitem value="#{cancelControlText}" styleClass="ui-menu" 
+				url="/loanadmin/agentAllocation.xhtml" outcome="#{cancelOutcome}"
+				/>
+		</p:splitButton>
+	</ui:define>
+	<!-- end -->
+	 
+	 <ui:define name="topSearchContent">
+       <p:panel>
+          <h:panelGrid columns="12">
+               
+                <h:outputLabel for="loanAcNo"	value="#{msg['loanMgmt.label.loanAcNo']}" />
+				<p:inputText id="loanAcNo" onkeypress="return inputLimiter(event,'NameCharactersAndNumbers')"
+					value="#{loanListController.loanAcNo}" label="#{msg['loanMgmt.label.loanAcNo']}"/>
+				<p:message for="loanAcNo" display="icon" />
+				
+				<h:outputLabel for="brCode" value="#{msg['userMgmt.label.branchCode']}" />
+				<p:inputText id="brCode" value="#{loanListController.brCode}"  
+					label="#{msg['userMgmt.label.branchCode']}"/>
+				<p:message for="brCode" display="icon" />
+				
+				 <h:outputLabel for="custId" value="#{msg['customerMgmt.label.customerId']}" />
+				<p:inputText id="custId" value="#{loanListController.custId}" 
+					label="#{msg['customerMgmt.label.customerId']}"/>
+				<p:message for="custId" display="icon" />
+				
+				<h:outputLabel for="cfCode"	value="#{msg['loanMgmt.label.creditOfficerCode']}" />
+				<p:inputText id="cfCode" value="#{loanListController.cfCode}" 
+					label="#{msg['loanMgmt.label.creditOfficerCode']}"/>
+				<p:message for="cfCode" display="icon" />
+				
+				<h:outputLabel for="agtId" value="#{msg['agentMsgMgmt.tblHeader.agentId']}" />
+				<p:inputText id="agtId"	value="#{loanListController.agtId}" 
+					label="#{msg['agentMsgMgmt.tblHeader.agentId']}"/>
+				<p:message for="agtId" display="icon" />
+				
+				 <h:outputLabel for="locCode" value="#{msg['loanMgmt.label.locationCode']}" />
+				<p:inputText id="locCode" value="#{loanListController.locCode}" 
+					label="#{msg['loanMgmt.label.locationCode']}"/>
+				<p:message for="locCode" display="icon" />
+				
+				<h:outputLabel for="parentLoanAcNo" value="#{msg['loanMgmt.label.parentLoanAcNo']}" />
+				<p:inputText id="parentLoanAcNo" value="#{loanListController.parentLoanAcNo}" 
+					label="#{msg['loanMgmt.label.parentLoanAcNo']}"/>
+				<p:message for="parentLoanAcNo" display="icon" />
+				
+				<h:outputLabel for="parentCustID" value="#{msg['customerMgmt.label.parentCustId']}" />
+				<p:inputText id="parentCustID" value="#{loanListController.parentCustID}" 
+					label="#{msg['customerMgmt.label.parentCustId']}"/>
+				<p:message for="parentCustID" display="icon" />
+				
+				<h:outputLabel for="space" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
+				<p:commandButton id="btnSearch" value="#{msg['commonMgmt.btn.search']}" update="panel"
+					 action="#{loanListController.load()}" />
+					
+           </h:panelGrid>
+       </p:panel>
+     
+     </ui:define>
+	
+	
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{loanListController.listSelect}" />
+		<!-- <p:column selectionMode="multiple" style="width:2%"
+			disabledSelection="true" /> -->
+
+		<p:column id="id" filterBy="#{record.id}"
+			headerText="#{msg['loanMgmt.tblHeader.loanAcNoSummary']}"
+			filterMatchMode="contains" sortBy="#{record.id}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+
+		<p:column id="branchCode" filterBy="#{record.branchCode}"
+			headerText="#{msg['loanMgmt.tblHeader.branchCode']}"
+			filterMatchMode="contains" sortBy="#{record.branchCode}">
+			<h:outputText value="#{record.branchCode}" />
+		</p:column>
+		
+		<p:column id="parentLoanAcNo" filterBy="#{record.parentLoanAcNo}"
+			headerText="#{msg['loanMgmt.label.parentLoanAcNo']}"
+			filterMatchMode="contains" sortBy="#{record.parentLoanAcNo}">
+			<h:outputText value="#{record.parentLoanAcNo}" />
+		</p:column>
+
+		<p:column id="customerId" filterBy="#{record.customerId}"
+			headerText="#{msg['loanMgmt.tblHeader.customerId']}"
+			filterMatchMode="contains" sortBy="#{record.customerId}">
+			<h:outputText value="#{record.customerId}" />
+		</p:column>
+		
+		<p:column id="parentCustId" filterBy="#{record.parentCustId}"
+			headerText="#{msg['customerMgmt.label.parentCustId']}"
+			filterMatchMode="contains" sortBy="#{record.parentCustId}">
+			<h:outputText value="#{record.parentCustId}" />
+		</p:column>
+		
+		<p:column id="isParentLoan" filterBy="#{record.isParentLoan}"
+			headerText="#{msg['loanMgmt.label.loanType']}"
+			filterMatchMode="contains" sortBy="#{record.isParentLoan}">
+			<h:outputText value="#{record.isParentLoan}" />
+		</p:column>
+		
+		<p:column id="isGroupLoan" filterBy="#{record.isGroupLoan}"
+			headerText="#{msg['loanMgmt.label.Group_typecat']}"
+			filterMatchMode="contains" sortBy="#{record.isGroupLoan}">
+			<h:outputText value="#{record.isGroupLoan}" />
+		</p:column>
+
+         <p:column id="creditOfficerCode" filterBy="#{record.creditOfficerCode}"
+			headerText="#{msg['loanMgmt.tblHeader.creditOfficerCode']}"
+			filterMatchMode="contains" sortBy="#{record.creditOfficerCode}">
+			<h:outputText value="#{record.creditOfficerCode}" />
+		</p:column>
+
+         <p:column id="agentId" filterBy="#{record.agentId}"
+			headerText="#{msg['loanMgmt.tblHeader.agentId']}"
+			filterMatchMode="contains" sortBy="#{record.agentId}">
+			<h:outputText value="#{record.agentId}" />
+		</p:column>
+
+         <p:column id="locationCode" filterBy="#{record.locationCode}"
+			headerText="#{msg['loanMgmt.tblHeader.locationCode']}"
+			filterMatchMode="contains" sortBy="#{record.locationCode}">
+			<h:outputText value="#{record.locationCode}" />
+		</p:column>
+
+       <!--  <p:column id="allocationByCode" filterBy="#{record.allocationByCode}"
+			headerText="#{msg['loanMgmt.tblHeader.allocationByCode']}"
+			filterMatchMode="contains" sortBy="#{record.allocationByCode}">
+			<h:outputText value="#{record.allocationByCode}" />
+		</p:column> -->
+
+		<!-- <p:column id="loanAcCcy" filterBy="#{record.currency}"
+			headerText="#{msg['loanMgmt.tblHeader.currency']}"
+			filterMatchMode="contains" sortBy="#{record.currency}">
+			<h:outputText value="#{record.currency}" />
+		</p:column> -->
+
+		<!-- <p:column id="principalAmount" filterBy="#{record.principalAmount}"
+			headerText="#{msg['loanMgmt.tblHeader.amountSanctioned']}"
+			filterMatchMode="contains" sortBy="#{record.principalAmount}">
+			<h:outputText value="#{record.principalAmount}">
+				<f:convertNumber type="number" groupingUsed="true"
+					minFractionDigits="0" />
+			</h:outputText>
+		</p:column> -->
+        
+         <!--  <p:column id="principalPaid" filterBy="#{record.principalPaid}"
+			headerText="#{msg['loanMgmt.tblHeader.principalPaid']}"
+			filterMatchMode="contains" sortBy="#{record.principalPaid}">
+			<h:outputText value="#{record.principalPaid}">
+				<f:convertNumber type="number" groupingUsed="true"
+					minFractionDigits="0" />
+			</h:outputText>
+		</p:column>
+
+         <p:column id="principalOutstanding" filterBy="#{record.principalOutstanding}"
+			headerText="#{msg['loanMgmt.tblHeader.principalOutstanding']}"
+			filterMatchMode="contains" sortBy="#{record.principalOutstanding}">
+			<h:outputText value="#{record.principalOutstanding}">
+				<f:convertNumber type="number" groupingUsed="true"
+					minFractionDigits="0" />
+			</h:outputText>
+		 </p:column> -->
+		 
+		<!--  <p:column id="loanStatus" filterBy="#{record.loanStatus}"
+			headerText="#{msg['loanMgmt.tblHeader.loanStatus']}"
+			filterMatchMode="contains" sortBy="#{record.loanStatus}">
+			<h:outputText value="#{record.loanStatus}" />
+		</p:column>
+          
+          <p:column id="recordStat" filterBy="#{record.recordStat}"
+			headerText="#{msg['loanMgmt.tblHeader.recordStat']}"
+			filterMatchMode="contains" sortBy="#{record.recordStat}">
+			<h:outputText value="#{record.recordStat}" />
+		</p:column>
+          
+          <p:column id="cbsUpldJobId" filterBy="#{record.cbsUpldJobId}"
+			headerText="#{msg['loanMgmt.tblHeader.cbsUpldJobId']}"
+			filterMatchMode="contains" sortBy="#{record.cbsUpldJobId}">
+			<h:outputText value="#{record.cbsUpldJobId}" />
+		</p:column>
+          
+          <p:column id="syncTime" filterBy="#{record.syncTime}"
+			headerText="#{msg['loanMgmt.tblHeader.syncTime']}"
+			filterMatchMode="contains" sortBy="#{record.syncTime}">
+			<h:outputText value="#{record.syncTime}" />
+		</p:column> -->
+          
+          
+		<!-- <p:column id="amtDisbursed" filterBy="#{record.amtDisbursed}"
+			headerText="#{msg['loanMgmt.tblHeader.amtDisbursed']}"
+			filterMatchMode="contains" sortBy="#{record.amtDisbursed}">
+			<h:outputText value="#{record.amtDisbursed}">
+				<f:convertNumber type="number" groupingUsed="true"
+					minFractionDigits="0" />
+			</h:outputText>
+		</p:column>
+
+		<p:column id="lastDisbursementDate"
+			filterBy="#{record.disbursementDate}"
+			headerText="#{msg['loanMgmt.tblHeader.lastDisbursementDate']}"
+			filterMatchMode="contains" sortBy="#{record.disbursementDate}">
+			<h:outputText value="#{record.disbursementDate}" />
+		</p:column>
+
+		<p:column id="locationName" filterBy="#{record.locationName}"
+			headerText="#{msg['loanMgmt.tblHeader.locationName']}"
+			filterMatchMode="contains" sortBy="#{record.locationName}">
+			<h:outputText value="#{record.locationName}" />
+		</p:column>
+
+
+		<p:column id="groupName" filterBy="#{record.groupName}"
+			headerText="#{msg['loanMgmt.tblHeader.groupName']}"
+			filterMatchMode="contains" sortBy="#{record.groupName}">
+			<h:outputText value="#{record.groupName}" />
+		</p:column>
+
+		<p:column id="agentName" filterBy="#{record.agent.fname}"
+			headerText="#{msg['agentAllocationsMgmt.tblHeader.firstName']}"
+			filterMatchMode="contains" sortBy="#{record.agent.fname}">
+			<h:outputText value="#{record.agent.fname}" />
+		</p:column>
+
+		<p:column id="syncStatus" filterBy="#{record.syncStatus}"
+			headerText="#{msg['loanMgmt.tblHeader.syncStatus']}"
+			filterMatchMode="contains" sortBy="#{record.syncStatus}">
+			<h:outputText value="#{record.syncStatus}" />
+		</p:column>
+ -->
+
+
+		<!-- <p:column id="amtToDisbr"
+			filterBy="#{record.disburseSchedule.amountToDisbr}"
+			headerText="#{msg['loanMgmt.tblHeader.amountToDisbr']}"
+			filterMatchMode="contains"
+			sortBy="#{record.disburseSchedule.amountToDisbr}">
+			<h:outputText value="#{record.disburseSchedule.amountToDisbr}">
+				<f:convertNumber type="number" groupingUsed="true"
+					minFractionDigits="0" />
+			</h:outputText>
+		</p:column>
+
+		<p:column id="scheduleDueDate"
+			filterBy="#{record.disburseSchedule.scheduleDueDate}"
+			headerText="#{msg['loanMgmt.tblHeader.scheduleDueDate']}"
+			filterMatchMode="contains"
+			sortBy="#{record.disburseSchedule.scheduleDueDate}">
+			<h:outputText value="#{record.disburseSchedule.scheduleDueDate}" />
+		</p:column> -->
+
+	</ui:define>
+</ui:composition>

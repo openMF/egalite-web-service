@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{cbsJobHistoryController.cbsJobDetails.jobId}"></f:viewParam>
+			<f:event listener="#{cbsJobHistoryController.loadJobDetail}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<ui:param name="selectionMode" value="single"></ui:param>
+	<ui:param name="selection"
+		value="#{cbsJobHistoryListController.selectedRecord}" />
+	<!-- <ui:param name="pageTitle"
+		value="#{msg['cbsJobHistoryMgmt.title.listCbsJobHistory']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['cbsJobHistoryMgmt.title.cbsJobHistory']}">
+	</ui:param>
+	
+	<ui:param name="emptyMessage"
+		value="#{msg['cbsJobHistoryMgmt.msg.noRecords']}" />
+
+	<ui:param name="startControlText"
+		value="#{msg['cbsJobHistoryMgmt.tblNav.start']}" />
+
+	<ui:param name="refreshControlText"
+		value="#{msg['cbsJobHistoryMgmt.tblNav.refresh']}" />
+
+	<ui:param name="cancelOutcome" value="doRefresh" />
+
+	<ui:param name="listController" value="#{cbsJobHistoryListController}" />
+
+	<ui:define name="pageHeaderControls">
+	
+	<p:commandButton id="btnExtraction" value="Start Data Extraction"
+			style="margin-left: 182px;" ajax="false"
+			action="#{cbsJobHistoryListController.startCbsJob}" />
+
+		<p:commandButton id="btnSave" value="#{startControlText}"
+			 ajax="true"
+			action="#{transactionListener.startJob()}" />
+		<p:commandButton id="btnCancel" action="#{transactionListener.stopJob()}"
+			 value="Stop" ajax="true" />
+	</ui:define>
+
+
+	<ui:define name="dataTableContent" filterMatchMode="contains">
+		<p:ajax event="rowDblselect"
+			listener="#{cbsJobHistoryListController.listSelect}" />
+
+		<p:column id="id"
+			headerText="#{msg['cbsJobHistoryMgmt.tblHeader.cbsJobHistoryJobId']}"
+			filterBy="#{record.jobId}" sortBy="#{record.jobId}">
+			<h:outputText value="#{record.jobId}" />
+		</p:column>
+
+		<p:column id="startTimeText"
+			headerText="#{msg['cbsJobHistoryMgmt.tblHeader.startTime']}"
+			filterBy="#{record.startTimeText}" sortBy="#{record.startTimeText}">
+			<h:outputText value="#{record.startTime}">
+				<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss" />
+			</h:outputText>
+		</p:column>
+
+
+		<p:column id="startedBy"
+			headerText="#{msg['cbsJobHistoryMgmt.tblHeader.startedBy']}"
+			filterBy="#{record.startedBy}" sortBy="#{record.startedBy}">
+			<h:outputText value="#{record.startedBy}" />
+		</p:column>
+
+
+		<p:column id="endTimeText"
+			headerText="#{msg['cbsJobHistoryMgmt.tblHeader.endTime']}"
+			filterBy="#{record.endTimeText}" sortBy="#{record.endTimeText}">
+			<h:outputText value="#{record.endTimeText}">
+				<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss" />
+			</h:outputText>
+		</p:column>
+
+
+		<p:column id="noOfLoanFetched"
+			headerText="#{msg['cbsJobHistoryMgmt.tblHeader.noOfLoanFetched']}"
+			filterBy="#{record.noOfLoanFetched}" sortBy="#{record.noOfLoanFetched}">
+			<h:outputText value="#{record.noOfLoanFetched}" />
+		</p:column>
+
+		<p:column id="noOfCustomerFetched"
+			headerText="#{msg['cbsJobHistoryMgmt.tblHeader.noOfCustomerFetched']}"
+			filterBy="#{record.noOfCustomerFetched}" sortBy="#{record.noOfCustomerFetched}">
+			<h:outputText value="#{record.noOfCustomerFetched}" />
+		</p:column>
+
+		<p:column id="noOfDepositFetched"
+			headerText="#{msg['cbsJobHistoryMgmt.tblHeader.noOfDepositFetched']}"
+			filterBy="#{record.noOfDepositFetched}" sortBy="#{record.noOfDepositFetched}">
+			<h:outputText value="#{record.noOfDepositFetched}" />
+		</p:column>
+	</ui:define>
+
+	<ui:define name="extraContent">
+		<p:dataTable id="loanDataTable" var="cbsDetail" widgetVar="recordsTable1"
+			rowKey="#{loanSchedule.id}" 
+			value="#{cbsJobHistoryController.cbsJobDetail}" scrollable="true"
+			scrollHeight="120" filterMatchMode="contains">
+			<f:facet name="header">
+			   <span class="pageHeaderTitle"> <h:outputText styleClass="pageHeaderTitle2"
+					value="#{msg['cbsJobHistoryMgmt.title.ViewLoanCbsJobHistory']}" />
+					
+				 <h:outputText style="margin-left: 585px;"
+								value="#{msg['agentMgmt.label.searchallflds']}" /> <p:inputText
+								id="globalFilter" onkeyup="recordsTable1.filter()"
+								style="width:150px; height:20px;" />	
+				</span>						
+			</f:facet>
+
+			<p:column id="id"  
+				headerText="#{msg['cbsJobHistoryMgmt.tblHeader.cbsJobHistoryJobId']}"
+				filterBy="#{cbsDetail.jobId}" sortBy="#{cbsDetail.jobId}">
+				<h:outputText value="#{cbsDetail.jobId}" />
+			</p:column>
+			<p:column id="recordId" 
+				headerText="#{msg['cbsJobHistoryMgmt.label.recordId']}"
+				filterBy="#{cbsDetail.recordId}" sortBy="#{cbsDetail.recordId}">
+				<h:outputText value="#{cbsDetail.recordId}" />
+			</p:column>
+
+			<p:column id="recordType" 
+				headerText="#{msg['cbsJobHistoryMgmt.label.recordType']}"
+				filterBy="#{cbsDetail.recordType}" sortBy="#{cbsDetail.recordType}">
+				<h:outputText value="#{cbsDetail.recordType}">
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+	</ui:define>
+
+</ui:composition>

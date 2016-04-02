@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<p:panel id="auditTrail" rendered="#{auditTrailController.isEnabled()}">
+		<p:dataTable id="tblAuditTrail" var="auditTrail"
+			value="#{auditTrailController.auditTrails}"
+			widgetVar="auditTrailTable" scrollable="true" scrollHeight="60"
+			rowKey="#{auditTrail.id}" 
+			emptyMessage="#{msg['auidTralMgmt.msg.noRecords']}"
+			selection="#{auditTrailController.selectedAuditTrail}"
+			selectionMode="single" styleClass="auditTrailTable">
+			
+
+			<!-- <p:ajax event="rowDblselect" listener="#{userListController.userSelect}" /> -->
+
+			<p:column id="version" headerText="Version">
+				<h:outputText value="#{auditTrail.version}" />
+			</p:column>
+
+			<p:column id="maker" headerText="Maker">
+				<h:outputText value="#{auditTrail.maker}" />
+			</p:column>
+
+			<p:column id="makerTimestamp" headerText="Maker Timestamp">
+				<h:outputText value="#{auditTrail.makerTimestamp}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</h:outputText>
+			</p:column>
+
+			<p:column id="checker" headerText="Checker">
+				<h:outputText value="#{auditTrail.checker}" />
+			</p:column>
+
+			<p:column id="checkerTimestamp" headerText="Checker Timestamp">
+				<h:outputText value="#{auditTrail.checkerTimestamp}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>

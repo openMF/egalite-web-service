@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	<ui:define name="metadata">
+
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+
+			//]]>
+		</script>
+
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['cashMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<!-- Remarks add to madatory == Changes for Asomi Nirml kanna S -->
+	<!-- Required = false also added drop down ==> changes for Asomi Nirmal kanna S -->
+	
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['cashMgmt.label.newCashSettlementEntry']}" />
+				</span>
+				<span class="pageHeaderControls"> <p:commandButton
+						id="btnSave" value="#{msg['cashMgmt.nav.save']}" update="panel"
+						action="#{cashSettlementController.createCashSettlement}"
+						style="margin-left: 182px;" /> <p:spacer width="2px" /> <p:button
+						id="btnCancel" value="#{msg['cashMgmt.nav.cancel']}"
+						outcome="cancel" />
+				</span>
+				<p:message for="btnSave" display="icon" />
+			</p:panel>
+		</f:facet>
+
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="tillId" value="#{msg['cashMgmt.label.tillId']}" />
+				<p:inputText id="tillId" autocomplete="off"	value="#{cashSettlementController.cashSettlement.tillId}"
+					label="tillId" readonly="true" required="true" >
+					<f:validateLength minimum="2" />
+				</p:inputText><h:inputHidden />
+
+				<h:outputLabel for="agentId" value="#{msg['cashMgmt.label.agentId']}" styleClass="required_asterisk" />
+				<h:selectOneMenu id="agentId" value="#{cashSettlementController.cashSettlement.agentId}"
+					required="true" label="agentId" styleClass="drop_down_style">
+					<p:ajax event="change" listener="#{cashSettlementController.updateSystemPosition}" process="@this" />
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{cashSettlementController.agentIds}"
+						var="dev" itemValue="#{dev.agentId}" itemLabel="#{dev.agentId}  ~  #{dev.fname}" />
+				</h:selectOneMenu>	<p:message for="agentId" display="icon" />
+
+				<h:outputLabel for="txnCode" value="#{msg['cashMgmt.label.txnCode']}" styleClass="required_asterisk" />
+				<h:selectOneMenu id="txnCode" value="#{cashSettlementController.cashSettlement.txnCode}"
+					required="true" label="txnCode" styleClass="drop_down_style">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{cashSettlementController.cashTxnCode}" itemValue="#{cash.txnCode}"
+						var="cash" itemLabel="#{cash.txnCode} ~  #{cash.txnDesc}" process=":form:txnCode" />
+				</h:selectOneMenu><p:message for="txnCode" display="icon" />
+
+				<h:outputLabel for="txnCurrencyCode" value="#{msg['cashMgmt.label.currencyCode']}" styleClass="required_asterisk" />
+				<h:selectOneMenu id="txnCurrencyCode" value="#{cashSettlementController.cashSettlement.currencyCode}"
+					required="true" styleClass="drop_down_style">
+					<f:selectItem itemLabel="Select" itemValue="" />
+					<f:selectItems value="#{cashSettlementController.currencyCodes}" var="dev" 
+						itemValue="#{dev.currencyCode}" itemLabel="#{dev.currencyCode} ~  #{dev.currencyName}"
+						process=":form:txnCurrencyCode" />
+				</h:selectOneMenu><p:message for="txnCurrencyCode" display="icon" />
+
+				<h:outputLabel for="cashAmount" value="#{msg['cashMgmt.label.amount']}" styleClass="required_asterisk" />
+				<p:inputText id="cashAmount" autocomplete="off" onkeypress="return inputLimiter(event,'Numbers')"
+					value="#{cashSettlementController.cashSettlement.cashAmount}"
+					label="cashAmount" required="true" >
+					<f:validateLength minimum="2" />
+				</p:inputText> <p:message for="cashAmount" id="msgcashAmount" display="icon" />
+
+				<h:outputLabel for="txnRemarks" styleClass="required_asterisk" value="#{msg['cashMgmt.label.txnRemarks']}" />
+				<p:inputText id="txnRemarks" required="true" value="#{cashSettlementController.cashSettlement.txnRemarks}"
+					label="txnRemarks" autocomplete="off">
+					<f:validateLength minimum="2" />
+				</p:inputText><p:message for="txnRemarks" id="msgtxnRemarks" display="icon" />
+
+				<h:outputLabel for="isActive" value="#{msg['cashMgmt.tblHeader.isActive']}" />
+				<h:selectOneMenu id="isActive" styleClass="drop_down_style" value="#{cashSettlementController.cashSettlement.isActive}"
+					required="true" label="#{msg['cashMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{cashSettlementController.cashStatuss}"
+						var="devs" itemValue="#{devs.listValue}" itemLabel="#{devs.desn}" />
+				</h:selectOneMenu><p:message for="isActive" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

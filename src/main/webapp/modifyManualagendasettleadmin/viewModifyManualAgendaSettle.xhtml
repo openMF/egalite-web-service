@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.id}"></f:viewParam>
+			<f:event listener="#{modifyManualAgendaSettleController.loadManuAgdSet}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['agencyMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['ModifymanualAgnSetMgmt.title.manAgnDetail']}" /></span>
+
+			<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{modifyManualAgendaSettleController}"></ui:param>
+					</ui:include>
+			</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+		<p:panel style="width:46%;height:410px; float:left" >
+			<h:panelGrid columns="2">
+                  <h:outputLabel for="recId"
+					value="#{msg['manualAgnSetMgmt.label.recId']}" />
+				<p:inputText id="recId" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.id}"
+					label="#{msg['manualAgnSetMgmt.label.recId']}">
+				</p:inputText>
+
+				<h:outputLabel for="agendaId"
+					value="#{msg['manualAgnSetMgmt.label.agendaId']}" />
+				<p:inputText id="agendaId" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.agendaId}"
+					label="#{msg['manualAgnSetMgmt.label.agendaId']}">
+				</p:inputText>
+
+				<h:outputLabel for="seqNo"
+					value="#{msg['manualAgnSetMgmt.label.seqNo']}" />
+				<p:inputText id="seqNo" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.seqNo}"
+					label="#{msg['manualAgnSetMgmt.label.seqNo']}">
+				</p:inputText>
+
+				<h:outputLabel for="cbsAcRefNo"
+					value="#{msg['manualAgnSetMgmt.label.cbsAcRefNo']}" />
+				<p:inputText id="cbsAcRefNo" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.cbsAcRefNo}"
+					label="#{msg['manualAgnSetMgmt.label.cbsAcRefNo']}">
+				</p:inputText>
+
+                 <h:outputLabel for="txnCode"
+					value="#{msg['manualAgnSetMgmt.label.txnCode']}" />
+				<p:inputText id="txnCode" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.txnCode}"
+					label="#{msg['manualAgnSetMgmt.label.txnCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="customerId"
+					value="#{msg['manualAgnSetMgmt.label.customerId']}" />
+				<p:inputText id="customerId" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.customerId}"
+					label="#{msg['manualAgnSetMgmt.label.cbsAcRefNo']}">
+				</p:inputText>
+
+				<h:outputLabel for="agentId"
+					value="#{msg['manualAgnSetMgmt.label.agentId']}" />
+				<p:inputText id="agentId" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.agentId}"
+					label="#{msg['manualAgnSetMgmt.label.agentId']}">
+				</p:inputText>
+
+				<h:outputLabel for="deviceId"
+					value="#{msg['manualAgnSetMgmt.label.deviceId']}" />
+				<p:inputText id="deviceId" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.deviceId}"
+					label="#{msg['manualAgnSetMgmt.label.deviceId']}">
+				</p:inputText>
+
+				<h:outputLabel for="locationCode"
+					value="#{msg['manualAgnSetMgmt.label.locationCode']}" />
+				<p:inputText id="locationCode" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.locationCode}"
+					label="#{msg['manualAgnSetMgmt.label.locationCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="agnCmpName"
+					value="#{msg['manualAgnSetMgmt.label.agnCmpName']}" />
+				<p:inputText id="agnCmpName" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.agnCmpName}"
+					label="#{msg['manualAgnSetMgmt.label.agnCmpName']}">
+				</p:inputText>
+				
+				<h:outputLabel for="agnCmpStDate"
+					value="#{msg['manualAgnSetMgmt.label.agnCmpStDate']}" />
+				<p:inputText id="agnCmpStDate" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.agnCmpStDate}"
+					label="#{msg['manualAgnSetMgmt.label.agnCmpStDate']}">
+				</p:inputText>
+						
+			</h:panelGrid>
+			</p:panel>
+			
+			<p:panel style="width:52%;height:410px; float:right">
+			<h:panelGrid columns="2">
+				
+
+				<h:outputLabel for="agnCmpEndDate"
+					value="#{msg['manualAgnSetMgmt.label.agnCmpEndDate']}" />
+				<p:inputText id="agnCmpEndDate" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.agnCmpEndDate}"
+					label="#{msg['manualAgnSetMgmt.label.agnCmpEndDate']}">
+				</p:inputText>
+				
+				<h:outputLabel for="agnCcyCode"
+					value="#{msg['manualAgnSetMgmt.label.agnCcyCode']}" />
+				<p:inputText id="agnCcyCode" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.agnCcyCode}"
+					label="#{msg['manualAgnSetMgmt.label.agnCcyCode']}">
+				</p:inputText>
+
+				<h:outputLabel for="agnAgendaAmt"
+					value="#{msg['manualAgnSetMgmt.label.agnAgendaAmt']}" />
+				<p:inputText id="agnAgendaAmt" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.agnAgendaAmt}"
+					label="#{msg['manualAgnSetMgmt.label.agnAgendaAmt']}">
+				</p:inputText>
+                
+			
+			<h:outputLabel for="agnAgendaSettledAmt" value="#{msg['manualAgnSetMgmt.label.agnAgendaSettledAmt']}" styleClass="required_asterisk" />
+		   <p:inputText id="agnAgendaSettledAmt" autocomplete="off"
+		           decimalPlaces="8"  minValue="0" maxValue="9999999999999999999999.99999999"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.agnAgendaSettledAmt}" readonly="true"
+					label="#{msg['manualAgnSetMgmt.label.agnAgendaSettledAmt']}">
+			</p:inputText>
+				
+			<h:outputLabel for="fullPartialIndicator" value="#{msg['manualAgnSetMgmt.label.fullPartInd']}" styleClass="required_asterisk" />
+				<h:selectOneMenu id="fullPartialIndicator"
+				    styleClass="drop_down_style"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.fullPartInd}" readonly="true" disabled="true"
+					label="#{msg['manualAgnSetMgmt.label.fullPartInd']}">
+					<f:selectItems value="#{modifyManualAgendaSettleController.fullPartIndicators}" var="devi"
+						itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+		   </h:selectOneMenu>
+				
+			<h:outputLabel for="settleRemarks" styleClass="required_asterisk" value="#{msg['manualAgnSetMgmt.label.settleRemarks']}" />
+			<p:inputText id="settleRemarks" 
+						value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.settleRemarks}" readonly="true"
+						required="true" label="#{msg['manualAgnSetMgmt.label.settleRemarks']}" >
+						 <f:validateLength  minimum="3" maximum="200" /> 
+			</p:inputText>
+			
+				<h:outputLabel for="manualInitDateTime"
+					value="#{msg['manualAgnSetMgmt.label.initDateTime']}" />
+				<p:inputText id="manualInitDateTime" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.initDateTime}"
+					label="#{msg['manualAgnSetMgmt.label.initDateTime']}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</p:inputText>
+
+
+				<h:outputLabel for="manualAuthDateTime"
+					value="#{msg['manualAgnSetMgmt.label.authDateTime']}" />
+				<p:inputText id="manualAuthDateTime" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.authDateTime}"
+					label="#{msg['manualAgnSetMgmt.label.authDateTime']}">
+					<f:convertDateTime pattern="dd-MMM-yyyy HH:mm:ss" type="date" />
+				</p:inputText>
+				
+			  <h:outputLabel for="processStatus"
+					value="#{msg['reAgendaMgmt.label.processStatus']}" />
+				<p:inputText id="processStatus" readonly="true"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.processStat}"
+					label="#{msg['reAgendaMgmt.label.processStatus']}">
+				</p:inputText>
+				
+			<h:outputLabel for="isActive" value="#{msg['agencyMgmt.tblHeader.isActive']}" styleClass="required_asterisk" />
+		     <h:selectOneMenu id="isActive"
+		            styleClass="drop_down_style"
+					value="#{modifyManualAgendaSettleController.modifyManualAgendaSettleVO.isActive}" readonly="true" disabled="true"
+					label="#{msg['agencyMgmt.tblHeader.isActive']}">
+					<f:selectItems value="#{modifyManualAgendaSettleController.activeStatuss}" var="devi"
+					itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+			</h:selectOneMenu>
+				
+				</h:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

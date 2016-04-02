@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://java.sun.com/jsp/jstl/core"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	
+<!--EGA-MN15-000022  added columns generated_sms,sms_mobile_no,sms_content,generated_revr,full_part_ind,sync_type
+	-->
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{redemptionReqController.depRedemptionRequestVO.id}"></f:viewParam>
+			<f:event listener="#{redemptionReqController.loadredemptionReq}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['depositMgmt.title.Reqtracker']}" /> 
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['depositMgmt.title.redemptionReq']}" /></span>
+				<span class="pageHeaderControls"> <p:button id="btnList"
+						value="#{msg['agentTxnMgmt.label.close']}" outcome="openList" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+			<p:panel style="width:46%;height:410px; float:left">
+				<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.RequestId']}" />
+					<p:inputText id="requestId"
+						value="#{redemptionReqController.depRedemptionRequestVO.id}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnDescription']}" />
+					<p:inputText id="txnCode"
+						value="#{redemptionReqController.depRedemptionRequestVO.txnCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.BranchCode']}" />
+					<p:inputText id="branCode"
+						value="#{redemptionReqController.depRedemptionRequestVO.branCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.depositA/cNo']}" />
+					<p:inputText id="cbsAcRefNo"
+						value="#{redemptionReqController.depRedemptionRequestVO.cbsAcRefNo}"
+						readonly="true" />
+
+					<h:outputLabel
+						value="#{msg['depositeMgmt.label.redemptionRequestDate']}" />
+					<p:inputText id="redemptionRequestDate"
+						value="#{redemptionReqController.depRedemptionRequestVO.redemptionRequestDate}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy" />
+					</p:inputText>
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.RedemptionType']}" />
+					<p:inputText id="redemptionType"
+						value="#{redemptionReqController.depRedemptionRequestVO.redemptionType}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerId']}" />
+					<p:inputText id="customerId"
+						value="#{redemptionReqController.depRedemptionRequestVO.customerId}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.CustomerName']}" />
+					<p:inputText id="customerFullName"
+						value="#{redemptionReqController.depRedemptionRequestVO.customerFullName}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.AgentId']}" />
+					<p:inputText id="agentId"
+						value="#{redemptionReqController.depRedemptionRequestVO.agentId}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.AgentName']}" />
+					<p:inputText id="agentName"
+						value="#{redemptionReqController.depRedemptionRequestVO.agentName}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.locationCode']}" />
+					<p:inputText id="locationCode"
+						value="#{redemptionReqController.depRedemptionRequestVO.locationCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.locationDesc']}" />
+					<p:inputText id="locationDesc"
+						value="#{redemptionReqController.depRedemptionRequestVO.locationDesc}"
+						readonly="true" />
+
+				</h:panelGrid>
+			</p:panel>
+
+			<p:panel style="width:52%;height:410px; float:right">
+				<h:panelGrid columns="2">
+
+
+
+					<h:outputLabel value="#{msg['depositeMgmt.label.txnNarrative']}" />
+					<p:inputText id="txnNarrative"
+						value="#{redemptionReqController.depRedemptionRequestVO.txnNarrative}"
+						readonly="true" />
+
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnInitTime']}" />
+					<p:inputText id="txnInitTime"
+						value="#{redemptionReqController.depRedemptionRequestVO.txnInitTime}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy hh:ss:mm a" />
+					</p:inputText>
+
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnSyncTime']}" />
+					<p:inputText id="SyncTime"
+						value="#{redemptionReqController.depRedemptionRequestVO.txnSyncTime}"
+						readonly="true">
+						<f:convertDateTime pattern="dd-MMM-yyyy hh:ss:mm a" />
+					</p:inputText>
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnStatusDesc']}" />
+					<p:inputText id="txnStatusDesc"
+						value="#{redemptionReqController.depRedemptionRequestVO.txnStatusDesc}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnErrCode']}" />
+					<p:inputText id="txnErrCode"
+						value="#{redemptionReqController.depRedemptionRequestVO.txnErrCode}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['DepositeMgmt.label.txnErrMessage']}" />
+					<p:inputText id="txnErrMessage"
+						value="#{redemptionReqController.depRedemptionRequestVO.txnErrMessage}"
+						readonly="true" />
+
+
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.generatedSms']}" />
+					<p:inputText id="generatedSms"
+						value="#{redemptionReqController.depRedemptionRequestVO.generatedSms}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.smsMobileNo']}" />
+					<p:inputText id="smsMobileNo"
+						value="#{redemptionReqController.depRedemptionRequestVO.smsMobileNo}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.smsContent']}" />
+					<p:inputText id="smsContent"
+						value="#{redemptionReqController.depRedemptionRequestVO.smsContent}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.genetatedRevr']}" />
+					<p:inputText id="genetatedRevr"
+						value="#{redemptionReqController.depRedemptionRequestVO.generatedRevr}"
+						readonly="true" />
+
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.fullPartInd']}" />
+					<p:inputText id="fullPartInd"
+						value="#{redemptionReqController.depRedemptionRequestVO.fullPartInd}"
+						readonly="true" />
+
+					<h:outputLabel value="#{msg['agentTxnMgmt.label.syncType']}" />
+					<p:inputText id="syncType"
+						value="#{redemptionReqController.depRedemptionRequestVO.syncType}"
+						readonly="true" />
+
+
+				</h:panelGrid>
+			</p:panel>
+		</p:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{externalDeviceController.device.id}"></f:viewParam>
+			<f:event listener="#{externalDeviceController.loadDevice}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['deviceMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['extdeviceMgmt.title.deviceDetail']}" /></span>
+				
+				<span class="pageHeaderControls">
+				<ui:include	src="/templates/includes/viewPageControls.xhtml">
+					<ui:param name="controller" value="#{externalDeviceController}"></ui:param>
+				</ui:include> 
+				<p:commandButton id="btnDelete" value="#{msg['deviceMgmt.btn.delete']}"
+					rendered="#{externalDeviceController.isDeleteAllowed()}" update="panel"
+					disabled="#{externalDeviceController.isEnableDeleteAllowed()}" action="#{externalDeviceController.deleteUnAuthorized}" >
+						<p:confirm header="Confirmation" message="#{msg['msg.confirm.dialog']}"
+							icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+									
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrail">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['extdeviceMgmt.label.deviceId']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{externalDeviceController.device.id}"
+					label="#{msg['extdeviceMgmt.label.deviceId']}">
+				</p:inputText>
+
+
+				<h:outputLabel for="macId"
+					value="#{msg['extdeviceMgmt.label.macId']}" />
+				<p:inputText id="macId" readonly="true"
+					value="#{externalDeviceController.device.macId}"
+					label="#{msg['extdeviceMgmt.label.macId']}" required="true">
+				</p:inputText>
+
+                <h:outputLabel for="manufacturer"
+					value="#{msg['extdeviceMgmt.label.manufacturer']}" />
+				<p:inputText id="manufacturer" readonly="true"
+					value="#{externalDeviceController.device.manufacturer}" required="true"
+					label="#{msg['extdeviceMgmt.label.manufacturer']}">
+				</p:inputText>
+                
+                
+				<h:outputLabel for="issuedDate"
+					value="#{msg['deviceMgmt.label.issuedDate']}" />
+				<p:calendar pattern="dd-MMM-yyyy" navigator="true" readonly="true"
+					showOn="label" yearRange="c-1:c+3"
+					value="#{externalDeviceController.device.issuedDate}" id="issuedDate" />
+
+				
+
+				<h:outputLabel for="issuedByCo"
+					value="#{msg['deviceMgmt.tblHeader.issuedBy']}" />
+				<p:inputText id="issuedByCo" readonly="true"
+					value="#{externalDeviceController.device.issuedByCo}" required="true"
+					label="#{msg['deviceMgmt.tblHeader.issuedBy']}">
+				</p:inputText>
+
+
+				<h:outputLabel for="modelNo"
+					value="#{msg['extdeviceMgmt.label.modelNo']}" />
+				<p:inputText id="modelNo" readonly="true"
+					value="#{externalDeviceController.device.modelNo}" required="true"
+					label="#{msg['extdeviceMgmt.label.modelNo']}">
+				</p:inputText>
+
+				
+				<h:outputLabel for="licenceFile"
+					value="#{msg['extdeviceMgmt.label.licenceFile']}" />
+				<p:inputText id="licenceFile" readonly="true"
+					value="#{externalDeviceController.device.licenceFileName}" required="true"
+					label="#{msg['extdeviceMgmt.label.licenceFile']}">
+				</p:inputText>
+
+			
+				<h:outputLabel for="isActive"
+					value="#{msg['deviceMgmt.tblHeader.deviceStatus']}" />
+				<p:inputText id="isActive" readonly="true"
+					value="#{externalDeviceController.isStatusActive}"></p:inputText>
+                 
+                <h:outputLabel for="authStatus"
+					value="#{msg['extdeviceMgmt.label.authStatusText']}" />
+				<p:inputText id="authStatus" readonly="true"
+					value="#{externalDeviceController.device.authStatusText}" required="true"
+					label="#{msg['extdeviceMgmt.label.authStatusText']}">
+				</p:inputText>   
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

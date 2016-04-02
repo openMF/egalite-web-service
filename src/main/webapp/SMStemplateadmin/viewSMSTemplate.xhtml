@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/maintenanceFormTemplate.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id" value="#{smsTemplateController.smstemplatevo.id}"></f:viewParam>
+			<f:event listener="#{smsTemplateController.loadSmsTemplate}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['smstemplatevoMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['smstemplatevoMgmt.title.smsConfigDetail']}" /></span>
+
+				<span class="pageHeaderControls"> <ui:include
+						src="/templates/includes/viewPageControls.xhtml">
+						<ui:param name="controller" value="#{smsTemplateController}"></ui:param>
+					</ui:include> <p:commandButton id="btnDelete"
+						value="#{msg['agencyMgmt.btn.delete']}"
+						rendered="#{smsTemplateController.isDeleteAllowed()}"
+						disabled="#{smsTemplateController.isEnableDeleteAllowed()}"
+						action="#{smsTemplateController.deleteUnAuthorized}">
+						<p:confirm header="Confirmation"
+							message="#{msg['msg.confirm.dialog']}" icon="ui-icon-alert" />
+					</p:commandButton> <p:confirmDialog global="true" showEffect="fade"
+						hideEffect="explode">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithAuditTrailmodifySMSTemp">
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="id"
+					value="#{msg['SmsTemplateMgmt.tblHeader.templateId']}" />
+				<p:inputText id="id" readonly="true"
+					value="#{smsTemplateController.smstemplatevo.id}"
+					label="#{msg['SmsTemplateMgmt.tblHeader.templateId']}">
+				</p:inputText>
+
+				<h:outputLabel for="txtSms"
+					value="#{msg['SmsTemplateMgmt.tblHeader.txtsms']}" />
+				<p:inputTextarea id="txtSms" readonly="true"
+					value="#{smsTemplateController.smstemplatevo.txtSms}"
+					label="#{msg['SmsTemplateMgmt.tblHeader.txtsms']}" rows="6"
+					cols="33">
+				</p:inputTextarea>
+
+				<h:outputLabel for="dynaFields"
+					value="#{msg['SmsTemplateMgmt.tblHeader.dynamicFields']}" />
+				<p:inputTextarea id="dynaFields" readonly="true"
+					value="#{smsTemplateController.smstemplatevo.dynaFields}"
+					label="#{msg['SmsTemplateMgmt.tblHeader.dynamicFields']}" rows="6"
+					cols="33">
+				</p:inputTextarea>
+				
+				<h:outputLabel for="description"
+					value="#{msg['SmsTemplateMgmt.tblHeader.desc']}" />
+				<p:inputText id="description" readonly="true"
+					value="#{smsTemplateController.smstemplatevo.description}"
+					label="#{msg['SmsTemplateMgmt.tblHeader.desc']}">
+				</p:inputText>
+
+
+			
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

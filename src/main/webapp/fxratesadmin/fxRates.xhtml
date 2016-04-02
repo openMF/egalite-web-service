@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	<ui:define name="metadata">
+	      <script type="text/javascript">
+          //<![CDATA[
+        
+		function inputLimiter(e,allow) {
+		    var AllowableCharacters = '';
+		
+		    if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+		    if (allow == 'Numbers'){AllowableCharacters='1234567890.';}
+		    if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+		    if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+		
+		    var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+		    if (k!=13 && k!=8 && k!=0){
+		        if ((e.ctrlKey==false) && (e.altKey==false)) {
+		        	return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+		        } else {
+		        	return true;
+		        }
+		    } else {
+		        return true;
+		    }
+		}
+		
+		if (navigator.userAgent.toLowerCase().indexOf('chrome') >= 0) {
+			
+		    setTimeout(function () {
+		        	
+		    }, 500);
+		}
+		//]]>
+		</script>
+	</ui:define>
+	
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['fxratesMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['fxratesMgmt.label.fxrates']}" />
+				</span>
+				<span class="pageHeaderControls"> 
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="bodyWithoutAuditTrail">
+		           <div style="overflow: auto; height: 15px;"></div>
+				   <h:outputLabel for="ccy1" value="#{msg['fxratesMgmt.label.currency1']}" /><br/>
+				   <h:selectOneMenu styleClass="drop_down_style" value="#{fxRatesController.cbsFxRates.ccy1}" required="true" 
+							label="#{msg['fxratesMgmt.label.currency1']}">
+							<f:selectItem itemLabel="Select" itemValue="" />    
+							<f:selectItems value="#{fxRatesController.CBSFxRatesCcy1VOs}"
+								var="fxrate1" itemValue="#{fxrate1.ccy1}"
+								itemLabel="#{fxrate1.ccy1}">
+							</f:selectItems>
+							<p:ajax event="change" update="amountCcy2 curCcy1 curCcy11 headingCcy1 amtCcy2 amtCcy22" process="@this"/>
+					 </h:selectOneMenu><br/>
+				    
+				    <div style="overflow: auto; height: 8px;"></div>
+				     <h:outputLabel for="ccy2" value="#{msg['fxratesMgmt.label.currency2']}" /><br/>
+				      <h:selectOneMenu id="ccy2" styleClass="drop_down_style" value="#{fxRatesController.cbsFxRates.ccy2}" required="true" 
+					            label="#{msg['fxratesMgmt.label.currency2']}">
+					    <f:selectItem itemLabel="Select" itemValue="" />          
+					    <f:selectItems value="#{fxRatesController.CBSFxRatesCcy2VOs}" var="fxrate2" 
+					            itemValue="#{fxrate2.ccy2}" itemLabel="#{fxrate2.ccy2}" />
+					       <p:ajax event="change" update="amountCcy2 curCcy2 curCcy22 headingCcy2 amtCcy2 amtCcy22" process="@this" />     
+				      </h:selectOneMenu><h:outputLabel/>
+				    <p:message for="ccy2"  id="msgccy2" display="icon" />
+				    
+				    <div style="overflow: auto; height: 8px;"></div>
+				     <h:outputLabel for="amountCcy1" value="#{msg['fxratesMgmt.label.amountIHave']}" /><br/>
+				     <p:inputText autocomplete="off" id="amountCcy1" onkeypress="return inputLimiter(event,'Numbers')" style="width:206px;"
+					  value="#{fxRatesController.ccy1Amount}" required="true" label="#{msg['fxratesMgmt.label.amount']}" >
+					    <p:ajax event="keyup" update="amountCcy2 sellUSD buyUSD amtCcy2 amtCcy22" process="@this"/>
+					     <f:convertNumber type="number" groupingUsed="true"  minFractionDigits="1" maxFractionDigits ="6"/>
+					  </p:inputText>
+				     <h:outputLabel/><p:message for="amountCcy1" display="icon" />
+				  
+				    <div style="overflow: auto; height: 8px;"></div>
+				     <h:outputLabel for="amountCcy2" value="#{msg['fxratesMgmt.label.amount']}" /><br/>
+				     <p:inputText autocomplete="off" id="amountCcy2" onkeypress="return inputLimiter(event,'Numbers')" style="width:206px;"
+					  value="#{fxRatesController.ccy2Amount}" required="true" label="#{msg['fxratesMgmt.label.amount']}" >
+					      <p:ajax event="keyup" update="amountCcy1 sellUSD buyUSD amtCcy2 amtCcy22" process="@this"/>
+					      <f:convertNumber type="number" groupingUsed="true"  minFractionDigits="1" maxFractionDigits ="6"/>
+					  </p:inputText>
+				     <h:outputLabel/><p:message for="amountCcy2" display="icon" />
+				     
+				     
+				    <div style="overflow: auto; height: 10px;"></div>
+				    <h3>
+				    <p:outputLabel id="headingCcy1" value="#{fxRatesController.cbsFxRates.ccy1} &nbsp;&nbsp;"/>
+				    <p:outputLabel id="headingCcy2" value="#{fxRatesController.cbsFxRates.ccy2} &nbsp;&nbsp;&nbsp;"/>
+				    <p:outputLabel id="headingDetails" value="#{msg['fxratesMgmt.label.headingdetails']}"/>
+				     </h3>
+				     
+				   <div style="overflow: auto; height: 3px;"></div>
+				    <p:outputLabel id="sellingUsd" value="#{msg['fxratesMgmt.label.sellingUsd']} &nbsp;&nbsp;&nbsp;"/>
+						<h:outputText id="sellUSD"
+							value="#{fxRatesController.bigCcy1Amount()} &nbsp;&nbsp;&nbsp;">
+							<f:convertNumber type="number" groupingUsed="true" minFractionDigits="1" maxFractionDigits ="6"/>
+						</h:outputText>
+					<p:outputLabel id="curCcy1" value="#{fxRatesController.cbsFxRates.ccy1} &nbsp;&nbsp;&nbsp;"/>
+				    <p:outputLabel id="arrow1" value="#{msg['fxratesMgmt.label.arrow1']} &nbsp;&nbsp;&nbsp;"/>
+				    <p:outputLabel id="amtCcy2" value="#{fxRatesController.youGot()} &nbsp;&nbsp;&nbsp;"/>
+				    <p:outputLabel id="curCcy2" value="#{fxRatesController.cbsFxRates.ccy2} &nbsp;&nbsp;&nbsp;"/><br/>
+				    
+				   <div style="overflow: auto; height: 5px;"></div>  
+				    <p:outputLabel id="buyingUsd" value="#{msg['fxratesMgmt.label.buyingUsd']} &nbsp;&nbsp;&nbsp;"/>
+						<h:outputText id="buyUSD"
+							value="#{fxRatesController.bigCcy1Amount()} &nbsp;&nbsp;&nbsp;">
+							<f:convertNumber type="number" groupingUsed="true"  minFractionDigits="1" maxFractionDigits ="6"/>
+						</h:outputText>
+					<p:outputLabel id="curCcy11" value="#{fxRatesController.cbsFxRates.ccy1} &nbsp;&nbsp;&nbsp;"/>
+				    <p:outputLabel id="arrow2" value="#{msg['fxratesMgmt.label.arrow2']} &nbsp;&nbsp;&nbsp;"/>
+				    <p:outputLabel id="amtCcy22" value="#{fxRatesController.youPay()} &nbsp;&nbsp;&nbsp;"/>
+				    <p:outputLabel id="curCcy22" value="#{fxRatesController.cbsFxRates.ccy2} &nbsp;&nbsp;&nbsp;"/><br/> 
+				 
+		</p:panel>
+	</ui:define>
+</ui:composition>

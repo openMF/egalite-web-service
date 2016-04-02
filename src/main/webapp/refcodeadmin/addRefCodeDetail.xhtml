@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/templateWithoutAuditTrail.xhtml">
+	<ui:define name="metadata">
+		<script type="text/javascript">
+			//<![CDATA[
+
+			function inputLimiter(e, allow) {
+				var AllowableCharacters = '';
+
+				if (allow == 'Letters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+				if (allow == 'Numbers') {
+					AllowableCharacters = '1234567890';
+				}
+				if (allow == 'NameCharacters') {
+					AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+				}
+				if (allow == 'NameCharactersAndNumbers') {
+					AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+				}
+
+				var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+				if (k != 13 && k != 8 && k != 0) {
+					if ((e.ctrlKey == false) && (e.altKey == false)) {
+						return (AllowableCharacters.indexOf(String
+								.fromCharCode(k)) != -1);
+					} else {
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+			
+			function txtLowerToUpper(obj) {
+				obj.value=obj.value.toUpperCase();
+			}
+			
+			//]]>
+		</script>
+		<f:metadata>
+			<f:viewParam name="id" value="#{referenceCodeController.refcode.refMasterCode}"></f:viewParam>
+		</f:metadata>
+	</ui:define>
+	
+	<!-- <ui:define name="pageTitleBar">
+		<f:facet name="header">
+			<h:outputText value="#{msg['referenceMgmt.title']}" />
+		</f:facet>
+	</ui:define> -->
+
+	<ui:define name="pageHeader">
+		<f:facet name="header">
+			<p:panel styleClass="maintenanceFormPanelHeader">
+				<span class="pageHeaderTitle"> <h:outputText
+						value="#{msg['referenceMgmt.label.newRefCodeDetailEntry']}" />
+				</span>
+				<span class="pageHeaderControls"> 
+				<p:commandButton id="btnSave" value="#{msg['referenceMgmt.btn.save']}"
+						update="panel" action="#{referenceCodeController.refCodeDetailAdd}"
+						style="margin-left: 182px;" />
+					<p:spacer width="2px" />  
+				<p:button id="btnCancel"
+						value="#{msg['referenceMgmt.nav.cancel']}" outcome="cancel" />
+				</span>
+			</p:panel>
+		</f:facet>
+	</ui:define>
+	<ui:define name="maintenanceForm">
+		<p:panel styleClass="maintenanceFormWithoutAuditTrail">
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="refMasterCode"
+					value="#{msg['referenceMgmt.tblHeader.refMasterCode']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="refMasterCode"
+					value="#{referenceCodeController.refcode.refMasterCode}"
+					readonly="true" required="true"
+					label="#{msg['referenceMgmt.tblHeader.refMasterCode']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="refMasterCode" display="icon" />
+
+				<h:outputLabel for="refDetailCode" 
+					value="#{msg['referenceMgmt.tblHeader.refDetailCode']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="refDetailCode" onkeyup="txtLowerToUpper(this)"
+					value="#{referenceCodeController.refcode.refDetailCode}"
+					readonly="false" required="true"
+					label="#{msg['referenceMgmt.tblHeader.refDetailCode']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="refDetailCode" display="icon" />
+
+				<h:outputLabel for="detailCodeDesc"
+					value="#{msg['referenceMgmt.tblHeader.detailCodeDesc']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="detailCodeDesc"
+					value="#{referenceCodeController.refcode.detailCodeDesc}"
+					readonly="false" required="true"
+					label="#{msg['referenceMgmt.tblHeader.detailCodeDesc']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="detailCodeDesc" display="icon" />
+
+				<h:outputLabel for="transValueEga"
+					value="#{msg['referenceMgmt.tblHeader.transValueEga']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="transValueEga"
+					value="#{referenceCodeController.refcode.transValueEga}" readonly="false"
+					required="true"
+					label="#{msg['referenceMgmt.tblHeader.transValueEga']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="transValueEga" display="icon" />
+
+				<h:outputLabel for="transValueInt"
+					value="#{msg['referenceMgmt.tblHeader.transValueInt']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="transValueInt"
+					value="#{referenceCodeController.refcode.transValueInt}" readonly="false"
+					required="true"
+					label="#{msg['referenceMgmt.tblHeader.transValueInt']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="transValueInt" display="icon" />
+
+				<h:outputLabel for="isValid"
+					value="#{msg['referenceMgmt.tblHeader.recordStatus']}"
+					styleClass="required_asterisk" />
+				<h:selectOneMenu id="isValid"
+				    styleClass="drop_down_style"
+					value="#{referenceCodeController.refcode.validRef}" required="true"
+					label="#{msg['referenceMgmt.tblHeader.isValid']}">
+					<f:selectItems value="#{referenceCodeController.refValid}"
+						var="devi" itemValue="#{devi.listValue}" itemLabel="#{devi.desn}" />
+				</h:selectOneMenu>
+				<p:message for="isValid" display="icon" />
+				
+				<h:outputLabel for="codeSrNo"
+					value="#{msg['referenceMgmt.tblHeader.codeSrNo']}"
+					styleClass="required_asterisk" />
+				<p:inputText id="codeSrNo"
+					value="#{referenceCodeController.refcode.codeSrNo}" readonly="false"
+					required="true"
+					label="#{msg['referenceMgmt.tblHeader.codeSrNo']}">
+					<f:validateLength minimum="2" maximum="25" />
+				</p:inputText>
+				<p:message for="codeSrNo" display="icon" />
+
+			</h:panelGrid>
+		</p:panel>
+	</ui:define>
+</ui:composition>

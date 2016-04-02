@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/listViewWithoutHeaderTemplate.xhtml">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+
+	<!-- <ui:param name="pageTitle" value="#{msg['agencyMgmt.title']}" /> -->
+	<ui:param name="pageHeaderTitle"
+		value="#{msg['lovMgmt.title.listLov']}" />
+	<ui:param name="emptyMessage"
+		value="#{msg['lovMgmt.msg.noRecords']}" />
+	<ui:param name="addControlText" value="#{msg['lovMgmt.tblNav.addBase']}" />
+	<ui:param name="addOutcome" value="addLovBaseDetail" />
+	<ui:param name="addAuthority"
+		value="#{auth.checkAuthority('addAgency')}" />
+	<ui:param name="listController" value="#{lovBaseListController}" />
+
+     <!-- ADD -->
+	<ui:param name="selectionMode" value="single"/>
+	<ui:param name="selection" value="#{lovBaseListController.selectedRecord}"/>
+	<ui:define name="pageHeaderControls">
+		<p:button id="btnAdd" value="#{addControlText}"
+			outcome="#{addOutcome}" style="margin-left: 182px;"
+			rendered="#{addAuthority}" />
+	</ui:define>
+	<!-- ADD END -->
+
+
+
+	<ui:define name="dataTableContent">
+		<p:ajax event="rowDblselect"
+			listener="#{lovBaseListController.listSelect}" />
+
+		<p:column id="id" filterBy="#{record.id}"
+			headerText="#{msg['lovMgmt.tblHeader.lovId']}"
+			sortBy="#{record.idd}">
+			<h:outputText value="#{record.id}" />
+		</p:column>
+		
+		<p:column id="lovDesc" filterBy="#{record.lovDesc}"
+			headerText="#{msg['lovMgmt.tblHeader.lovDesc']}"
+			sortBy="#{record.lovDesc}">
+			<h:outputText value="#{record.lovDesc}" />
+		</p:column>
+		
+
+		<p:column id="isActive" filterBy="#{record.agencyStatusText}"
+				headerText="#{msg['agencyMgmt.tblHeader.isActive']}"
+				sortBy="#{record.agencyStatusText}">
+				<h:outputText value="#{record.agencyStatusText}" />
+		</p:column> 
+		
+		
+	</ui:define>
+</ui:composition>

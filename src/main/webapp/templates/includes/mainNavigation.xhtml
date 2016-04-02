@@ -1,0 +1,298 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<h:form id="navigationForm">
+		<p:growl autoUpdate="true" />
+		<p:panelMenu styleClass="westPanelMenu">
+			<p:submenu styleClass="westPanelSubMenu" id="Administration"
+				label="#{msg['navHeader.Administration']}"
+				rendered="#{auth.checkAuthorityHasAny('listRoles','listMbsRoles','listUsers','listDevices','listExternalDevices',
+				'listAgentMessages','listErrorCodes','listRefCode','listSystemParameters','listCbsJobHistory','listLovBase',
+				'listLovAddition')}">
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('roleadmin') ? 'customClassName' : 'displayNone'}"
+					url="/roleadmin/listRoles.xhtml" value="#{msg['nav.roleMgmt']}"
+					rendered="#{auth.checkAuthority('listRoles')}" />
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('roleadminmbs') ? 'customClassName' : 'displayNone'}"
+					url="/roleadminmbs/listMbsRoles.xhtml" value="#{msg['nav.roleMgmtForMbs']}"
+					rendered="#{auth.checkAuthority('listMbsRoles')}" />
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('useradmin') ? 'customClassName' : 'displayNone'}"
+					url="/useradmin/listUsers.xhtml" value="#{msg['nav.userMgmt']}"
+					rendered="#{auth.checkAuthority('listUsers')}" />
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('deviceadmin') ? 'customClassName' : 'displayNone'}"
+					url="/deviceadmin/listDevices.xhtml"
+					value="#{msg['nav.deviceMgmt']}"
+					rendered="#{auth.checkAuthority('listDevices')}" />
+					
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('externaldeviceadmin') ? 'customClassName' : 'displayNone'}"
+					url="/externaldeviceadmin/listExternalDevices.xhtml"
+					value="#{msg['nav.extdeviceMgmt']}"
+					rendered="#{auth.checkAuthority('listExternalDevices')}" />
+						
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('agentmessageadmin') ? 'customClassName' : 'displayNone'}"
+					url="/agentmessageadmin/listAgentMessages.xhtml"
+					value="#{msg['nav.messageBroadcast']}"
+					rendered="#{auth.checkAuthority('listAgentMessages')}" />
+
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('errorcodeadmin') ? 'customClassName' : 'displayNone'}"
+					url="/errorcodeadmin/listErrorCode.xhtml"
+					value="#{msg['nav.ErrorCode']}"
+					rendered="#{auth.checkAuthority('listErrorCodes')}" />
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('refcodeadmin') ? 'customClassName' : 'displayNone'}"
+					url="/refcodeadmin/listRefCode.xhtml"
+					value="#{msg['nav.refCodeMgmt']}"
+					rendered="#{auth.checkAuthority('listRefCode')}" />
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('systemparameter') ? 'customClassName' : 'displayNone'}"
+					url="/systemparameter/listSystemParameters.xhtml"
+					value="#{msg['nav.systemParameterMgmt']}"
+					rendered="#{auth.checkAuthority('listSystemParameters')}" />
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('cbsjobhistoryadmin') ? 'customClassName' : 'displayNone'}"
+					url="/cbsjobhistoryadmin/listCbsJobHistory.xhtml"
+					value="#{msg['nav.console']}"
+					rendered="#{auth.checkAuthority('listCbsJobHistory')}" />
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('lovbaseadmin') ? 'customClassName' : 'displayNone'}"
+					url="/lovbaseadmin/listLovBase.xhtml"
+					value="#{msg['nav.lovbase']}"
+					rendered="#{auth.checkAuthority('listLovBase')}" />	
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('lovaddadmin') ? 'customClassName' : 'displayNone'}"
+					url="/lovaddadmin/listAddLovType.xhtml"
+					value="#{msg['nav.lovadd']}"
+					rendered="#{auth.checkAuthority('listLovAddition')}" />
+				
+			</p:submenu>
+
+			<p:submenu styleClass="westPanelSubMenu" id="Consolemanagement"
+				rendered="#{auth.checkAuthorityHasAny('listInitConsole','listCleanup','listCharter')}"
+				label="#{msg['nav.consolemgmt']}">
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('consoleadmin') ? 'customClassName' : 'displayNone'}"
+					url="/consoleadmin/viewInitConsole.xhtml"
+					value="#{msg['nav.initiate']}"
+					rendered="#{auth.checkAuthority('listInitConsole')}" />
+
+					<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('resetagendaadmin') ? 'customClassName' : 'displayNone'}"
+					url="/resetagendaadmin/listIbsResetAgenda.xhtml"
+					value="#{msg['nav.resetAgendaAdd']}"
+					rendered="#{auth.checkAuthority('listIbsResetAgenda')}" />
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('manualagendasettleAddadmin') ? 'customClassName' : 'displayNone'}"
+					url="/manualagendasettleAddadmin/listManualAgendaSettle.xhtml"
+					value="#{msg['nav.manualAgendaSettleAdd']}"
+					rendered="#{auth.checkAuthority('listManualAgendaSettle')}" />	
+					
+				<p:menuitem  
+					styleClass="#{navigationController.checkHighLightMenu('modifyManualagendasettleadmin') ? 'customClassName' : 'displayNone'}"
+					url="/modifyManualagendasettleadmin/listModifyManualAgendaSettle.xhtml"
+					value="#{msg['nav.modifyManualAgendaSettleAdd']}"
+					rendered="#{auth.checkAuthority('listModifyManualAgendaSettle')}" />			
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('agendaadmin') ? 'customClassName' : 'displayNone'}"
+					url="/agendaadmin/listCbsTxnOut.xhtml" value="#{msg['nav.cbsTxnOut']}"
+					rendered="#{auth.checkAuthority('listCbsTxnOut')}" />
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('branchadmin') ? 'customClassName' : 'displayNone'}"
+					url="/branchadmin/listBranch.xhtml" value="#{msg['nav.branch']}"
+					rendered="#{auth.checkAuthority('listBranch')}" />
+				
+			</p:submenu>
+			
+			<p:submenu styleClass="westPanelSubMenu" id="Agentmanagement"
+				rendered="#{auth.checkAuthorityHasAny('listAgencies','listLocation','listRouteCode','listCenterCode','listAgents','listCashSettlements')}"
+				label="#{msg['navHeader.agentmanagement']}">
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('agencyadmin') ? 'customClassName' : 'displayNone'}"
+					url="/agencyadmin/listAgencyDetails.xhtml"
+					value="#{msg['nav.agencyManagement']}"
+					rendered="#{auth.checkAuthority('listAgencies')}" />
+
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('locationadmin') ? 'customClassName' : 'displayNone'}"
+					url="/locationadmin/listLocation.xhtml"
+					value="#{msg['nav.location']}"
+					rendered="#{auth.checkAuthority('listLocation')}" />
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('routecodeadmin') ? 'customClassName' : 'displayNone'}"
+					url="/routecodeadmin/listRouteCode.xhtml"
+					value="#{msg['nav.routeCode']}"
+					rendered="#{auth.checkAuthority('listRouteCode')}" />
+
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('centercodeadmin') ? 'customClassName' : 'displayNone'}"
+					url="/centercodeadmin/listCenterCode.xhtml"
+					value="#{msg['nav.centerCode']}"
+					rendered="#{auth.checkAuthority('listCenterCode')}" />
+
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('agentadmin') ? 'customClassName' : 'displayNone'}"
+					url="/agentadmin/listAgent.xhtml" value="#{msg['nav.agentMgmt']}"
+					rendered="#{auth.checkAuthority('listAgents')}" />
+
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('cashsettlementadmin') ? 'customClassName' : 'displayNone'}"
+					url="/cashsettlementadmin/listCashSettlement.xhtml"
+					value="#{msg['nav.agentCashSettlement']}"
+					rendered="#{auth.checkAuthority('listCashSettlements')}" />
+			</p:submenu>
+
+			<p:submenu styleClass="westPanelSubMenu" id="CustomerManagement"
+				rendered="#{auth.checkAuthorityHasAny('listCustomers','listEnrollmentCustomer','listGroupCode')}"
+				label="#{msg['navHeader.customermanagement']}">
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('customeradmin') ? 'customClassName' : 'displayNone'}"
+					url="/customeradmin/listCustomers.xhtml"
+					value="#{msg['nav.customerMgmt.info']}"
+					rendered="#{auth.checkAuthority('listCustomers')}" />
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('enrolladmin') ? 'customClassName' : 'displayNone'}"
+					url="/enrolladmin/listEnrollCustomer.xhtml"
+					rendered="#{auth.checkAuthority('listEnrollmentCustomer')}"
+					value="#{msg['nav.enrolment']}" />
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('groupcodesadmin') ? 'customClassName' : 'displayNone'}"
+					url="/groupcodesadmin/listGroupCodes.xhtml"
+					value="#{msg['nav.groupCodesMgmt']}"
+					rendered="#{auth.checkAuthority('listGroupCode')}" />
+
+			</p:submenu>
+
+			<p:submenu styleClass="westPanelSubMenu" id="Depositmanagement"
+				rendered="#{auth.checkAuthorityHasAny('listPigmyDesposit','depositeReqList','listDepositTxn')}"
+				label="#{msg['navHeader.depositmanagement']}">
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('pigmydeposit') ? 'customClassName' : 'displayNone'}"
+					url="/pigmydeposit/listPigmyDesposit.xhtml"
+					value="#{msg['nav.depositAccounts']}"
+					rendered="#{auth.checkAuthority('listPigmyDesposit')}" />
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('agendaadmin') ? 'customClassName' : 'displayNone'}"
+					url="/agendaadmin/listDepositAgenda.xhtml"
+					value="#{msg['nav.depositAgenda']}"
+					rendered="#{auth.checkAuthority('listDeposit')}" />	
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('pigmydeposit') ? 'customClassName' : 'displayNone'}"
+					url="/txnadmin/listDepositTxn.xhtml"
+					value="#{msg['nav.depositMgmt.transaction']}"
+					rendered="#{auth.checkAuthority('listDepositTxn')}" />
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('Deposite') ? 'customClassName' : 'displayNone'}"
+					url="/Deposite/depositeReqList.xhtml"
+					value="#{msg['nav.Deposit.request']}"
+					rendered="#{auth.checkAuthority('depositeReqList')}" />
+					
+			</p:submenu>
+
+			<p:submenu styleClass="westPanelSubMenu" id="loanmanagement"
+				rendered="#{auth.checkAuthorityHasAny('listLoanAccounts','listAgentTxn','listLoan')}"
+				label="#{msg['navHeader.loanmanagement']}" ajax="false">
+
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('loanadmin') ? 'customClassName' : 'displayNone'}"
+					url="/loanadmin/listLoanAccounts.xhtml"
+					value="#{msg['nav.loanAccounts']}"
+					rendered="#{auth.checkAuthority('listLoanAccounts')}" />
+
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('agendaadmin') ? 'customClassName' : 'displayNone'}"
+					url="/agendaadmin/listLoanAgenda.xhtml"
+					value="#{msg['nav.loanAgenda']}"
+					rendered="#{auth.checkAuthority('listLoan')}" />
+				
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('txnadmin') ? 'customClassName' : 'displayNone'}"
+					url="/txnadmin/listLoanTxn.xhtml"
+					value="#{msg['nav.loantransaction']}"
+					rendered="#{auth.checkAuthority('listAgentTxn')}" />
+
+			</p:submenu>
+
+			<p:submenu styleClass="westPanelSubMenu" id="cashdepandwithdrawmgmt"
+				rendered="#{auth.checkAuthorityHasAny('listWithandDep','listCustAcDetails','listCashRecSumup')}"
+				label="#{msg['navHeader.cashwthanddeposit']}" ajax="false">
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('casaadmin') ? 'customClassName' : 'displayNone'}"
+					url="/casaadmin/listCustAcDetails.xhtml" value="#{msg['nav.casa']}"
+					rendered="#{auth.checkAuthority('listCustAcDetails')}" />
+
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('Deposite') ? 'customClassName' : 'displayNone'}"
+					url="/Deposite/cashWandDList.xhtml"
+					value="#{msg['nav.cashwtdrawanddepmgmt.request']}"
+					rendered="#{auth.checkAuthority('listWithandDep')}" />
+               
+               <p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('cashrecordadmin') ? 'customClassName' : 'displayNone'}"
+					url="/cashrecordadmin/listCashRecSumup.xhtml"
+					value="#{msg['nav.cashRecMgmt.cashRec']}"
+					rendered="#{auth.checkAuthority('listCashRecSumup')}" />
+
+			</p:submenu>
+
+			<p:submenu styleClass="westPanelSubMenu" id="smsmanagement"
+				rendered="#{auth.checkAuthorityHasAny('listSmsConfig','listSmsTemplate')}"
+				label="#{msg['nav.smsConfig']}">
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('SMSconfigadmin') ? 'customClassName' : 'displayNone'}"
+					url="/SMSconfigadmin/listSMSConfig.xhtml"
+					value="#{msg['nav.txnConfig']}"
+					rendered="#{auth.checkAuthority('listSmsConfig')}" />
+					
+				<p:menuitem
+					styleClass="#{navigationController.checkHighLightMenu('SMStemplateadmin') ? 'customClassName' : 'displayNone'}"
+					url="/SMStemplateadmin/listSMSTemplate.xhtml"
+					value="#{msg['nav.template']}"
+					rendered="#{auth.checkAuthority('listSmsTemplate')}" />
+
+			</p:submenu>
+
+		</p:panelMenu>
+	</h:form>
+</ui:composition>

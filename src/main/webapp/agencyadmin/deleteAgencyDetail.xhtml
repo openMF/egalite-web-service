@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterTemplate.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="agencyCode"
+				value="#{agencyController.agency.agencyCode}"></f:viewParam>
+			<f:event listener="#{agencyController.loadAgency}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<script language="JavaScript">
+
+	function ieClicked() {
+		if (document.all) {
+			return false;
+		}
+	}
+	function firefoxClicked(e) {
+		if(document.layers||(document.getElementById &amp;&amp; (!document.all))) {
+			if (e.which==2||e.which==3) {
+				return false;
+			}
+		}
+	}
+	if (document.layers){
+		document.captureEvents(Event.MOUSEDOWN);
+		document.onmousedown=firefoxClicked;
+	}else{
+		document.onmouseup=firefoxClicked;
+		document.oncontextmenu=ieClicked;
+	}
+	document.oncontextmenu=new Function("return false")
+
+</script>
+	<ui:define name="contentSection">
+		<h1>#{msg['agencyMgmt.title']}</h1>
+
+		<h:form id="form">
+
+			<p:panel id="panel">
+
+				<f:facet name="header">
+					<p:panel>
+						<span class="pageHeaderTitle"> <h:outputText
+								value="#{msg['agencyMgmt.title.deleteAgency']}" />
+						</span>
+						<span class="pageHeaderControls"> <p:commandButton
+								id="btnSave" value="#{msg['agencyMgmt.nav.delete']}"
+								update="panel" action="#{agencyController.delete}" /> <p:button
+								id="btnCancel" value="#{msg['agencyMgmt.nav.cancel']}"
+								outcome="cancel"><p:spacer width="2px" /> 
+								<f:param name="agencyCode"
+									value="#{agencyController.agency.agencyCode}" />
+							</p:button>
+						</span>
+					</p:panel>
+				</f:facet>
+
+				<p:messages id="msgs" showDetail="false" closable="true" />
+				<p:growl id="growl" showDetail="true" sticky="false" />
+
+
+				<h:panelGrid columns="3">
+					<h:outputLabel for="agencyCode"
+						value="#{msg['agencyMgmt.tblHeader.agencyCode']}" />
+					<p:inputText id="agencyCode" readonly="true"
+						value="#{agencyController.agency.agencyCode}"
+						label="#{msg['agencyMgmt.label.agencyCode']}">
+					</p:inputText>
+					<p:message for="agencyCode" display="icon" />
+					
+						<h:outputLabel for="agencyName"
+						value="#{msg['agencyMgmt.tblHeader.agencyName']}" />
+					<p:inputText id="agencyName" readonly="true"
+						value="#{agencyController.agency.agencyName}"
+						label="#{msg['agencyMgmt.label.agencyName']}">
+					</p:inputText>
+					<p:message for="agencyName" display="icon" />
+
+					<h:outputLabel for="agencyDesc"
+						value="#{msg['agencyMgmt.label.agencyDesc']}" />
+					<p:inputText id="agencyDesc"
+						value="#{agencyController.agency.agencyDesc}"
+						label="#{msg['agencyMgmt.label.agencyDesc']}">
+					</p:inputText>
+					<p:message for="agencyDesc" display="icon" />
+
+
+					<h:outputLabel for="address1"
+						value="#{msg['agencyMgmt.label.address1']}" />
+					<p:inputText id="address1"
+						value="#{agencyController.agency.address1}"
+						label="#{msg['agencyMgmt.label.address1']}">
+					</p:inputText>
+					<p:message for="address1" id="msgaddress1" display="icon" />
+
+
+
+
+					<h:outputLabel for="address2"
+						value="#{msg['agencyMgmt.label.address2']}" />
+					<p:inputText id="address2"
+						value="#{agencyController.agency.address2}"
+						label="#{msg['agencyMgmt.label.address2']}">
+					</p:inputText>
+					<p:message for="address2" id="msgaddress2" display="icon" />
+
+
+
+
+					<h:outputLabel for="address3"
+						value="#{msg['agencyMgmt.label.address3']}" />
+					<p:inputText id="address3"
+						value="#{agencyController.agency.address3}"
+						label="#{msg['agencyMgmt.label.address3']}">
+					</p:inputText>
+					<p:message for="address3" id="msgaddress3" display="icon" />
+
+
+					<h:outputLabel for="address4"
+						value="#{msg['agencyMgmt.label.address4']}" />
+					<p:inputText id="address4"
+						value="#{agencyController.agency.address4}"
+						label="#{msg['agencyMgmt.label.address4']}">
+					</p:inputText>
+					<p:message for="address4" id="msgaddress4" display="icon" />
+
+
+					<h:outputLabel for="agencyContactNumber"
+						value="#{msg['agencyMgmt.label.agencyContactNumber']}" />
+					<p:inputText id="agencyContactNumber"
+						value="#{agencyController.agency.agencyContactNumber}"
+						label="#{msg['agencyMgmt.label.agencyContactNumber']}">
+					</p:inputText>
+					<p:message for="agencyContactNumber" id="msgagencyContactNumber"
+						display="icon" />
+
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

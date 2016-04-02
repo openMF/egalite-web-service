@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/printTemplate.xhtml">
+	<!-- Tag no : EGA-MN15-000018  New XHTML Added-->
+	
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="id"
+				value="#{enrollCustomerController.enrollCustomer.id}"></f:viewParam>
+			<f:event listener="#{enrollCustomerController.loadEnrollCustomer}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="contentSection">
+		<p:panel styleClass="printScrollPanel">
+			<h:form id="form" enctype="multipart/form-data">
+				<p:panel id="contentPanel">
+					<f:facet name="header">
+						<h:outputText value="#{msg['nav.enrollCustomer']}" />
+						<span class="pageHeaderControls"> <p:commandButton
+								value="Print" type="button" icon="ui-icon-print"
+								style="display:block">
+								<p:printer target="form" />
+							</p:commandButton></span>
+					</f:facet>
+					<p:panel id="panel">
+						<p:panel styleClass="maintenanceFormWithAuditTrailPrint">
+							<h:panelGrid columns="2">
+
+								<h:outputLabel for="id"
+									value="#{msg['customerMgmt.label.enrolID']}" />
+								<p:outputLabel id="id" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.id}"
+									label="#{msg['customerMgmt.label.enrolID']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="workFlowQType"
+									value="#{msg['customerMgmt.label.workFlowQType']}" />
+								<p:outputLabel id="workFlowQType" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.workFlowQType}"
+									label="#{msg['customerMgmt.label.workFlowQType']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="tempGroupId"
+									value="#{msg['customerMgmt.label.tempGroupId']}" />
+								<p:outputLabel id="tempGroupId" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.tempGroupId}"
+									label="#{msg['customerMgmt.label.tempGroupId']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="poc"
+									value="#{msg['customerMgmt.label.poc']}" />
+								<p:outputLabel id="poc" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.poc}"
+									label="#{msg['customerMgmt.label.poc']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="firstName"
+									value="#{msg['customerMgmt.label.custfName']}" />
+								<p:outputLabel id="firstName" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.firstName}"
+									label="#{msg['customerMgmt.label.custfName']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="middleName"
+									value="#{msg['customerMgmt.label.custmName']}" />
+								<p:outputLabel id="middleName" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.middleName}"
+									label="#{msg['customerMgmt.label.custmName']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="lastName"
+									value="#{msg['customerMgmt.label.custlName']}" />
+								<p:outputLabel id="lastName" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.lastName}"
+									label="#{msg['customerMgmt.label.custlName']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="dob"
+									value="#{msg['customerMgmt.label.custDob']}" />
+								<p:outputLabel id="dob" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.dob}"
+									label="#{msg['customerMgmt.label.custDob']}">
+									<f:convertDateTime pattern="dd-MMM-yyyy" />
+								</p:outputLabel>
+
+								<h:outputLabel for="gender"
+									value="#{msg['customerMgmt.label.custGender']}" />
+								<p:outputLabel id="gender" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.gender}"
+									label="#{msg['customerMgmt.label.custGender']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="residentialType"
+									value="#{msg['customerMgmt.label.residentialType']}" />
+								<p:outputLabel id="residentialType" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.residentialType}"
+									label="#{msg['customerMgmt.label.residentialType']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="nationality"
+									value="#{msg['customerMgmt.label.nationality']}" />
+								<p:outputLabel id="nationality" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.nationality}"
+									label="#{msg['customerMgmt.label.nationality']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="address1"
+									value="#{msg['agencyMgmt.label.address1']}" />
+								<p:outputLabel id="address1" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.address1}"
+									label="#{msg['agencyMgmt.label.address1']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="address2"
+									value="#{msg['agencyMgmt.label.address2']}" />
+								<p:outputLabel id="address2" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.address2}"
+									label="#{msg['agencyMgmt.label.address2']}">
+								</p:outputLabel>
+
+
+								<h:outputLabel for="address3"
+									value="#{msg['agencyMgmt.label.address3']}" />
+								<p:outputLabel id="address3" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.address3}"
+									label="#{msg['agencyMgmt.label.address3']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="address4"
+									value="#{msg['agencyMgmt.label.address4']}" />
+								<p:outputLabel id="address4" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.address4}"
+									label="#{msg['agencyMgmt.label.address4']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="state"
+									value="#{msg['customerMgmt.label.state']}" />
+								<p:outputLabel id="state" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.state}"
+									label="#{msg['customerMgmt.label.state']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="zipCode"
+									value="#{msg['customerMgmt.label.zipCode']}" />
+								<p:outputLabel id="zipCode" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.zipCode}"
+									label="#{msg['customerMgmt.label.zipCode']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="country"
+									value="#{msg['customerMgmt.label.country']}" />
+								<p:outputLabel id="country" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.country}"
+									label="#{msg['customerMgmt.label.country']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="emailId"
+									value="#{msg['customerMgmt.label.emailID']}" />
+								<p:outputLabel id="emailId" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.emailId}"
+									label="#{msg['customerMgmt.label.emailID']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="contactNumber"
+									value="#{msg['agencyMgmt.tblHeader.contactNumber']}" />
+								<p:outputLabel id="contactNumber" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.contactNumber}"
+									label="#{msg['agencyMgmt.tblHeader.contactNumber']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="martialStatus"
+									value="#{msg['customerMgmt.label.maritalStat']}" />
+								<p:outputLabel id="martialStatus" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.martialStatus}"
+									label="#{msg['customerMgmt.label.maritalStat']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="profession"
+									value="#{msg['customerMgmt.label.profession']}" />
+								<p:outputLabel id="profession" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.profession}"
+									label="#{msg['customerMgmt.label.profession']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="professionRemark"
+									value="#{msg['customerMgmt.label.professionRemark']}" />
+								<p:outputLabel id="professionRemark" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.professionRemark}"
+									label="#{msg['customerMgmt.label.professionRemark']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="accountCategory"
+									value="#{msg['customerMgmt.label.accountCategory']}" />
+								<p:outputLabel id="accountCategory" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.accountCategory}"
+									label="#{msg['customerMgmt.label.accountCategory']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="accountType"
+									value="#{msg['customerMgmt.label.accountType']}" />
+								<p:outputLabel id="accountType" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.accountType}"
+									label="#{msg['customerMgmt.label.accountType']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="currency"
+									value="#{msg['customerMgmt.label.custCurrency']}" />
+								<p:outputLabel id="currency" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.currency}"
+									label="#{msg['customerMgmt.label.custCurrency']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="txnInitTime"
+									value="#{msg['DepositeMgmt.label.txnInitTime']}" />
+								<p:outputLabel id="txnInitTime" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.txnInitTime}"
+									label="#{msg['DepositeMgmt.label.txnInitTime']}">
+									<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a" />
+								</p:outputLabel>
+
+								<h:outputLabel for="txnSyncTime"
+									value="#{msg['agentTxnMgmt.label.txnSyncTime']}" />
+								<p:outputLabel id="txnSyncTime" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.txnSyncTime}"
+									label="#{msg['agentTxnMgmt.label.txnSyncTime']}">
+									<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a" />
+								</p:outputLabel>
+
+								<h:outputLabel for="agentId"
+									value="#{msg['agentMgmt.label.agentId']}" />
+								<p:outputLabel id="agentId" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.agentId}"
+									label="#{msg['agentMgmt.label.agentId']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="deviceId"
+									value="#{msg['deviceMgmt.label.deviceId']}" />
+								<p:outputLabel id="deviceId" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.deviceId}"
+									label="#{msg['deviceMgmt.label.deviceId']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="locationCode"
+									value="#{msg['DepositeMgmt.label.locationCode']}" />
+								<p:outputLabel id="locationCode" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.locationCode}"
+									label="#{msg['DepositeMgmt.label.locationCode']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="txnErrCode"
+									value="#{msg['customerMgmt.label.txnErrCode']}" />
+								<p:outputLabel id="txnErrCode" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.txnErrCode}"
+									label="#{msg['customerMgmt.label.txnErrCode']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="txnErrMessage"
+									value="#{msg['customerMgmt.label.txnErrMessage']}" />
+								<p:outputLabel id="txnErrMessage" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.txnErrMessage}"
+									label="#{msg['customerMgmt.label.txnErrMessage']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="authStatus"
+									value="#{msg['customerMgmt.label.authStatus']}" />
+								<p:outputLabel id="authStatus" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.authStatusText}"
+									label="#{msg['customerMgmt.label.authStatus']}">
+								</p:outputLabel>
+
+								<h:outputLabel for="cbsResponseStat"
+									value="#{msg['customerMgmt.label.cbsResponseStat']}" />
+								<p:outputLabel id="cbsResponseStat" readonly="true"
+									value="#{enrollCustomerController.enrollCustomer.cbsResponseStat}"
+									label="#{msg['customerMgmt.label.cbsResponseStat']}">
+								</p:outputLabel>
+
+							</h:panelGrid>
+						</p:panel>
+						<!-- <p:tab title="Enrichment Details"> -->
+						<p:panel styleClass="maintenanceFormWithAuditTrailPrintKyc">
+							<h:panelGrid columns="2">
+								<h:panelGrid>
+									<h:panelGrid columns="2" id="panelGridCust">
+										<p:panel>
+											<h:outputLink id="content">
+												<p:graphicImage cache="true"
+													value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.customerImage}"
+													width="150" height="150" circular="true">
+													<f:param name="uniqueId"
+														value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+												</p:graphicImage>
+											</h:outputLink>
+										</p:panel>
+										<h:panelGrid columns="2">
+											<p:outputLabel id="custFullName"
+												value="#{enrollCustomerController.enrollCustomer.firstName} &#160;&#160;
+					                                                         #{enrollCustomerController.enrollCustomer.middleName} &#160;&#160;
+					                                                             #{enrollCustomerController.enrollCustomer.lastName} " />
+										</h:panelGrid>
+									</h:panelGrid>
+
+									<h:panelGrid columns="2" id="panel1">
+										<p:panel>
+											<h:outputLink id="grpImage1" value="#">
+												<p:graphicImage cache="true"
+													value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.streamImage1}"
+													width="150" height="150" alt="image" circular="true">
+													<f:param name="uniqueId"
+														value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+												</p:graphicImage>
+											</h:outputLink>
+										</p:panel>
+										<h:panelGrid columns="2">
+
+											<h:outputLabel for="kycId1Type"
+												value="#{msg['customerMgmt.label.kycId1Type']}" />
+											<p:outputLabel id="kycId1Type" readonly="true"
+												value="#{enrollCustomerController.kycTypeDesc1}"
+												label="#{msg['customerMgmt.label.kycId1Type']}">
+											</p:outputLabel>
+											<h:outputLabel />
+											<p:message for="kycId1Type" id="kycIDT1" display="icon" />
+
+											<h:outputLabel for="kycId1Number"
+												value="#{msg['customerMgmt.label.kycId1Number']}" />
+											<p:outputLabel id="kycId1Number" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId1Number}"
+												label="#{msg['customerMgmt.label.kycId1Number']}">
+											</p:outputLabel>
+
+											<h:outputLabel for="kycId1ProofType"
+												value="#{msg['customerMgmt.label.kycId1ProofType']}" />
+												
+												<p:outputLabel id="kycId1ProofType" readonly="true"
+												value="#{enrollCustomerController.kycTypeDesc2}"
+												label="#{msg['customerMgmt.label.kycId1Type']}">
+											</p:outputLabel>
+											<h:outputLabel />
+											<p:message for="kycId1ProofType" id="kycIDProof1"
+												display="icon" />
+
+										</h:panelGrid>
+									</h:panelGrid>
+
+									<h:panelGrid columns="2" id="panel2">
+										<p:panel>
+											<h:outputLink id="grpImage2" value="#">
+												<p:graphicImage cache="true"
+													value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.streamImage2}"
+													width="150" height="150" circular="true">
+													<f:param name="uniqueId"
+														value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+												</p:graphicImage>
+											</h:outputLink>
+										</p:panel>
+										<h:panelGrid columns="2">
+
+											<h:outputLabel for="kycId2Type"
+												value="#{msg['customerMgmt.label.kycId1Type']}" />
+											<p:outputLabel id="kycId2Type" readonly="true"
+												value="#{enrollCustomerController.kycTypeDesc3}"
+												label="#{msg['customerMgmt.label.kycId1Type']}">
+											</p:outputLabel>
+											<h:outputLabel />
+											<p:message for="kycId2Type" id="kycIDT2" display="icon" />
+
+											<h:outputLabel for="kycId2Number"
+												value="#{msg['customerMgmt.label.kycId1Number']}" />
+											<p:outputLabel id="kycId2Number" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId2Number}"
+												label="#{msg['customerMgmt.label.kycId1Number']}">
+											</p:outputLabel>
+
+											<h:outputLabel for="kycId2ProofType"
+												value="#{msg['customerMgmt.label.kycId1ProofType']}" />
+											<p:outputLabel id="kycId2ProofType" readonly="true"
+												value="#{enrollCustomerController.kycTypeDesc4}"
+												label="#{msg['customerMgmt.label.kycId1ProofType']}">
+											</p:outputLabel>
+											<h:outputLabel />
+											<p:message for="kycId2ProofType" id="kycIDProof2"
+												display="icon" />
+
+
+										</h:panelGrid>
+									</h:panelGrid>
+
+									<h:panelGrid columns="2" id="panel3">
+										<p:panel>
+											<h:outputLink id="grpImage3" value="#">
+												<p:graphicImage cache="true"
+													value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.streamImage3}"
+													width="150" height="150" circular="true">
+													<f:param name="uniqueId"
+														value="#{enrollCustomerController.enrollCustomer.id}"></f:param>
+												</p:graphicImage>
+											</h:outputLink>
+										</p:panel>
+										<h:panelGrid columns="2">
+
+											<h:outputLabel for="kycId3Type"
+												value="#{msg['customerMgmt.label.kycId1Type']}" />
+											<p:outputLabel id="kycId3Type" readonly="true"
+												value="#{enrollCustomerController.kycTypeDesc5}"
+												label="#{msg['customerMgmt.label.kycId1Type']}">
+											</p:outputLabel>
+											<h:outputLabel />
+											<p:message for="kycId3Type" id="kycIDT3" display="icon" />
+
+
+											<h:outputLabel for="kycId3Number"
+												value="#{msg['customerMgmt.label.kycId1Number']}" />
+											<p:outputLabel id="kycId3Number" readonly="true"
+												value="#{enrollCustomerController.enrollCustomer.custEnrolKyc.kycId3Number}"
+												label="#{msg['customerMgmt.label.kycId1Number']}">
+											</p:outputLabel>
+
+											<h:outputLabel for="kycId3ProofType"
+												value="#{msg['customerMgmt.label.kycId1ProofType']}" />
+											<p:outputLabel id="kycId3ProofType" readonly="true"
+												value="#{enrollCustomerController.kycTypeDesc6}"
+												label="#{msg['customerMgmt.label.kycId1Type']}">
+											</p:outputLabel>
+											<h:outputLabel />
+											<p:message for="kycId3ProofType" id="kycIDProof3"
+												display="icon" />
+
+										</h:panelGrid>
+									</h:panelGrid>
+								</h:panelGrid>
+							</h:panelGrid>
+						</p:panel>
+						<!-- </p:tab> -->
+					</p:panel>
+				</p:panel>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
